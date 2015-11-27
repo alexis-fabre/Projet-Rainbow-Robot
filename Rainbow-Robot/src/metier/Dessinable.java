@@ -14,7 +14,7 @@ import java.awt.Graphics;
 public interface Dessinable {
     
     /**
-     * MÃ©hode pour dessiner
+     * Méhode pour dessiner
      * @param g
      */
     public void dessiner (Graphics g);

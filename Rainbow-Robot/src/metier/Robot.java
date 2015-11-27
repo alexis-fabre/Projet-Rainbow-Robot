@@ -28,37 +28,37 @@ public class Robot implements Dessinable{
     }
     
     /**
-     * MÃ©thode pour faire avancer le robot
+     * Méthode pour faire avancer le robot
      */
     public void avancer() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©thode pour faire reculer le robot
+     * Méthode pour faire reculer le robot
      */
     public void reculer () {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©thode pour faire pivoter le robot
+     * Méthode pour faire pivoter le robot
      */
     public void pivoter () {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©thode pour que le robot saisisse une caisse
+     * Méthode pour que le robot saisisse une caisse
      */
     public void saisirCaisse() {
         
     }
     
     /**
-     * MÃ©thode pour faire fusionner deux caisses
+     * Méthode pour faire fusionner deux caisses
      */
     public void fusionner () {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
 }

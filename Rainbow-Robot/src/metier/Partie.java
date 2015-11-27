@@ -18,37 +18,37 @@ public class Partie {
     private int niveauMaxAtteint;
     
     /**
-     * Constructeur par dÃ©faut pour crÃ©er une partie
+     * Constructeur par défaut pour créer une partie
      */
     public Partie() {
-        // TODO Ã©crire le corps de la mÃ©thode
+        // TODO écrire le corps de la méthode
     }
     
     /**
-     * Constructeur avec un argument, pour crÃ©er une partie Ã  partir d'un fichier
+     * Constructeur avec un argument, pour créer une partie Ã  partir d'un fichier
      * mit en argument
      * @param nomFic nom du fichier ou se trouve la carte
      */
     public Partie (String nomFic) {
-        // TODO Ã©crie le corps
+        // TODO écrie le corps
     }
     
     /**
-     * Pour rÃ©cupÃ©rer le niveau suivant
+     * Pour récupérer le niveau suivant
      * @param niveauCourant niveau actuel du joueur
      * @return 
      */
     public Carte getNiveauSuivant(int niveauCourant) {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
         return null;
     } 
     
     /**
-     * Pour rÃ©cupÃ©rer le niveau courant du joueur
+     * Pour récupérer le niveau courant du joueur
      * @return 
      */
     public Carte getNiveauCourant () {
-        // TODO Ã©crei le corps
+        // TODO écrei le corps
         return null;
     }
     
@@ -57,7 +57,7 @@ public class Partie {
      * @return
      */
     public Carte getNiveau(int niveau ) {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
         return null;
     }
 }

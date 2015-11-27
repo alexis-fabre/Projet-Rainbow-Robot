@@ -11,50 +11,50 @@ package metier;
  */
 public class Position {
     
-    /** CoordonnÃ©es */
+    /** Coordonnées */
     private int x;
     private int y;
     
     /**
-     * Constructeur avec arguemnts pour crÃ©er une position
-     * @param x coordonnÃ©es
-     * @param y coordonnÃ©es
+     * Constructeur avec arguemnts pour créer une position
+     * @param x coordonnées
+     * @param y coordonnées
      */
     public Position (int x, int y) {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * Pour rÃ©cupÃ©rer la coordonÃ©e x
+     * Pour récupérer la coordonée x
      * @return
      */
     public int getX() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
         return 0;
     }
     
     /**
-     * Pour changer une coordonnÃ©e
-     * @param x coordonnÃ©e
+     * Pour changer une coordonnée
+     * @param x coordonnée
      */
     public void setX(int x) {
-        // TODO Ã©crie le corps
+        // TODO écrie le corps
     }
     
     /**
-     * Pour rÃ©cupÃ©rer la coordonÃ©e y
+     * Pour récupérer la coordonée y
      * @return
      */
     public int getY() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
         return 0;
     }
     
     /**
-     * Pour changer une coordonnÃ©e
-     * @param y coordonnÃ©e
+     * Pour changer une coordonnée
+     * @param y coordonnée
      */
     public void setY(int y) {
-        // TODO Ã©crie le corps
+        // TODO écrie le corps
     }
 }

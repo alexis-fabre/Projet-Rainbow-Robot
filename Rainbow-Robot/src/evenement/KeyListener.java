@@ -12,19 +12,19 @@ import java.awt.event.KeyEvent;
 public interface KeyListener {
 
 	/**
-	 * MÃ©thode pour reconnaitre la touche prÃ©ssÃ©e
+	 * Méthode pour reconnaitre la touche préssée
 	 * @param e
 	 */
 	public void keyPressed(KeyEvent e);
 	
 	/**
-	 * MÃ©thode pour dÃ©tecter le touche relachÃ©e
+	 * Méthode pour détecter le touche relachée
 	 * @param e
 	 */
 	public void keyReleased(KeyEvent e);
 	
 	/**
-	 * MÃ©thode pour reconnaitre le caractÃ©re tapÃ©
+	 * Méthode pour reconnaitre le caractére tapé
 	 * @param e
 	 */
 	public void keyTyped(KeyEvent e);

@@ -18,32 +18,32 @@ public class Carte {
     private int nbLigne;
     
     /**
-     * Constrcuteur par dÃ©faut pour crÃ©er une carte
+     * Constrcuteur par défaut pour créer une carte
      */
     public Carte() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©thode pour recommencer uen partie
+     * Méthode pour recommencer uen partie
      */
     public void recommencer() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©tode pour jouer une partie 
+     * Métode pour jouer une partie 
      */
     public void jouer() {
-        // TODO Ã©crire le corps
+        // TODO écrire le corps
     }
     
     /**
-     * MÃ©thode pour rÃ©initialiser une partie
+     * Méthode pour réinitialiser une partie
      * @return 
      */
     public boolean reinitialiser() {
-        //TODO Ã©crire le corps
+        //TODO écrire le corps
         return false;
     }
 }
