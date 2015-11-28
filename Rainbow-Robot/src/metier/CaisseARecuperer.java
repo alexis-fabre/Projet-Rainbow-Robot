@@ -5,10 +5,15 @@
 
 package metier;
 
+import java.util.List;
+
 /**
  *
  * @author Rainbow Robot
  */
 public class CaisseARecuperer {
+	
+	/** Liste des caisses à récuperer par le joueur */
+	private List<Caisse> caisseAAttraper;
 
 }

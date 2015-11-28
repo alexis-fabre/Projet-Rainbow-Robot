@@ -21,7 +21,7 @@ public class Caisse implements Dessinable{
      * @return 
      */
     public Color getCouleur() {
-        return null;
+        return couleur;
         // TODO écrire le corps
     }
     
@@ -31,6 +31,7 @@ public class Caisse implements Dessinable{
      */
     public void setColeur( Color couleur) {
         // TODO écrire le corps
+    	this.couleur = couleur;
     }
 
     @Override

@@ -5,6 +5,8 @@
 
 package metier;
 
+import java.util.List;
+
 /**
  *
  * @author Rainbow Robot
@@ -16,6 +18,19 @@ public class Carte {
     
     /** Nombre de lignes de la carte */
     private int nbLigne;
+    
+	/** Robot sur la carte */
+	private Robot robot;
+	
+	/** Tableau de caisse */
+	private Caisse[] caisses;
+	
+	/** Vortex de la carte*/
+	private Vortex vortex;
+	
+	/** Carte de la partie */
+	private List<Carte> map;
+    
     
     /**
      * Constrcuteur par défaut pour créer une carte

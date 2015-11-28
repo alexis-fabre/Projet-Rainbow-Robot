@@ -12,10 +12,19 @@ package metier;
 public class Partie {
     
     /** Niveau actuel du joueur */
-    private int niveauCOurant;
+    private int niveauCourant;
     
     /** Niveau maximum */
     private int niveauMaxAtteint;
+    
+	/** Timer de la partie */
+	private Timer timer;
+	
+	/** Menu de la partie */
+	private Menu menu;
+	
+	/** Caisse Ã  rÃ©cuperer */
+	private CaisseARecuperer caisseARecuperer;
     
     /**
      * Constructeur par défaut pour créer une partie
@@ -48,7 +57,8 @@ public class Partie {
      * @return 
      */
     public Carte getNiveauCourant () {
-        // TODO écrei le corps
+        // TODO écrire le corps
+    	// return this.niveauCourant + 1;
         return null;
     }
     

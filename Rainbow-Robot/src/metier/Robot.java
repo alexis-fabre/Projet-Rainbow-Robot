@@ -20,7 +20,13 @@ public class Robot implements Dessinable{
     private final int CONST_VITESSE = 0;
     
     /** Orientation du robot */
-    private int orinetation;
+    private int orientation;
+    
+	/** Position de depart du robot */
+	private Position pos_ini;
+	
+	/** Position courante du robot courante */
+	private Position pos_courante;
 
     @Override
     public void dessiner(Graphics g) {
@@ -32,6 +38,7 @@ public class Robot implements Dessinable{
      */
     public void avancer() {
         // TODO écrire le corps
+    	// Avancer d'un indice dans la list
     }
     
     /**
@@ -39,6 +46,7 @@ public class Robot implements Dessinable{
      */
     public void reculer () {
         // TODO écrire le corps
+    	// Reculer d'un indice dans la list
     }
     
     /**
