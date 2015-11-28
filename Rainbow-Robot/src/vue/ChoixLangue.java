@@ -5,6 +5,9 @@
 package vue;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import evenement.ClicSouris;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -12,35 +15,36 @@ import javax.swing.JButton;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class ChoixLangue {
+public class ChoixLangue extends JFrame {
 
-    /**
-     * TODO Expliquer le fonctionnement de la variable d'instance
-     */
-    private JButton bt_fr;
-    
-    /**
-     * TODO Expliquer le fonctionnement de la variable d'instance
-     */
-    private JButton bt_an;
-    
-    /**
-     * TODO Expliquer le fonctionnement de la variable d'instance
-     */
-    private JButton bt_retour;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton bt_fr;
 
-    /**
-     * TODO Expliquer le fonctionnement du constructeur
-     */
-    public ChoixLangue() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton bt_an;
 
-    /**
-     * TODO Expliquer le fonctionnement de la méthode
-     */
-    public void retour() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton bt_retour;
+
+	/**
+	 * TODO Expliquer le fonctionnement du constructeur
+	 * @param gestion
+	 */
+	public ChoixLangue(ClicSouris gestion) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 */
+	public void retour() {
+		// TODO - Création automaitque par VisualParadigm
+	}
 
 }

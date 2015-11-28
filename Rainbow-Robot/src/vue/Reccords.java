@@ -4,8 +4,13 @@
  */
 package vue;
 
+import java.awt.HeadlessException;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import evenement.ClicSouris;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -13,7 +18,7 @@ import javax.swing.JLabel;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Reccords {
+public class Reccords extends JFrame {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -44,6 +49,15 @@ public class Reccords {
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
 	private JLabel[] leScore;
+
+	/**
+	 * TODO Expliquer le fonctionnement du constructeur
+	 * 
+	 * @param gestion
+	 */
+	public Reccords(ClicSouris gestion) {
+		super();
+	}
 
 	/**
 	 * TODO Expliquer le fonctionnement de la méthode

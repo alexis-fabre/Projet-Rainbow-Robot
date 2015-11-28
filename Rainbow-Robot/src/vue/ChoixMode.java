@@ -5,7 +5,10 @@
 package vue;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextArea;
+
+import evenement.ClicSouris;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -13,13 +16,7 @@ import javax.swing.JTextArea;
  * @author Rainbow Robot
  * @version 1.0
  */
-/**
- * TODO Expliquer le fonctionnement de la classe
- * 
- * @author Rainbow Robot
- * @version 1.0
- */
-public class ChoixMode {
+public class ChoixMode extends JFrame {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -60,11 +57,13 @@ public class ChoixMode {
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
 	private JTextArea desc_Custom;
-	
+
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur
+	 * 
+	 * @param gestion
 	 */
-	public ChoixMode() {
+	public ChoixMode(ClicSouris gestion) {
 		// TODO - Création automaitque par VisualParadigm
 	}
 

@@ -4,8 +4,11 @@
  */
 package vue;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+
+import evenement.ClicSouris;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -13,7 +16,7 @@ import javax.swing.JTextArea;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class APropos {
+public class APropos extends JFrame {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -32,8 +35,10 @@ public class APropos {
 
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur
+	 * 
+	 * @param gestion
 	 */
-	public APropos() {
+	public APropos(ClicSouris gestion) {
 
 	}
 
