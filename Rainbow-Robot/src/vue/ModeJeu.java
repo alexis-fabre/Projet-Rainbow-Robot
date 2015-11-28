@@ -1,3 +1,7 @@
+/*
+ * ModeJeu.java							28 nov 2015
+ * IUT Info2 2015-2016
+ */
 package vue;
 
 import javax.swing.JButton;
@@ -6,6 +10,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public abstract class ModeJeu {
 
     private final String DESC_COMMANDES = "";
@@ -24,11 +34,11 @@ public abstract class ModeJeu {
     private JTextArea Commandes;
 
     public void retourChoixMode() {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
     public void jouer() {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
     /**
@@ -36,7 +46,7 @@ public abstract class ModeJeu {
      * @param nouveau
      */
     public void setTitre(String nouveau) {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
     /**
@@ -44,7 +54,7 @@ public abstract class ModeJeu {
      * @param aModifier
      */
     public void setCheminPhoto(String aModifier) {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
     /**
@@ -52,7 +62,7 @@ public abstract class ModeJeu {
      * @param texte
      */
     public void setRegles(String texte) {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
     /**
@@ -60,7 +70,7 @@ public abstract class ModeJeu {
      * @param texte
      */
     public void setCommandes(String texte) {
-        // TODO - CrÃ©ation automaitque par VisualParadigm
+        // TODO - Création automaitque par VisualParadigm
     }
 
 }
