@@ -18,59 +18,122 @@ import javax.swing.border.Border;
  */
 public abstract class ModeJeu {
 
-    private final String DESC_COMMANDES = "";
-    private String REGLES_STORY;
-    private String REGLES_ARCADE;
-    private String REGLES_CUSTOM;
-    private JLabel titre;
-    private Border bordure;
-    private JButton bt_Retour;
-    private JButton bt_Jouer;
-    private JLabel lb_difficulte;
-    private JRadioButton rb_Facile;
-    private JRadioButton rb_Moyen;
-    private JRadioButton rb_Difficile;
-    private JTextArea regles;
-    private JTextArea Commandes;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private final String DESC_COMMANDES = "";
 
-    public void retourChoixMode() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private String REGLES_STORY;
 
-    public void jouer() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private String REGLES_ARCADE;
 
-    /**
-     * 
-     * @param nouveau
-     */
-    public void setTitre(String nouveau) {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private String REGLES_CUSTOM;
 
-    /**
-     * 
-     * @param aModifier
-     */
-    public void setCheminPhoto(String aModifier) {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JLabel titre;
 
-    /**
-     * 
-     * @param texte
-     */
-    public void setRegles(String texte) {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private Border bordure;
 
-    /**
-     * 
-     * @param texte
-     */
-    public void setCommandes(String texte) {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton bt_Retour;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton bt_Jouer;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JLabel lb_difficulte;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Facile;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Moyen;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Difficile;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JTextArea regles;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JTextArea Commandes;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 */
+	public void retourChoixMode() {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 */
+	public abstract void jouer();
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param nouveau
+	 */
+	public void setTitre(String nouveau) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param aModifier
+	 */
+	public void setCheminPhoto(String aModifier) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param texte
+	 */
+	public void setRegles(String texte) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param texte
+	 */
+	public void setCommandes(String texte) {
+		// TODO - Création automaitque par VisualParadigm
+	}
 
 }

@@ -9,37 +9,73 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class Custom extends ModeJeu {
 
-    private JPanel ZoneDescription;
-    private JButton parcourir;
-    private JTextField cheminFichier;
-    private JRadioButton jeuSolo;
-    private JRadioButton jeuIA;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JPanel ZoneDescription;
 
-    public void jouer() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JButton parcourir;
 
-    /**
-     * 
-     * @param chemin
-     */
-    public void ouvrirFichier(String chemin) {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JTextField cheminFichier;
 
-    public int getDifficulte() {
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton jeuSolo;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton jeuIA;
+
+	/**
+	 * TODO Expliquer le fonctionnement du constructeur
+	 * 
+	 * @param titre
+	 */
+	public Custom(String titre) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vue.ModeJeu#jouer()
+	 */
+	public void jouer() {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param chemin
+	 */
+	public void ouvrirFichier(String chemin) {
+		// TODO - Création automaitque par VisualParadigm
+	}
+
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @return
+	 */
+	public int getDifficulte() {
 		return 0; // bouchon
-        // TODO - Création automaitque par VisualParadigm
-    }
-
-    /**
-     * 
-     * @param titre
-     */
-    public Custom(String titre) {
-        // TODO - Création automaitque par VisualParadigm
-    }
-
+		// TODO - Création automaitque par VisualParadigm
+	}
 }

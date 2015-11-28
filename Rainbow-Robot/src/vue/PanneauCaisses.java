@@ -8,17 +8,34 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class PanneauCaisses extends JPanel {
 
-    private ArrayList<Caisse> caisses;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private ArrayList<Caisse> caisses;
 
-    public String aRecuperer() {
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @return
+	 */
+	public String aRecuperer() {
 		return null; // bouchon
-        // TODO - Création automaitque par VisualParadigm
-    }
+		// TODO - Création automaitque par VisualParadigm
+	}
 
-    public PanneauCaisses() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement du constructeur
+	 */
+	public PanneauCaisses() {
+		// TODO - Création automaitque par VisualParadigm
+	}
 
 }

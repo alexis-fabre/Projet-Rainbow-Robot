@@ -4,9 +4,22 @@
  */
 package vue;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class PanneauCarte {
 
-    private String robot;
-    private int lesCaisses;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private String robot;
+	
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private int lesCaisses;
 
 }

@@ -6,16 +6,39 @@ package vue;
 
 import javax.swing.JButton;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class ChoixLangue {
 
+    /**
+     * TODO Expliquer le fonctionnement de la variable d'instance
+     */
     private JButton bt_fr;
+    
+    /**
+     * TODO Expliquer le fonctionnement de la variable d'instance
+     */
     private JButton bt_an;
+    
+    /**
+     * TODO Expliquer le fonctionnement de la variable d'instance
+     */
     private JButton bt_retour;
 
+    /**
+     * TODO Expliquer le fonctionnement du constructeur
+     */
     public ChoixLangue() {
         // TODO - Création automaitque par VisualParadigm
     }
 
+    /**
+     * TODO Expliquer le fonctionnement de la méthode
+     */
     public void retour() {
         // TODO - Création automaitque par VisualParadigm
     }

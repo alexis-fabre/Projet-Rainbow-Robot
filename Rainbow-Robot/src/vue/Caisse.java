@@ -6,26 +6,52 @@ package vue;
 
 import metier.Position;
 
+/**
+ * TODO Expliquer le fonctionnement de la classe
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class Caisse {
 
-    private static final int TAILLE_CAISSE = 1;
-    private String couleur;
-    private Position position;
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private static final int TAILLE_CAISSE = 1;
+	
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private String couleur;
+	
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private Position position;
 
-    public Caisse() {
-        // TODO - Création automaitque par VisualParadigm
-    }
+	/**
+	 * TODO Expliquer le fonctionnement du constructeur
+	 */
+	public Caisse() {
+		// TODO - Création automaitque par VisualParadigm
+	}
 
-    public String getCouleur() {
-        return this.couleur;
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @return
+	 */
+	public String getCouleur() {
+		return this.couleur;
+	}
 
-    /**
-     * 
-     * @param nouvelle
-     */
-    public void setCouleur(String nouvelle) {
-        this.couleur = nouvelle;
-    }
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @param nouvelle
+	 */
+	public void setCouleur(String nouvelle) {
+		this.couleur = nouvelle;
+	}
 
 }
