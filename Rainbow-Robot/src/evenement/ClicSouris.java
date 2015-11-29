@@ -11,9 +11,9 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import vue.APropos;
-import vue.F_accueil;
 import vue.ChoixLangue;
+import vue.F_aPropos;
+import vue.F_accueil;
 import vue.ChoixMode;
 import vue.Reccords;
 
@@ -102,17 +102,27 @@ public class ClicSouris implements MouseListener {
 
 			// Bouton Langue
 			if (e.getSource() == fenetreAccueil.getBt_Langue()) {
+				String[] traductionLangue = ChoixLangue.getChoixLangue()
+						.getLangue();
 				// On lance la page des langues ChoixLangue.java
-				ChoixLangue nouvelleFenetre = new ChoixLangue(this);
-				fenetre.setVisible(false);
-				nouvelleFenetre.setVisible(true);
-				setFenetre(nouvelleFenetre);
+				String[] traductionToutesLangues = ChoixLangue.getChoixLangue()
+						.getToutesLangues();
+				String resultat = (String) JOptionPane.showInputDialog(
+						fenetreAccueil, traductionLangue[0],
+						traductionLangue[1], JOptionPane.QUESTION_MESSAGE,
+						null, traductionToutesLangues,
+						traductionToutesLangues[0]);
+
+				// On change la langue choisie
+				ChoixLangue.getChoixLangue().setLangue(resultat);
+				// On réactualise la fenêtre
+				fenetreAccueil.setLangue();
 			}
 
 			// Bouton A Propos
 			if (e.getSource() == fenetreAccueil.getBt_Apropos()) {
 				// On lance la page d'a propos A Propos.java
-				APropos nouvelleFenetre = new APropos(this);
+				F_aPropos nouvelleFenetre = new F_aPropos(this);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -121,12 +131,16 @@ public class ClicSouris implements MouseListener {
 			// Bouton Quitter
 			if (e.getSource() == fenetreAccueil.getBt_Quitter()) {
 				// On quitte l'application
-				// On demande si l'utilisateur veux vraiment quitter ou sil a
+				String[] traductionQuitter = ChoixLangue.getChoixLangue()
+						.getQuitter();
+				// On demande si l'utilisateur veux vraiment quitter ou s'il a
 				// commit une erreur
-				int resultat = JOptionPane.showConfirmDialog(fenetreAccueil,
-						"Voulez-vous quitter l'application ?",
-						"Quitter l'application", JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
+
+				int resultat = JOptionPane
+						.showConfirmDialog(fenetreAccueil,
+								traductionQuitter[0], traductionQuitter[1],
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
 				if (resultat == JOptionPane.OK_OPTION) {
 					// On quitte l'application
 					fenetre.setVisible(false);

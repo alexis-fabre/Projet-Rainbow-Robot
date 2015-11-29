@@ -16,7 +16,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class APropos extends JFrame {
+public class F_aPropos extends JFrame {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -38,7 +38,7 @@ public class APropos extends JFrame {
 	 * 
 	 * @param gestion
 	 */
-	public APropos(ClicSouris gestion) {
+	public F_aPropos(ClicSouris gestion) {
 
 	}
 

@@ -13,7 +13,7 @@ import javax.swing.JRadioButton;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Arcade extends ModeJeu {
+public class F_arcade extends ModeJeu {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -38,7 +38,7 @@ public class Arcade extends ModeJeu {
 	 * 
 	 * @param titre
 	 */
-	public Arcade(String titre) {
+	public F_arcade(String titre) {
 		// TODO - Création automaitque par VisualParadigm
 	}
 	

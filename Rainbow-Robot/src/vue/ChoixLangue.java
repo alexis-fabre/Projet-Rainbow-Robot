@@ -1,37 +1,30 @@
 /*
- * ChoixLangue.java							28 nov 2015
+ * ChoixLangue.java							29 nov. 2015
  * IUT Info2 2015-2016
  */
 package vue;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.util.Locale;
 
-import evenement.ClicSouris;
+import javax.swing.JComponent;
 
 /**
- * Fenêtre lancée à partir de la fenêtre d'accueil (Accueil.java). Elle permet
- * de changer la langue de l'application.
+ * <p>
+ * Représentation de la traduction de l'application en différentes langues.<br />
+ * Pour l'instant seul la langue française ou anglaise.<br />
+ * On utilise le Pattern Singleton pour n'avoir qu'une seule langue pour toutes
+ * les fenêtres.<br />
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
  */
-public class ChoixLangue extends JFrame {
+public class ChoixLangue {
 
 	/**
-	 * Bouton qui traduit la langue en Français
+	 * Unique représentation de la classe
 	 */
-	private JButton bt_fr;
-
-	/**
-	 * Bouton qui traduit la langue en Anglais (English)
-	 */
-	private JButton bt_en;
-
-	/**
-	 * Bouton retour qui permet de revenir sur l'accueil
-	 */
-	private JButton bt_retour;
+	private static ChoixLangue langueChoisie;
 
 	/**
 	 * Langue choisie par l'utilisateur
@@ -39,59 +32,177 @@ public class ChoixLangue extends JFrame {
 	private int langue;
 
 	/**
-	 * Constante permettant à l'utilisateur de choisir la langue française
+	 * Constante permettant à l'utilisateur de choisir la langue française. Pour
+	 * une meilleure utilisation la valeur de cette variable soit correspondre à
+	 * l'indice du tableau LANGUE.
 	 */
-	public static final int LANGUE_FR = 1;
+	public static final int LANGUE_FR = 0;
 
 	/**
 	 * Constante permettant à l'utilisateur de choisir la langue anglaise
 	 */
-	public static final int LANGUE_EN = 2;
+	public static final int LANGUE_EN = 1;
 
 	/**
-	 * Comprend les traductions pour la page Accueil La 1ère ligne correspond au
-	 * tradution française La 2nde ligne correspond à la traduction anglaise
+	 * <p>
+	 * Comprend les traductions pour la JFrame Accueil (F_accueil.java).<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 2ème colonne correspond au titre de la page.</li>
+	 * <li>La 3ème colonne correspond au contenu du bouton Jouer.</li>
+	 * <li>La 4ème colonne correspond au contenu du bouton Reccors.</li>
+	 * <li>La 5ème colonne correspond au contenu du bouton Langue.</li>
+	 * <li>La 6ème colonne correspond au contenu du bouton A Propos.</li>
+	 * <li>La 7ème colonne correspond au contenu du bouton Quitter.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
 	 */
 	private final String[][] ACCUEIL = {
-			{ "Jouer", "Records", "Langue", "A Propos", "Quitter" },
-			{ "Play", "Records", "Language", "By the way", "Exit" } };
+			{ "Accueil", "Rainbow Robot", "Jouer", "Reccors", "Langue",
+					"A Propos", "Quitter" },
+			{ "Reception", "Rainbow Robot", "Play", "Records", "Language",
+					"By the way", "Exit" } };
 
 	/**
-	 * Initialise les composants et les disposent sur un contexte graphique 2D.
-	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
-	 * pour éviter tous soucis de disposition.
-	 * 
-	 * @param gestion
-	 *            le contrôleur qui va controler cette vue = cible
-	 *            evenementielle
+	 * <p>
+	 * Comprend les traductions pour la JOptionPane Langue (ClicSouris.java /
+	 * mouseClicked / Bouton Langue).<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
+	 * <li>La 3ème colonne correspond à la tradution française.</li>
+	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
 	 */
-	public ChoixLangue(ClicSouris gestion) {
+	private final String[][] LANGUE = {
+			{ "Choix de la langue", "Veuillez choisir une langue : ",
+					"Français", "English" },
+			{ "Language selection", "Please select a language : ", "Français",
+					"English" } };
 
+	/**
+	 * Contient toutes les traductions de langues connues pour cette application
+	 */
+	private final String[] TOUTES_LANGUES = { "Français", "English" };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JOptionPane Quitter (ClicSouris.java /
+	 * mouseClicked / Bouton Quitter).<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
+	 * <li>La 3ème colonne correspond à la tradution française.</li>
+	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] QUITTER = {
+			{ "Quitter l'application", "Voulez-vous quitter l'application" },
+			{ "Exit Application", "Do you want to exit the application ?" } };
+
+	/**
+	 * Pour n'avoir qu'une seule instance de la classe que l'on récuère via
+	 * getLangue()
+	 */
+	private ChoixLangue() {
+		langue = LANGUE_FR;
 	}
 
-	/**
-	 * @return la langue
-	 */
-	public int getLangue() {
-		return langue;
+	public static ChoixLangue getChoixLangue() {
+		if (langueChoisie == null) {
+			langueChoisie = new ChoixLangue();
+		}
+		return langueChoisie;
 	}
 
 	/**
 	 * @param langue
 	 *            la langue à modifier
 	 */
-	public void setLangue(int langue) {
-		if (langue == LANGUE_FR || langue == LANGUE_EN) {
-			this.langue = langue;
+	public void setLangue(int nouvelleLangue) {
+		if (nouvelleLangue == LANGUE_FR) {
+			langue = nouvelleLangue;
+			// On change la langue locale des composants
+			JComponent.setDefaultLocale(Locale.FRANCE);
+		}
+		if (nouvelleLangue == LANGUE_EN) {
+			langue = nouvelleLangue;
+			// On change la langue locale des composants
+			JComponent.setDefaultLocale(Locale.ENGLISH);
+		}
+
+	}
+
+	/**
+	 * Cette fonction ne marche uniquement que si les valeurs des constantes
+	 * entières des langues correspondent aux indices du tableau TOUTE_LANGUES.
+	 * 
+	 * @param langue
+	 *            la langue à modifier
+	 */
+	public void setLangue(String nouvelleLangue) {
+		if (nouvelleLangue != null) {
+			for (int i = 0; i < TOUTES_LANGUES.length; i++) {
+				if (nouvelleLangue.trim().equals(TOUTES_LANGUES[i])) {
+					setLangue(i);
+					break;
+				}
+			}
 		}
 	}
 
 	/**
-	 * @return les traductions utilisées pour le menu Accueil selon la langue
-	 *         choisie
+	 * @return les traductions utilisées pour la JFrame Accueil
+	 *         (F_accueil.java).<br />
 	 */
-	public String[] getACCUEIL() {
-		return langue == LANGUE_FR ? ACCUEIL[0] : ACCUEIL[1];
+	public String[] getAccueil() {
+		return ACCUEIL[langue];
+	}
+
+	/**
+	 * @return les traductions utilisées pour la JOptionPane Langue
+	 *         (ClicSouris.java / mouseClicked / Bouton Langue)
+	 */
+	public String[] getLangue() {
+		return LANGUE[langue];
+	}
+
+	/**
+	 * @return toutes les traductions de langues connues pour cette application
+	 */
+	public String[] getToutesLangues() {
+		return TOUTES_LANGUES;
+	}
+
+	/**
+	 * @return les traductions utilisées pour pour la JOptionPane Quitter
+	 *         (ClicSouris.java / mouseClicked / Bouton Quitter)
+	 */
+	public String[] getQuitter() {
+		return QUITTER[langue];
 	}
 
 }

@@ -33,8 +33,6 @@ import evenement.ClicSouris;
  */
 public class Lanceur {
 
-	public static final Dimension DIM_FENETRE = new Dimension(700, 500);
-
 	/**
 	 * Déroulement logique du jeu Rainbow Robot
 	 * 
@@ -46,7 +44,7 @@ public class Lanceur {
 
 		// On construit le contrôleur à partir de la partie métier
 		ClicSouris gestion = new ClicSouris();
-		
+
 		// On construit la fenêtre avec le contrôleur
 		F_accueil fenetreActive = new F_accueil(gestion);
 		fenetreActive.setVisible(true);

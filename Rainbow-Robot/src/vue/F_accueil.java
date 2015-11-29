@@ -4,14 +4,10 @@
  */
 package vue;
 
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -35,9 +31,9 @@ public class F_accueil extends JFrame {
 	private JLabel la_titre;
 
 	/**
-	 * Dimension des boutons
+	 * Tableau contenant les traductions effectuées dans ChoixLangue.java
 	 */
-	public static final Dimension DIM_COMPOSANT = new Dimension(400, 60);
+	private String[] traductionAccueil;
 
 	/**
 	 * Bouton qui lance la fenêtre du choix des modes de jeux
@@ -77,9 +73,9 @@ public class F_accueil extends JFrame {
 	 *            evenementielle
 	 */
 	public F_accueil(ClicSouris gestion) {
-		super("Accueil");
+		super();
 
-		super.setSize(new Dimension(700, 500));
+		super.setSize(UtilitaireFenetre.DIM_FENETRE);
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,12 +85,22 @@ public class F_accueil extends JFrame {
 		containerPane.setLayout(new BoxLayout(containerPane, BoxLayout.Y_AXIS));
 
 		// On ajoute les composants dans la fenêtre
-		addAComposant(getLa_titre(), containerPane);
-		addAComposant(getBt_Jouer(), containerPane);
-		addAComposant(getBt_Reccords(), containerPane);
-		addAComposant(getBt_Langue(), containerPane);
-		addAComposant(getBt_Apropos(), containerPane);
-		addAComposant(getBt_Quitter(), containerPane);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
+				containerPane, 0, 20);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
+				containerPane, 0, 20);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
+				containerPane, 0, 20);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
+				containerPane, 0, 20);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
+				containerPane, 0, 20);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
+				containerPane, 0, 20);
+
+		// On ajoute le nom des composants en fonction de la langue choisie
+		traductionAccueil = ChoixLangue.getChoixLangue().getAccueil();
+		setLangue();
 
 		// On centre la fenêtre par rapport à la taille de l'écran
 		super.setLocation(((int) java.awt.Toolkit.getDefaultToolkit()
@@ -112,98 +118,102 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * Ajoute un nouveau composant dans le container
-	 * 
-	 * @param aAjouter
-	 *            nouveau composant à ajouter
-	 * @param pane
-	 *            container où on ajoute le composant
+	 * Permet de raffraichir les objets en cas de changement de langue
 	 */
-	private void addAComposant(JComponent aAjouter, Container pane) {
-		// On aligne le composant horizontalement par rapport à la fenêtre
-		aAjouter.setAlignmentX(Component.CENTER_ALIGNMENT);
-		pane.add(aAjouter);
-		// On créé une marge vertical de 10 pixels
-		pane.add(Box.createRigidArea(new Dimension(0, 20)));
+	public void setLangue() {
+		// On actualise la langue
+		traductionAccueil = ChoixLangue.getChoixLangue().getAccueil();
+		this.setTitle(traductionAccueil[0]);
+		getLa_titre().setText(traductionAccueil[1]);
+		getBt_Jouer().setText(traductionAccueil[2]);
+		getBt_Reccords().setText(traductionAccueil[3]);
+		getBt_Langue().setText(traductionAccueil[4]);
+		getBt_Apropos().setText(traductionAccueil[5]);
+		getBt_Quitter().setText(traductionAccueil[6]);
 	}
 
 	/**
-	 * @return le la_titre
+	 * @return le JLabel la_titre titre de la fenêtre
 	 */
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
-			la_titre = new JLabel("Accueil");
-			la_titre.setPreferredSize(DIM_COMPOSANT);
+			la_titre = new JLabel();
+			la_titre.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return la_titre;
 	}
 
 	/**
-	 * @return le bt_Jouer
+	 * @return le JButton bt_Jouer qui lance la fenêtre du choix des modes de
+	 *         jeux
 	 */
 	public JButton getBt_Jouer() {
 		if (bt_Jouer == null) {
-			bt_Jouer = new JButton("Jouer");
+			bt_Jouer = new JButton();
 			// On définit une taille pour le bouton
-			bt_Jouer.setMaximumSize(DIM_COMPOSANT);
-			bt_Jouer.setMinimumSize(DIM_COMPOSANT);
-			bt_Jouer.setPreferredSize(DIM_COMPOSANT);
+			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return bt_Jouer;
 	}
 
 	/**
-	 * @return le bt_Reccords
+	 * @return le JButton bt_Reccords qui lance la fenêtre pour consulter les
+	 *         reccords
 	 */
 	public JButton getBt_Reccords() {
 		if (bt_Reccords == null) {
-			bt_Reccords = new JButton("Reccords");
+			bt_Reccords = new JButton();
 			// On définit une taille pour le bouton
-			bt_Reccords.setMaximumSize(DIM_COMPOSANT);
-			bt_Reccords.setMinimumSize(DIM_COMPOSANT);
-			bt_Reccords.setPreferredSize(DIM_COMPOSANT);
+			bt_Reccords.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Reccords.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Reccords.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return bt_Reccords;
 	}
 
 	/**
-	 * @return le bt_Langue
+	 * @return le JButton bt_Langue qui lance la fenêtre pour pouvoir changer de
+	 *         langue
 	 */
 	public JButton getBt_Langue() {
 		if (bt_Langue == null) {
-			bt_Langue = new JButton("Langue");
+			bt_Langue = new JButton();
 			// On définit une taille pour le bouton
-			bt_Langue.setMaximumSize(DIM_COMPOSANT);
-			bt_Langue.setMinimumSize(DIM_COMPOSANT);
-			bt_Langue.setPreferredSize(DIM_COMPOSANT);
+			bt_Langue.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Langue.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Langue.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return bt_Langue;
 	}
 
 	/**
-	 * @return le bt_Apropos
+	 * @return le JButton bt_Apropos qui lance la fenêtre permettant de voir
+	 *         comment c'est élaborer ce projet
 	 */
 	public JButton getBt_Apropos() {
 		if (bt_Apropos == null) {
-			bt_Apropos = new JButton("A Propos");
+			bt_Apropos = new JButton();
 			// On définit une taille pour le bouton
-			bt_Apropos.setMaximumSize(DIM_COMPOSANT);
-			bt_Apropos.setMinimumSize(DIM_COMPOSANT);
-			bt_Apropos.setPreferredSize(DIM_COMPOSANT);
+			bt_Apropos.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Apropos.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Apropos.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return bt_Apropos;
 	}
 
 	/**
-	 * @return le bt_Quitter
+	 * @return le JButton bt_Quitter permettant de quitter l'application (en
+	 *         plus de la croix rouge)
 	 */
 	public JButton getBt_Quitter() {
 		if (bt_Quitter == null) {
-			bt_Quitter = new JButton("Quitter");
+			bt_Quitter = new JButton();
 			// On définit une taille pour le bouton
-			bt_Quitter.setMaximumSize(DIM_COMPOSANT);
-			bt_Quitter.setMinimumSize(DIM_COMPOSANT);
-			bt_Quitter.setPreferredSize(DIM_COMPOSANT);
+			bt_Quitter.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Quitter.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
+			bt_Quitter.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
 		}
 		return bt_Quitter;
 	}
