@@ -46,17 +46,17 @@ public class ChoixMode extends JFrame {
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JTextArea desc_Story;
+	private static final String DESC_STORY = "Jouer solo contre l'ordinateur avec des énigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JTextArea desc_Arcade;
+	private static final String DESC_ARCADE = "Jouer solo contre l'ordinateur avec des énigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JTextArea desc_Custom;
+	private static final String DESC_CUSTOM = "Jouer solo contre l'ordinateur avec des énigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur

@@ -27,7 +27,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Accueil extends JFrame {
+public class F_accueil extends JFrame {
 
 	/**
 	 * Titre de la fenêtre
@@ -66,13 +66,17 @@ public class Accueil extends JFrame {
 	private JButton bt_Quitter;
 
 	/**
-	 * Initialise les composants et les dispose sur le contexte 2D
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
+	 * les cliques de la souris sur les boutons.
+	 * 
 	 * 
 	 * @param gestion
-	 *            le contrôleut qui va controler cette vue = cible
+	 *            le contrôleur qui va controler cette vue = cible
 	 *            evenementielle
 	 */
-	public Accueil(ClicSouris gestion) {
+	public F_accueil(ClicSouris gestion) {
 		super("Accueil");
 
 		super.setSize(new Dimension(700, 500));
@@ -113,7 +117,7 @@ public class Accueil extends JFrame {
 	 * @param aAjouter
 	 *            nouveau composant à ajouter
 	 * @param pane
-	 *            container ou on ajoute le composant
+	 *            container où on ajoute le composant
 	 */
 	private void addAComposant(JComponent aAjouter, Container pane) {
 		// On aligne le composant horizontalement par rapport à la fenêtre

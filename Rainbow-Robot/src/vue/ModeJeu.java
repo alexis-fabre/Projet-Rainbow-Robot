@@ -5,6 +5,7 @@
 package vue;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -16,7 +17,7 @@ import javax.swing.border.Border;
  * @author Rainbow Robot
  * @version 1.0
  */
-public abstract class ModeJeu {
+public abstract class ModeJeu extends JFrame {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance

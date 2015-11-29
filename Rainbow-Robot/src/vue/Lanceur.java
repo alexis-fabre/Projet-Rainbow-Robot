@@ -4,11 +4,13 @@
  */
 package vue;
 
+import java.awt.Dimension;
+
 import evenement.ClicSouris;
 
 /**
  * <p>
- * Déroulement logique de Rainbow Robot. C'est un application représentant un
+ * Déroulement logique de Rainbow Robot. C'est une application représentant un
  * jeu de type "taquin".<br >
  * Le joueur contrôle en temps réel un petit robot qui doit aller chercher des
  * caisses colorées dans un entrepôt. Si la caisse à aller chercher est derrière
@@ -31,6 +33,8 @@ import evenement.ClicSouris;
  */
 public class Lanceur {
 
+	public static final Dimension DIM_FENETRE = new Dimension(700, 500);
+
 	/**
 	 * Déroulement logique du jeu Rainbow Robot
 	 * 
@@ -39,15 +43,15 @@ public class Lanceur {
 	 */
 	public static void main(String[] args) {
 		// On initialise la partie métier
+
+		// On construit le contrôleur à partir de la partie métier
 		ClicSouris gestion = new ClicSouris();
-
-		// On construit le controlleur à partir de la partie métier
-
-		// On construit la fenêtre avec le controlleur
-		Accueil fenetreActive = new Accueil(gestion);
+		
+		// On construit la fenêtre avec le contrôleur
+		F_accueil fenetreActive = new F_accueil(gestion);
 		fenetreActive.setVisible(true);
 
-		// On ajoute la nouvelle fenêtre à controller
+		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
 	}
 

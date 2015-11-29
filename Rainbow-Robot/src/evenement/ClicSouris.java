@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import vue.APropos;
-import vue.Accueil;
+import vue.F_accueil;
 import vue.ChoixLangue;
 import vue.ChoixMode;
 import vue.Reccords;
@@ -78,8 +78,8 @@ public class ClicSouris implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// d'accueil
-		if (fenetre instanceof Accueil) {
-			Accueil fenetreAccueil = (Accueil) fenetre;
+		if (fenetre instanceof F_accueil) {
+			F_accueil fenetreAccueil = (F_accueil) fenetre;
 
 			// On vérifie quel bouton a été utilisé
 			// Bouton Jouer
