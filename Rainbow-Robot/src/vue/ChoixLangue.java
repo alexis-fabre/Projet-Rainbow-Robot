@@ -65,10 +65,10 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private final String[][] ACCUEIL = {
-			{ "Accueil", "Rainbow Robot", "Jouer", "Reccors", "Langue",
+			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
 					"A Propos", "Quitter" },
-			{ "Reception", "Rainbow Robot", "Play", "Records", "Language",
-					"By the way", "Exit" } };
+			{ "Home", "Rainbow Robot", "Play", "Records", "Language",
+					"About", "Exit" } };
 
 	/**
 	 * <p>
@@ -92,7 +92,7 @@ public class ChoixLangue {
 	private final String[][] LANGUE = {
 			{ "Choix de la langue", "Veuillez choisir une langue : ",
 					"Français", "English" },
-			{ "Language selection", "Please select a language : ", "Français",
+			{ "Language's selection", "Please select a language : ", "Français",
 					"English" } };
 
 	/**
@@ -121,7 +121,7 @@ public class ChoixLangue {
 	 */
 	private final String[][] QUITTER = {
 			{ "Quitter l'application", "Voulez-vous quitter l'application" },
-			{ "Exit Application", "Do you want to exit the application ?" } };
+			{ "Exit application", "Do you want to exit the application ?" } };
 
 	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récuère via
