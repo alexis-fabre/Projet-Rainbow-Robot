@@ -14,16 +14,16 @@ import java.awt.Graphics;
 public class Robot implements Dessinable{
 
 	/** Orientation du robot vers la gauche */
-	private static final int ORIENTATION_GAUCHE = 1;
+	public static final int ORIENTATION_GAUCHE = 1;
 
 	/** Orientation du robot vers la bas */
-	private static final int ORIENTATION_BAS = 2;
+	public static final int ORIENTATION_BAS = 2;
 
 	/** Orientation du robot vers la droite */
-	private static final int ORIENTATION_DROITE = 3;
+	public static final int ORIENTATION_DROITE = 3;
 
 	/** Orientation du robot vers la haut */
-	private static final int ORIENTATION_HAUT = 4;
+	public static final int ORIENTATION_HAUT = 4;
 
 
 	public static final int PIVOTER_GAUCHE = 1;
@@ -152,4 +152,5 @@ public class Robot implements Dessinable{
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position
+	
 }
