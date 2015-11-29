@@ -22,6 +22,8 @@ public class Position {
      */
     public Position (int x, int y) {
         // TODO écrire le corps
+    	this.x = x;
+    	this.y = y;
     }
     
     /**
@@ -30,7 +32,7 @@ public class Position {
      */
     public int getX() {
         // TODO écrire le corps
-        return 0;
+        return x;
     }
     
     /**
@@ -38,7 +40,8 @@ public class Position {
      * @param x coordonnée
      */
     public void setX(int x) {
-        // TODO écrie le corps
+        // TODO écrire le corps
+    	this.x = x;
     }
     
     /**
@@ -47,7 +50,7 @@ public class Position {
      */
     public int getY() {
         // TODO écrire le corps
-        return 0;
+        return y;
     }
     
     /**
@@ -56,5 +59,10 @@ public class Position {
      */
     public void setY(int y) {
         // TODO écrie le corps
+    	this.y = y;
+    }
+    
+    public String toString(){
+    	return " X : " + getX() + " et Y : " + getY();
     }
 }
