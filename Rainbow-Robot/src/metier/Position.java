@@ -38,7 +38,7 @@ public class Position {
      * @param x coordonnée
      */
     public void setX(int x) {
-        // TODO écrie le corps
+        // TODO écrire le corps
     }
     
     /**

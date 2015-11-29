@@ -32,10 +32,11 @@ public class Caisse {
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur
 	 */
-	public Caisse() {
-		// TODO - Création automaitque par VisualParadigm
+	public Caisse(Position position, String couleur){
+		this.position = position;
+		this.couleur = couleur;
 	}
-
+	
 	/**
 	 * TODO Expliquer le fonctionnement de la méthode
 	 * 
@@ -52,6 +53,25 @@ public class Caisse {
 	 */
 	public void setCouleur(String nouvelle) {
 		this.couleur = nouvelle;
+	}
+	
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @return
+	 */
+	
+	public int getPositionX(){
+		return position.getX();
+	}	
+	
+	/**
+	 * TODO Expliquer le fonctionnement de la méthode
+	 * 
+	 * @return
+	 */
+	public int getPositionY(){
+		return position.getY();
 	}
 
 }

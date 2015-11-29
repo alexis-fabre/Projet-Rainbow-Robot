@@ -4,8 +4,9 @@
  */
 
 package metier;
+import java.awt.Color;
+import java.util.ArrayList;
 
-import java.util.List;
 
 /**
  *
@@ -13,7 +14,13 @@ import java.util.List;
  */
 public class CaisseARecuperer {
 	
+	
+	private Color couleur;
+	
 	/** Liste des caisses à récuperer par le joueur */
-	private List<Caisse> caisseAAttraper;
-
+	ArrayList<Caisse> caisseAAttraper = new ArrayList<Caisse>();
+	
+	public CaisseARecuperer(){
+		caisseAAttraper.add(new Caisse(couleur));
+	}
 }

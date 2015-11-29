@@ -16,6 +16,9 @@ public class Caisse implements Dessinable{
     /** Couleur de la caisse */
     private Color couleur;
     
+    public Caisse(Color couleur){
+    	this.couleur = couleur;
+    }
     /**
      * 
      * @return 

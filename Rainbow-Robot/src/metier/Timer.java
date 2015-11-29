@@ -5,10 +5,16 @@
 
 package metier;
 
+
+
+
 /**
  *
  * @author Rainbow Robot
  */
-public class Timer {
-    
+public class Timer  	{
+
+	Timer timer = new Timer();
+	
+	
 }
