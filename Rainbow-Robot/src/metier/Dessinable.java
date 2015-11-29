@@ -18,4 +18,6 @@ public interface Dessinable {
      * @param g
      */
     public void dessiner (Graphics g);
+    
+    
 }

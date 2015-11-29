@@ -129,10 +129,11 @@ public class Robot implements Dessinable{
 		}    	
 
 		if(position == PIVOTER_DROITE){
+			orientation--;
 			if(orientation < ORIENTATION_GAUCHE){
 				orientation = ORIENTATION_HAUT;
 			}
-			orientation--;
+
 		}
 
 	}
@@ -141,7 +142,7 @@ public class Robot implements Dessinable{
 	 * Méthode pour que le robot saisisse une caisse
 	 */
 	public void saisirCaisse() {
-
+		
 	}
 
 	/**
@@ -149,6 +150,7 @@ public class Robot implements Dessinable{
 	 */
 	public void fusionner () {
 		// TODO écrire le corps
+		
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position

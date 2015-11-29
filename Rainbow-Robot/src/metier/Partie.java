@@ -23,7 +23,7 @@ public class Partie {
 	/** Menu de la partie */
 	private Menu menu;
 	
-	/** Caisse Ã  rÃ©cuperer */
+	/** Caisse à récuperer */
 	private CaisseARecuperer caisseARecuperer;
     
     /**

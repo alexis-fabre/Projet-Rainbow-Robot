@@ -16,6 +16,7 @@ public class Caisse implements Dessinable{
     /** Couleur de la caisse */
     private Color couleur;
     
+    
     public Caisse(Color couleur){
     	this.couleur = couleur;
     }
@@ -25,14 +26,14 @@ public class Caisse implements Dessinable{
      */
     public Color getCouleur() {
         return couleur;
-        // TODO écrire le corps
+
     }
     
     /**
      * 
      * @param couleur 
      */
-    public void setColeur( Color couleur) {
+    public void setCouleur( Color couleur) {
         // TODO écrire le corps
     	this.couleur = couleur;
     }

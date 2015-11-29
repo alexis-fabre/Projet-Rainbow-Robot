@@ -5,6 +5,7 @@
 
 package metier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class Carte {
 	private Vortex vortex;
 	
 	/** Carte de la partie */
-	private List<Carte> map;
+	private ArrayList<Carte> map = new ArrayList<Carte>();
     
     
     /**
@@ -37,10 +38,13 @@ public class Carte {
      */
     public Carte() {
         // TODO écrire le corps
+    	// Ne pas créer de caisses de X et Y = 0..1 ; X = 9..10 et Y = 1..2
+    	// X = 0..1 et Y = 7..8 et X = 9..10 et Y = 7..8
+    	
     }
     
     /**
-     * Méthode pour recommencer uen partie
+     * Méthode pour recommencer une partie
      */
     public void recommencer() {
         // TODO écrire le corps
