@@ -54,7 +54,7 @@ public class Robot implements Dessinable{
 	/** */
 	public Robot(int orientation , Position pos_ini){
 		this.orientation = orientation;
-		this.pos_ini = pos_ini;
+		this.pos_courante = pos_ini;
 	}
 
 	/**
@@ -152,5 +152,8 @@ public class Robot implements Dessinable{
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position
-	
+	public String toString(){
+		return "L'orientation est " + orientation + "\n et sa postion est" + pos_courante.toString() + "\n";
+		
+	}
 }
