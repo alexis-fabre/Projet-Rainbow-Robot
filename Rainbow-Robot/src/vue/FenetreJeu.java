@@ -36,21 +36,21 @@ public class FenetreJeu {
 	 * TODO Expliquer le fonctionnement du constructeur
 	 */
 	public FenetreJeu() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public void pause() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public void repaint() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 }

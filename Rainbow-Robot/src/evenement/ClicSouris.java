@@ -18,7 +18,7 @@ import vue.ChoixMode;
 import vue.Reccords;
 
 /**
- * Controleur lors d'un clic de la souris. Utilisé surtout pour naviguer entre
+ * Controleur lors d'un clic de la souris. UtilisÃ© surtout pour naviguer entre
  * les pages.
  * 
  * @author Rainbow Robot
@@ -27,14 +27,14 @@ import vue.Reccords;
 public class ClicSouris implements MouseListener {
 
 	/**
-	 * On initialise le constructeur par défaut.
+	 * On initialise le constructeur par dÃ©faut.
 	 */
 	public ClicSouris() {
 	}
 
 	/**
-	 * Détection des clics sur une fenêtre. On peut traiter qu'une seule fenêtre
-	 * car il n'y aura jamais deux fenêtres affichées en même temps.
+	 * DÃ©tection des clics sur une fenÃªtre. On peut traiter qu'une seule fenÃªtre
+	 * car il n'y aura jamais deux fenÃªtres affichÃ©es en mÃªme temps.
 	 */
 	private JFrame fenetre;
 
@@ -70,21 +70,21 @@ public class ClicSouris implements MouseListener {
 	}
 
 	/*
-	 * Quand la souris presse et relache le clic sur un même composant un
+	 * Quand la souris presse et relache le clic sur un mÃªme composant un
 	 * composant (non-Javadoc)
 	 * 
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
 	public void mouseClicked(MouseEvent e) {
-		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
+		// On vÃ©rifie si la fenÃªtre que l'on contrÃ´le est bien la fenÃªtre
 		// d'accueil
 		if (fenetre instanceof F_accueil) {
 			F_accueil fenetreAccueil = (F_accueil) fenetre;
 
-			// On vérifie quel bouton a été utilisé
+			// On vÃ©rifie quel bouton a Ã©tÃ© utilisÃ©
 			// Bouton Jouer
 			if (e.getSource() == fenetreAccueil.getBt_Jouer()) {
-				// On lance la fenêtre Jouer ChoixMode.java
+				// On lance la fenÃªtre Jouer ChoixMode.java
 				ChoixMode nouvelleFenetre = new ChoixMode(this);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
@@ -115,7 +115,7 @@ public class ClicSouris implements MouseListener {
 
 				// On change la langue choisie
 				ChoixLangue.getChoixLangue().setLangue(resultat);
-				// On réactualise la fenêtre
+				// On rÃ©actualise la fenÃªtre
 				fenetreAccueil.setLangue();
 			}
 
@@ -144,7 +144,7 @@ public class ClicSouris implements MouseListener {
 				if (resultat == JOptionPane.OK_OPTION) {
 					// On quitte l'application
 					fenetre.setVisible(false);
-					// On arrête le déroulement logique de l'application
+					// On arrÃªte le dÃ©roulement logique de l'application
 					System.exit(0);
 				}
 
@@ -155,7 +155,7 @@ public class ClicSouris implements MouseListener {
 	}
 
 	/*
-	 * Quand la souris est relaché sur un composant (non-Javadoc)
+	 * Quand la souris est relachÃ© sur un composant (non-Javadoc)
 	 * 
 	 * @see
 	 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
@@ -168,7 +168,7 @@ public class ClicSouris implements MouseListener {
 
 	/**
 	 * @param nouvelleFenetre
-	 *            la nouvelle fenêtre à controller
+	 *            la nouvelle fenÃªtre Ã  controller
 	 */
 	public void setFenetre(JFrame nouvelleFenetre) {
 		this.fenetre = nouvelleFenetre;

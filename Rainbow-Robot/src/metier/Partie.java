@@ -23,46 +23,46 @@ public class Partie {
 	/** Menu de la partie */
 	private Menu menu;
 
-	/** Caisse à récuperer */
+	/** Caisse Ã  rÃ©cuperer */
 	private CaisseARecuperer caisseARecuperer;
 
 	/**
-	 * Constructeur par défaut pour créer une partie
+	 * Constructeur par dÃ©faut pour crÃ©er une partie
 	 */
 	public Partie() {
-		// TODO écrire le corps de la méthode
+		// TODO Ã©crire le corps de la mÃ©thode
 	}
 
 	/**
-	 * Constructeur avec un argument, pour créer une partie à partir d'un
+	 * Constructeur avec un argument, pour crÃ©er une partie Ã  partir d'un
 	 * fichier mit en argument
 	 * 
 	 * @param nomFic
 	 *            nom du fichier ou se trouve la carte
 	 */
 	public Partie(String nomFic) {
-		// TODO écrie le corps
+		// TODO Ã©crie le corps
 	}
 
 	/**
-	 * Pour récupérer le niveau suivant
+	 * Pour rÃ©cupÃ©rer le niveau suivant
 	 * 
 	 * @param niveauCourant
 	 *            niveau actuel du joueur
 	 * @return
 	 */
 	public Carte getNiveauSuivant(int niveauCourant) {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		return null;
 	}
 
 	/**
-	 * Pour récupérer le niveau courant du joueur
+	 * Pour rÃ©cupÃ©rer le niveau courant du joueur
 	 * 
 	 * @return
 	 */
 	public Carte getNiveauCourant() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		// return this.niveauCourant + 1;
 		return null;
 	}
@@ -72,7 +72,7 @@ public class Partie {
 	 * @return
 	 */
 	public Carte getNiveau(int niveau) {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		return null;
 	}
 }

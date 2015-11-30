@@ -10,20 +10,20 @@ import evenement.ClicSouris;
 
 /**
  * <p>
- * Déroulement logique de Rainbow Robot. C'est une application représentant un
+ * DÃ©roulement logique de Rainbow Robot. C'est une application reprÃ©sentant un
  * jeu de type "taquin".<br >
- * Le joueur contrôle en temps réel un petit robot qui doit aller chercher des
- * caisses colorées dans un entrepôt. Si la caisse à aller chercher est derrière
- * d'autre caisse, il va falloir déplacer celles-ci de faÃ§on optimisée.<br />
- * La particularité de ce jeu réside dans la possibilité de fusionner des
+ * Le joueur contrÃ´le en temps rÃ©el un petit robot qui doit aller chercher des
+ * caisses colorÃ©es dans un entrepÃ´t. Si la caisse Ã  aller chercher est derriÃ¨re
+ * d'autre caisse, il va falloir dÃ©placer celles-ci de faÃ§on optimisÃ©e.<br />
+ * La particularitÃ© de ce jeu rÃ©side dans la possibilitÃ© de fusionner des
  * caisses (fusionner une caisse rouge et une jaune donne un caisse orange).<br />
  * Le jeu dispose de trois modes : Story, Arcade et Custom
  * <ul>
- * <li>Le mode Story permet de jouer seul contre l'ordi avec des énigmes qui
- * débloquent des possibilités (en évoluant dans les niveaux).</li>
+ * <li>Le mode Story permet de jouer seul contre l'ordi avec des Ã©nigmes qui
+ * dÃ©bloquent des possibilitÃ©s (en Ã©voluant dans les niveaux).</li>
  * <li>Le mode arcade qui permet de jouer solo ou en 1 contre 1 contre l'ordi
  * (IA).</li>
- * <li>Le mode custom qui charge une carte personnalisée, puis permet de jouer
+ * <li>Le mode custom qui charge une carte personnalisÃ©e, puis permet de jouer
  * en solo ou contre l'ordi (IA).</li>
  * </ul>
  * </p>
@@ -34,22 +34,22 @@ import evenement.ClicSouris;
 public class Lanceur {
 
 	/**
-	 * Déroulement logique du jeu Rainbow Robot
+	 * DÃ©roulement logique du jeu Rainbow Robot
 	 * 
 	 * @param args
-	 *            non utilisé
+	 *            non utilisÃ©
 	 */
 	public static void main(String[] args) {
-		// On initialise la partie métier
+		// On initialise la partie mÃ©tier
 
-		// On construit le contrôleur à partir de la partie métier
+		// On construit le contrÃ´leur Ã  partir de la partie mÃ©tier
 		ClicSouris gestion = new ClicSouris();
 
-		// On construit la fenêtre avec le contrôleur
+		// On construit la fenÃªtre avec le contrÃ´leur
 		F_accueil fenetreActive = new F_accueil(gestion);
 		fenetreActive.setVisible(true);
 
-		// On ajoute la nouvelle fenêtre à contrôler
+		// On ajoute la nouvelle fenÃªtre Ã  contrÃ´ler
 		gestion.setFenetre(fenetreActive);
 	}
 

@@ -39,7 +39,7 @@ public class F_arcade extends ModeJeu {
 	 * @param titre
 	 */
 	public F_arcade(String titre) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 	
 	/*
@@ -48,16 +48,16 @@ public class F_arcade extends ModeJeu {
 	 * @see vue.ModeJeu#jouer()
 	 */
 	public void jouer() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @return
 	 */
 	public int getDifficulte() {
 		return 0;
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 }

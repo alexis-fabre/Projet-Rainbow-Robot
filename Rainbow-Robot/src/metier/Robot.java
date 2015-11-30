@@ -58,10 +58,10 @@ public class Robot implements Dessinable{
 	}
 
 	/**
-	 * Méthode pour faire avancer le robot
+	 * MÃ©thode pour faire avancer le robot
 	 */
 	public void avancer() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		// Avancer d'un indice dans la list
 		// faire une switch en fonction de orientation
 		switch(orientation){
@@ -87,10 +87,10 @@ public class Robot implements Dessinable{
 	}
 
 	/**
-	 * Méthode pour faire reculer le robot
+	 * MÃ©thode pour faire reculer le robot
 	 */
 	public void reculer () {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		// Reculer d'un indice dans la liste
 		// faire une switch en fonction de orientation
 		switch(orientation){
@@ -115,10 +115,10 @@ public class Robot implements Dessinable{
 	}
 
 	/**
-	 * Méthode pour faire pivoter le robot
+	 * MÃ©thode pour faire pivoter le robot
 	 */
 	public void pivoter (int position) {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		if(position == PIVOTER_GAUCHE){
 
 			orientation++;
@@ -139,17 +139,17 @@ public class Robot implements Dessinable{
 	}
 
 	/**
-	 * Méthode pour que le robot saisisse une caisse
+	 * MÃ©thode pour que le robot saisisse une caisse
 	 */
 	public void saisirCaisse() {
 		
 	}
 
 	/**
-	 * Méthode pour faire fusionner deux caisses
+	 * MÃ©thode pour faire fusionner deux caisses
 	 */
 	public void fusionner () {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		
 	}
 

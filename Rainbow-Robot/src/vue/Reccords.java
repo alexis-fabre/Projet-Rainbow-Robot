@@ -1,6 +1,6 @@
 /*
- * Reccords.java							é8 nov é015
- * IUT Info2 2015-é016
+ * Reccords.java							Ã©8 nov Ã©015
+ * IUT Info2 2015-Ã©016
  */
 package vue;
 
@@ -60,12 +60,12 @@ public class Reccords extends JFrame {
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param nomFichier
 	 */
 	public void recupNomScore(String nomFichier) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 }

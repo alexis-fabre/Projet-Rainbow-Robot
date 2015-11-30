@@ -46,17 +46,17 @@ public class ChoixMode extends JFrame {
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private static final String DESC_STORY = "Jouer solo contre l'ordinateur avec des énigmes";
+	private static final String DESC_STORY = "Jouer solo contre l'ordinateur avec des Ã©nigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private static final String DESC_ARCADE = "Jouer solo contre l'ordinateur avec des énigmes";
+	private static final String DESC_ARCADE = "Jouer solo contre l'ordinateur avec des Ã©nigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private static final String DESC_CUSTOM = "Jouer solo contre l'ordinateur avec des énigmes";
+	private static final String DESC_CUSTOM = "Jouer solo contre l'ordinateur avec des Ã©nigmes";
 
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur
@@ -64,23 +64,23 @@ public class ChoixMode extends JFrame {
 	 * @param gestion
 	 */
 	public ChoixMode(ClicSouris gestion) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public void retourAccueil() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @return
 	 */
 	public String getChoix() {
 		return titre;
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 }

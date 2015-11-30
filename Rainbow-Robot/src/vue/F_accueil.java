@@ -14,11 +14,11 @@ import javax.swing.JLabel;
 import evenement.ClicSouris;
 
 /**
- * Fenêtre principale, c'est celle qui sera lancée en première lors de
- * l'exécution du programme. Elle permet entre autre de pouvoir jouer,
+ * FenÃªtre principale, c'est celle qui sera lancÃ©e en premiÃ¨re lors de
+ * l'exÃ©cution du programme. Elle permet entre autre de pouvoir jouer,
  * selectionner la langue ou consulter les reccords. Il est aussi possible de
  * consulter la page permettant d'avoir des informations diverses sur le
- * l'élaboration du logiciel.
+ * l'Ã©laboration du logiciel.
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -26,32 +26,32 @@ import evenement.ClicSouris;
 public class F_accueil extends JFrame {
 
 	/**
-	 * Titre de la fenêtre
+	 * Titre de la fenÃªtre
 	 */
 	private JLabel la_titre;
 
 	/**
-	 * Tableau contenant les traductions effectuées dans ChoixLangue.java
+	 * Tableau contenant les traductions effectuÃ©es dans ChoixLangue.java
 	 */
 	private String[] traductionAccueil;
 
 	/**
-	 * Bouton qui lance la fenêtre du choix des modes de jeux
+	 * Bouton qui lance la fenÃªtre du choix des modes de jeux
 	 */
 	private JButton bt_Jouer;
 
 	/**
-	 * Bouton qui lance la fenêtre pour consulter les reccords
+	 * Bouton qui lance la fenÃªtre pour consulter les reccords
 	 */
 	private JButton bt_Reccords;
 
 	/**
-	 * Bouton qui lance la fenêtre pour pouvoir changer de langue
+	 * Bouton qui lance la fenÃªtre pour pouvoir changer de langue
 	 */
 	private JButton bt_Langue;
 
 	/**
-	 * Bouton qui lance la fenêtre permettant de voir comment c'est élaborer ce
+	 * Bouton qui lance la fenÃªtre permettant de voir comment c'est Ã©laborer ce
 	 * projet
 	 */
 	private JButton bt_Apropos;
@@ -63,28 +63,28 @@ public class F_accueil extends JFrame {
 
 	/**
 	 * Initialise les composants et les disposent sur un contexte graphique 2D.
-	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
-	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
+	 * La fenÃªtre s'affiche au centre de l'Ã©cran et n'est pas redimensionnable
+	 * pour Ã©viter tous soucis de disposition. Cette fenÃªtre dÃ©tecte uniquement
 	 * les cliques de la souris sur les boutons.
 	 * 
 	 * 
 	 * @param gestion
-	 *            le contrôleur qui va controler cette vue = cible
+	 *            le contrÃ´leur qui va controler cette vue = cible
 	 *            evenementielle
 	 */
 	public F_accueil(ClicSouris gestion) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
-		// On rend la fenêtre non redimenssionable
+		// On rend la fenÃªtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// On définit le layoutManager
+		// On dÃ©finit le layoutManager
 		Container containerPane = super.getContentPane();
 		containerPane.setLayout(new BoxLayout(containerPane, BoxLayout.Y_AXIS));
 
-		// On ajoute les composants dans la fenêtre
+		// On ajoute les composants dans la fenÃªtre
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
 				containerPane, 0, 20);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
@@ -102,14 +102,14 @@ public class F_accueil extends JFrame {
 		traductionAccueil = ChoixLangue.getChoixLangue().getAccueil();
 		setLangue();
 
-		// On centre la fenêtre par rapport à la taille de l'écran
+		// On centre la fenÃªtre par rapport Ã  la taille de l'Ã©cran
 		super.setLocation(((int) java.awt.Toolkit.getDefaultToolkit()
 				.getScreenSize().getWidth() / 2)
 				- super.getWidth() / 2, ((int) java.awt.Toolkit
 				.getDefaultToolkit().getScreenSize().getHeight() / 2)
 				- super.getHeight() / 2);
 
-		// On ajoute les êvenements sur les boutons
+		// On ajoute les Ãªvenements sur les boutons
 		getBt_Jouer().addMouseListener(gestion);
 		getBt_Reccords().addMouseListener(gestion);
 		getBt_Langue().addMouseListener(gestion);
@@ -133,7 +133,7 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * @return le JLabel la_titre titre de la fenêtre
+	 * @return le JLabel la_titre titre de la fenÃªtre
 	 */
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
@@ -144,13 +144,13 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * @return le JButton bt_Jouer qui lance la fenêtre du choix des modes de
+	 * @return le JButton bt_Jouer qui lance la fenÃªtre du choix des modes de
 	 *         jeux
 	 */
 	public JButton getBt_Jouer() {
 		if (bt_Jouer == null) {
 			bt_Jouer = new JButton();
-			// On définit une taille pour le bouton
+			// On dÃ©finit une taille pour le bouton
 			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
@@ -159,13 +159,13 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * @return le JButton bt_Reccords qui lance la fenêtre pour consulter les
+	 * @return le JButton bt_Reccords qui lance la fenÃªtre pour consulter les
 	 *         reccords
 	 */
 	public JButton getBt_Reccords() {
 		if (bt_Reccords == null) {
 			bt_Reccords = new JButton();
-			// On définit une taille pour le bouton
+			// On dÃ©finit une taille pour le bouton
 			bt_Reccords.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Reccords.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Reccords.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
@@ -174,13 +174,13 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * @return le JButton bt_Langue qui lance la fenêtre pour pouvoir changer de
+	 * @return le JButton bt_Langue qui lance la fenÃªtre pour pouvoir changer de
 	 *         langue
 	 */
 	public JButton getBt_Langue() {
 		if (bt_Langue == null) {
 			bt_Langue = new JButton();
-			// On définit une taille pour le bouton
+			// On dÃ©finit une taille pour le bouton
 			bt_Langue.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Langue.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Langue.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
@@ -189,13 +189,13 @@ public class F_accueil extends JFrame {
 	}
 
 	/**
-	 * @return le JButton bt_Apropos qui lance la fenêtre permettant de voir
-	 *         comment c'est élaborer ce projet
+	 * @return le JButton bt_Apropos qui lance la fenÃªtre permettant de voir
+	 *         comment c'est Ã©laborer ce projet
 	 */
 	public JButton getBt_Apropos() {
 		if (bt_Apropos == null) {
 			bt_Apropos = new JButton();
-			// On définit une taille pour le bouton
+			// On dÃ©finit une taille pour le bouton
 			bt_Apropos.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Apropos.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Apropos.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);
@@ -210,7 +210,7 @@ public class F_accueil extends JFrame {
 	public JButton getBt_Quitter() {
 		if (bt_Quitter == null) {
 			bt_Quitter = new JButton();
-			// On définit une taille pour le bouton
+			// On dÃ©finit une taille pour le bouton
 			bt_Quitter.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Quitter.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT);
 			bt_Quitter.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT);

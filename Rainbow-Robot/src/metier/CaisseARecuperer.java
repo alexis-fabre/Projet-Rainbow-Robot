@@ -17,10 +17,10 @@ public class CaisseARecuperer {
 	
 	private Color couleur;
 
-	/** Liste des caisses à récuperer par le joueur */
+	/** Liste des caisses Ã  rÃ©cuperer par le joueur */
 	ArrayList<Caisse> caisseAAttraper = new ArrayList<Caisse>();
 	
-	public ArrayList<Caisse> listeARecupérer(){
+	public ArrayList<Caisse> listeARecupÃ©rer(){
 		
 		caisseAAttraper.add(new Caisse(couleur));
 		

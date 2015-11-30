@@ -29,13 +29,13 @@ public class Story extends ModeJeu {
      * @param titre
      */
     public Story(String titre) {
-        // TODO - Création automaitque par VisualParadigm
+        // TODO - CrÃ©ation automaitque par VisualParadigm
     }
 
     /* (non-Javadoc)
      * @see vue.ModeJeu#jouer()
      */
     public void jouer() {
-        // TODO - Création automaitque par VisualParadigm
+        // TODO - CrÃ©ation automaitque par VisualParadigm
     }
 }

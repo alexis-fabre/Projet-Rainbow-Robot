@@ -90,51 +90,51 @@ public abstract class ModeJeu extends JFrame {
 	private JTextArea Commandes;
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public void retourChoixMode() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public abstract void jouer();
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param nouveau
 	 */
 	public void setTitre(String nouveau) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param aModifier
 	 */
 	public void setCheminPhoto(String aModifier) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param texte
 	 */
 	public void setRegles(String texte) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param texte
 	 */
 	public void setCommandes(String texte) {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 }

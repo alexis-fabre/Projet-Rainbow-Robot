@@ -34,7 +34,7 @@ public class Caisse implements Dessinable{
      * @param couleur 
      */
     public void setCouleur( Color couleur) {
-        // TODO écrire le corps
+        // TODO Ã©crire le corps
     	this.couleur = couleur;
     }
 

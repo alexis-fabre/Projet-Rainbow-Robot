@@ -19,7 +19,7 @@ public class ToucheClavier implements KeyListener{
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 	}
 
 	/* (non-Javadoc)

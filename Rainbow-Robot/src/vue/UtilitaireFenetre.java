@@ -13,8 +13,8 @@ import javax.swing.JComponent;
 
 /**
  * <p>
- * Classe utilitaire regroupant les différentes fonctions et constantes
- * utilisées dans la création des fenêtres. <br />
+ * Classe utilitaire regroupant les diffÃ©rentes fonctions et constantes
+ * utilisÃ©es dans la crÃ©ation des fenÃªtres. <br />
  * </p>
  * 
  * @author Rainbow Robot
@@ -22,12 +22,12 @@ import javax.swing.JComponent;
  */
 public class UtilitaireFenetre {
 	/**
-	 * Dimension des boutons des fenêtres principales
+	 * Dimension des boutons des fenÃªtres principales
 	 */
 	public static final Dimension DIM_COMPOSANT = new Dimension(400, 60);
 
 	/**
-	 * Dimension des fenêtres usuelles
+	 * Dimension des fenÃªtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(700, 500);
 
@@ -35,17 +35,17 @@ public class UtilitaireFenetre {
 	 * Ajoute un nouveau composant dans le container
 	 * 
 	 * @param aAjouter
-	 *            nouveau composant à ajouter
+	 *            nouveau composant Ã  ajouter
 	 * @param pane
-	 *            container où on ajoute le composant
+	 *            container oÃ¹ on ajoute le composant
 	 * @param largeur
-	 *            largeur séparant deux composants horizontalement
+	 *            largeur sÃ©parant deux composants horizontalement
 	 * @param hauteur
-	 *            hauteur séparant deux composants verticalement
+	 *            hauteur sÃ©parant deux composants verticalement
 	 */
 	public static void addAComposantWithBoxLayout(JComponent aAjouter,
 			Container pane, int largeur, int hauteur) {
-		// On aligne le composant horizontalement par rapport à la fenêtre
+		// On aligne le composant horizontalement par rapport Ã  la fenÃªtre
 		aAjouter.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(aAjouter);
 		pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));

@@ -36,14 +36,14 @@ public class MenuPause {
 	 * TODO Expliquer le fonctionnement du constructeur
 	 */
 	public MenuPause() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 */
 	public void quitter() {
-		// TODO - Création automaitque par VisualParadigm
+		// TODO - CrÃ©ation automaitque par VisualParadigm
 	}
 
 }

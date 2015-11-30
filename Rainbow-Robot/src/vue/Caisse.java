@@ -38,7 +38,7 @@ public class Caisse {
 	}
 	
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @return
 	 */
@@ -47,7 +47,7 @@ public class Caisse {
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @param nouvelle
 	 */
@@ -56,7 +56,7 @@ public class Caisse {
 	}
 	
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @return
 	 */
@@ -66,7 +66,7 @@ public class Caisse {
 	}	
 	
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * TODO Expliquer le fonctionnement de la mÃ©thode
 	 * 
 	 * @return
 	 */

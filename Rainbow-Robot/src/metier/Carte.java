@@ -33,33 +33,33 @@ public class Carte {
 	private List<Carte> map;
 
 	/**
-	 * Constrcuteur par défaut pour créer une carte
+	 * Constrcuteur par dÃ©faut pour crÃ©er une carte
 	 */
 	public Carte() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 	}
 
 	/**
-	 * Méthode pour recommencer uen partie
+	 * MÃ©thode pour recommencer uen partie
 	 */
 	public void recommencer() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 	}
 
 	/**
-	 * Métode pour jouer une partie
+	 * MÃ©tode pour jouer une partie
 	 */
 	public void jouer() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 	}
 
 	/**
-	 * Méthode pour réinitialiser une partie
+	 * MÃ©thode pour rÃ©initialiser une partie
 	 * 
 	 * @return
 	 */
 	public boolean reinitialiser() {
-		// TODO écrire le corps
+		// TODO Ã©crire le corps
 		return false;
 	}
 }
