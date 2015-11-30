@@ -45,7 +45,13 @@ public class Robot implements Dessinable{
 
 	/** Position courante du robot courante */
 	private Position pos_courante;
-
+	
+	/** Caisse du robot */
+	private Caisse caisse;
+	
+	/** Le robot */
+	private Robot robot = new Robot(ORIENTATION_GAUCHE,pos_ini);
+	
 	@Override
 	public void dessiner(Graphics g) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -142,14 +148,23 @@ public class Robot implements Dessinable{
 	 * Méthode pour que le robot saisisse une caisse
 	 */
 	public void saisirCaisse() {
-		
+		if(caisse == null ){
+			// Le robot peut saisir une caisse
+		} else {
+			// le robot ne peut pas saisir de caisse
+			
+		}
 	}
 
 	/**
 	 * Méthode pour faire fusionner deux caisses
 	 */
 	public void fusionner () {
-		// TODO écrire le corps
+		if(caisse != null ){
+			// le robot peut fusionner une caisse
+		} else {
+			// le robot ne peut pas fusionner
+		}
 		
 	}
 
