@@ -13,12 +13,6 @@ import javax.swing.JLabel;
  * @author Rainbow Robot
  * @version 1.0
  */
-/**
- * TODO Expliquer le fonctionnement de la classe
- * 
- * @author Rainbow Robot
- * @version 1.0
- */
 public class FenetreJeu {
 
 	/**

@@ -1,6 +1,6 @@
 /*
  * Reccords.java							é8 nov é015
- * IUT Infoé é015-é016
+ * IUT Info2 2015-é016
  */
 package vue;
 

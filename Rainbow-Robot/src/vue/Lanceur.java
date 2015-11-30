@@ -14,12 +14,12 @@ import evenement.ClicSouris;
  * jeu de type "taquin".<br >
  * Le joueur contrôle en temps réel un petit robot qui doit aller chercher des
  * caisses colorées dans un entrepôt. Si la caisse à aller chercher est derrière
- * d'autre caisse, il va falloir déplacer celles-ci de façon optimisée.<br />
+ * d'autre caisse, il va falloir déplacer celles-ci de faÃ§on optimisée.<br />
  * La particularité de ce jeu réside dans la possibilité de fusionner des
  * caisses (fusionner une caisse rouge et une jaune donne un caisse orange).<br />
  * Le jeu dispose de trois modes : Story, Arcade et Custom
  * <ul>
- * <li>Le mode Story permet de jouer seul contre l'orde avec des énigmes qui
+ * <li>Le mode Story permet de jouer seul contre l'ordi avec des énigmes qui
  * débloquent des possibilités (en évoluant dans les niveaux).</li>
  * <li>Le mode arcade qui permet de jouer solo ou en 1 contre 1 contre l'ordi
  * (IA).</li>

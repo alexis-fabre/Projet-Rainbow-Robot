@@ -10,10 +10,10 @@ import javax.swing.JComponent;
 
 /**
  * <p>
- * Représentation de la traduction de l'application en différentes langues.<br />
- * Pour l'instant seul la langue française ou anglaise.<br />
+ * ReprÃ©sentation de la traduction de l'application en diffÃ©rentes langues.<br />
+ * Pour l'instant seul la langue franÃ§aise ou anglaise.<br />
  * On utilise le Pattern Singleton pour n'avoir qu'une seule langue pour toutes
- * les fenêtres.<br />
+ * les fenÃªtres.<br />
  * </p>
  * 
  * @author Rainbow Robot
@@ -22,7 +22,7 @@ import javax.swing.JComponent;
 public class ChoixLangue {
 
 	/**
-	 * Unique représentation de la classe
+	 * Unique reprÃ©sentation de la classe
 	 */
 	private static ChoixLangue langueChoisie;
 
@@ -32,14 +32,14 @@ public class ChoixLangue {
 	private int langue;
 
 	/**
-	 * Constante permettant à l'utilisateur de choisir la langue française. Pour
-	 * une meilleure utilisation la valeur de cette variable soit correspondre à
+	 * Constante permettant Ã  l'utilisateur de choisir la langue franÃ§aise. Pour
+	 * une meilleure utilisation la valeur de cette variable soit correspondre Ã 
 	 * l'indice du tableau LANGUE.
 	 */
 	public static final int LANGUE_FR = 0;
 
 	/**
-	 * Constante permettant à l'utilisateur de choisir la langue anglaise
+	 * Constante permettant Ã  l'utilisateur de choisir la langue anglaise
 	 */
 	public static final int LANGUE_EN = 1;
 
@@ -48,17 +48,17 @@ public class ChoixLangue {
 	 * Comprend les traductions pour la JFrame Accueil (F_accueil.java).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution française.</li>
-	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>La 1Ã¨re ligne correspond au tradution franï¿½aise.</li>
+	 * <li>La 2nde ligne correspond Ã  la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
-	 * <li>La 2ème colonne correspond au titre de la page.</li>
-	 * <li>La 3ème colonne correspond au contenu du bouton Jouer.</li>
-	 * <li>La 4ème colonne correspond au contenu du bouton Reccors.</li>
-	 * <li>La 5ème colonne correspond au contenu du bouton Langue.</li>
-	 * <li>La 6ème colonne correspond au contenu du bouton A Propos.</li>
-	 * <li>La 7ème colonne correspond au contenu du bouton Quitter.</li>
+	 * <li>La 1Ã¨re colonne correspond au nom de la page.</li>
+	 * <li>La 2Ã¨me colonne correspond au titre de la page.</li>
+	 * <li>La 3Ã¨me colonne correspond au contenu du bouton Jouer.</li>
+	 * <li>La 4Ã¨me colonne correspond au contenu du bouton Reccors.</li>
+	 * <li>La 5Ã¨me colonne correspond au contenu du bouton Langue.</li>
+	 * <li>La 6Ã¨me colonne correspond au contenu du bouton A Propos.</li>
+	 * <li>La 7Ã¨me colonne correspond au contenu du bouton Quitter.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
@@ -67,8 +67,8 @@ public class ChoixLangue {
 	private final String[][] ACCUEIL = {
 			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
 					"A Propos", "Quitter" },
-			{ "Home", "Rainbow Robot", "Play", "Records", "Language",
-					"About", "Exit" } };
+			{ "Home", "Rainbow Robot", "Play", "Records", "Language", "About",
+					"Exit" } };
 
 	/**
 	 * <p>
@@ -76,14 +76,14 @@ public class ChoixLangue {
 	 * mouseClicked / Bouton Langue).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution française.</li>
-	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>La 1Ã¨re ligne correspond au tradution franï¿½aise.</li>
+	 * <li>La 2nde ligne correspond Ã  la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
-	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution française.</li>
-	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
+	 * <li>La 1Ã¨re colonne correspond au nom de la page.</li>
+	 * <li>La 2Ã¨me colonne correspond Ã  la traduction de la question.</li>
+	 * <li>La 3Ã¨me colonne correspond Ã  la tradution franï¿½aise.</li>
+	 * <li>La 4Ã¨me colonne correspond Ã  la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
@@ -91,14 +91,14 @@ public class ChoixLangue {
 	 */
 	private final String[][] LANGUE = {
 			{ "Choix de la langue", "Veuillez choisir une langue : ",
-					"Français", "English" },
-			{ "Language's selection", "Please select a language : ", "Français",
-					"English" } };
+					"Franï¿½ais", "English" },
+			{ "Language's selection", "Please select a language : ",
+					"Franï¿½ais", "English" } };
 
 	/**
 	 * Contient toutes les traductions de langues connues pour cette application
 	 */
-	private final String[] TOUTES_LANGUES = { "Français", "English" };
+	private final String[] TOUTES_LANGUES = { "Franï¿½ais", "English" };
 
 	/**
 	 * <p>
@@ -106,14 +106,14 @@ public class ChoixLangue {
 	 * mouseClicked / Bouton Quitter).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution française.</li>
-	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>La 1Ã¨re ligne correspond au tradution franï¿½aise.</li>
+	 * <li>La 2nde ligne correspond ï¿½ la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
-	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution française.</li>
-	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
+	 * <li>La 1Ã¨re colonne correspond au nom de la page.</li>
+	 * <li>La 2Ã¨me colonne correspond Ã  la traduction de la question.</li>
+	 * <li>La 3Ã¨me colonne correspond Ã  la tradution franï¿½aise.</li>
+	 * <li>La 4Ã¨me colonne correspond Ã  la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
@@ -124,7 +124,7 @@ public class ChoixLangue {
 			{ "Exit application", "Do you want to exit the application ?" } };
 
 	/**
-	 * Pour n'avoir qu'une seule instance de la classe que l'on récuère via
+	 * Pour n'avoir qu'une seule instance de la classe que l'on rÃ©cupÃ¨re via
 	 * getLangue()
 	 */
 	private ChoixLangue() {
@@ -140,7 +140,7 @@ public class ChoixLangue {
 
 	/**
 	 * @param langue
-	 *            la langue à modifier
+	 *            la langue Ã  modifier
 	 */
 	public void setLangue(int nouvelleLangue) {
 		if (nouvelleLangue == LANGUE_FR) {
@@ -158,10 +158,10 @@ public class ChoixLangue {
 
 	/**
 	 * Cette fonction ne marche uniquement que si les valeurs des constantes
-	 * entières des langues correspondent aux indices du tableau TOUTE_LANGUES.
+	 * entiï¿½res des langues correspondent aux indices du tableau TOUTE_LANGUES.
 	 * 
 	 * @param langue
-	 *            la langue à modifier
+	 *            la langue Ã  modifier
 	 */
 	public void setLangue(String nouvelleLangue) {
 		if (nouvelleLangue != null) {
@@ -175,7 +175,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour la JFrame Accueil
+	 * @return les traductions utilisÃ©es pour la JFrame Accueil
 	 *         (F_accueil.java).<br />
 	 */
 	public String[] getAccueil() {
@@ -183,7 +183,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour la JOptionPane Langue
+	 * @return les traductions utilisÃ©es pour la JOptionPane Langue
 	 *         (ClicSouris.java / mouseClicked / Bouton Langue)
 	 */
 	public String[] getLangue() {
@@ -198,7 +198,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour pour la JOptionPane Quitter
+	 * @return les traductions utilisÃ©es pour pour la JOptionPane Quitter
 	 *         (ClicSouris.java / mouseClicked / Bouton Quitter)
 	 */
 	public String[] getQuitter() {

@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import evenement.ClicSouris;
 
 /**
- * Fenêtre principale, c'est celle qui sera lancé en première lors de
+ * Fenêtre principale, c'est celle qui sera lancée en première lors de
  * l'exécution du programme. Elle permet entre autre de pouvoir jouer,
  * selectionner la langue ou consulter les reccords. Il est aussi possible de
  * consulter la page permettant d'avoir des informations diverses sur le
@@ -109,7 +109,7 @@ public class F_accueil extends JFrame {
 				.getDefaultToolkit().getScreenSize().getHeight() / 2)
 				- super.getHeight() / 2);
 
-		// On ajoute les évenements sur les boutons
+		// On ajoute les êvenements sur les boutons
 		getBt_Jouer().addMouseListener(gestion);
 		getBt_Reccords().addMouseListener(gestion);
 		getBt_Langue().addMouseListener(gestion);
