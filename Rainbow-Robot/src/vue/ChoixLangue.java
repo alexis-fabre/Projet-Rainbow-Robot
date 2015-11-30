@@ -45,14 +45,14 @@ public class ChoixLangue {
 
 	/**
 	 * <p>
-	 * Comprend les traductions pour la JFrame Accueil (F_accueil.java).<br />
+	 * Comprend les traductions pour la JFrame F_accueil.<br />
 	 * </p>
 	 * <ul>
 	 * <li>La 1ère ligne correspond au tradution française.</li>
 	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
 	 * <li>La 2ème colonne correspond au titre de la page.</li>
 	 * <li>La 3ème colonne correspond au contenu du bouton Jouer.</li>
 	 * <li>La 4ème colonne correspond au contenu du bouton Reccors.</li>
@@ -80,20 +80,16 @@ public class ChoixLangue {
 	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
 	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution française.</li>
-	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
 	 * </ul>
 	 */
 	private final String[][] LANGUE = {
-			{ "Choix de la langue", "Veuillez choisir une langue : ",
-					"Français", "English" },
-			{ "Language's selection", "Please select a language : ",
-					"Français", "English" } };
+			{ "Choix de la langue", "Veuillez choisir une langue : " },
+			{ "Language's selection", "Please select a language : " } };
 
 	/**
 	 * Contient toutes les traductions de langues connues pour cette application
@@ -110,10 +106,8 @@ public class ChoixLangue {
 	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
-	 * <li>La 1ère colonne correspond au nom de la page.</li>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
 	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution française.</li>
-	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
@@ -122,6 +116,25 @@ public class ChoixLangue {
 	private final String[][] QUITTER = {
 			{ "Quitter l'application", "Voulez-vous quitter l'application" },
 			{ "Exit application", "Do you want to exit the application ?" } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JFrame Fa_modeJeu.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au Bouton Retour.</li>
+	 * <li>La 2ème colonne correspond au Bouton Jouer.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] MODE_JEU = { { "Retour", "Jouer" },
+			{ "Back", "Play" } };
 
 	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récupère via
@@ -175,7 +188,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour la JFrame Accueil
+	 * @return les traductions utilisées pour la JFrame F_accueil
 	 *         (F_accueil.java).<br />
 	 */
 	public String[] getAccueil() {
@@ -203,6 +216,13 @@ public class ChoixLangue {
 	 */
 	public String[] getQuitter() {
 		return QUITTER[langue];
+	}
+
+	/**
+	 * @return les traductions utilisées pour pour la JFrame Fa_modeJeu
+	 */
+	public String[] getModeJeu() {
+		return MODE_JEU[langue];
 	}
 
 }

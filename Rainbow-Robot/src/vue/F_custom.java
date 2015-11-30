@@ -9,13 +9,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import evenement.ClicSouris;
+
 /**
  * TODO Expliquer le fonctionnement de la classe
  * 
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Custom extends ModeJeu {
+public class F_custom extends Fa_modeJeu implements ChangementLangue {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -47,17 +49,18 @@ public class Custom extends ModeJeu {
 	 * 
 	 * @param titre
 	 */
-	public Custom(String titre) {
+	public F_custom(ClicSouris gestion) {
 		// TODO - Création automaitque par VisualParadigm
+		super(gestion);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see vue.ModeJeu#jouer()
+	 * @see vue.Fa_modeJeu#setLangue()
 	 */
-	public void jouer() {
-		// TODO - Création automaitque par VisualParadigm
+	public void setLangue() {
+		super.setLangue();
 	}
 
 	/**

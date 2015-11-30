@@ -108,8 +108,8 @@ public class ClicSouris implements MouseListener {
 				String[] traductionToutesLangues = ChoixLangue.getChoixLangue()
 						.getToutesLangues();
 				String resultat = (String) JOptionPane.showInputDialog(
-						fenetreAccueil, traductionLangue[0],
-						traductionLangue[1], JOptionPane.QUESTION_MESSAGE,
+						fenetreAccueil, traductionLangue[1],
+						traductionLangue[0], JOptionPane.QUESTION_MESSAGE,
 						null, traductionToutesLangues,
 						traductionToutesLangues[0]);
 
@@ -131,6 +131,8 @@ public class ClicSouris implements MouseListener {
 			// Bouton Quitter
 			if (e.getSource() == fenetreAccueil.getBt_Quitter()) {
 				// On quitte l'application
+				// Tableau contenant les mots pour quitter l'application
+				// traduits selon la langue choisie
 				String[] traductionQuitter = ChoixLangue.getChoixLangue()
 						.getQuitter();
 				// On demande si l'utilisateur veux vraiment quitter ou s'il a
@@ -138,7 +140,7 @@ public class ClicSouris implements MouseListener {
 
 				int resultat = JOptionPane
 						.showConfirmDialog(fenetreAccueil,
-								traductionQuitter[0], traductionQuitter[1],
+								traductionQuitter[1], traductionQuitter[0],
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.QUESTION_MESSAGE);
 				if (resultat == JOptionPane.OK_OPTION) {

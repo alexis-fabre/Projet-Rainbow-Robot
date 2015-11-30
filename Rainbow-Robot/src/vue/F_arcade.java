@@ -4,8 +4,11 @@
  */
 package vue;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
+import evenement.ClicSouris;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -13,7 +16,7 @@ import javax.swing.JRadioButton;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class F_arcade extends ModeJeu {
+public class F_arcade extends Fa_modeJeu implements ChangementLangue {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -34,21 +37,42 @@ public class F_arcade extends ModeJeu {
 	private JRadioButton jeuIA;
 
 	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JLabel lb_difficulte;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Facile;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Moyen;
+
+	/**
+	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 */
+	private JRadioButton rb_Difficile;
+
+	/**
 	 * TODO Expliquer le fonctionnement du constructeur
 	 * 
 	 * @param titre
 	 */
-	public F_arcade(String titre) {
+	public F_arcade(ClicSouris gestion) {
 		// TODO - Création automaitque par VisualParadigm
+		super(gestion);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see vue.ModeJeu#jouer()
+	 * @see vue.Fa_modeJeu#setLangue()
 	 */
-	public void jouer() {
-		// TODO - Création automaitque par VisualParadigm
+	public void setLangue() {
+		super.setLangue();
 	}
 
 	/**

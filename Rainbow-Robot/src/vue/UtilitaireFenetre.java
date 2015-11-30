@@ -10,6 +10,7 @@ import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 /**
  * <p>
@@ -24,12 +25,33 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
-	public static final Dimension DIM_COMPOSANT = new Dimension(400, 60);
+	public static final Dimension DIM_BOUTON_PRINCIPAL = new Dimension(400, 60);
+
+	/**
+	 * Dimension des boutons des fenêtres principales
+	 */
+	public static final Dimension DIM_BOUTON_SECONDAIRE = new Dimension(100, 60);
 
 	/**
 	 * Dimension des fenêtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(700, 500);
+
+	/**
+	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le
+	 * centre de la fenêtre sera placé au centre de l'écran de l'utilisateur.
+	 * 
+	 * @param aCentrer
+	 *            fenêtre que l'on doit centrer
+	 */
+	public static void centrerFenetre(JFrame aCentrer) {
+		// On centre la fenêtre par rapport à la taille de l'écran
+		aCentrer.setLocation(((int) java.awt.Toolkit.getDefaultToolkit()
+				.getScreenSize().getWidth() / 2)
+				- aCentrer.getWidth() / 2, ((int) java.awt.Toolkit
+				.getDefaultToolkit().getScreenSize().getHeight() / 2)
+				- aCentrer.getHeight() / 2);
+	}
 
 	/**
 	 * Ajoute un nouveau composant dans le container
