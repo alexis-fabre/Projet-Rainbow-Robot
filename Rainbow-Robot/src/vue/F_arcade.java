@@ -16,7 +16,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class F_arcade extends Fa_modeJeu implements ChangementLangue {
+public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance

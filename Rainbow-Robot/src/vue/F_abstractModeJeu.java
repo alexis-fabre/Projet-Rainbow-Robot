@@ -24,7 +24,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public abstract class Fa_modeJeu extends JFrame implements ChangementLangue {
+public abstract class F_abstractModeJeu extends JFrame implements ChangementLangue {
 
 	/**
 	 * Référence des traductions effectuées dans ChoixLangue.java
@@ -58,7 +58,7 @@ public abstract class Fa_modeJeu extends JFrame implements ChangementLangue {
 	 */
 	private JButton bt_Jouer;
 
-	protected Fa_modeJeu(ClicSouris gestion) {
+	protected F_abstractModeJeu(ClicSouris gestion) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
