@@ -48,7 +48,7 @@ public class ChoixLangue {
 	 * Comprend les traductions pour la JFrame Accueil (F_accueil.java).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution fran�aise.</li>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
 	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
@@ -76,13 +76,13 @@ public class ChoixLangue {
 	 * mouseClicked / Bouton Langue).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution fran�aise.</li>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
 	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
 	 * <li>La 1ère colonne correspond au nom de la page.</li>
 	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution fran�aise.</li>
+	 * <li>La 3ème colonne correspond à la tradution française.</li>
 	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
@@ -91,14 +91,14 @@ public class ChoixLangue {
 	 */
 	private final String[][] LANGUE = {
 			{ "Choix de la langue", "Veuillez choisir une langue : ",
-					"Fran�ais", "English" },
+					"Français", "English" },
 			{ "Language's selection", "Please select a language : ",
-					"Fran�ais", "English" } };
+					"Français", "English" } };
 
 	/**
 	 * Contient toutes les traductions de langues connues pour cette application
 	 */
-	private final String[] TOUTES_LANGUES = { "Fran�ais", "English" };
+	private final String[] TOUTES_LANGUES = { "Français", "English" };
 
 	/**
 	 * <p>
@@ -106,13 +106,13 @@ public class ChoixLangue {
 	 * mouseClicked / Bouton Quitter).<br />
 	 * </p>
 	 * <ul>
-	 * <li>La 1ère ligne correspond au tradution fran�aise.</li>
-	 * <li>La 2nde ligne correspond � la traduction anglaise.</li>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
 	 * <li>
 	 * <ul>
 	 * <li>La 1ère colonne correspond au nom de la page.</li>
 	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
-	 * <li>La 3ème colonne correspond à la tradution fran�aise.</li>
+	 * <li>La 3ème colonne correspond à la tradution française.</li>
 	 * <li>La 4ème colonne correspond à la traduction anglaise.</li>
 	 * <li></li>
 	 * </ul>
@@ -158,7 +158,7 @@ public class ChoixLangue {
 
 	/**
 	 * Cette fonction ne marche uniquement que si les valeurs des constantes
-	 * enti�res des langues correspondent aux indices du tableau TOUTE_LANGUES.
+	 * entières des langues correspondent aux indices du tableau TOUTE_LANGUES.
 	 * 
 	 * @param langue
 	 *            la langue à modifier
