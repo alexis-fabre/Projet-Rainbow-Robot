@@ -43,7 +43,7 @@ public class testRobot {
 		
 		int position = Robot.PIVOTER_GAUCHE;
 		
-		System.out.println("Position de départ \n" + robot.toString());
+		System.out.println("Position de départ pour pivoter à GAUCHE -------------\n" + robot.toString());
 		
 		robot.pivoter(position);
 		System.out.println("Position après avoir avancer \n" + robot.toString());
@@ -52,6 +52,19 @@ public class testRobot {
 		robot.pivoter(position);
 		System.out.println("Position après avoir avancer \n" + robot.toString());
 		robot.pivoter(position);
+		System.out.println("Position après avoir avancer \n" + robot.toString());
+		
+		int position2 = Robot.PIVOTER_DROITE;
+		
+		System.out.println("Position de départ pour pivoter à droite -------------\n" + robot.toString());
+		
+		robot.pivoter(position2);
+		System.out.println("Position après avoir avancer \n" + robot.toString());
+		robot.pivoter(position2);
+		System.out.println("Position après avoir avancer \n" + robot.toString());
+		robot.pivoter(position2);
+		System.out.println("Position après avoir avancer \n" + robot.toString());
+		robot.pivoter(position2);
 		System.out.println("Position après avoir avancer \n" + robot.toString());
 		
 		
