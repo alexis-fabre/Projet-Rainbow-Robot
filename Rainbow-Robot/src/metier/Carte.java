@@ -37,6 +37,7 @@ public class Carte {
 	 */
 	public Carte() {
 		// TODO écrire le corps
+		
 	}
 
 	/**

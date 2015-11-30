@@ -47,11 +47,11 @@ public class Partie {
 	/**
 	 * Pour récupérer le niveau suivant
 	 * 
-	 * @param niveauCourant
+	 * @param niveau
 	 *            niveau actuel du joueur
 	 * @return
 	 */
-	public Carte getNiveauSuivant(int niveauCourant) {
+	public Carte getNiveauSuivant(int niveau) {
 		// TODO écrire le corps
 		return null;
 	}
@@ -71,7 +71,7 @@ public class Partie {
 	 * @param niveau
 	 * @return
 	 */
-	public Carte getNiveau(int niveau) {
+	public Carte getNiveauPrecedent(int niveau) {
 		// TODO écrire le corps
 		return null;
 	}

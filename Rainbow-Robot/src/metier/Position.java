@@ -24,7 +24,6 @@ public class Position {
 	 *            coordonnées
 	 */
 	public Position(int x, int y) {
-		// TODO écrire le corps
 		this.x = x;
 		this.y = y;
 	}
@@ -35,7 +34,6 @@ public class Position {
 	 * @return
 	 */
 	public int getX() {
-		// TODO écrire le corps
 		return x;
 	}
 
@@ -46,7 +44,6 @@ public class Position {
 	 *            coordonnée
 	 */
 	public void setX(int x) {
-		// TODO écrire le corps
 		this.x = x;
 	}
 
@@ -56,7 +53,6 @@ public class Position {
 	 * @return
 	 */
 	public int getY() {
-		// TODO écrire le corps
 		return y;
 	}
 
@@ -67,7 +63,6 @@ public class Position {
 	 *            coordonnée
 	 */
 	public void setY(int y) {
-		// TODO écrie le corps
 		this.y = y;
 	}
 
