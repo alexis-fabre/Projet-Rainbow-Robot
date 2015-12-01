@@ -95,6 +95,19 @@ public class ChoixLangue {
 	 * Contient toutes les traductions de langues connues pour cette application
 	 */
 	private final String[] TOUTES_LANGUES = { "Français", "English" };
+	
+	/** 
+	 * Contient les traductions pour la fenêtre ChoixMode 
+	 */
+	private final String[][] CHOIXMODE = {
+                { "Choix du mode", "Jouer solo contre l'ordinateur avec des énigmes",
+                    "Jouer solo (records personnels) ou 1v1 contre l'ordinateur", 
+                    "Jouer solo ou 1v1 contre l'ordinateur sur une carte personnalisée",
+                    "Retour"},
+                { "Gaming mode", "Single player against the computer with mysteries",
+                        "Single player (personnal bests) or 1vs1 against IA",
+                        "Single player or 1vs1 against IA on a personalized map", 
+                        "Back"} };
 
 	/**
 	 * <p>
@@ -225,4 +238,10 @@ public class ChoixLangue {
 		return MODE_JEU[langue];
 	}
 
+	/**
+	 * @return les traductions utilisées pour pour la JFrame ChoixMode
+	 */
+	public String[] getChoixMode() {
+	    return CHOIXMODE[langue];
+	}
 }

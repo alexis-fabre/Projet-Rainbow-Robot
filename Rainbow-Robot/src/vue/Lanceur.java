@@ -54,6 +54,7 @@ public class Lanceur {
 
 		F_story test = new F_story(gestion);
 		test.setVisible(true);
+		
 	}
 
 }
