@@ -113,7 +113,7 @@ public class ChoixMode extends JFrame implements ChangementLangue {
         // On laisse une petite marge sur l'axe des y
         contentBoutons.setPreferredSize(new Dimension(
           UtilitaireFenetre.DIM_FENETRE.width,
-          UtilitaireFenetre.DIM_BOUTON_SECONDAIRE.height + 20));
+          UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE.height + 20));
 
         contentBoutons.add(getBt_Retour());
 
@@ -161,7 +161,7 @@ public class ChoixMode extends JFrame implements ChangementLangue {
     public JLabel getLa_titre() {
         if (la_titre == null) {
             la_titre = new JLabel();
-            la_titre.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+            la_titre.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
         }
         return la_titre;
     }
@@ -173,9 +173,9 @@ public class ChoixMode extends JFrame implements ChangementLangue {
         if (bt_Story == null) {
             bt_Story = new JButton();
             // On définit une taille pour le bouton
-            bt_Story.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Story.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Story.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+            bt_Story.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Story.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Story.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
             bt_Story.setText("Story");
         }
         return bt_Story;
@@ -188,9 +188,9 @@ public class ChoixMode extends JFrame implements ChangementLangue {
         if (bt_Arcade == null) {
             bt_Arcade = new JButton();
             // On définit une taille pour le bouton
-            bt_Arcade.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Arcade.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Arcade.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+            bt_Arcade.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Arcade.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Arcade.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
             bt_Arcade.setText("Arcade");
         }
         return bt_Arcade;
@@ -203,9 +203,9 @@ public class ChoixMode extends JFrame implements ChangementLangue {
         if (bt_Custom == null) {
             bt_Custom = new JButton();
             // On définit une taille pour le bouton
-            bt_Custom.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Custom.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-            bt_Custom.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+            bt_Custom.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Custom.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+            bt_Custom.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
             bt_Custom.setText("Custom");
         }
         return bt_Custom;
@@ -218,9 +218,9 @@ public class ChoixMode extends JFrame implements ChangementLangue {
         if (bt_Retour == null) {
             bt_Retour = new JButton();
             // On définit une taille pour le bouton
-            bt_Retour.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_SECONDAIRE);
-            bt_Retour.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_SECONDAIRE);
-            bt_Retour.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_SECONDAIRE);
+            bt_Retour.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+            bt_Retour.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+            bt_Retour.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
         }
         return bt_Retour;
     }
