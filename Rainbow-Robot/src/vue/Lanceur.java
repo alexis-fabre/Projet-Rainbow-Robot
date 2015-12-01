@@ -4,8 +4,6 @@
  */
 package vue;
 
-import java.awt.Dimension;
-
 import evenement.ClicSouris;
 
 /**
@@ -46,15 +44,17 @@ public class Lanceur {
 		ClicSouris gestion = new ClicSouris();
 
 		// On construit la fenêtre avec le contrôleur
+
 		F_accueil fenetreActive = new F_accueil(gestion);
+
 		fenetreActive.setVisible(true);
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
 
-		F_story test = new F_story(gestion);
-		test.setVisible(true);
-		
+		// F_story test = new F_story(gestion);
+		// test.setVisible(true);
+
 	}
 
 }

@@ -63,15 +63,16 @@ public class UtilitaireFenetre {
 	 * @param pane
 	 *            container où on ajoute le composant
 	 * @param largeur
-	 *            largeur séparant deux composants horizontalement
+	 *            largeur séparant le composant de l'ancien composant ou du
+	 *            composant parent s'il n'y en a pas horizontalement
 	 * @param hauteur
-	 *            hauteur séparant deux composants verticalement
+	 *            hauteur séparant le composant de l'ancien composant ou du
+	 *            composant parent s'il n'y en a pas verticalement
 	 */
 	public static void addAComposantWithBoxLayout(JComponent aAjouter,
 			Container pane, int largeur, int hauteur) {
 		// On aligne le composant horizontalement par rapport à la fenêtre
 		if (largeur > 0 || hauteur > 0) {
-			System.out.println("Box rigide + " + aAjouter);
 			pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));
 		}
 		aAjouter.setAlignmentX(Component.CENTER_ALIGNMENT);

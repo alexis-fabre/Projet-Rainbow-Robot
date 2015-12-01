@@ -5,12 +5,10 @@
 package vue;
 
 import java.awt.Container;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import evenement.ClicSouris;
 
 /**
@@ -86,17 +84,17 @@ public class F_accueil extends JFrame implements ChangementLangue {
 
 		// On ajoute les composants dans la fenêtre
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
-				contentPane, 0, 45);
+				contentPane, 0, 40);
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
