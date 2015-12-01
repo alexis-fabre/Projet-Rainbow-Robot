@@ -98,22 +98,22 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		// On laisse une petite marge sur l'axe des y
 		contentBoutons.setPreferredSize(new Dimension(
 				UtilitaireFenetre.DIM_FENETRE.width,
-				UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE.height + 20));
+				UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE.height + 50));
 
 		contentBoutons.add(getBt_Retour());
 		contentBoutons.add(getBt_Jouer());
 
 		// On place les deux boutons
 		// Bouton Retour
-		layout_boutons.putConstraint(SpringLayout.WEST, getBt_Retour(), 10,
+		layout_boutons.putConstraint(SpringLayout.WEST, getBt_Retour(), 20,
 				SpringLayout.WEST, contentBoutons);
-		layout_boutons.putConstraint(SpringLayout.NORTH, getBt_Retour(), 10,
+		layout_boutons.putConstraint(SpringLayout.NORTH, getBt_Retour(), 20,
 				SpringLayout.NORTH, contentBoutons);
 		// Bouton Jouer
 		// -10 <=> 10 pixels entre le panneau des boutons et le boutons bt_jouer
-		layout_boutons.putConstraint(SpringLayout.EAST, getBt_Jouer(), -10,
+		layout_boutons.putConstraint(SpringLayout.EAST, getBt_Jouer(), -20,
 				SpringLayout.EAST, contentBoutons);
-		layout_boutons.putConstraint(SpringLayout.NORTH, getBt_Jouer(), 10,
+		layout_boutons.putConstraint(SpringLayout.NORTH, getBt_Jouer(), 20,
 				SpringLayout.NORTH, contentBoutons);
 
 		// ---------------------------------------------------------------------
@@ -121,9 +121,12 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		// ---------------------------------------------------------------------
 		Container contentTitre = new JPanel();
 		contentTitre.setLayout(new BoxLayout(contentTitre, BoxLayout.Y_AXIS));
+		contentTitre.setPreferredSize(new Dimension(
+				UtilitaireFenetre.DIM_FENETRE.width, 50));
+		contentTitre.setBackground(Color.BLACK);
 
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentTitre, 0, 0);
+				contentTitre, 0, 15);
 
 		// ---------------------------------------------------------------------
 		// On dispose les éléments dans la fenêtre
@@ -214,7 +217,6 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
 			la_titre = new JLabel("MODE STORY");
-			la_titre.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return la_titre;
 	}

@@ -25,8 +25,8 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
-	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(400,
-			60);
+	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(700,
+			75);
 
 	/**
 	 * Dimension des boutons des fenêtres principales
@@ -37,7 +37,7 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension des fenêtres usuelles
 	 */
-	public static final Dimension DIM_FENETRE = new Dimension(700, 500);
+	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
 
 	/**
 	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le
@@ -70,8 +70,11 @@ public class UtilitaireFenetre {
 	public static void addAComposantWithBoxLayout(JComponent aAjouter,
 			Container pane, int largeur, int hauteur) {
 		// On aligne le composant horizontalement par rapport à la fenêtre
+		if (largeur > 0 || hauteur > 0) {
+			System.out.println("Box rigide + " + aAjouter);
+			pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));
+		}
 		aAjouter.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pane.add(aAjouter);
-		pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));
 	}
 }

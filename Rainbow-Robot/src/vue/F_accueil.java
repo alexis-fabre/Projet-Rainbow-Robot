@@ -86,17 +86,17 @@ public class F_accueil extends JFrame implements ChangementLangue {
 
 		// On ajoute les composants dans la fenêtre
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
-				contentPane, 0, 20);
+				contentPane, 0, 45);
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
