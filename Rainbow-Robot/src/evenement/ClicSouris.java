@@ -15,6 +15,9 @@ import vue.ChoixLangue;
 import vue.F_aPropos;
 import vue.F_accueil;
 import vue.ChoixMode;
+import vue.F_arcade;
+import vue.F_custom;
+import vue.F_story;
 import vue.Reccords;
 
 /**
@@ -152,6 +155,51 @@ public class ClicSouris implements MouseListener {
 
 			}
 
+		}
+		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
+                // de choix du mode
+		if (fenetre instanceof ChoixMode) {
+		    ChoixMode fenetreChoixMode = (ChoixMode) fenetre;
+
+                    // On vérifie quel bouton a été utilisé
+                    // Bouton Story
+                    if (e.getSource() == fenetreChoixMode.getBt_Story()) {
+                            // On lance la fenêtre Story F_story.java
+                            F_story nouvelleFenetre = new F_story(this);
+                            fenetre.setVisible(false);
+                            nouvelleFenetre.setVisible(true);
+                            setFenetre(nouvelleFenetre);
+                    }
+                    
+                    // On vérifie quel bouton a été utilisé
+                    // Bouton Arcade
+                    if (e.getSource() == fenetreChoixMode.getBt_Arcade()) {
+                            // On lance la fenêtre Arcade F_arcade.java
+                            F_arcade nouvelleFenetre = new F_arcade(this);
+                            fenetre.setVisible(false);
+                            nouvelleFenetre.setVisible(true);
+                            setFenetre(nouvelleFenetre);
+                    }
+                    
+                    // On vérifie quel bouton a été utilisé
+                    // Bouton Custom
+                    if (e.getSource() == fenetreChoixMode.getBt_Custom()) {
+                            // On lance la fenêtre Custom F_custom.java
+                            F_custom nouvelleFenetre = new F_custom(this);
+                            fenetre.setVisible(false);
+                            nouvelleFenetre.setVisible(true);
+                            setFenetre(nouvelleFenetre);
+                    }
+                    
+                    // On vérifie quel bouton a été utilisé
+                    // Bouton Retour
+                    if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
+                            // On lance la fenêtre Accueil F_accueil.java
+                            F_accueil nouvelleFenetre = new F_accueil(this);
+                            fenetre.setVisible(false);
+                            nouvelleFenetre.setVisible(true);
+                            setFenetre(nouvelleFenetre);
+                    }
 		}
 
 	}
