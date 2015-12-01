@@ -135,7 +135,7 @@ public class F_accueil extends JFrame implements ChangementLangue {
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
 			la_titre = new JLabel();
-			la_titre.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+			la_titre.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return la_titre;
 	}
@@ -148,9 +148,9 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Jouer == null) {
 			bt_Jouer = new JButton();
 			// On définit une taille pour le bouton
-			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Jouer;
 	}
@@ -163,10 +163,12 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Reccords == null) {
 			bt_Reccords = new JButton();
 			// On définit une taille pour le bouton
-			bt_Reccords.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Reccords.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
 			bt_Reccords
-					.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Reccords
+					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Reccords
+					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Reccords;
 	}
@@ -179,9 +181,10 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Langue == null) {
 			bt_Langue = new JButton();
 			// On définit une taille pour le bouton
-			bt_Langue.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Langue.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Langue.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+			bt_Langue.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Langue.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Langue
+					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Langue;
 	}
@@ -194,9 +197,12 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Apropos == null) {
 			bt_Apropos = new JButton();
 			// On définit une taille pour le bouton
-			bt_Apropos.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Apropos.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Apropos.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+			bt_Apropos
+					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Apropos
+					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Apropos
+					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Apropos;
 	}
@@ -209,9 +215,12 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Quitter == null) {
 			bt_Quitter = new JButton();
 			// On définit une taille pour le bouton
-			bt_Quitter.setMaximumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Quitter.setMinimumSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
-			bt_Quitter.setPreferredSize(UtilitaireFenetre.DIM_BOUTON_PRINCIPAL);
+			bt_Quitter
+					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Quitter
+					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			bt_Quitter
+					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Quitter;
 	}
