@@ -25,12 +25,14 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
-	public static final Dimension DIM_BOUTON_PRINCIPAL = new Dimension(400, 60);
+	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(400,
+			60);
 
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
-	public static final Dimension DIM_BOUTON_SECONDAIRE = new Dimension(100, 60);
+	public static final Dimension DIM_COMPOSANT_SECONDAIRE = new Dimension(100,
+			60);
 
 	/**
 	 * Dimension des fenêtres usuelles
