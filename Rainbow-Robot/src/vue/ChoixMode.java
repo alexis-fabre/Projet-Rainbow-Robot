@@ -152,7 +152,6 @@ public class ChoixMode extends JFrame implements ChangementLangue {
 	@Override
 	public void setLangue() {
 		String[] traducionChoixMode = traducteur.getChoixMode();
-		System.out.println(Arrays.toString(traducionChoixMode));
 		this.setTitle(traducionChoixMode[0]);
 		getLa_titre().setText(traducionChoixMode[0]);
 		getDescStory().setText(traducionChoixMode[1]);
