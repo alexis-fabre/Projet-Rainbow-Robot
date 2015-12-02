@@ -18,6 +18,7 @@ import vue.ChoixMode;
 import vue.F_arcade;
 import vue.F_custom;
 import vue.F_story;
+import vue.FenetreJeu;
 import vue.Reccords;
 
 /**
@@ -200,6 +201,36 @@ public class ClicSouris implements MouseListener {
                             nouvelleFenetre.setVisible(true);
                             setFenetre(nouvelleFenetre);
                     }
+		}
+		if (fenetre instanceof FenetreJeu) {
+			FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
+			// On vérifie quel bouton a été utilisé
+            // Bouton Retour
+            if (e.getSource() == fenetreJeu.getBt_Pause()) {
+                    // TODO On lance le menu pause
+                    
+            }
+		}
+		if (fenetre instanceof F_story) {
+			F_story fenetreStory = (F_story) fenetre;
+			// On vérifie quel bouton a été utilisé
+            // Bouton Jouer
+            if (e.getSource() == fenetreStory.getBt_Jouer()) {
+                    // On lance la fenêtre Accueil F_accueil.java
+                    FenetreJeu nouvelleFenetre = new FenetreJeu(this);
+                    fenetre.setVisible(false);
+                    nouvelleFenetre.setVisible(true);
+                    setFenetre(nouvelleFenetre);
+            }
+         // On vérifie quel bouton a été utilisé
+            // Bouton Retour
+            if (e.getSource() == fenetreStory.getBt_Retour()) {
+                    // On lance la fenêtre Accueil F_accueil.java
+                    ChoixMode nouvelleFenetre = new ChoixMode(this);
+                    fenetre.setVisible(false);
+                    nouvelleFenetre.setVisible(true);
+                    setFenetre(nouvelleFenetre);
+            }
 		}
 
 	}
