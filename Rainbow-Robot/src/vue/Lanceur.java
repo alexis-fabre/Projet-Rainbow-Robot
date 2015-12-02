@@ -4,6 +4,10 @@
  */
 package vue;
 
+import javax.swing.UIManager;
+
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+
 import evenement.ClicSouris;
 
 /**
@@ -38,6 +42,13 @@ public class Lanceur {
 	 *            non utilisé
 	 */
 	public static void main(String[] args) {
+		try {
+			// select Look and Feel
+			UIManager.setLookAndFeel(new AcrylLookAndFeel());
+			// start application
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		// On initialise la partie métier
 
 		// On construit le contrôleur à partir de la partie métier

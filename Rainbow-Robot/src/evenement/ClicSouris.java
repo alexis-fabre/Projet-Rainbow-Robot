@@ -158,79 +158,79 @@ public class ClicSouris implements MouseListener {
 
 		}
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
-                // de choix du mode
+		// de choix du mode
 		if (fenetre instanceof ChoixMode) {
-		    ChoixMode fenetreChoixMode = (ChoixMode) fenetre;
+			ChoixMode fenetreChoixMode = (ChoixMode) fenetre;
 
-                    // On vérifie quel bouton a été utilisé
-                    // Bouton Story
-                    if (e.getSource() == fenetreChoixMode.getBt_Story()) {
-                            // On lance la fenêtre Story F_story.java
-                            F_story nouvelleFenetre = new F_story(this);
-                            fenetre.setVisible(false);
-                            nouvelleFenetre.setVisible(true);
-                            setFenetre(nouvelleFenetre);
-                    }
-                    
-                    // On vérifie quel bouton a été utilisé
-                    // Bouton Arcade
-                    if (e.getSource() == fenetreChoixMode.getBt_Arcade()) {
-                            // On lance la fenêtre Arcade F_arcade.java
-                            F_arcade nouvelleFenetre = new F_arcade(this);
-                            fenetre.setVisible(false);
-                            nouvelleFenetre.setVisible(true);
-                            setFenetre(nouvelleFenetre);
-                    }
-                    
-                    // On vérifie quel bouton a été utilisé
-                    // Bouton Custom
-                    if (e.getSource() == fenetreChoixMode.getBt_Custom()) {
-                            // On lance la fenêtre Custom F_custom.java
-                            F_custom nouvelleFenetre = new F_custom(this);
-                            fenetre.setVisible(false);
-                            nouvelleFenetre.setVisible(true);
-                            setFenetre(nouvelleFenetre);
-                    }
-                    
-                    // On vérifie quel bouton a été utilisé
-                    // Bouton Retour
-                    if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
-                            // On lance la fenêtre Accueil F_accueil.java
-                            F_accueil nouvelleFenetre = new F_accueil(this);
-                            fenetre.setVisible(false);
-                            nouvelleFenetre.setVisible(true);
-                            setFenetre(nouvelleFenetre);
-                    }
+			// On vérifie quel bouton a été utilisé
+			// Bouton Story
+			if (e.getSource() == fenetreChoixMode.getBt_Story()) {
+				// On lance la fenêtre Story F_story.java
+				F_story nouvelleFenetre = new F_story(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+
+			// On vérifie quel bouton a été utilisé
+			// Bouton Arcade
+			if (e.getSource() == fenetreChoixMode.getBt_Arcade()) {
+				// On lance la fenêtre Arcade F_arcade.java
+				F_arcade nouvelleFenetre = new F_arcade(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+
+			// On vérifie quel bouton a été utilisé
+			// Bouton Custom
+			if (e.getSource() == fenetreChoixMode.getBt_Custom()) {
+				// On lance la fenêtre Custom F_custom.java
+				F_custom nouvelleFenetre = new F_custom(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+
+			// On vérifie quel bouton a été utilisé
+			// Bouton Retour
+			if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
+				// On lance la fenêtre Accueil F_accueil.java
+				F_accueil nouvelleFenetre = new F_accueil(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
 		}
 		if (fenetre instanceof FenetreJeu) {
 			FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
 			// On vérifie quel bouton a été utilisé
-            // Bouton Retour
-            if (e.getSource() == fenetreJeu.getBt_Pause()) {
-                    // TODO On lance le menu pause
-                    
-            }
+			// Bouton Retour
+			if (e.getSource() == fenetreJeu.getBt_Pause()) {
+				// TODO On lance le menu pause
+
+			}
 		}
 		if (fenetre instanceof F_story) {
 			F_story fenetreStory = (F_story) fenetre;
 			// On vérifie quel bouton a été utilisé
-            // Bouton Jouer
-            if (e.getSource() == fenetreStory.getBt_Jouer()) {
-                    // On lance la fenêtre Accueil F_accueil.java
-                    FenetreJeu nouvelleFenetre = new FenetreJeu(this);
-                    fenetre.setVisible(false);
-                    nouvelleFenetre.setVisible(true);
-                    setFenetre(nouvelleFenetre);
-            }
-         // On vérifie quel bouton a été utilisé
-            // Bouton Retour
-            if (e.getSource() == fenetreStory.getBt_Retour()) {
-                    // On lance la fenêtre Accueil F_accueil.java
-                    ChoixMode nouvelleFenetre = new ChoixMode(this);
-                    fenetre.setVisible(false);
-                    nouvelleFenetre.setVisible(true);
-                    setFenetre(nouvelleFenetre);
-            }
+			// Bouton Jouer
+			if (e.getSource() == fenetreStory.getBt_Jouer()) {
+				// On lance la fenêtre Accueil F_accueil.java
+				FenetreJeu nouvelleFenetre = new FenetreJeu(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+			// On vérifie quel bouton a été utilisé
+			// Bouton Retour
+			if (e.getSource() == fenetreStory.getBt_Retour()) {
+				// On lance la fenêtre Accueil F_accueil.java
+				ChoixMode nouvelleFenetre = new ChoixMode(this);
+				fenetre.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
 		}
 
 	}
