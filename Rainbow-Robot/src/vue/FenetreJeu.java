@@ -73,7 +73,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Container contentMenuHaut = super.getContentPane();
-		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.LEADING));
+		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		 //On ajoute les composants dans la fenêtre
 		contentMenuHaut.add(getTimer());
