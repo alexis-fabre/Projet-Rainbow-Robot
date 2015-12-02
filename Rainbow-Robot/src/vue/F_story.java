@@ -8,17 +8,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * <p>
+ * Fenêtre de descritpion précise du mode de jeu Story.<br />
+ * Elle permet de pouvoir consulter les règles du jeu, les commandes que l'on
+ * pourra utiliser ainsi qu'une photo du mode de jeu.<br />
+ * La fenêtre dispose des composants de son parent, c'est à dire les boutons
+ * jouer et retour.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -26,14 +35,22 @@ import evenement.ClicSouris;
 public class F_story extends F_abstractModeJeu implements ChangementLangue {
 
 	/**
-	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 * Chemin de la photo que l'on désire afficher
 	 */
-	private String cheminPhoto;
+	private final static String CHEMIN_PHOTO = "./img/test.jpg";
 
 	/**
-	 * TODO Expliquer le fonctionnement du constructeur
+	 * <p>
+	 * Menu permettant d'accéder au mode de jeu Story avec un bref aperçu des
+	 * commandes, règles ainsi que d'une image du mode de jeu Story.<br />
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * </p>
 	 * 
-	 * @param titre
+	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
 	 */
 	public F_story(ClicSouris gestion) {
 		super(gestion);
@@ -48,10 +65,7 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		// ---------------------------------------------------------------------
 		// Contient la photo
 		// ---------------------------------------------------------------------
-		JPanel contentPhoto = new JPanel();
-		UtilitaireFenetre.setAllSize(contentPhoto, 250, 350);
-		contentPhoto.setBorder(BorderFactory.createLineBorder(Color.black));
-		contentPhoto.setAlignmentY(CENTER_ALIGNMENT);
+		Photo contentPhoto = new Photo(CHEMIN_PHOTO);
 
 		// ---------------------------------------------------------------------
 		// Contient la description + les règles

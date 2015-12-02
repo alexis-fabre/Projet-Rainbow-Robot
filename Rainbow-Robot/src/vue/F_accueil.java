@@ -14,11 +14,16 @@ import javax.swing.JLabel;
 import evenement.ClicSouris;
 
 /**
+ * <p>
  * Fenêtre principale, c'est celle qui sera lancée en première lors de
- * l'exécution du programme. Elle permet entre autre de pouvoir jouer,
- * selectionner la langue ou consulter les reccords. Il est aussi possible de
- * consulter la page permettant d'avoir des informations diverses sur le
- * l'élaboration du logiciel.
+ * l'exécution du programme.<br />
+ * Elle permet entre autre de pouvoir jouer, selectionner la langue, consulter
+ * les reccords ou quitter l'application. Il est aussi possible de consulter la
+ * page permettant d'avoir des informations diverses sur le l'élaboration du
+ * logiciel.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -62,11 +67,13 @@ public class F_accueil extends JFrame implements ChangementLangue {
 	private JButton bt_Quitter;
 
 	/**
-	 * Initialise les composants et les disposent sur un contexte graphique 2D.
+	 * <p>
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
 	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
-	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
-	 * les cliques de la souris sur les boutons.
-	 * 
+	 * pour éviter tous soucis de disposition.<br />
+	 * Cette fenêtre détecte uniquement les cliques de la souris sur les
+	 * boutons.
+	 * </p>
 	 * 
 	 * @param gestion
 	 *            le contrôleur qui va controler cette vue = cible

@@ -21,7 +21,15 @@ import javax.swing.border.Border;
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * <p>
+ * Fenêtre abstraite comprenant les composants principaux pour tous les modes de
+ * jeux (Story, Arcade et Custon).<br />
+ * Elle permet de pouvoir revenir sur la page précédente et d'accéder aux
+ * différentes modes de jeux. Les labels titre, description des règles et
+ * commande sont juste initialisés et seront placés dans les classes filles.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.<br />
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -207,7 +215,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	}
 
 	/**
-	 * @return le JLabel titre de la fenêtre
+	 * @return le JLabel la_titre titre de la fenêtre
 	 */
 	protected JLabel getLa_titre() {
 		if (la_titre == null) {
