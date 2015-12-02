@@ -62,10 +62,6 @@ public class Lanceur {
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
-
-		// F_story test = new F_story(gestion);
-		// test.setVisible(true);
-
 	}
 
 }

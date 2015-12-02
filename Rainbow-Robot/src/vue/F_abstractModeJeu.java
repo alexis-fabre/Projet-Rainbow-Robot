@@ -67,10 +67,10 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	 * Ici sont placé uniquement le label Titre ainsi que les boutons retour et
 	 * jouer.<br />
 	 * Les deux labels description des règles et commande sont initialisés mais
-	 * pas disposés.<br />
+	 * ils ne sont ni disposés, ni nommés.<br />
 	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
 	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
-	 * les cliques de la souris sur les boutons.
+	 * les cliques de la souris sur les boutons.<br />
 	 * </p>
 	 * 
 	 * @param gestion
@@ -82,6 +82,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
 		// On rend la fenêtre non redimenssionable
+		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container contentPane = super.getContentPane();
@@ -123,7 +124,6 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		contentTitre.setLayout(new BoxLayout(contentTitre, BoxLayout.Y_AXIS));
 		contentTitre.setPreferredSize(new Dimension(
 				UtilitaireFenetre.DIM_FENETRE.width, 50));
-		contentTitre.setBackground(Color.BLACK);
 
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
 				contentTitre, 0, 15);
@@ -135,7 +135,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		contentPane.add(contentTitre, BorderLayout.NORTH);
 		contentPane.add(contentBoutons, BorderLayout.SOUTH);
 
-		// On ajoute le nom des composants en fonction de la langue choisie
+		// On ajoute la langue
 		setLangue();
 
 		// On centre l'écran
@@ -147,7 +147,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * La fonction est appelé par les classes filles (non-Javadoc)
 	 * 
 	 * @see vue.ChangementLangue#setLangue()
 	 */
@@ -164,12 +164,8 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		if (bt_Retour == null) {
 			bt_Retour = new JButton();
 			// On définit une taille pour le bouton
-			bt_Retour
-					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Retour
-					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Retour
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			UtilitaireFenetre.setAllSize(bt_Retour,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 
 		}
 		return bt_Retour;
@@ -183,9 +179,8 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		if (bt_Jouer == null) {
 			bt_Jouer = new JButton();
 			// On définit une taille pour le bouton
-			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			UtilitaireFenetre.setAllSize(bt_Jouer,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
 		return bt_Jouer;
 	}
@@ -194,7 +189,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	 * @return le JLabel la_commande contient les descriptions des commandes que
 	 *         l'utilisateur pourra effectuer s'il choisi ce mode de jeu
 	 */
-	public JLabel getLa_commande() {
+	protected JLabel getLa_commande() {
 		if (la_commande == null) {
 			la_commande = new JLabel();
 		}
@@ -204,9 +199,9 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	/**
 	 * @return le JLabel la_descRegle contient la description des règles du jeux
 	 */
-	public JLabel getLa_descRegle() {
+	protected JLabel getLa_descRegle() {
 		if (la_descRegle == null) {
-
+			la_descRegle = new JLabel();
 		}
 		return la_descRegle;
 	}
@@ -214,9 +209,9 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	/**
 	 * @return le JLabel titre de la fenêtre
 	 */
-	public JLabel getLa_titre() {
+	protected JLabel getLa_titre() {
 		if (la_titre == null) {
-			la_titre = new JLabel("MODE STORY");
+			la_titre = new JLabel();
 		}
 		return la_titre;
 	}

@@ -95,19 +95,22 @@ public class ChoixLangue {
 	 * Contient toutes les traductions de langues connues pour cette application
 	 */
 	private final String[] TOUTES_LANGUES = { "Français", "English" };
-	
-	/** 
-	 * Contient les traductions pour la fenêtre ChoixMode 
+
+	/**
+	 * Contient les traductions pour la fenêtre ChoixMode
 	 */
 	private final String[][] CHOIXMODE = {
-                { "Choix du mode", "Jouer solo contre l'ordinateur avec des énigmes",
-                    "Jouer solo (records personnels) ou 1v1 contre l'ordinateur", 
-                    "Jouer solo ou 1v1 contre l'ordinateur sur une carte personnalisée",
-                    "Retour"},
-                { "Gaming mode", "Single player against the computer with mysteries",
-                        "Single player (personnal bests) or 1vs1 against IA",
-                        "Single player or 1vs1 against IA on a personalized map", 
-                        "Back"} };
+			{
+					"Choix du mode",
+					"Jouer solo contre l'ordinateur avec des énigmes",
+					"Jouer solo (records personnels) ou 1v1 contre l'ordinateur",
+					"Jouer solo ou 1v1 contre l'ordinateur sur une carte personnalisée",
+					"Retour" },
+			{ "Gaming mode",
+					"Single player against the computer with mysteries",
+					"Single player (personnal bests) or 1vs1 against IA",
+					"Single player or 1vs1 against IA on a personalized map",
+					"Back" } };
 
 	/**
 	 * <p>
@@ -132,7 +135,7 @@ public class ChoixLangue {
 
 	/**
 	 * <p>
-	 * Comprend les traductions pour la JFrame Fa_modeJeu.<br />
+	 * Comprend les traductions pour la JFrame F_abstractModeJeu.<br />
 	 * </p>
 	 * <ul>
 	 * <li>La 1ère ligne correspond au tradution française.</li>
@@ -148,6 +151,30 @@ public class ChoixLangue {
 	 */
 	private final String[][] MODE_JEU = { { "Retour", "Jouer" },
 			{ "Back", "Play" } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JFrame F_story.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au titre de la fenêtre.</li>
+	 * <li>La 3ème colonne correspond au règle de ce mode.</li>
+	 * <li>La 4ème colonne correspond à la descritpion des commandes
+	 * utilisables.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] MODE_STORY = {
+			{ "Mode story", "MODE STORY", "Règle : à définir",
+					"Commande : à définir" }, //
+			{ "story mode", "STORY MODE", "No translation", "No translation" } };
 
 	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récupère via
@@ -232,7 +259,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour pour la JFrame Fa_modeJeu
+	 * @return les traductions utilisées pour pour la JFrame F_abstractModeJeu
 	 */
 	public String[] getModeJeu() {
 		return MODE_JEU[langue];
@@ -242,6 +269,13 @@ public class ChoixLangue {
 	 * @return les traductions utilisées pour pour la JFrame ChoixMode
 	 */
 	public String[] getChoixMode() {
-	    return CHOIXMODE[langue];
+		return CHOIXMODE[langue];
+	}
+
+	/**
+	 * @return les traductions utilisées pour pour la JFrame F_story
+	 */
+	public String[] getModeStory() {
+		return MODE_STORY[langue];
 	}
 }

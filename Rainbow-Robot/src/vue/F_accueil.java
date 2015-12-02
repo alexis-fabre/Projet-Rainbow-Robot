@@ -5,10 +5,12 @@
 package vue;
 
 import java.awt.Container;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import evenement.ClicSouris;
 
 /**
@@ -146,9 +148,8 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Jouer == null) {
 			bt_Jouer = new JButton();
 			// On définit une taille pour le bouton
-			bt_Jouer.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Jouer.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Jouer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			UtilitaireFenetre.setAllSize(bt_Jouer,
+					UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Jouer;
 	}
@@ -161,12 +162,8 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Reccords == null) {
 			bt_Reccords = new JButton();
 			// On définit une taille pour le bouton
-			bt_Reccords
-					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Reccords
-					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Reccords
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			UtilitaireFenetre.setAllSize(bt_Reccords,
+					UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Reccords;
 	}
@@ -179,10 +176,8 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Langue == null) {
 			bt_Langue = new JButton();
 			// On définit une taille pour le bouton
-			bt_Langue.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Langue.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Langue
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			UtilitaireFenetre.setAllSize(bt_Langue,
+					UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Langue;
 	}
@@ -195,12 +190,8 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Apropos == null) {
 			bt_Apropos = new JButton();
 			// On définit une taille pour le bouton
-			bt_Apropos
-					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Apropos
-					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Apropos
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			UtilitaireFenetre.setAllSize(bt_Apropos,
+					UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Apropos;
 	}
@@ -213,12 +204,8 @@ public class F_accueil extends JFrame implements ChangementLangue {
 		if (bt_Quitter == null) {
 			bt_Quitter = new JButton();
 			// On définit une taille pour le bouton
-			bt_Quitter
-					.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Quitter
-					.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
-			bt_Quitter
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+			UtilitaireFenetre.setAllSize(bt_Quitter,
+					UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
 		}
 		return bt_Quitter;
 	}
