@@ -39,7 +39,7 @@ public class Partie {
 	public Partie() {
 		// TODO écrire le corps
 
-		Caisse.CaisseARecuperer(caisseARecup,1non;
+		Caisse.CaisseARecuperer(caisseARecup,1);
 	}
 	
 	/**
