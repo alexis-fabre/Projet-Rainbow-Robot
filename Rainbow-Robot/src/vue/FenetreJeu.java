@@ -4,18 +4,17 @@
  */
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Container;
-import java.awt.Dimension;
+
 import java.awt.FlowLayout;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JButton;
-import javax.swing.JComponent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 import evenement.ClicSouris;
 

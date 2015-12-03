@@ -211,7 +211,7 @@ public class ClicSouris implements MouseListener {
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
 				Object[] optionsBoutons = { new JButton("Reprendre"),
 				new JButton("Recommncer"), new JButton("Quitter") };
-				// 3 boutons donc optionType = YES_NO_CANCEL_OPTION
+				// 3 bouton0  s donc optionType = YES_NO_CANCEL_OPTION
 				int r = JOptionPane.showOptionDialog(null, "Choix","Pause" ,
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
 				optionsBoutons, optionsBoutons[0]);
