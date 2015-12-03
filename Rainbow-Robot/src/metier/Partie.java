@@ -17,12 +17,6 @@ public class Partie {
 	/** Niveau maximum */
 	private int niveauMaxAtteint;
 
-	/** Timer de la partie */
-	private Timer timer;
-
-	/** Menu de la partie */
-	private Menu menu;
-
 	/** Caisse à récuperer */
 	private CaisseARecuperer caisseARecuperer;
 

@@ -30,6 +30,11 @@ public class Robot implements Dessinable{
 
 
 	public static final int PIVOTER_DROITE = 2;
+	
+	
+	private static final int DEPLACEMENT = 3;
+	
+
 
 	/** Vitesse du robot */
 	private int vitesse;
@@ -49,6 +54,9 @@ public class Robot implements Dessinable{
 	/** Caisse du robot */
 	private Caisse caisse;
 	
+	
+
+	
 	/** Le robot */
 	private Robot robot = new Robot(ORIENTATION_GAUCHE,pos_ini);
 	
@@ -67,9 +75,9 @@ public class Robot implements Dessinable{
 	 * Méthode pour faire avancer le robot
 	 */
 	public void avancer() {
-		// TODO écrire le corps
 		// Avancer d'un indice dans la list
 		// faire une switch en fonction de orientation
+		
 		switch(orientation){
 		
 			case ORIENTATION_GAUCHE:
@@ -95,13 +103,12 @@ public class Robot implements Dessinable{
 	/**
 	 * Méthode pour faire reculer le robot
 	 */
-	public void reculer () {
-		// TODO écrire le corps
+	public void reculer() {
 		// Reculer d'un indice dans la liste
 		// faire une switch en fonction de orientation
 		switch(orientation){
 			case ORIENTATION_GAUCHE:
-				pos_courante.setX(pos_courante.getX()+1);
+				pos_courante.setX(pos_courante.getX()+1) ;
 				break;
 				
 			case ORIENTATION_BAS:
@@ -150,9 +157,10 @@ public class Robot implements Dessinable{
 	public void saisirCaisse() {
 		if(caisse == null ){
 			// Le robot peut saisir une caisse
+			// Le robot attrape une caisse
 		} else {
 			// le robot ne peut pas saisir de caisse
-			
+			// le robot ne fait rien
 		}
 	}
 
@@ -162,10 +170,20 @@ public class Robot implements Dessinable{
 	public void fusionner () {
 		if(caisse != null ){
 			// le robot peut fusionner une caisse
+			// appeler la fonction dans caisse
 		} else {
 			// le robot ne peut pas fusionner
+			// le robot ne fait rien
 		}
 		
+	}
+
+	
+	
+	
+	private int GetFrameTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position
