@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Caisse implements Dessinable{
     
     /** Couleur de la caisse */
-    private Color couleur;
+    private static Color couleur;
     
     
     public Caisse(Color couleur){
@@ -49,9 +49,10 @@ public class Caisse implements Dessinable{
 	 * Créer une liste de caisse pour que l'utilisateur puisse les recuperer dans sa partie
 	 * @param nbCaisse nombre de caisses a récuperer
 	 */
-	public void CaisseARecuperer(ArrayList<Caisse> caisseArecup ,int nbCaisse){
+	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup ,int nbCaisse){
 		for(int i = 0; i < nbCaisse ; i++)
 			caisseArecup.add(new Caisse(couleur));
 	}
     
 }
+ 

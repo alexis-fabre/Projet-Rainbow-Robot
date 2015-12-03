@@ -1,5 +1,5 @@
 /*
- * Partie.java							28 nov 2015
+ * Carte.java							28 nov 2015
  * IUT Info2 2015-2016
  */
 
@@ -14,70 +14,58 @@ import java.util.List;
  */
 public class Partie {
 
-	/** Niveau par défaut de la partie */
-	private static final int DEFAULT_NIVEAU = 1;
-	
-	/** Niveau actuel du joueur */
-	private int niveauCourant;
+	/** Nombre colonne de la carte */
+	private int nbColonne;
 
-	/** Niveau maximum */
-	private int niveauMaxAtteint;
+	/** Nombre de lignes de la carte */
+	private int nbLigne;
 
-	/** Caisse à récuperer */
-	private Caisse caisseARecuperer;
-	
-	/** */
-	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
-	
-	/** Carte de la partie */
-	Carte carte; 
+	/** Robot sur la carte */
+	private Robot robot;
+
+	/** Tableau de caisse */
+	private Caisse[] caisses;
+
+	/** Vortex de la carte */
+	private Vortex vortex;
+
 
 	/**
-	 * Constructeur par défaut pour créer une partie
+	 * Constrcuteur par défaut pour créer une carte
 	 */
 	public Partie() {
-		// TODO écrire le corps de la méthode
-		niveauCourant = DEFAULT_NIVEAU;
-		carte = new Carte();
-		caisseARecuperer = new CaisseARecuperer(caisseARecup,nbCaisse);
+		// TODO écrire le corps
+		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
+		
+	}
+	
+	/**
+	 * Créer une carte avec un niveau donné
+	 */
+	public Partie(int niveau){
+		// TODO ecrire le corps
+	}
+
+	/**
+	 * Méthode pour recommencer uen partie
+	 */
+	public void recommencer() {
+		// TODO écrire le corps
+	}
+
+	/**
+	 * Métode pour jouer une partie
+	 */
+	public void jouer() {
+		// TODO écrire le corps
+	}
+	
+	/**
+	 * Savoir si la partie est fini
+	 */
+	public void isFinished(){
 		
 	}
 
-	/**
-	 * Constructeur avec un argument, pour créer une partie à partir d'un
-	 * fichier mit en argument
-	 * 
-	 * @param nomFic
-	 *            nom du fichier ou se trouve la carte
-	 */
-	public Partie(String nomFic) {
-		// TODO écrie le corps
-	}
 
-	
-	/**
-	 * Pour récupérer la Carte du niveau suivant
-	 * @return la carte du niveau suivant
-	 */
-	public Carte getNiveauSuivant(int niveau) {
-		return carte = new Carte(niveauCourant + 1);
-	}
-	
-
-	/**
-	 * Pour récupérer la Carte du niveau courant 
-	 * @return la carte du niveau courant
-	 */
-	public Carte getNiveauCourant(int niveau) {
-		return carte = new Carte(niveauCourant);
-	}
-	
-
-	/**
-	 * récupérer La carte du niveau précédent
-	 * @return la carte du niveau precedent
-	 */
-	public Carte getNiveauPrecedent(int niveau) {
-		return new Carte(niveauCourant - 1) ;
-	}
 }
