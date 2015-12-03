@@ -8,6 +8,7 @@ package evenement;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,7 @@ import vue.F_arcade;
 import vue.F_custom;
 import vue.F_story;
 import vue.FenetreJeu;
+import vue.MenuPause;
 import vue.Reccords;
 
 /**
@@ -207,8 +209,13 @@ public class ClicSouris implements MouseListener {
 			// On vérifie quel bouton a été utilisé
 			// Bouton Retour
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
-				// TODO On lance le menu pause
-
+				Object[] optionsBoutons = { new JButton("Reprendre"),
+				new JButton("Recommncer"), new JButton("Quitter") };
+				// 3 boutons donc optionType = YES_NO_CANCEL_OPTION
+				int r = JOptionPane.showOptionDialog(null, "Choix","Pause" ,
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+				optionsBoutons, optionsBoutons[0]);
+				// TODO faire la gestion des boutons
 			}
 		}
 		if (fenetre instanceof F_story) {
@@ -216,7 +223,7 @@ public class ClicSouris implements MouseListener {
 			// On vérifie quel bouton a été utilisé
 			// Bouton Jouer
 			if (e.getSource() == fenetreStory.getBt_Jouer()) {
-				// On lance la fenêtre Accueil F_accueil.java
+				// On lance la fenêtre de jeu FenetreJeu.java
 				FenetreJeu nouvelleFenetre = new FenetreJeu(this);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
