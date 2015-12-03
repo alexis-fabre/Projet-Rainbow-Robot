@@ -25,9 +25,7 @@ public class JeuRainbow {
 
 	/** Caisse à récuperer */
 	private Caisse caisseARecuperer;
-	
-	/** */
-	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
+
 	
 	/** Carte de la partie */
 	private ArrayList<Partie> carte = new ArrayList<Partie>(); 
@@ -37,11 +35,7 @@ public class JeuRainbow {
 	 * Constructeur par défaut pour créer une partie
 	 */
 	public JeuRainbow() {
-
 		niveauCourant = DEFAULT_NIVEAU;
-
-		Caisse.CaisseARecuperer(caisseARecup,1);
-		
 	}
 
 	/**

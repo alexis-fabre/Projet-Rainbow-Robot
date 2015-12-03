@@ -28,6 +28,10 @@ public class Partie {
 
 	/** Vortex de la carte */
 	private Vortex vortex;
+	
+	
+	/** */
+	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
 
 
 	/**
@@ -36,7 +40,7 @@ public class Partie {
 	public Partie() {
 		// TODO écrire le corps
 		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
-		
+		Caisse.CaisseARecuperer(caisseARecup,1);
 	}
 	
 	/**
@@ -64,7 +68,7 @@ public class Partie {
 	 * Savoir si la partie est fini
 	 */
 	public void isFinished(){
-		
+		// lorsque toutes les caisseARecup sont récupérer
 	}
 
 

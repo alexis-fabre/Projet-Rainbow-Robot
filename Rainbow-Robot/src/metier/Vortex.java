@@ -18,6 +18,6 @@ public class Vortex implements Dessinable {
 		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools|Templates.
 	}
 	
-	
+	// LE VORTEX VERA EN 0,0
 
 }
