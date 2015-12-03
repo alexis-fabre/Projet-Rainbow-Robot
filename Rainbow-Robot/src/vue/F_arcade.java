@@ -74,7 +74,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	/**
 	 * <p>
 	 * Menu permettant d'accéder au mode de jeu Arcade avec un bref aperçu des
-	 * commandes, règles ainsi que d'une image du mode de jeu Story.<br />
+	 * commandes, règles ainsi que d'une image du mode de jeu Arcade.<br />
 	 * Il sera aussi possible de choisir si l'on joue contre l'IA ou contre
 	 * l'ordi ainsi que le niveau de difficulté de l'IA.<br />
 	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
@@ -104,15 +104,15 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 		// ---------------------------------------------------------------------
 		// Contient la description + les règles + tous les radios boutons
 		// ---------------------------------------------------------------------
-		JPanel contentWest = new JPanel();
+		JPanel contentEast = new JPanel();
 		// On force les dimensions au 2/3 de la fenêtre sur la largeur.
 		// Pour la hauteur on prend la toutes la hauteur disponible (elle sera
 		// redimensionné lorsqu'on l'ajoutera au contentStory)
-		UtilitaireFenetre.setAllSize(contentWest,
+		UtilitaireFenetre.setAllSize(contentEast,
 				2 * UtilitaireFenetre.DIM_FENETRE.width / 3,
 				UtilitaireFenetre.DIM_FENETRE.height);
 
-		contentWest.setLayout(new BoxLayout(contentWest, BoxLayout.Y_AXIS));
+		contentEast.setLayout(new BoxLayout(contentEast, BoxLayout.Y_AXIS));
 
 		// On force la taille des JLabels
 		UtilitaireFenetre.setAllSize(super.getLa_descRegle(), 500, 50);
@@ -125,21 +125,21 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 		group.add(getRb_jeuSolo());
 		group.add(getRb_jeuIA());
 		UtilitaireFenetre.addAComposantWithBoxLayout(getRb_jeuSolo(),
-				contentWest, 70, 50, Component.LEFT_ALIGNMENT);
+				contentEast, 70, 50, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getRb_jeuIA(),
-				contentWest, 70, 20, Component.LEFT_ALIGNMENT);
+				contentEast, 70, 20, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getJp_difficulte(),
-				contentWest, 70, 50, Component.LEFT_ALIGNMENT);
+				contentEast, 70, 50, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_descRegle(),
-				contentWest, 70, 50, Component.LEFT_ALIGNMENT);
+				contentEast, 70, 50, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_commande(),
-				contentWest, 70, 20, Component.LEFT_ALIGNMENT);
+				contentEast, 70, 20, Component.LEFT_ALIGNMENT);
 
 		// On ajoute les composants sur le JPanel contentStory
 		// On ajoute une marge entre le composant et le bord de la fenêtre
 		contentArcade.add(Box.createHorizontalStrut(30));
 		contentArcade.add(contentPhoto);
-		contentArcade.add(contentWest);
+		contentArcade.add(contentEast);
 
 		// On rend inactif le bouton jouer (il sera actif dans une future
 		// version)
@@ -176,7 +176,9 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le jp_difficulte
+	 * @return le JPanel jp_difficulte qui permet de selectionner la difficulté
+	 *         de l'IA. Il n'est affiché seulement si l'utilisateur à cocher le
+	 *         bouton "Jouer contre l'IA"
 	 */
 	public JPanel getJp_difficulte() {
 		if (jp_difficulte == null) {
@@ -200,7 +202,8 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_jeuSolo
+	 * @return le JRadioButton rb_jeuSolo qui permet de selectionner le mode
+	 *         custom solo
 	 */
 	public JRadioButton getRb_jeuSolo() {
 		if (rb_jeuSolo == null) {
@@ -211,7 +214,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_jeuIA
+	 * @return le JRadioButton rb_jeuIA qui permet de jouer contre une IA
 	 */
 	public JRadioButton getRb_jeuIA() {
 		if (rb_jeuIA == null) {
@@ -221,7 +224,8 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_facile
+	 * @return le JRadioButton rb_facile qui permet d'initilialiser l'IA en mode
+	 *         facile
 	 */
 	public JRadioButton getRb_facile() {
 		if (rb_facile == null) {
@@ -232,7 +236,8 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_moyen
+	 * @return le JRadioButton rb_moyen qui permet d'initilialiser l'IA en mode
+	 *         moyen
 	 */
 	public JRadioButton getRb_moyen() {
 		if (rb_moyen == null) {
@@ -242,7 +247,8 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_difficile
+	 * @return le JRadioButton rb_difficile qui permet d'initilialiser l'IA en
+	 *         mode difficile
 	 */
 	public JRadioButton getRb_difficile() {
 		if (rb_difficile == null) {

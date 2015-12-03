@@ -24,7 +24,18 @@ import javax.swing.SpringLayout;
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * *
+ * <p>
+ * Fenêtre qui décrit ce que contiendra le mode de jeu Custom.<br />
+ * Elle permet de consulter les règles du jeux, les commandes utilisables.<br />
+ * Il sera possible de choisir si l'on joue contre l'IA ou contre l'ordi ainsi
+ * que le niveau de difficulté de l'IA.<br />
+ * La fenêtre permet un acces au fichier personnel afin de charger des cartes.<br />
+ * La fenêtre dispose des composants de son parent, c'est à dire les boutons
+ * jouer et retour.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -32,7 +43,7 @@ import evenement.ClicSouris;
 public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 
 	/**
-	 * JPanel qui permet de selctionner la difficulté de l'IA. Il n'est affiché
+	 * JPanel qui permet de selectionner la difficulté de l'IA. Il n'est affiché
 	 * seulement si l'utilisateur à cocher le bouton "Jouer contre l'IA"
 	 */
 	private JPanel jp_difficulte;
@@ -78,9 +89,21 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	private JTextField tf_cheminFichier;
 
 	/**
-	 * TODO Expliquer le fonctionnement du constructeur
+	 * <p>
+	 * Menu permettant d'accéder au mode de jeu Custom avec un bref aperçu des
+	 * commandes, règles.<br />
+	 * Il sera aussi possible de choisir si l'on joue contre l'IA ou contre
+	 * l'ordi ainsi que le niveau de difficulté de l'IA.<br />
+	 * La fenêtre permet un acces au fichier personnel afin de charger des
+	 * cartes.<br />
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * </p>
 	 * 
-	 * @param titre
+	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
 	 */
 	public F_custom(ClicSouris gestion) {
 		super(gestion);
@@ -204,7 +227,9 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le jp_difficulte
+	 * @return le JPanel jp_difficulte qui permet de selectionner la difficulté
+	 *         de l'IA. Il n'est affiché seulement si l'utilisateur à cocher le
+	 *         bouton "Jouer contre l'IA"
 	 */
 	public JPanel getJp_difficulte() {
 		if (jp_difficulte == null) {
@@ -228,7 +253,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_jeuSolo
+	 * @return le JRadioButton rb_jeuSolo qui permet de selectionner le mode
+	 *         custom solo
 	 */
 	public JRadioButton getRb_jeuSolo() {
 		if (rb_jeuSolo == null) {
@@ -239,7 +265,7 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_jeuIA
+	 * @return le JRadioButton rb_jeuIA qui permet de jouer contre une IA
 	 */
 	public JRadioButton getRb_jeuIA() {
 		if (rb_jeuIA == null) {
@@ -249,7 +275,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_facile
+	 * @return le JRadioButton rb_facile qui permet d'initilialiser l'IA en mode
+	 *         facile
 	 */
 	public JRadioButton getRb_facile() {
 		if (rb_facile == null) {
@@ -260,7 +287,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_moyen
+	 * @return le JRadioButton rb_moyen qui permet d'initilialiser l'IA en mode
+	 *         moyen
 	 */
 	public JRadioButton getRb_moyen() {
 		if (rb_moyen == null) {
@@ -270,7 +298,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le rb_difficile
+	 * @return le JRadioButton rb_difficile qui permet d'initilialiser l'IA en
+	 *         mode difficile
 	 */
 	public JRadioButton getRb_difficile() {
 		if (rb_difficile == null) {
@@ -280,7 +309,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le la_titreParcourir
+	 * @return le JLabel la_titreParcourir qui contiet le titre pour demander à
+	 *         l'utilisateur de choisir un fichier
 	 */
 	public JLabel getLa_titreParcourir() {
 		if (la_titreParcourir == null) {
@@ -290,7 +320,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le bt_parcourir
+	 * @return le JButton bt_parcourir qui permet de selectionner un fichier
+	 *         dans ses dossiers personnels
 	 */
 	public JButton getBt_Parcourir() {
 		if (bt_parcourir == null) {
@@ -300,7 +331,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
-	 * @return le tf_cheminFichier
+	 * @return le JTextField tf_cheminFichier qui contient le chemin du fichier
+	 *         renseigné par l'utilisateur
 	 */
 	public JTextField getTf_cheminFichier() {
 		if (tf_cheminFichier == null) {
