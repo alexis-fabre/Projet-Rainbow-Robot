@@ -24,7 +24,7 @@ public class Partie {
 	private int niveauMaxAtteint;
 
 	/** Caisse à récuperer */
-	private CaisseARecuperer caisseARecuperer;
+	private Caisse caisseARecuperer;
 	
 	/** */
 	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
