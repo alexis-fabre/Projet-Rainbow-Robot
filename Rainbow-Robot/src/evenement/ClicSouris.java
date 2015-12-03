@@ -8,13 +8,15 @@ package evenement;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import vue.ChoixLangue;
-import vue.F_aPropos;
-import vue.F_accueil;
 import vue.ChoixMode;
+import vue.F_aPropos;
+import vue.F_abstractModeJeu;
+import vue.F_accueil;
 import vue.F_arcade;
 import vue.F_custom;
 import vue.F_story;
@@ -211,11 +213,11 @@ public class ClicSouris implements MouseListener {
 
 			}
 		}
-		if (fenetre instanceof F_story) {
-			F_story fenetreStory = (F_story) fenetre;
+		if (fenetre instanceof F_abstractModeJeu) {
+			F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) fenetre;
 			// On vérifie quel bouton a été utilisé
 			// Bouton Jouer
-			if (e.getSource() == fenetreStory.getBt_Jouer()) {
+			if (e.getSource() == fenetreAbastractModeJeu.getBt_Jouer()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				FenetreJeu nouvelleFenetre = new FenetreJeu(this);
 				fenetre.setVisible(false);
@@ -224,12 +226,24 @@ public class ClicSouris implements MouseListener {
 			}
 			// On vérifie quel bouton a été utilisé
 			// Bouton Retour
-			if (e.getSource() == fenetreStory.getBt_Retour()) {
+			if (e.getSource() == fenetreAbastractModeJeu.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				ChoixMode nouvelleFenetre = new ChoixMode(this);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
+			}
+		}
+		if (fenetre instanceof F_custom) {
+			F_custom fenetreCustom = (F_custom) fenetre;
+			if (e.getSource() == fenetreCustom.getBt_Parcourir()) {
+				// Objet qui permet de naviguer dans les dossiers personnels
+				JFileChooser chooser = new JFileChooser();
+				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					fenetreCustom.getTf_cheminFichier().setText(
+							chooser.getSelectedFile().getAbsolutePath()
+									.toString());
+				}
 			}
 		}
 

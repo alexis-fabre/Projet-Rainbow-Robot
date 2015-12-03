@@ -61,6 +61,7 @@ public class Photo extends JPanel {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		Graphics2D contexte = (Graphics2D) g;
 		contexte.drawImage(photo, 0, 0, this.getWidth(), this.getHeight(), this);
 	}

@@ -6,6 +6,7 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -20,7 +21,7 @@ import evenement.ClicSouris;
 
 /**
  * <p>
- * Fenêtre de descritpion précise du mode de jeu Story.<br />
+ * Fenêtre de description précise du mode de jeu Story.<br />
  * Elle permet de pouvoir consulter les règles du jeu, les commandes que l'on
  * pourra utiliser ainsi qu'une photo du mode de jeu.<br />
  * La fenêtre dispose des composants de son parent, c'est à dire les boutons
@@ -74,15 +75,9 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		// On force les dimensions au 2/3 de la fenêtre sur la largeur.
 		// Pour la hauteur on prend la toutes la hauteur disponible (elle sera
 		// redimensionné lorsqu'on l'ajoutera au contentStory)
-		contentDescReg.setMinimumSize(new Dimension(
+		UtilitaireFenetre.setAllSize(contentDescReg,
 				2 * UtilitaireFenetre.DIM_FENETRE.width / 3,
-				UtilitaireFenetre.DIM_FENETRE.height));
-		contentDescReg.setPreferredSize(new Dimension(
-				2 * UtilitaireFenetre.DIM_FENETRE.width / 3,
-				UtilitaireFenetre.DIM_FENETRE.height));
-		contentDescReg.setMaximumSize(new Dimension(
-				2 * UtilitaireFenetre.DIM_FENETRE.width / 3,
-				UtilitaireFenetre.DIM_FENETRE.height));
+				UtilitaireFenetre.DIM_FENETRE.height);
 
 		contentDescReg
 				.setLayout(new BoxLayout(contentDescReg, BoxLayout.Y_AXIS));
@@ -93,9 +88,9 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		UtilitaireFenetre.setAllSize(super.getLa_commande(), 500, 50);
 
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_descRegle(),
-				contentDescReg, 0, 100);
+				contentDescReg, 20, 100, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_commande(),
-				contentDescReg, 0, 50);
+				contentDescReg, 20, 50, Component.LEFT_ALIGNMENT);
 
 		// On ajoute les composants sur le JPanel contentStory
 		// On ajoute une marge entre le composant et le bord de la fenêtre

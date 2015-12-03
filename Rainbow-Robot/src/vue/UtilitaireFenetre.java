@@ -4,7 +4,6 @@
  */
 package vue;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -25,7 +24,7 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
-	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(700,
+	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(650,
 			75);
 
 	/**
@@ -68,14 +67,16 @@ public class UtilitaireFenetre {
 	 * @param hauteur
 	 *            hauteur séparant le composant de l'ancien composant ou du
 	 *            composant parent s'il n'y en a pas verticalement
+	 * @param alignementX
+	 *            alignement horizontal par rapport au container parent (pane)
 	 */
 	public static void addAComposantWithBoxLayout(JComponent aAjouter,
-			Container pane, int largeur, int hauteur) {
+			Container pane, int largeur, int hauteur, float alignementX) {
 		// On aligne le composant horizontalement par rapport à la fenêtre
 		if (largeur > 0 || hauteur > 0) {
 			pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));
 		}
-		aAjouter.setAlignmentX(Component.CENTER_ALIGNMENT);
+		aAjouter.setAlignmentX(alignementX);
 		pane.add(aAjouter);
 	}
 

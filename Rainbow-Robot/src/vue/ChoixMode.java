@@ -6,6 +6,7 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -101,19 +102,19 @@ public class ChoixMode extends JFrame implements ChangementLangue {
 
 		// On ajoute les composants dans la fenêtre
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentModeJeu, 0, 30);
+				contentModeJeu, 0, 30, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Story(),
-				contentModeJeu, 0, 50);
+				contentModeJeu, 0, 50, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getDescStory(),
-				contentModeJeu, 0, 10);
+				contentModeJeu, 0, 10, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Arcade(),
-				contentModeJeu, 0, 50);
+				contentModeJeu, 0, 50, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getDescArcade(),
-				contentModeJeu, 0, 10);
+				contentModeJeu, 0, 10, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Custom(),
-				contentModeJeu, 0, 50);
+				contentModeJeu, 0, 50, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getDescCustom(),
-				contentModeJeu, 0, 10);
+				contentModeJeu, 0, 10, Component.CENTER_ALIGNMENT);
 
 		// ---------------------------------------------------------------------
 		// Ajout du bouton Retour
