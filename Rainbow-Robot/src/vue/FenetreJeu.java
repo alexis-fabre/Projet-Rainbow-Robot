@@ -4,18 +4,17 @@
  */
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
+
 import java.awt.FlowLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+
+
 
 import evenement.ClicSouris;
 
@@ -25,7 +24,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue{
+public class FenetreJeu extends JFrame implements ChangementLangue {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -46,12 +45,13 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JLabel getCaiseARecuperer = new JLabel("Liste des caisses à récupérer");
+	private JLabel getCaiseARecuperer = new JLabel(
+			"Liste des caisses à récupérer");
 	/**
 	 * Référence des traductions effectuées dans ChoixLangue.java
 	 */
 	private ChoixLangue traducteur = ChoixLangue.getChoixLangue();
-	
+
 	/**
 	 * Bouton qui permet de mettre en pause la partie en cours
 	 */
@@ -70,38 +70,41 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		Container contentMenuHaut = super.getContentPane();
 		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.CENTER));
-		
-		 //On ajoute les composants dans la fenêtre
+
+		// On ajoute les composants dans la fenêtre
 		contentMenuHaut.add(getTimer());
 		contentMenuHaut.add(getCaiseARecuperer());
 		contentMenuHaut.add(getBt_Pause());
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
-		
+
 		getBt_Pause().addMouseListener(gestion);
-		
+
 		// On centre l'écran
 		UtilitaireFenetre.centrerFenetre(this);
 	}
-	
+
 	/**
 	 * Affichage des caisses que le joueur doit récypérer
+	 * 
 	 * @return la liste de caisses
 	 */
 	private JLabel getCaiseARecuperer() {
 		if (getCaiseARecuperer == null) {
 			getCaiseARecuperer = new JLabel();
-			getCaiseARecuperer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			getCaiseARecuperer
+					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
 		return getCaiseARecuperer;
 	}
 
 	/**
 	 * Affichage du timer de la partie
+	 * 
 	 * @return le timer
 	 */
 	public JLabel getTimer() {
@@ -110,10 +113,9 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 			getTimer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
 		return getTimer;
-		
+
 	}
-	
-	
+
 	public JButton getBt_Pause() {
 		if (bt_Pause == null) {
 			bt_Pause = new JButton();
@@ -139,7 +141,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 	public void repaint() {
 		// TODO - Création automaitque par VisualParadigm
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -147,7 +149,6 @@ public class FenetreJeu extends JFrame implements ChangementLangue{
 	 */
 	@Override
 	public void setLangue() {
-		
 
 	}
 

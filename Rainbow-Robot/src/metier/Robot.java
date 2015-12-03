@@ -11,7 +11,7 @@ import java.awt.Graphics;
  *
  * @author Rainbow Robot
  */
-public class Robot implements Dessinable{
+public class Robot implements Dessinable {
 
 	/** Orientation du robot vers la gauche */
 	public static final int ORIENTATION_GAUCHE = 1;
@@ -25,48 +25,35 @@ public class Robot implements Dessinable{
 	/** Orientation du robot vers la haut */
 	public static final int ORIENTATION_HAUT = 4;
 
-
 	public static final int PIVOTER_GAUCHE = 1;
 
-
 	public static final int PIVOTER_DROITE = 2;
-	
-	
-	private static final int DEPLACEMENT = 3;
-	
-
-
-	/** Vitesse du robot */
-	private int vitesse;
-
-	/** Constante de la vitesse */
-	private final int CONST_VITESSE = 0;
 
 	/** Orientation du robot */
-	private int orientation ;
-
-	/** Position de depart du robot */
-	private Position pos_ini;
+	private int orientation;
 
 	/** Position courante du robot courante */
 	private Position pos_courante;
-	
+
 	/** Caisse du robot */
 	private Caisse caisse;
-	
-	
 
-	
-	/** Le robot */
-	private Robot robot = new Robot(ORIENTATION_GAUCHE,pos_ini);
-	
 	@Override
 	public void dessiner(Graphics g) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		throw new UnsupportedOperationException("Not supported yet."); // To
+																		// change
+																		// body
+																		// of
+																		// generated
+																		// methods,
+																		// choose
+																		// Tools
+																		// |
+																		// Templates.
 	}
 
 	/** */
-	public Robot(int orientation , Position pos_ini){
+	public Robot(int orientation, Position pos_ini) {
 		this.orientation = orientation;
 		this.pos_courante = pos_ini;
 	}
@@ -77,25 +64,25 @@ public class Robot implements Dessinable{
 	public void avancer() {
 		// Avancer d'un indice dans la list
 		// faire une switch en fonction de orientation
-		
-		switch(orientation){
-		
-			case ORIENTATION_GAUCHE:
-				pos_courante.setX(pos_courante.getX()-1);
-				break;
-				
-			case ORIENTATION_BAS:
-				pos_courante.setY(pos_courante.getY()+1);
-				break;
-				
-			case ORIENTATION_DROITE:
-				pos_courante.setX(pos_courante.getX()+1);
-				break;
-				
-			case ORIENTATION_HAUT:
-				pos_courante.setY(pos_courante.getY()-1);
 
-				break;
+		switch (orientation) {
+
+		case ORIENTATION_GAUCHE:
+			pos_courante.setX(pos_courante.getX() - 1);
+			break;
+
+		case ORIENTATION_BAS:
+			pos_courante.setY(pos_courante.getY() + 1);
+			break;
+
+		case ORIENTATION_DROITE:
+			pos_courante.setX(pos_courante.getX() + 1);
+			break;
+
+		case ORIENTATION_HAUT:
+			pos_courante.setY(pos_courante.getY() - 1);
+
+			break;
 		}
 
 	}
@@ -106,44 +93,42 @@ public class Robot implements Dessinable{
 	public void reculer() {
 		// Reculer d'un indice dans la liste
 		// faire une switch en fonction de orientation
-		switch(orientation){
-			case ORIENTATION_GAUCHE:
-				pos_courante.setX(pos_courante.getX()+1) ;
-				break;
-				
-			case ORIENTATION_BAS:
-				pos_courante.setY(pos_courante.getY()-1);
-				break;
-				
-			case ORIENTATION_DROITE:
-				pos_courante.setX(pos_courante.getX()-1);
-				break;
-				
-			case ORIENTATION_HAUT:	
-				pos_courante.setY(pos_courante.getY()+1);
-				break;
-		}
+		switch (orientation) {
+		case ORIENTATION_GAUCHE:
+			pos_courante.setX(pos_courante.getX() + 1);
+			break;
 
+		case ORIENTATION_BAS:
+			pos_courante.setY(pos_courante.getY() - 1);
+			break;
+
+		case ORIENTATION_DROITE:
+			pos_courante.setX(pos_courante.getX() - 1);
+			break;
+
+		case ORIENTATION_HAUT:
+			pos_courante.setY(pos_courante.getY() + 1);
+			break;
+		}
 
 	}
 
 	/**
 	 * Méthode pour faire pivoter le robot
 	 */
-	public void pivoter (int position) {
-		// TODO écrire le corps
-		if(position == PIVOTER_GAUCHE){
+	public void pivoter(int position) {
+		if (position == PIVOTER_GAUCHE) {
 
 			orientation++;
 
-			if(orientation > ORIENTATION_HAUT){
+			if (orientation > ORIENTATION_HAUT) {
 				orientation = ORIENTATION_GAUCHE;
 			}
-		}    	
+		}
 
-		if(position == PIVOTER_DROITE){
+		if (position == PIVOTER_DROITE) {
 			orientation--;
-			if(orientation < ORIENTATION_GAUCHE){
+			if (orientation < ORIENTATION_GAUCHE) {
 				orientation = ORIENTATION_HAUT;
 			}
 
@@ -155,7 +140,7 @@ public class Robot implements Dessinable{
 	 * Méthode pour que le robot saisisse une caisse
 	 */
 	public void saisirCaisse() {
-		if(caisse == null ){
+		if (caisse == null) {
 			// Le robot peut saisir une caisse
 			// Le robot attrape une caisse
 		} else {
@@ -167,28 +152,26 @@ public class Robot implements Dessinable{
 	/**
 	 * Méthode pour faire fusionner deux caisses
 	 */
-	public void fusionner () {
+	public void fusionner (Caisse c2) {
 		if(caisse != null ){
 			// le robot peut fusionner une caisse
 			// appeler la fonction dans caisse
+			//if( c1.couleur() == c2.couleur){
+				// fusionne pas
+			//} else {
+				//fusionne
+			//}
 		} else {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien
 		}
-		
-	}
 
-	
-	
-	
-	private int GetFrameTime() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position
-	public String toString(){
-		return "L'orientation est " + orientation + "\n et sa postion est" + pos_courante.toString() + "\n";
-		
+	public String toString() {
+		return "L'orientation est " + orientation + "\n et sa postion est"
+				+ pos_courante.toString() + "\n";
+
 	}
 }

@@ -5,7 +5,6 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -16,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
 
 import evenement.ClicSouris;
 
@@ -134,7 +132,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 				UtilitaireFenetre.DIM_FENETRE.width, 50));
 
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentTitre, 0, 15);
+				contentTitre, 0, 15, Component.CENTER_ALIGNMENT);
 
 		// ---------------------------------------------------------------------
 		// On dispose les éléments dans la fenêtre

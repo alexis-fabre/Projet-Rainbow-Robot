@@ -44,6 +44,7 @@ public class Position {
 	 *            coordonnée
 	 */
 	public void setX(int x) {
+		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
 		this.x = x;
 	}
 

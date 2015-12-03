@@ -4,9 +4,12 @@
  */
 package vue;
 
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +32,11 @@ import evenement.ClicSouris;
  * @version 1.0
  */
 public class F_accueil extends JFrame implements ChangementLangue {
+
+	/**
+	 * Chemin de la photo de fond de l'écran
+	 */
+	private final static String CHEMIN_PHOTO = "./img/ImageDeFond.jpg";
 
 	/**
 	 * Titre de la fenêtre
@@ -89,21 +97,31 @@ public class F_accueil extends JFrame implements ChangementLangue {
 
 		// On définit le layoutManager
 		Container contentPane = super.getContentPane();
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+		// ---------------------------------------------------------------------
+		// Contient la photo en arrière plan
+		// ---------------------------------------------------------------------
+		JLabel contentBackground = new JLabel(new ImageIcon(
+				".\\img\\ImageDeFond.jpg"));
+		contentBackground.setLayout(new BoxLayout(contentBackground,
+				BoxLayout.Y_AXIS));
+
+		// On ajoute les composants
+		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
+				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
 
 		// On ajoute les composants dans la fenêtre
-		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentPane, 0, 40);
-		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
-				contentPane, 0, 40);
-		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
-				contentPane, 0, 40);
-		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
-				contentPane, 0, 40);
-		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
-				contentPane, 0, 40);
-		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
-				contentPane, 0, 40);
+		contentPane.add(contentBackground);
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
