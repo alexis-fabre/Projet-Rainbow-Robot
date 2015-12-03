@@ -62,6 +62,7 @@ public class Lanceur {
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
+		
 	}
 
 }

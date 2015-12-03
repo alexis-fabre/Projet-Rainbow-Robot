@@ -111,6 +111,13 @@ public class ChoixLangue {
 					"Single player (personnal bests) or 1vs1 against IA",
 					"Single player or 1vs1 against IA on a personalized map",
 					"Back" } };
+	
+	/**
+	 * Contient les traductions pour la fenêtre Reccords
+	 */
+	private final String[][] MODE_RECCORD = { {"Reccords", "Joueur", "Temps"},
+	        {"Highscores", "Player", "Time"}};
+	
 
 	/**
 	 * <p>
@@ -278,4 +285,11 @@ public class ChoixLangue {
 	public String[] getModeStory() {
 		return MODE_STORY[langue];
 	}
+	
+	/**
+         * @return les traductions utilisées pour pour la JFrame Reccords
+         */
+        public String[] getReccords() {
+                return MODE_RECCORD[langue];
+        }
 }
