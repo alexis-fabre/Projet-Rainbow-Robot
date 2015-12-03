@@ -18,24 +18,23 @@ public class JeuRainbow {
 	private static final int DEFAULT_NIVEAU = 0;
 	
 	/** Niveau actuel du joueur */
-	private int niveauCourant;
+	public int niveauCourant;
 
+	
 	/** Niveau maximum */
 	private int niveauMaxAtteint;
 
-	/** Caisse à récuperer */
-	private Caisse caisseARecuperer;
 
-	
 	/** Carte de la partie */
-	private ArrayList<Partie> carte = new ArrayList<Partie>(); 
+	private ArrayList<Partie> parties = new ArrayList<Partie>(); 
 
 	
 	/**
-	 * Constructeur par défaut pour créer une partie
+	 * Constructeur par défaut pour créer les parties
 	 */
 	public JeuRainbow() {
 		niveauCourant = DEFAULT_NIVEAU;
+		
 	}
 
 	/**
@@ -48,14 +47,13 @@ public class JeuRainbow {
 	public JeuRainbow(String nomFic) {
 		// TODO écrie le corps
 	}
-
 	
 	/**
 	 * Pour récupérer la Carte du niveau suivant
 	 * @return la carte du niveau suivant
 	 */
 	public Partie getNiveau() {
-		return carte.get(niveauCourant);
+		return parties.get(niveauCourant);
 	}
 
 }

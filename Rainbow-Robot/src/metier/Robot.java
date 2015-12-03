@@ -151,10 +151,15 @@ public class Robot implements Dessinable{
 	/**
 	 * Méthode pour faire fusionner deux caisses
 	 */
-	public void fusionner () {
+	public void fusionner (Caisse c2) {
 		if(caisse != null ){
 			// le robot peut fusionner une caisse
 			// appeler la fonction dans caisse
+			//if( c1.couleur() == c2.couleur){
+				// fusionne pas
+			//} else {
+				//fusionne
+			//}
 		} else {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien

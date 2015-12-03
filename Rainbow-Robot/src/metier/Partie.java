@@ -28,9 +28,8 @@ public class Partie {
 
 	/** Vortex de la carte */
 	private Vortex vortex;
-	
-	
-	/** */
+		
+	/** caisse à recuperer pour finir une partie */
 	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
 
 
@@ -39,8 +38,8 @@ public class Partie {
 	 */
 	public Partie() {
 		// TODO écrire le corps
-		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
-		Caisse.CaisseARecuperer(caisseARecup,1);
+
+		Caisse.CaisseARecuperer(caisseARecup,1non;
 	}
 	
 	/**
@@ -51,7 +50,7 @@ public class Partie {
 	}
 
 	/**
-	 * Méthode pour recommencer uen partie
+	 * Méthode pour recommencer une partie
 	 */
 	public void recommencer() {
 		// TODO écrire le corps
@@ -69,6 +68,18 @@ public class Partie {
 	 */
 	public void isFinished(){
 		// lorsque toutes les caisseARecup sont récupérer
+		if(caisseARecup.isEmpty()){
+			//niveauCourant++;
+		}
+	}
+	
+	
+	/**
+	 * Renvoie le robot 
+	 * @return le robot 
+	 */
+	public Robot getRobot(){
+		return robot;
 	}
 
 
