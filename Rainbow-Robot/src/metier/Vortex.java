@@ -11,11 +11,20 @@ import java.awt.Graphics;
  *
  * @author Rainbow Robot
  */
-public class Vortex implements Dessinable{
+public class Vortex implements Dessinable {
 
-    @Override
-    public void dessiner(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+	@Override
+	public void dessiner(Graphics g) {
+		throw new UnsupportedOperationException("Not supported yet."); // To
+																		// change
+																		// body
+																		// of
+																		// generated
+																		// methods,
+																		// choose
+																		// Tools|Templates.
+	}
+
+	// LE VORTEX VERA EN 0,0
+
 }

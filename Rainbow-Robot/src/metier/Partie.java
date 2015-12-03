@@ -1,9 +1,12 @@
 /*
- * Partie.java							28 nov 2015
+ * Carte.java							28 nov 2015
  * IUT Info2 2015-2016
  */
 
 package metier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,68 +14,60 @@ package metier;
  */
 public class Partie {
 
-	/** Niveau actuel du joueur */
-	private int niveauCourant;
+	/** Nombre colonne de la carte */
+	private int nbColonne;
 
-	/** Niveau maximum */
-	private int niveauMaxAtteint;
+	/** Nombre de lignes de la carte */
+	private int nbLigne;
 
-	/** Timer de la partie */
-	private Timer timer;
+	/** Robot sur la carte */
+	private Robot robot;
 
-	/** Menu de la partie */
-	private Menu menu;
+	/** Tableau de caisse */
+	private Caisse[] caisses;
 
-	/** Caisse à récuperer */
-	private CaisseARecuperer caisseARecuperer;
+	/** Vortex de la carte */
+	private Vortex vortex;
+
+	/** */
+	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
 
 	/**
-	 * Constructeur par défaut pour créer une partie
+	 * Constrcuteur par défaut pour créer une carte
 	 */
 	public Partie() {
-		// TODO écrire le corps de la méthode
-	}
-
-	/**
-	 * Constructeur avec un argument, pour créer une partie à partir d'un
-	 * fichier mit en argument
-	 * 
-	 * @param nomFic
-	 *            nom du fichier ou se trouve la carte
-	 */
-	public Partie(String nomFic) {
-		// TODO écrie le corps
-	}
-
-	/**
-	 * Pour récupérer le niveau suivant
-	 * 
-	 * @param niveau
-	 *            niveau actuel du joueur
-	 * @return
-	 */
-	public Carte getNiveauSuivant(int niveau) {
 		// TODO écrire le corps
-		return null;
+		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
+		// X = 4..5 Y = -4..-3
+		Caisse.CaisseARecuperer(caisseARecup, 1);
 	}
 
 	/**
-	 * Pour récupérer le niveau courant du joueur
-	 * 
-	 * @return
+	 * Créer une carte avec un niveau donné
 	 */
-	public Carte getNiveauCourant() {
-		// TODO écrire le corps
-		// return this.niveauCourant + 1;
-		return null;
+	public Partie(int niveau) {
+		// TODO ecrire le corps
 	}
 
 	/**
-	 * @param niveau
-	 * @return
+	 * Méthode pour recommencer uen partie
 	 */
-	public Carte getNiveauPrecedent(int niveau) {
+	public void recommencer() {
 		// TODO écrire le corps
-		return null;
 	}
+
+	/**
+	 * Métode pour jouer une partie
+	 */
+	public void jouer() {
+		// TODO écrire le corps
+	}
+
+	/**
+	 * Savoir si la partie est fini
+	 */
+	public void isFinished() {
+		// lorsque toutes les caisseARecup sont récupérer
+	}
+
 }

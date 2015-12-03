@@ -45,5 +45,6 @@ public class MenuPause {
 	public void quitter() {
 		// TODO - Création automaitque par VisualParadigm
 	}
+	
 
 }
