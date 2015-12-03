@@ -17,5 +17,7 @@ public class Vortex implements Dessinable {
 	public void dessiner(Graphics g) {
 		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools|Templates.
 	}
+	
+	
 
 }

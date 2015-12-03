@@ -26,27 +26,17 @@ public class Robot implements Dessinable{
 	public static final int ORIENTATION_HAUT = 4;
 
 
+	
 	public static final int PIVOTER_GAUCHE = 1;
 
 
 	public static final int PIVOTER_DROITE = 2;
 	
-	
-	private static final int DEPLACEMENT = 3;
-	
-
-
-	/** Vitesse du robot */
-	private int vitesse;
-
-	/** Constante de la vitesse */
-	private final int CONST_VITESSE = 0;
 
 	/** Orientation du robot */
 	private int orientation ;
 
-	/** Position de depart du robot */
-	private Position pos_ini;
+
 
 	/** Position courante du robot courante */
 	private Position pos_courante;
@@ -54,12 +44,7 @@ public class Robot implements Dessinable{
 	/** Caisse du robot */
 	private Caisse caisse;
 	
-	
 
-	
-	/** Le robot */
-	private Robot robot = new Robot(ORIENTATION_GAUCHE,pos_ini);
-	
 	@Override
 	public void dessiner(Graphics g) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -131,7 +116,6 @@ public class Robot implements Dessinable{
 	 * Méthode pour faire pivoter le robot
 	 */
 	public void pivoter (int position) {
-		// TODO écrire le corps
 		if(position == PIVOTER_GAUCHE){
 
 			orientation++;
@@ -178,13 +162,6 @@ public class Robot implements Dessinable{
 		
 	}
 
-	
-	
-	
-	private int GetFrameTime() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	// Faire un tostring pour afficher l'orientation et la position
 	public String toString(){

@@ -6,6 +6,7 @@ package metier;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,5 +43,15 @@ public class Caisse implements Dessinable{
     public void dessiner(Graphics g) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+
+	/**
+	 * Créer une liste de caisse pour que l'utilisateur puisse les recuperer dans sa partie
+	 * @param nbCaisse nombre de caisses a récuperer
+	 */
+	public void CaisseARecuperer(ArrayList<Caisse> caisseArecup ,int nbCaisse){
+		for(int i = 0; i < nbCaisse ; i++)
+			caisseArecup.add(new Caisse(couleur));
+	}
     
 }

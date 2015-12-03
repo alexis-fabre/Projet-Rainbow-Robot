@@ -30,16 +30,22 @@ public class Carte {
 	private Vortex vortex;
 
 	/** Carte de la partie */
-	private List<Carte> map;
+	private List map;
 
 	/**
 	 * Constrcuteur par défaut pour créer une carte
 	 */
 	public Carte() {
 		// TODO écrire le corps
-		//  Ne pas créer de caisses de X et Y = 0..1 ; X = 9..10 et Y = 1..2
-	    // X = 0..1 et Y = 7..8 et X = 9..10 et Y = 7..8
+		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
 		
+	}
+	
+	/**
+	 * Créer une carte avec un niveau donné
+	 */
+	public Carte(int niveau){
+		// TODO ecrire le corps
 	}
 
 	/**
