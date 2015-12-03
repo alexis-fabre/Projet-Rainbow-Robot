@@ -67,8 +67,8 @@ public class ChoixLangue {
 	private final String[][] ACCUEIL = {
 			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
 					"A Propos", "Quitter" },
-			{ "Home", "Rainbow Robot", "Play", "Records", "Language", "About",
-					"Exit" } };
+			{ "Home", "Rainbow Robot", "Play", "High Scores", "Language",
+					"About", "Exit" } };
 
 	/**
 	 * <p>
@@ -172,9 +172,83 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private final String[][] MODE_STORY = {
-			{ "Mode story", "MODE STORY", "Règle : à définir",
-					"Commande : à définir" }, //
-			{ "story mode", "STORY MODE", "No translation", "No translation" } };
+			{ "Mode story", "MODE STORY", "Règle : ", "Commande : " }, //
+			{ "Story mode", "STORY MODE", "Rules : ", "Control : " } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JFrame F_arcade.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au titre de la fenêtre.</li>
+	 * <li>La 3ème colonne correspond au règle de ce mode.</li>
+	 * <li>La 4ème colonne correspond à la descritpion des commandes
+	 * utilisables.</li>
+	 * <li>La 5ème colonne correspond au radio bouton Jeu solo.</li>
+	 * <li>La 6ème colonne correspond au radio bouton Jeu IA.</li>
+	 * <li>La 7ème colonne correspond au titre de la bordure.</li>
+	 * <li>La 8ème colonne correspond au radio bouton Difficulté facile de l'IA.
+	 * </li>
+	 * <li>La 9ème colonne correspond au radio bouton Difficulté moyenne de
+	 * l'IA.</li>
+	 * <li>La 10ème colonne correspond au radio bouton Difficulté difficile de
+	 * l'IA.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] MODE_ARCADE = {
+			{ "Mode arcade", "MODE ARCADE", "Règle : ", "Commande : ",
+					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
+					"Moyenne", "Difficile" }, //
+			{ "Arcade mode", "ARCADE MODE", "Rules : ", "Control : ",
+					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
+					"Hard" } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JFrame F_custom.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au titre de la fenêtre.</li>
+	 * <li>La 3ème colonne correspond au règle de ce mode.</li>
+	 * <li>La 4ème colonne correspond à la descritpion des commandes
+	 * utilisables.</li>
+	 * <li>La 5ème colonne correspond au radio bouton Jeu solo.</li>
+	 * <li>La 6ème colonne correspond au radio bouton Jeu IA.</li>
+	 * <li>La 7ème colonne correspond au titre de la bordure.</li>
+	 * <li>La 8ème colonne correspond au radio bouton Difficulté facile de l'IA.
+	 * </li>
+	 * <li>La 9ème colonne correspond au radio bouton Difficulté moyenne de
+	 * l'IA.</li>
+	 * <li>La 10ème colonne correspond au radio bouton Difficulté difficile de
+	 * l'IA.</li>
+	 * <li>La 11ème colonne correspond au titre pour selectionner un fichier
+	 * (JLabel).</li>
+	 * <li>La 12ème colonne correspond au bouton pour aller chercher un fichier
+	 * dans nos dossiers personnels.</li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] MODE_CUSTOM = {
+			{ "Mode custom", "MODE CUSTOM", "Règle : ", "Commande : ",
+					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
+					"Moyenne", "Difficile", "Choisir un fichier", "Parcourir" }, //
+			{ "Custom mode", "CUSTOM MODE", "Rules : ", "Control : ",
+					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
+					"Hard", "Choose a file", "Search" } };
 
 	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récupère via
@@ -219,7 +293,7 @@ public class ChoixLangue {
 	public void setLangue(String nouvelleLangue) {
 		if (nouvelleLangue != null) {
 			for (int i = 0; i < TOUTES_LANGUES.length; i++) {
-				if (nouvelleLangue.trim().equals(TOUTES_LANGUES[i])) {
+				if (nouvelleLangue.equals(TOUTES_LANGUES[i])) {
 					setLangue(i);
 					break;
 				}
@@ -277,5 +351,19 @@ public class ChoixLangue {
 	 */
 	public String[] getModeStory() {
 		return MODE_STORY[langue];
+	}
+
+	/**
+	 * @return les traductions utilisées pour pour la JFrame F_arcade
+	 */
+	public String[] getModeArcade() {
+		return MODE_ARCADE[langue];
+	}
+
+	/**
+	 * @return les traductions utilisées pour pour la JFrame F_custom
+	 */
+	public String[] getModeCustom() {
+		return MODE_CUSTOM[langue];
 	}
 }
