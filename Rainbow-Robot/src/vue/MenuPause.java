@@ -46,8 +46,5 @@ public class MenuPause {
 		// TODO - Création automaitque par VisualParadigm
 	}
 	
-	public JButton getBt_Reprendre() {
-		return bt_Reprendre;
-	}
 
 }
