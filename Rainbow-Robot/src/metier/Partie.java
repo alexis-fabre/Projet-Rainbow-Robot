@@ -71,7 +71,7 @@ public class Partie {
 	public void isFinished() {
 		// lorsque toutes les caisseARecup sont récupérer
 		if(caisseARecup.isEmpty()){
-			//niveauCourant++;
+			JeuRainbow.niveauCourant++;
 		}
 	}
 	
