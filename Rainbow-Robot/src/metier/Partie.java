@@ -1,5 +1,5 @@
 /*
- * Carte.java							28 nov 2015
+ * Partie.java							28 nov 2015
  * IUT Info2 2015-2016
  */
 
@@ -20,9 +20,13 @@ public class Partie extends Observable implements Dessinable{
 
 	/** Nombre de lignes de la carte */
 	private int nbLigne;
+	
+	/** Position initial du robot */
+	Position pos_ini = new Position(1,0);
 
 	/** Robot sur la carte */
-	private Robot robot;
+	private Robot robot = new Robot(Robot.ORIENTATION_GAUCHE,pos_ini);
+	
 
 	/** Tableau de caisse */
 	private Caisse[] caisses;
@@ -33,11 +37,12 @@ public class Partie extends Observable implements Dessinable{
 	/** caisse à recuperer pour finir une partie */
 	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
 
+
 	/**
-	 * Constrcuteur par défaut pour créer une carte
+	 * Créer une carte avec un niveau donné
 	 */
-	public Partie() {
-		// TODO écrire le corps
+	public Partie(int niveau) {
+		// TODO ecrire le corps
 
 		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
 		// X = 4..5 Y = -4..-3
@@ -45,35 +50,22 @@ public class Partie extends Observable implements Dessinable{
 
 	}
 
-	/**
-	 * Créer une carte avec un niveau donné
-	 */
-	public Partie(int niveau) {
-		// TODO ecrire le corps
-	}
 
-	/**
-	 * Méthode pour recommencer une partie
-	 */
-	public void recommencer() {
-		// TODO écrire le corps
-	}
-
-	/**
-	 * Métode pour jouer une partie
-	 */
-	public void jouer() {
-		// TODO écrire le corps
-	}
-
+	
+	
 	/**
 	 * Savoir si la partie est fini
 	 */
-	public void isFinished() {
+	public boolean isFinished() {
 		// lorsque toutes les caisseARecup sont récupérer
+		boolean ok = false;
 		if(caisseARecup.isEmpty()){
-			//niveauCourant++;
-		}
+			JeuRainbow.niveauCourant++;
+			ok = true;
+			return ok;
+		} else {
+			return ok;
+		}	
 	}
 	
 	

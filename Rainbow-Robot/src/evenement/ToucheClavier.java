@@ -36,7 +36,6 @@ public class ToucheClavier implements KeyListener{
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (e.getKeyChar() == KeyEvent.)
 	}
 
 }

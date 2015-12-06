@@ -1,5 +1,5 @@
 /*
- * Partie.java							28 nov 2015
+ * JeuRainbow.java							28 nov 2015
  * IUT Info2 2015-2016
  */
 
@@ -18,7 +18,7 @@ public class JeuRainbow {
 	private static final int DEFAULT_NIVEAU = 0;
 	
 	/** Niveau actuel du joueur */
-	public int niveauCourant;
+	public static int niveauCourant;
 
 	
 	/** Niveau maximum */
@@ -34,6 +34,7 @@ public class JeuRainbow {
 	 */
 	public JeuRainbow() {
 		niveauCourant = DEFAULT_NIVEAU;
+		
 		
 	}
 

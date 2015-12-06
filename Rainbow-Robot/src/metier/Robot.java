@@ -40,16 +40,7 @@ public class Robot implements Dessinable {
 
 	@Override
 	public void dessiner(Graphics2D g) {
-		throw new UnsupportedOperationException("Not supported yet."); // To
-																		// change
-																		// body
-																		// of
-																		// generated
-																		// methods,
-																		// choose
-																		// Tools
-																		// |
-																		// Templates.
+		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods,chooseTools| Templates.
 	}
 
 	/** */
@@ -139,10 +130,11 @@ public class Robot implements Dessinable {
 	/**
 	 * Méthode pour que le robot saisisse une caisse
 	 */
-	public void saisirCaisse() {
+	public void saisirCaisse(Caisse aAttraper) {
 		if (caisse == null) {
 			// Le robot peut saisir une caisse
 			// Le robot attrape une caisse
+			caisse = aAttraper;			
 		} else {
 			// le robot ne peut pas saisir de caisse
 			// le robot ne fait rien
@@ -154,18 +146,22 @@ public class Robot implements Dessinable {
 	 */
 	public void fusionner (Caisse c2) {
 		if(caisse != null ){
-			// le robot peut fusionner une caisse
-			// appeler la fonction dans caisse
-			//if( c1.couleur() == c2.couleur){
-				// fusionne pas
-			//} else {
-				//fusionne
-			//}
+			//fusionne
+			Caisse.fusionCouleur(caisse, c2);
 		} else {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien
 		}
 
+	}
+	
+	
+	/**
+	 * Retourne la position du Robot
+	 * @return pos_courante la position courante
+	 */
+	public Position getPosRobot(){
+		return pos_courante;
 	}
 
 	// Faire un tostring pour afficher l'orientation et la position
