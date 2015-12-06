@@ -5,7 +5,7 @@
 
 package metier;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -39,7 +39,7 @@ public class Robot implements Dessinable {
 	private Caisse caisse;
 
 	@Override
-	public void dessiner(Graphics g) {
+	public void dessiner(Graphics2D g) {
 		throw new UnsupportedOperationException("Not supported yet."); // To
 																		// change
 																		// body

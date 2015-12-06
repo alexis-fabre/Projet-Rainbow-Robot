@@ -5,7 +5,7 @@
 
 package metier;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -17,7 +17,7 @@ public interface Dessinable {
      * Méhode pour dessiner
      * @param g
      */
-    public void dessiner (Graphics g);
+	public void dessiner(Graphics2D g);
     
     
 }

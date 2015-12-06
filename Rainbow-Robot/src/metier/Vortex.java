@@ -5,7 +5,7 @@
 
 package metier;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.awt.Graphics;
 public class Vortex implements Dessinable {
 
 	@Override
-	public void dessiner(Graphics g) {
+	public void dessiner(Graphics2D g) {
 		throw new UnsupportedOperationException("Not supported yet."); // To
 																		// change
 																		// body
