@@ -24,14 +24,20 @@ public class Partie {
 	Position pos_ini = new Position(1,0);
 
 	/** Robot sur la carte */
-	private Robot robot = new Robot(Robot.ORIENTATION_GAUCHE,pos_ini);
+	private Robot robot ;
 	
 
 	/** Tableau de caisse */
 	private Caisse[] caisses;
+	
+	/** Niveau de la partie */
+	private int niveau;
 
 	/** Vortex de la carte */
 	private Vortex vortex;
+	
+	/** Position vortex */
+	private Position pos_vortex = new Position(0,0);
 		
 	/** caisse à recuperer pour finir une partie */
 	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
@@ -41,12 +47,14 @@ public class Partie {
 	 * Créer une carte avec un niveau donné
 	 */
 	public Partie(int niveau) {
-		// TODO ecrire le corps
+
 
 		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
 		// X = 4..5 Y = -4..-3
 		Caisse.CaisseARecuperer(caisseARecup, 1);
-
+		vortex = new Vortex(pos_vortex);
+		robot = new Robot(Robot.ORIENTATION_GAUCHE,pos_ini);
+		
 	}
 
 
@@ -59,12 +67,10 @@ public class Partie {
 		// lorsque toutes les caisseARecup sont récupérer
 		boolean ok = false;
 		if(caisseARecup.isEmpty()){
-			JeuRainbow.niveauCourant++;
+			JeuRainbow.setNiveau(niveau);
 			ok = true;
-			return ok;
-		} else {
-			return ok;
-		}	
+		}
+		return ok;
 	}
 	
 	

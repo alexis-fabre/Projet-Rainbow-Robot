@@ -164,6 +164,7 @@ public class Robot implements Dessinable {
 		return pos_courante;
 	}
 
+	
 	// Faire un tostring pour afficher l'orientation et la position
 	public String toString() {
 		return "L'orientation est " + orientation + "\n et sa postion est"

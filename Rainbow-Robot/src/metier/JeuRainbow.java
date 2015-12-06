@@ -18,7 +18,7 @@ public class JeuRainbow {
 	private static final int DEFAULT_NIVEAU = 0;
 	
 	/** Niveau actuel du joueur */
-	public static int niveauCourant;
+	private static int niveauCourant;
 
 	
 	/** Niveau maximum */
@@ -55,6 +55,10 @@ public class JeuRainbow {
 	 */
 	public Partie getNiveau() {
 		return parties.get(niveauCourant);
+	}
+	
+	public static int setNiveau(int niveau){
+		return niveauCourant = niveau;
 	}
 
 }
