@@ -108,16 +108,15 @@ public class Caisse implements Dessinable {
 
 	@Override
 	public void dessiner(Graphics2D g) {
-		throw new UnsupportedOperationException("Not supported yet."); // To
-																		// change
-																		// body
-																		// of
-																		// generated
-																		// methods,
-																		// choose
-																		// Tools
-																		// |
-																		// Templates.
+		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+	}
+	
+	/**
+	 * Retourne la position de la caisse
+	 * @return pos_courante la position courante
+	 */
+	public Position getPosCaisse(){
+		return pos_courante;
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * Partie.java							28 nov 2015
+ * JeuRainbow.java							28 nov 2015
  * IUT Info2 2015-2016
  */
 
@@ -34,6 +34,7 @@ public class JeuRainbow {
 	 */
 	public JeuRainbow() {
 		niveauCourant = DEFAULT_NIVEAU;
+		
 		
 	}
 
