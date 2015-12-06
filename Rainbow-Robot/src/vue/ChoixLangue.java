@@ -116,7 +116,7 @@ public class ChoixLangue {
 	 * Contient les traductions pour la fenêtre Reccords
 	 */
 	private final String[][] MODE_RECCORD = { {"Reccords", "Joueur", "Temps"},
-	        {"Highscores", "Player", "Time"}};
+	        {"High Score", "Player", "Time"}};
 	
 
 	/**

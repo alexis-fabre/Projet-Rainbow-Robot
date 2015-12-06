@@ -23,13 +23,17 @@ import javax.swing.JTabbedPane;
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
- * 
+ * Fenetre contenant meilleurs scores (temps) des joueurs en fonction du niveau
+ * effectué
+ * Chaque onglet correspond à un niveau
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Reccords extends JFrame implements ChangementLangue{
+public class Reccords extends JFrame implements ChangementLangue {
 
+    /** nombre de scores à afficher */
+    private final int NB_MAX_SCORES = 10;
+    
     /** Titre de la fenêtre */
     private JLabel la_titre;
 
@@ -41,29 +45,14 @@ public class Reccords extends JFrame implements ChangementLangue{
 
     /** Onglets des différents niveaux */
     private JTabbedPane lesOnglets;
-
-    /** panneau CardLayout pour le niveau 1 */
-    private JPanel cl_niv1;
-
-    /** panneau pour afficher le contenu sur 2 colonnes pour le niveau 1 */
-    private JPanel niv1;
-
-    /** panneau pour le niveau 2 */
-    private JPanel cl_niv2;
-
-    /** panneau pour afficher le contenu sur 2 colonnes pour le niveau 2 */
-    private JPanel niv2;
-
-    /** panneau pour le niveau 3 */
-    private JPanel cl_niv3;
-
-    /** panneau pour afficher le contenu sur 2 colonnes pour le niveau 3 */
-    private JPanel niv3;
-
-//    /** tableau contenant les couples (nomJoueur, temps effectué) 
-//     * chaque colonne représente un niveau dans le jeu 
-//     */
-//    private HashMap<String, String>[] lesNiveaux;
+    
+    /** tableau de JPanel pour chaque niveau*/
+    private JPanel[] lesPanneaux;
+    
+    /** tableau contenant les couples (nomJoueur, temps effectué) 
+     * chaque colonne représente un niveau dans le jeu 
+     */
+    private HashMap<String, String>[] lesNiveaux;
 
     /** label contenant le titre de la colonne joueur */ 
     private JLabel la_titreJoueur;
@@ -92,56 +81,54 @@ public class Reccords extends JFrame implements ChangementLangue{
         super.setResizable(false);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        this.lesOnglets = new JTabbedPane(JTabbedPane.TOP); // onglets en hauts
-        this.lesOnglets.setBounds(20, 10, 450, 580);       // position et taille
         // panneau de la fenêtre
-        Container contentPane =  super.getContentPane();
-        
+        Container contentPane =  super.getContentPane(); 
         contentPane.setLayout(null);
-
-
+        
+        this.lesOnglets = new JTabbedPane(JTabbedPane.TOP); // onglets en hauts
+        this.lesOnglets.setBounds(45, 45, 900, 550);       // position et taille
+        lesOnglets.setBackground(Color.YELLOW);
+        this.lesPanneaux = new JPanel[NB_MAX_SCORES];
         
         
-        // cardLayout pour les modifications en temps réel
-        JPanel cl_niv1 = new JPanel(new CardLayout());
-        JPanel cl_niv2 = new JPanel(new CardLayout());
-        JPanel cl_niv3 = new JPanel(new CardLayout());
-
-        // panneaux de gridLayout pour pouvoir séparer 
-        // on ajoute 1 pour le titre
-//        JPanel niv1 = new JPanel(new GridLayout(lesNiveaux[0].size()+1, 2));
-//        JPanel niv2 = new JPanel(new GridLayout(lesNiveaux[1].size()+1, 2) );
-//        JPanel niv3 = new JPanel(new CardLayout(lesNiveaux[2].size()+1, 2) );
-        
-        JPanel niv1 = new JPanel(new GridLayout(10, 3));
-        JPanel niv2 = new JPanel(new GridLayout(10, 3) );
-        JPanel niv3 = new JPanel(new GridLayout(10, 3) );
-
-        // ajout des onglets et de leur panneaux
-        lesOnglets.addTab("1", cl_niv1);
-        cl_niv1.add(niv1);
-
-        lesOnglets.addTab("2", cl_niv2);
-        cl_niv1.add(niv2);
-
-        lesOnglets.addTab("3", cl_niv3);
-        cl_niv1.add(niv3);
-
-        // ajout des titres
-        niv1.add(getLa_titreJoueur(), 0);
-        niv1.add(getLa_titreJoueur(), 0);
-        
-        
-
         // On ajoute le nom des composants en fonction de la langue choisie
         setLangue();
 
+        // ajout du contenu du panneau pour chaque niveau
+        for(int i = 0; i < lesPanneaux.length ; i++) {
+            // ajout des onglets et de leur panneaux
+            lesOnglets.addTab(Integer.toString(i) , ajoutContenu(lesPanneaux[i], i));
+        }
+  
 
         // ajout évènement sur bouton retour
         getBt_Retour().addMouseListener(gestion);
         
-        contentPane.add(lesOnglets); // ajout des onglets
+        // On centre l'écran
+        UtilitaireFenetre.centrerFenetre(this);
+        
+        contentPane.add(getLesOnglets()); // ajout des onglets
         contentPane.add(getBt_Retour());
+    }
+
+
+    /**
+     * crée le panneau du niveau correspondant et lui ajoute le contenu
+     * @param aAjouter
+     * @param indice
+     * @return aAjouter le panneau avec le contenu
+     */
+    public JPanel ajoutContenu(JPanel aAjouter, int indice) {
+        aAjouter = new JPanel(new GridLayout(NB_MAX_SCORES, 3));
+        // ajout du numro de classement en haut à gauche
+        aAjouter.add(new JLabel("No."));
+        // ajout du titre joueur en haut au centre
+        aAjouter.add(new JLabel("cc"));
+        // ajout du titre temps en haut au centre
+        aAjouter.add(getLa_titreTemps());
+        
+        System.out.println(getLa_titreJoueur().getText());
+        return aAjouter;
     }
 
 
@@ -164,7 +151,7 @@ public class Reccords extends JFrame implements ChangementLangue{
             bt_Retour = new JButton();
             // On définit une taille pour le bouton
             UtilitaireFenetre.setAllSize(bt_Retour,
-                    UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
+                    UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
         }
         return bt_Retour;
     }
@@ -176,20 +163,20 @@ public class Reccords extends JFrame implements ChangementLangue{
      * @param nomFichier
      */
     public void recupNomScore(String nomFichier) {
-        // TODO - Création automaitque par VisualParadigm
+        
     }
 
+    
     /* (non-Javadoc)
      * @see vue.ChangementLangue#setLangue()
      */
     @Override
     public void setLangue() {
         // On actualise la langue
-        String[] traductionAccueil = traducteur.getReccords();
-        this.setTitle(traductionAccueil[0]);
-        getLa_titre().setText(traductionAccueil[0]);
-        getLa_titreJoueur().setText(traductionAccueil[1]);
-        getLa_titreTemps().setText(traductionAccueil[2]);
+        String[] traductionReccords = traducteur.getReccords();
+        this.setTitle(traductionReccords[0]);
+        getLa_titreJoueur().setText(traductionReccords[1]);
+        getLa_titreTemps().setText(traductionReccords[2]);
 
     }
 
@@ -217,51 +204,13 @@ public class Reccords extends JFrame implements ChangementLangue{
 
 
     /**
-     * @return the cl_niv1
+     * @return the lesOnglets
      */
-    public JPanel getCl_niv1() {
-        return cl_niv1;
+    public JTabbedPane getLesOnglets() {
+        return lesOnglets;
     }
 
 
-    /**
-     * @return the niv1
-     */
-    public JPanel getNiv1() {
-        return niv1;
-    }
-
-
-    /**
-     * @return the cl_niv2
-     */
-    public JPanel getCl_niv2() {
-        return cl_niv2;
-    }
-
-
-    /**
-     * @return the niv2
-     */
-    public JPanel getNiv2() {
-        return niv2;
-    }
-
-
-    /**
-     * @return the cl_niv3
-     */
-    public JPanel getCl_niv3() {
-        return cl_niv3;
-    }
-
-
-    /**
-     * @return the niv3
-     */
-    public JPanel getNiv3() {
-        return niv3;
-    }
     
     
 
