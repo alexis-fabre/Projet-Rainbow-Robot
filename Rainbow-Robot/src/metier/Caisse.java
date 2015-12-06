@@ -5,7 +5,7 @@
 package metier;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 /**
@@ -107,7 +107,7 @@ public class Caisse implements Dessinable {
 	}
 
 	@Override
-	public void dessiner(Graphics g) {
+	public void dessiner(Graphics2D g) {
 		throw new UnsupportedOperationException("Not supported yet."); // To
 																		// change
 																		// body
