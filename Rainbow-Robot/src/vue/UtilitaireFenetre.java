@@ -4,6 +4,7 @@
  */
 package vue;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -37,6 +38,35 @@ public class UtilitaireFenetre {
 	 * Dimension des fenêtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
+
+	/**
+	 * Dimension d'une case vide. Une case vide est une case en fond représentée
+	 * lors d'une partie du jeu.
+	 */
+	public static final Dimension DIM_CASE_VIDE = new Dimension(50, 50);
+
+	/**
+	 * Largeur de la bordure d'une case vide. Une case vide est une case en fond
+	 * représentée lors d'une partie du jeu.
+	 */
+	public static final float LARGEUR_BORDURE = 2.0f;
+
+	/**
+	 * Couleur de fond d'une case vide. Une case vide est une case en fond
+	 * représentée lors d'une partie du jeu.
+	 */
+	public static final Color COULEUR_FOND = new Color(210, 211, 213);
+
+	/**
+	 * Couleur de la bordure d'une case vide. Une case vide est une case en fond
+	 * représentée lors d'une partie du jeu.
+	 */
+	public static final Color COULEUR_BORDURE = new Color(52, 102, 164);
+
+	/**
+	 * Couleur du vortex
+	 */
+	public static final Color COULEUR_VORTEX = new Color(88, 88, 90);
 
 	/**
 	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le

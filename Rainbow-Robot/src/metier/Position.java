@@ -44,7 +44,8 @@ public class Position {
 	 *            coordonnée
 	 */
 	public void setX(int x) {
-		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3  OU  X = 4..5 Y = 3..4  OU X = 4..5 Y = -4..-3
+		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
+		// X = 4..5 Y = -4..-3
 		this.x = x;
 	}
 
@@ -67,6 +68,24 @@ public class Position {
 		this.y = y;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return obj instanceof Position
+				&& ((Position) obj).getX() == this.getX()
+				&& ((Position) obj).getY() == this.getY();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return " X : " + getX() + " et Y : " + getY();
 	}

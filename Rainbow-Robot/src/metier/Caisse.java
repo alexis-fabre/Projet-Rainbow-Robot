@@ -20,10 +20,13 @@ import java.util.ArrayList;
 public class Caisse implements Dessinable {
 
 	/** Couleur de la caisse */
-	private static Color couleur;
+	private Color couleur;
 
 	/** Position de la Caisse sur la carte */
 	private Position pos_courante;
+
+	public static final Color[] COULEUR_AUTORISEE = { Color.RED, Color.YELLOW,
+			Color.MAGENTA, Color.GREEN, Color.BLUE };
 
 	/**
 	 * Constructeur initialisant une caisse en lui attribuant une couleur
@@ -108,14 +111,17 @@ public class Caisse implements Dessinable {
 
 	@Override
 	public void dessiner(Graphics2D g) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+		if (couleur == Color.BLUE) {
+
+		}
 	}
-	
+
 	/**
 	 * Retourne la position de la caisse
+	 * 
 	 * @return pos_courante la position courante
 	 */
-	public Position getPosCaisse(){
+	public Position getPosCaisse() {
 		return pos_courante;
 	}
 
@@ -127,7 +133,7 @@ public class Caisse implements Dessinable {
 	 *            nombre de caisses a récuperer
 	 */
 	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
-			int nbCaisse) {
+			int nbCaisse, Color couleur) {
 		for (int i = 0; i < nbCaisse; i++)
 			caisseArecup.add(new Caisse(couleur));
 	}
