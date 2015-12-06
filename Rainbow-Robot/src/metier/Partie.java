@@ -5,14 +5,15 @@
 
 package metier;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author Rainbow Robot
  */
-public class Partie {
+public class Partie extends Observable implements Dessinable{
 
 	/** Nombre colonne de la carte */
 	private int nbColonne;
@@ -82,6 +83,15 @@ public class Partie {
 	 */
 	public Robot getRobot(){
 		return robot;
+	}
+
+	/* (non-Javadoc)
+	 * @see metier.Dessinable#dessiner(java.awt.Graphics2D)
+	 */
+	@Override
+	public void dessiner(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

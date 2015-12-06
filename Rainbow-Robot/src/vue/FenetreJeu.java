@@ -4,17 +4,14 @@
  */
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
-
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-
-
+import javax.swing.JPanel;
 
 import evenement.ClicSouris;
 
@@ -71,7 +68,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Container contentMenuHaut = super.getContentPane();
+		Container contentPane = super.getContentPane();
+		Container contentMenuHaut = new JPanel();
 		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		// On ajoute les composants dans la fenêtre
@@ -81,6 +79,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
+
+		contentPane.add(contentMenuHaut,BorderLayout.PAGE_START);
 
 		getBt_Pause().addMouseListener(gestion);
 
@@ -132,13 +132,6 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	 * TODO Expliquer le fonctionnement de la méthode
 	 */
 	public void pause() {
-		// TODO - Création automaitque par VisualParadigm
-	}
-
-	/**
-	 * TODO Expliquer le fonctionnement de la méthode
-	 */
-	public void repaint() {
 		// TODO - Création automaitque par VisualParadigm
 	}
 

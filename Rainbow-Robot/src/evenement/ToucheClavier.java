@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
  */
 public class ToucheClavier implements KeyListener{
 	
-	/* (non-Javadoc)
+	/* Non utilisé (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
 	@Override
@@ -22,7 +22,7 @@ public class ToucheClavier implements KeyListener{
 		// TODO écrire le corps
 	}
 
-	/* (non-Javadoc)
+	/* Non utilisé (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
 	@Override
@@ -36,8 +36,7 @@ public class ToucheClavier implements KeyListener{
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getKeyChar() == KeyEvent.)
 	}
 
 }
