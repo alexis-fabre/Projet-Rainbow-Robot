@@ -4,18 +4,18 @@
  */
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
-
 import java.awt.FlowLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-
-
-
+import metier.Partie;
 import evenement.ClicSouris;
 
 /**
@@ -24,7 +24,12 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue {
+public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
+
+	/**
+	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
+	 */
+	private PartieDessinable partie;
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -71,7 +76,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Container contentMenuHaut = super.getContentPane();
+		Container contentPane = super.getContentPane();
+		Container contentMenuHaut = new JPanel();
 		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		// On ajoute les composants dans la fenêtre
@@ -81,6 +87,14 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
+
+		// *********************************************************************
+		// Test expérimental
+		// *********************************************************************
+		partie = new PartieDessinable(null, new Partie(9, 11));
+
+		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
+		contentPane.add(partie, BorderLayout.CENTER);
 
 		getBt_Pause().addMouseListener(gestion);
 
@@ -135,13 +149,6 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		// TODO - Création automaitque par VisualParadigm
 	}
 
-	/**
-	 * TODO Expliquer le fonctionnement de la méthode
-	 */
-	public void repaint() {
-		// TODO - Création automaitque par VisualParadigm
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -150,6 +157,15 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	@Override
 	public void setLangue() {
 
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
