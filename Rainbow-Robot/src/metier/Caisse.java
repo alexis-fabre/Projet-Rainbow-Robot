@@ -61,11 +61,8 @@ public class Caisse implements Dessinable {
 	}
 
 	/**
-	 * TODO Cas d'erreur mal géré et méthode à finir
-	 * 
-	 * Fusion des couleurs des deux caisses lorsque le robot effectuera une
-	 * fusion de caisse
-	 * 
+	 * Fusion des couleurs de deux caisses par le procédé de la synthèse additive
+	 * Lorsque le Robot effectuera l'action "fusionner"
 	 * @param c1
 	 *            première caisse à fusionner tenue par le robot
 	 * @param c2
@@ -73,29 +70,39 @@ public class Caisse implements Dessinable {
 	 * @return c3 la caisse de nouvelle couleur
 	 */
 	public static Caisse fusionCouleur(Caisse c1, Caisse c2) {
-		// tableau pour récupérer les valeurs RVB définissant la couleur de c1
-		float tabc1[] = new float[3];
-		// tableau pour récupérer les valeurs RVB définissant la couleur de c2
-		float tabc2[] = new float[3];
-		// tableau contenant les valeurs RVB après la synthèse additive
-		float tabc3[] = new float[3];
+		// caisse à retourner avec la couleur noir par défaut
+        Caisse c3 = new Caisse(Color.BLACK); 
 
-		Caisse c3; // nouvelle caisse à retourner
-
-		c1.getCouleur().getRGBColorComponents(tabc1);
-		c2.getCouleur().getRGBColorComponents(tabc2);
-
-		if ((c1.getCouleur()).equals(c2.getCouleur())) {
-			System.out.println("impossible de fusionner "
-					+ "deux caisses de même couleur");
-		} else {
-			for (int i = 0; i < tabc1.length; i++) {
-				tabc3[i] = tabc1[i] + tabc2[i];
-			}
-			c3 = new Caisse(new Color(tabc3[0], tabc3[1], tabc3[2]));
-		}
-		return c2;
-	}
+        if (c1.getCouleur() == c2.getCouleur()) {
+        	// Cas d'erreur fusion de deux caisses avec une couleur identique
+        	
+        } else if ( (c1.getCouleur() == Color.RED 
+        		     && c2.getCouleur() == Color.GREEN)
+                 || (c1.getCouleur() == Color.GREEN 
+                     && c2.getCouleur() == Color.RED)) {
+        
+        	// La couleur de la fusion est Jaune
+            c3.setCouleur(Color.YELLOW);
+            
+        } else if ( (c1.getCouleur() == Color.RED 
+        		     && c2.getCouleur() == Color.YELLOW)
+                || (c1.getCouleur() == Color.YELLOW 
+                     && c2.getCouleur() == Color.RED)) {
+        
+        	// La couleur de la fusion est Orange
+            c3.setCouleur(Color.ORANGE);
+            
+        } else if ( (c1.getCouleur() == Color.BLUE 
+        		     && c2.getCouleur() == Color.RED)
+                || (c1.getCouleur() == Color.RED 
+                     && c2.getCouleur() == Color.BLUE)) {
+        
+        	// La couleur de la fusion est violet
+            c3.setCouleur(Color.MAGENTA);
+        } 
+        
+        return c3;
+    }
 
 	/**
 	 * Accesseur sur la couleur de la caisse
