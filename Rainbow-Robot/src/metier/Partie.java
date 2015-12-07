@@ -7,13 +7,9 @@ package metier;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;	
-import java.io.File;
-import java.io.IOException;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Observable;
-
-import javax.imageio.ImageIO;
 
 import vue.UtilitaireFenetre;
 
@@ -40,18 +36,16 @@ public class Partie extends Observable implements Dessinable {
 	private int debutY;
 
 	/** Robot sur la carte */
-	private Robot robot ;
-	
+	private Robot robot;
 
 	/** Tableau de caisse */
 	private Caisse[] caisses;
-	
+
 	/** Niveau de la partie */
 	private int niveau;
 
 	/** Vortex de la carte */
 	private Vortex vortex;
-
 
 	/** caisse à recuperer pour finir une partie */
 	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
@@ -68,12 +62,11 @@ public class Partie extends Observable implements Dessinable {
 	 */
 	public Partie(int niveau) {
 
-
 		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
 		// X = 4..5 Y = -4..-3
 
-		vortex = new Vortex(new Position(0,0));
-		robot = new Robot(Robot.ORIENTATION_GAUCHE,new Position(1,0));
+		vortex = new Vortex(new Position(0, 0));
+		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
 
 		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
@@ -113,11 +106,17 @@ public class Partie extends Observable implements Dessinable {
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
-		// Le robot
-		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
+		// TODO à généraliser
+		robot = new Robot(Robot.ORIENTATION_HAUT, new Position(1, 0));
 
-		// Les caisses à récupérées
+		// TODO à généraliser
 		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
+
+		// TODO à généraliser
+		caisses = new Caisse[3];
+		caisses[0] = new Caisse(Color.RED, new Position(0, 0));
+		caisses[1] = new Caisse(Color.BLUE, new Position(3, 2));
+		caisses[2] = new Caisse(Color.YELLOW, new Position(2, 3));
 
 		// Le vortex
 		vortex = new Vortex(new Position(0, 0));
@@ -130,7 +129,7 @@ public class Partie extends Observable implements Dessinable {
 		// lorsque toutes les caisseARecup sont récupérer
 		boolean ok = false;
 
-		if(caisseARecup.isEmpty()){
+		if (caisseARecup.isEmpty()) {
 			JeuRainbow.setNiveau(niveau);
 			ok = true;
 		}
@@ -230,9 +229,12 @@ public class Partie extends Observable implements Dessinable {
 	public void dessiner(Graphics2D g) {
 		for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
 			for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
-				Position aDessiner = new Position(x + debutX, y + debutY);
-				if (isPositionOK(aDessiner)) {
-					if (aDessiner.equals(vortex.getPosVortex())) { // Vortex
+				Position posADessiner = new Position(x + debutX, y + debutY);
+				if (isPositionOK(posADessiner)) {
+					// ---------------------------------------------------------
+					// On dessine les cases vides et le vortex
+					// ---------------------------------------------------------
+					if (posADessiner.equals(vortex.getPosVortex())) { // Vortex
 						g.setColor(UtilitaireFenetre.COULEUR_VORTEX);
 					} else { // Case vide
 						g.setColor(UtilitaireFenetre.COULEUR_FOND);
@@ -252,6 +254,52 @@ public class Partie extends Observable implements Dessinable {
 							* UtilitaireFenetre.DIM_CASE_VIDE.height,
 							UtilitaireFenetre.DIM_CASE_VIDE.width,
 							UtilitaireFenetre.DIM_CASE_VIDE.height);
+
+					// ---------------------------------------------------------
+					// On dessine le robot
+					// ---------------------------------------------------------
+					if (posADessiner.equals(robot.getPosRobot())) {
+						// Marge entre le robot et le bord droit de la case vide
+						int marge = 10;
+						// On calcule la nouvel abscisse et ordonnée pour
+						// positionner l'image du robot
+						// On fait cela pour centrer l'image dans la case vide
+						int abscisse = x
+								* UtilitaireFenetre.DIM_CASE_VIDE.width
+								+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2)
+										- ((UtilitaireFenetre.DIM_ROBOT.width / 2)) - marge);
+						int ordonne = y
+								* UtilitaireFenetre.DIM_CASE_VIDE.height
+								+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
+						Graphics2D contexteRobot = (Graphics2D) g.create(
+								abscisse, ordonne,
+								UtilitaireFenetre.DIM_ROBOT.width,
+								UtilitaireFenetre.DIM_ROBOT.height);
+						robot.dessiner(contexteRobot);
+					}
+
+					// ---------------------------------------------------------
+					// On dessine les caisses
+					// ---------------------------------------------------------
+					for (Caisse caisseADessiner : caisses) {
+						if (posADessiner.equals(caisseADessiner.getPosCaisse())) {
+							// On calcule la nouvel abscisse et ordonnée pour
+							// positionner l'image de la caisse
+							// On fait cela pour centrer l'image dans la case
+							// vide
+							int abscisse = x
+									* UtilitaireFenetre.DIM_CASE_VIDE.width
+									+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+							int ordonne = y
+									* UtilitaireFenetre.DIM_CASE_VIDE.height
+									+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+							Graphics2D contexteCaisse = (Graphics2D) g.create(
+									abscisse, ordonne,
+									UtilitaireFenetre.DIM_CAISSE.width,
+									UtilitaireFenetre.DIM_CAISSE.height);
+							caisseADessiner.dessiner(contexteCaisse);
+						}
+					}
 				}
 			}
 		}

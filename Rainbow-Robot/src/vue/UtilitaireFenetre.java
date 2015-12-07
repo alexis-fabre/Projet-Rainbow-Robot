@@ -46,6 +46,16 @@ public class UtilitaireFenetre {
 	public static final Dimension DIM_CASE_VIDE = new Dimension(50, 50);
 
 	/**
+	 * Dimension de l'image d'une caisse.
+	 */
+	public static final Dimension DIM_CAISSE = new Dimension(40, 40);
+
+	/**
+	 * Dimension de l'image du robot.
+	 */
+	public static final Dimension DIM_ROBOT = new Dimension(80, 50);
+
+	/**
 	 * Largeur de la bordure d'une case vide. Une case vide est une case en fond
 	 * représentée lors d'une partie du jeu.
 	 */

@@ -6,7 +6,13 @@ package metier;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+import vue.UtilitaireFenetre;
 
 /**
  * Classe gérant les caisses présentent sur la carte et dans les commandes que
@@ -26,7 +32,12 @@ public class Caisse implements Dessinable {
 	private Position pos_courante;
 
 	public static final Color[] COULEUR_AUTORISEE = { Color.RED, Color.YELLOW,
-			Color.MAGENTA, Color.GREEN, Color.BLUE };
+			Color.MAGENTA, Color.GREEN, Color.BLUE, Color.ORANGE };
+
+	public static final String[] CHEMIN_IMAGE_CAISSE = { "./img/CaseRouge.PNG",
+			"./img/CaseJaune.PNG", "./img/CaseViolette.PNG",
+			"./img/CaseVerte.PNG", "./img/CaseBleue.PNG",
+			"./img/CaseOrange.PNG" };
 
 	/**
 	 * Constructeur initialisant une caisse en lui attribuant une couleur
@@ -109,10 +120,45 @@ public class Caisse implements Dessinable {
 		this.couleur = couleur;
 	}
 
+	/**
+	 * Vérifie si une couleur peut être dessiné car l'application ne permet pas
+	 * encore de pouvoir dessiner toutes les couleurs des caisses.
+	 * 
+	 * @param aVerifier
+	 *            couleur a vérifiée
+	 * @return true si la couleur appartient aux couleurs autorisées faux sinon
+	 */
+	public static boolean isColorOK(Color aVerifier) {
+		boolean couleurOK = false;
+		for (int i = 0; i < COULEUR_AUTORISEE.length && !couleurOK; i++) {
+			if (aVerifier.equals(COULEUR_AUTORISEE[i])) {
+				couleurOK = true;
+			}
+		}
+		return couleurOK;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see metier.Dessinable#dessiner(java.awt.Graphics2D)
+	 */
 	@Override
 	public void dessiner(Graphics2D g) {
-		if (couleur == Color.BLUE) {
-
+		boolean couleurTrouvee = false;
+		for (int i = 0; i < COULEUR_AUTORISEE.length && !couleurTrouvee; i++) {
+			if (couleur.equals(COULEUR_AUTORISEE[i])) {
+				// dessiner
+				couleurTrouvee = true;
+				try {
+					g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_CAISSE[i])),
+							0, 0, UtilitaireFenetre.DIM_CAISSE.width,
+							UtilitaireFenetre.DIM_CAISSE.height, null);
+				} catch (IOException e) {
+					System.out.println("Caisse : dessiner : "
+							+ "Chemin introuvable");
+				}
+			}
 		}
 	}
 
@@ -135,7 +181,7 @@ public class Caisse implements Dessinable {
 	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
 			int nbCaisse, Color couleur) {
 		for (int i = 0; i < nbCaisse; i++)
-			caisseArecup.add(new Caisse(couleur));
+			caisseArecup.add(new Caisse(couleur, new Position(2, 0)));
 	}
 
 }

@@ -220,22 +220,6 @@ public class ClicSouris implements MouseListener {
                 // TODO faire la gestion des boutons
             }
         }
-
-        if (fenetre instanceof FenetreJeu) {
-            FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
-            // On vérifie quel bouton a été utilisé
-            // Bouton Retour
-            if (e.getSource() == fenetreJeu.getBt_Pause()) {
-                Object[] optionsBoutons = { new JButton("Reprendre"),
-                        new JButton("Recommencer"), new JButton("Quitter") };
-                // 3 bouton0 s donc optionType = YES_NO_CANCEL_OPTION
-                int r = JOptionPane.showOptionDialog(null, "Choix", "Pause",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, optionsBoutons,
-                        optionsBoutons[0]);
-                // TODO faire la gestion des boutons
-            }
-        }
         if (fenetre instanceof F_abstractModeJeu) {
             F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) fenetre;
             // On vérifie quel bouton a été utilisé

@@ -17,6 +17,53 @@ import metier.Caisse;
  */
 public class testCaisse {
 
+	/**
+	 * Jeu de test comportant toutes les couleurs qui sont acceptés pour une
+	 * caisse
+	 */
+	public static final Color[] JEU_TEST_OK = { Color.RED, Color.YELLOW,
+			Color.MAGENTA, Color.GREEN, Color.BLUE, Color.ORANGE };
+
+	/**
+	 * Jeu de test comportant toutes les couleurs qui ne sont pas acceptés pour
+	 * une caisse
+	 */
+	public static final Color[] JEU_TEST_NOK = { Color.CYAN, Color.GRAY,
+			Color.BLACK, Color.DARK_GRAY, Color.PINK };
+
+	/**
+	 * Test de la fonction isCouleurOK de la classe Caisse.java
+	 */
+	public static void testCouleurOK() {
+		// Vérifie si les tests se sont correctements déroulés
+		boolean testOK = true;
+
+		for (Color aTester : JEU_TEST_OK) {
+			if (!Caisse.isColorOK(aTester)) {
+				testOK = false;
+				System.out.println("La couleur : " + aTester
+						+ " devrait être valide");
+			}
+		}
+
+		System.out.println("Couleur valide avec un jeu de test"
+				+ " de couleur valide : " + (testOK ? "OK" : "Problème"));
+
+		// On réinitialise le jeu de test
+		testOK = true;
+		for (Color aTester : JEU_TEST_NOK) {
+			if (Caisse.isColorOK(aTester)) {
+				testOK = false;
+				System.out.println("La couleur : " + aTester
+						+ " devrait être invalide");
+			}
+		}
+
+		System.out.println("Couleur valide avec un jeu de test"
+				+ " de couleur invalide : " + (testOK ? "OK" : "Problème"));
+
+	}
+
 	public void fusionCouleur(Caisse c1, Caisse c2) {
 		Caisse c3;
 
@@ -46,6 +93,9 @@ public class testCaisse {
 		} else {
 			System.out.println("nok");
 		}
+
+		// On test la fonction isCouleurOK
+		testCouleurOK();
 	}
 
 }

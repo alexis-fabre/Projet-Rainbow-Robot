@@ -6,12 +6,23 @@
 package metier;
 
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import vue.UtilitaireFenetre;
 
 /**
  *
  * @author Rainbow Robot
  */
 public class Robot implements Dessinable {
+
+	/**
+	 * Chemin de l'image du robot
+	 */
+	public static final String CHEMIN_IMAGE_ROBOT = "./img/robot.jpg";
 
 	/** Orientation du robot vers la gauche */
 	public static final int ORIENTATION_GAUCHE = 1;
@@ -37,11 +48,6 @@ public class Robot implements Dessinable {
 
 	/** Caisse du robot */
 	private Caisse caisse;
-
-	@Override
-	public void dessiner(Graphics2D g) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods,chooseTools| Templates.
-	}
 
 	/** */
 	public Robot(int orientation, Position pos_ini) {
@@ -134,7 +140,7 @@ public class Robot implements Dessinable {
 		if (caisse == null) {
 			// Le robot peut saisir une caisse
 			// Le robot attrape une caisse
-			caisse = aAttraper;			
+			caisse = aAttraper;
 		} else {
 			// le robot ne peut pas saisir de caisse
 			// le robot ne fait rien
@@ -144,9 +150,9 @@ public class Robot implements Dessinable {
 	/**
 	 * Méthode pour faire fusionner deux caisses
 	 */
-	public void fusionner (Caisse c2) {
-		if(caisse != null ){
-			//fusionne
+	public void fusionner(Caisse c2) {
+		if (caisse != null) {
+			// fusionne
 			Caisse.fusionCouleur(caisse, c2);
 		} else {
 			// le robot ne peut pas fusionner
@@ -154,17 +160,45 @@ public class Robot implements Dessinable {
 		}
 
 	}
-	
-	
+
 	/**
 	 * Retourne la position du Robot
+	 * 
 	 * @return pos_courante la position courante
 	 */
-	public Position getPosRobot(){
+	public Position getPosRobot() {
 		return pos_courante;
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see metier.Dessinable#dessiner(java.awt.Graphics2D)
+	 */
+	@Override
+	public void dessiner(Graphics2D g) {
+		switch (orientation) {
+		case ORIENTATION_BAS:
+			
+
+			break;
+		case ORIENTATION_HAUT:
+			break;
+		case ORIENTATION_DROITE:
+			break;
+		case ORIENTATION_GAUCHE:
+			try {
+				g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)), 0, 0,
+						UtilitaireFenetre.DIM_ROBOT.width,
+						UtilitaireFenetre.DIM_ROBOT.height, null);
+			} catch (IOException e) {
+				System.out.println("Robot : dessiner : Image inexistante");
+			}
+			break;
+		}
+
+	}
+
 	// Faire un tostring pour afficher l'orientation et la position
 	public String toString() {
 		return "L'orientation est " + orientation + "\n et sa postion est"
