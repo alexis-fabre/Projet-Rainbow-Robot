@@ -219,6 +219,20 @@ public class Partie extends Observable implements Dessinable {
 		return robot;
 	}
 
+	/**
+	 * @return le debutX
+	 */
+	public int getDebutX() {
+		return debutX;
+	}
+
+	/**
+	 * @return le debutY
+	 */
+	public int getDebutY() {
+		return debutY;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -253,54 +267,35 @@ public class Partie extends Observable implements Dessinable {
 							* UtilitaireFenetre.DIM_CASE_VIDE.height,
 							UtilitaireFenetre.DIM_CASE_VIDE.width,
 							UtilitaireFenetre.DIM_CASE_VIDE.height);
-
-					// ---------------------------------------------------------
-					// On dessine le robot
-					// ---------------------------------------------------------
-					if (posADessiner.equals(robot.getPosRobot())) {
-						// Marge entre le robot et le bord droit de la case vide
-						int marge = 10;
-						// On calcule la nouvel abscisse et ordonnée pour
-						// positionner l'image du robot
-						// On fait cela pour centrer l'image dans la case vide
-						int abscisse = x
-								* UtilitaireFenetre.DIM_CASE_VIDE.width
-								+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2)
-										- ((UtilitaireFenetre.DIM_ROBOT.width / 2)) - marge);
-						int ordonne = y
-								* UtilitaireFenetre.DIM_CASE_VIDE.height
-								+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
-						Graphics2D contexteRobot = (Graphics2D) g.create(
-								abscisse, ordonne,
-								UtilitaireFenetre.DIM_ROBOT.width,
-								UtilitaireFenetre.DIM_ROBOT.height);
-						robot.dessiner(contexteRobot);
-					}
-
-					// ---------------------------------------------------------
-					// On dessine les caisses
-					// ---------------------------------------------------------
-					for (Caisse caisseADessiner : caisses) {
-						if (posADessiner.equals(caisseADessiner.getPosCaisse())) {
-							// On calcule la nouvel abscisse et ordonnée pour
-							// positionner l'image de la caisse
-							// On fait cela pour centrer l'image dans la case
-							// vide
-							int abscisse = x
-									* UtilitaireFenetre.DIM_CASE_VIDE.width
-									+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-							int ordonne = y
-									* UtilitaireFenetre.DIM_CASE_VIDE.height
-									+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-							Graphics2D contexteCaisse = (Graphics2D) g.create(
-									abscisse, ordonne,
-									UtilitaireFenetre.DIM_CAISSE.width,
-									UtilitaireFenetre.DIM_CAISSE.height);
-							caisseADessiner.dessiner(contexteCaisse);
-						}
-					}
 				}
 			}
 		}
+
+		// ---------------------------------------------------------
+		// On dessine les caisses
+		// ---------------------------------------------------------
+		for (Caisse caisseADessiner : caisses) {
+			// On calcule la nouvel abscisse et ordonnée pour
+			// positionner l'image de la caisse
+			// On fait cela pour centrer l'image dans la case
+			// vide
+			int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
+					* UtilitaireFenetre.DIM_CASE_VIDE.width
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+			int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
+					* UtilitaireFenetre.DIM_CASE_VIDE.height
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
+					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
+					UtilitaireFenetre.DIM_CAISSE.height);
+			caisseADessiner.dessiner(contexteCaisse);
+
+			contexteCaisse.dispose();
+		}
+
+		// ---------------------------------------------------------
+		// On dessine le robot
+		// ---------------------------------------------------------
+		robot.dessiner(g);
 	}
 }

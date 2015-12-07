@@ -5,7 +5,10 @@
 
 package metier;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -221,25 +224,70 @@ public class Robot implements Dessinable {
 	 */
 	@Override
 	public void dessiner(Graphics2D g) {
+		// Abscisse du centre de la case vide associée à la position du robot
+		int abscisseCentre = (pos_courante.getX() - partie.getDebutX())
+				* UtilitaireFenetre.DIM_CASE_VIDE.width
+				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
+		int ordonneCentre = (pos_courante.getY() - partie.getDebutY())
+				* UtilitaireFenetre.DIM_CASE_VIDE.height
+				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
+
+		// Marge due à ce que la photo du robot n'est pas centré sur le robot
+		// Ces marges ont été trouvé en testant, il se peut qu'elle ne soit pas
+		// correcte dans certain cas
+		// Les marges par défaut correspondent à ORIENTATION_GAUCHE
+		int margeX = -12, // Marge du côté des abscisses
+		margeY = 15;// Marge du côté des ordonnées
+
+		// Permet de tourner l'image selon l'orientation du robot
+		AffineTransform transform = new AffineTransform();
+		// L'orientation de base de l'image est vers la gauche
 		switch (orientation) {
 		case ORIENTATION_BAS:
-
+			// On tourne de 270° (= 3*PI/2 radians) par rapport à l'axe de la
+			// photo
+			transform.rotate(3 * Math.PI / 2,
+					UtilitaireFenetre.DIM_ROBOT.width / 2,
+					UtilitaireFenetre.DIM_ROBOT.height / 2);
+			// On redéfinie le contexte en identifiant les marges
+			margeX = 15;
+			margeY = 12;
 			break;
 		case ORIENTATION_HAUT:
+			// On tourne de 90° (= 3*PI/2 radians) par rapport à l'axe de la
+			// photo
+			transform.rotate(Math.PI / 2,
+					UtilitaireFenetre.DIM_ROBOT.width / 2,
+					UtilitaireFenetre.DIM_ROBOT.height / 2);
+			// On redéfinie le contexte en identifiant les marges
+			margeX = -15;
+			margeY = -12;
 			break;
 		case ORIENTATION_DROITE:
-			break;
-		case ORIENTATION_GAUCHE:
-			try {
-				g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)), 0, 0,
-						UtilitaireFenetre.DIM_ROBOT.width,
-						UtilitaireFenetre.DIM_ROBOT.height, null);
-			} catch (IOException e) {
-				System.out.println("Robot : dessiner : Image inexistante");
-			}
+			// On tourne de 180° (= 3*PI/2 radians) par rapport à l'axe de la
+			// photo
+			transform.rotate(Math.PI, UtilitaireFenetre.DIM_ROBOT.width / 2,
+					UtilitaireFenetre.DIM_ROBOT.height / 2);
+			// On redéfinie le contexte en identifiant les marges
+			margeX = 12;
+			margeY = -15;
 			break;
 		}
 
+		// Permet de centre l'image du robot dans le centre de la case vide
+		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseCentre
+				+ margeX, ordonneCentre + margeY,
+				UtilitaireFenetre.DIM_ROBOT.width,
+				UtilitaireFenetre.DIM_ROBOT.height);
+
+		try {
+			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
+					transform, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		contexteRobot.dispose();
 	}
 
 	/**

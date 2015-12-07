@@ -58,10 +58,13 @@ public class Lanceur {
 
 		F_accueil fenetreActive = new F_accueil(gestion);
 
-		fenetreActive.setVisible(true);
+		//fenetreActive.setVisible(true);
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
+		
+		FenetreJeu test = new FenetreJeu(null);
+		test.setVisible(true);
 		
 	}
 

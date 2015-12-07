@@ -53,7 +53,7 @@ public class UtilitaireFenetre {
 	/**
 	 * Dimension de l'image du robot.
 	 */
-	public static final Dimension DIM_ROBOT = new Dimension(80, 50);
+	public static final Dimension DIM_ROBOT = new Dimension(80, 80);
 
 	/**
 	 * Largeur de la bordure d'une case vide. Une case vide est une case en fond

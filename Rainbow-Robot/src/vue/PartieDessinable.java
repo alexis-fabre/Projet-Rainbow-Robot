@@ -4,13 +4,15 @@
  */
 package vue;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import metier.Partie;
@@ -40,7 +42,6 @@ public class PartieDessinable extends JPanel {
 		super();
 		setPreferredSize(new Dimension(UtilitaireFenetre.DIM_FENETRE.width,
 				2 * UtilitaireFenetre.DIM_FENETRE.height / 3));
-		// setBackground(Color.CYAN);
 		jeuRainbowRobot = partie;
 	}
 
