@@ -8,7 +8,11 @@ package metier;
 import java.awt.Graphics2D;
 
 /**
- *
+ * Classe gérant le Robot présent sur la carte et pour une partie
+ * Il pourra se déplacer grâce a des commandes qu'effectuera le Robot : 
+ * Notamment avancer, reculer et pivoter. Il sera aussi possible de fusionner
+ * deux caisses entre elle.
+ * 
  * @author Rainbow Robot
  */
 public class Robot implements Dessinable {
@@ -35,8 +39,11 @@ public class Robot implements Dessinable {
 	/** Position courante du robot courante */
 	private Position pos_courante;
 
-	/** Caisse du robot */
+	/** Caisse que le robot à dans ces mains */
 	private Caisse caisse;
+	
+	/** Partie du robot */
+	private Partie partie;
 
 	@Override
 	public void dessiner(Graphics2D g) {
@@ -44,9 +51,18 @@ public class Robot implements Dessinable {
 	}
 
 	/** */
-	public Robot(int orientation, Position pos_ini) {
+	public Robot(int orientation, Position pos_ini, Partie partie) throws IllegalArgumentException {
+		if(partie.isPositionOK(pos_ini)){
+			this.pos_courante = pos_ini;
+		} else {
+			throw new IllegalArgumentException("La position initiale du robot n'est pas sur le plateau"
+					+ " de la partie." + pos_ini);
+		}
+		
 		this.orientation = orientation;
-		this.pos_courante = pos_ini;
+		
+		this.partie = partie;
+		
 	}
 
 	/**
@@ -59,19 +75,27 @@ public class Robot implements Dessinable {
 		switch (orientation) {
 
 		case ORIENTATION_GAUCHE:
-			pos_courante.setX(pos_courante.getX() - 1);
+			if(partie.isPositionOK(pos_courante.getX() - 1, pos_courante.getY())){
+				pos_courante.setX(pos_courante.getX() - 1);
+			}
 			break;
 
 		case ORIENTATION_BAS:
-			pos_courante.setY(pos_courante.getY() + 1);
+			if(partie.isPositionOK(pos_courante.getX(), pos_courante.getY() + 1)){
+				pos_courante.setY(pos_courante.getY() + 1);
+			}
 			break;
 
 		case ORIENTATION_DROITE:
-			pos_courante.setX(pos_courante.getX() + 1);
+			if(partie.isPositionOK(pos_courante.getX() + 1, pos_courante.getY())){
+				pos_courante.setX(pos_courante.getX() + 1);
+			}
 			break;
 
 		case ORIENTATION_HAUT:
-			pos_courante.setY(pos_courante.getY() - 1);
+			if(partie.isPositionOK(pos_courante.getX(), pos_courante.getY() - 1)){
+				pos_courante.setY(pos_courante.getY() - 1);
+			}
 
 			break;
 		}
@@ -86,19 +110,27 @@ public class Robot implements Dessinable {
 		// faire une switch en fonction de orientation
 		switch (orientation) {
 		case ORIENTATION_GAUCHE:
-			pos_courante.setX(pos_courante.getX() + 1);
+			if(partie.isPositionOK(pos_courante.getX() + 1, pos_courante.getY())){
+				pos_courante.setX(pos_courante.getX() + 1);
+			}
 			break;
 
 		case ORIENTATION_BAS:
-			pos_courante.setY(pos_courante.getY() - 1);
+			if(partie.isPositionOK(pos_courante.getX(), pos_courante.getY() - 1)){
+				pos_courante.setY(pos_courante.getY() - 1);
+			}
 			break;
 
 		case ORIENTATION_DROITE:
-			pos_courante.setX(pos_courante.getX() - 1);
+			if(partie.isPositionOK(pos_courante.getX() - 1, pos_courante.getY())){
+				pos_courante.setX(pos_courante.getX() - 1);
+			}
 			break;
 
 		case ORIENTATION_HAUT:
-			pos_courante.setY(pos_courante.getY() + 1);
+			if(partie.isPositionOK(pos_courante.getX(), pos_courante.getY() + 1)){
+				pos_courante.setY(pos_courante.getY() + 1);
+			}
 			break;
 		}
 
@@ -113,8 +145,10 @@ public class Robot implements Dessinable {
 			orientation++;
 
 			if (orientation > ORIENTATION_HAUT) {
+				// Si il n'y pas de caisse a cote alors on peut pivoter
 				orientation = ORIENTATION_GAUCHE;
 			}
+			// Sinon on ne fait rien
 		}
 
 		if (position == PIVOTER_DROITE) {
@@ -165,7 +199,10 @@ public class Robot implements Dessinable {
 	}
 
 	
-	// Faire un tostring pour afficher l'orientation et la position
+	/**
+	 * Méthode Permettant d'afficher la position et l'orientation du robot
+	 * @return L'orientation et la position du robot
+	 */
 	public String toString() {
 		return "L'orientation est " + orientation + "\n et sa postion est"
 				+ pos_courante.toString() + "\n";

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Classe qui va permettre de gérer plusieurs partie et de les récupérer à partir
+ * d'un fichier créer par l'utilisateurs
  * @author Rainbow Robot
  */
 public class JeuRainbow {

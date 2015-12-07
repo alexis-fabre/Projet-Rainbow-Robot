@@ -18,7 +18,9 @@ import javax.imageio.ImageIO;
 import vue.UtilitaireFenetre;
 
 /**
- *
+ * Classe gérant une partie du Jeu rainbow-robot
+ * Elle gère un robot qui va récuperer les différentes caisses.
+ * 
  * @author Rainbow Robot
  */
 public class Partie extends Observable implements Dessinable {
@@ -29,14 +31,10 @@ public class Partie extends Observable implements Dessinable {
 	/** Nombre de lignes de la carte */
 	private int nbLigne;
 
-	/**
-	 * Abscisse minimale que peut prendre une position. finX = -debutX
-	 */
+	/** Abscisse minimale que peut prendre une position. finX = -debutX	 */
 	private int debutX;
 
-	/**
-	 * Ordonnée minimale que peut prendre une position. finY = -debutY
-	 */
+	/** Ordonnée minimale que peut prendre une position. finY = -debutY	 */
 	private int debutY;
 
 	/** Robot sur la carte */
@@ -73,7 +71,7 @@ public class Partie extends Observable implements Dessinable {
 		// X = 4..5 Y = -4..-3
 
 		vortex = new Vortex(new Position(0,0));
-		robot = new Robot(Robot.ORIENTATION_GAUCHE,new Position(1,0));
+		robot = new Robot(Robot.ORIENTATION_GAUCHE,new Position(1,0),this);
 
 		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
@@ -114,7 +112,7 @@ public class Partie extends Observable implements Dessinable {
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
 		// Le robot
-		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
+		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0),this);
 
 		// Les caisses à récupérées
 		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
@@ -147,6 +145,7 @@ public class Partie extends Observable implements Dessinable {
 	 */
 	public boolean isPositionOK(Position aVerifier) {
 		// On vérifie si la position ne dépasse pas des dimensions de la partie.
+		
 		if (aVerifier.getX() < debutX || aVerifier.getX() > -debutX) {
 			return false;
 		}

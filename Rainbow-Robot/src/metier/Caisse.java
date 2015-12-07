@@ -11,10 +11,7 @@ import java.util.ArrayList;
 /**
  * Classe gérant les caisses présentent sur la carte et dans les commandes que
  * devra effectuer le joueur via le robot
- * 
- * Classe gérant les caisses présentent sur la carte et dans les commandes que
- * devra effectuer le joueur via le robot
- * 
+ *  
  * @author Rainbow Robot
  */
 public class Caisse implements Dessinable {
@@ -136,6 +133,7 @@ public class Caisse implements Dessinable {
 			int nbCaisse, Color couleur) {
 		for (int i = 0; i < nbCaisse; i++)
 			caisseArecup.add(new Caisse(couleur));
+		
 	}
 
 }

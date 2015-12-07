@@ -6,7 +6,8 @@
 package metier;
 
 /**
- *
+ * Classe gérant la position sur un plateau d'une Partie
+ * Elle va pouvoir gérer la position d'un robot, des caisses, du vortex
  * @author Rainbow Robot
  */
 public class Position {
