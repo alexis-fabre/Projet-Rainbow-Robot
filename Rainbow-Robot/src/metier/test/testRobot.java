@@ -1,7 +1,7 @@
 package metier.test;
 
+import metier.Partie;
 import metier.Robot;
-
 import metier.Position;
 
 public class testRobot {
@@ -15,9 +15,10 @@ public class testRobot {
 	
 	public static void testAvancer(){
 		System.out.println("--------------------METHODE AVANCER-------------------\n");
-		Position pos_ini = new Position(10,10);
+		Position pos_ini = new Position(1,0);
 		int orientation = Robot.ORIENTATION_BAS;
-		Robot robot = new Robot(orientation,pos_ini);
+		Partie partie = new Partie(9,11);
+		Robot robot = new Robot(orientation,pos_ini,partie);
 		System.out.println("Position de départ \n" + robot.toString());
 		robot.avancer();
 		System.out.println("Position après avoir avancer \n" + robot.toString());
@@ -25,9 +26,10 @@ public class testRobot {
 
 	public static void testReculer(){
 		System.out.println("--------------------METHODE RECULER-------------------\n");
-		Position pos_ini = new Position(10,10);
+		Position pos_ini = new Position(1,0);
 		int orientation = Robot.ORIENTATION_BAS;
-		Robot robot = new Robot(orientation,pos_ini);
+		Partie partie = new Partie(9,11);
+		Robot robot = new Robot(orientation,pos_ini,partie);
 		System.out.println("Position de départ \n" + robot.toString());
 		robot.reculer();
 		System.out.println("Position après avoir avancer \n" + robot.toString());
@@ -35,11 +37,12 @@ public class testRobot {
 	
 	public static void testPivoter(){
 		System.out.println("--------------------METHODE PIVOTER-------------------\n");
-		Position pos_ini = new Position(10,10);
+		Position pos_ini = new Position(1,0);
 		
 		int orientation = Robot.ORIENTATION_BAS;
 		
-		Robot robot = new Robot(orientation,pos_ini);
+		Partie partie = new Partie(9,11);
+		Robot robot = new Robot(orientation,pos_ini,partie);
 		
 		int position = Robot.PIVOTER_GAUCHE;
 		
