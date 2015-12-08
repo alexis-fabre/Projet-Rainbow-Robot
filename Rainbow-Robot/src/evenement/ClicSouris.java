@@ -22,6 +22,7 @@ import vue.F_arcade;
 import vue.F_custom;
 import vue.F_story;
 import vue.FenetreJeu;
+import vue.MenuPause;
 import vue.Reccords;
 
 /**
@@ -208,16 +209,11 @@ public class ClicSouris implements MouseListener {
         if (fenetre instanceof FenetreJeu) {
             FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
             // On vérifie quel bouton a été utilisé
-            // Bouton Retour
+            // Bouton Pause
             if (e.getSource() == fenetreJeu.getBt_Pause()) {
-                Object[] optionsBoutons = { new JButton("Reprendre"),
-                        new JButton("Recommncer"), new JButton("Quitter") };
-                // 3 boutons donc optionType = YES_NO_CANCEL_OPTION
-                int r = JOptionPane.showOptionDialog(null, "Choix", "Pause",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, optionsBoutons,
-                        optionsBoutons[0]);
-                // TODO faire la gestion des boutons
+            	MenuPause nouvelleFenetre = new MenuPause(this);
+                nouvelleFenetre.setVisible(true); 
+                setFenetre(nouvelleFenetre);
             }
         }
         if (fenetre instanceof F_abstractModeJeu) {
@@ -268,6 +264,34 @@ public class ClicSouris implements MouseListener {
                 nouvelleFenetre.setVisible(true);
                 setFenetre(nouvelleFenetre);
             }
+        }
+        if (fenetre instanceof MenuPause) {
+        	MenuPause fenetrePause = (MenuPause) fenetre;
+        	if(e.getSource() == fenetrePause.getBt_Reprendre()) {
+        		fenetre.setVisible(false);
+        	}
+        	if(e.getSource() == fenetrePause.getBt_Recommencer()) {
+        		FenetreJeu nouvelleFenetre = new FenetreJeu(this);
+        		fenetre.setVisible(false);
+        		setFenetre(nouvelleFenetre);
+        	}
+        	if(e.getSource() == fenetrePause.getBt_Quitter()) {
+        		int option = JOptionPane.showConfirmDialog(null, 
+        				"Voulez-vous vraiment quitter la partie en cours ?",
+        				"Quitter", 
+        				JOptionPane.YES_NO_CANCEL_OPTION, 
+        				JOptionPane.QUESTION_MESSAGE);
+        		if(option == JOptionPane.YES_OPTION){
+        			F_accueil nouvelleFenetre = new F_accueil(this);
+        			fenetre.setVisible(false);
+        			setFenetre(nouvelleFenetre);
+        		} else if(option == JOptionPane.NO_OPTION){
+        			setFenetre(fenetre);
+        		} else if(option == JOptionPane.CANCEL_OPTION){
+        			setFenetre(fenetre);
+        		}
+
+        	}
         }
     }
 
