@@ -38,6 +38,11 @@ public class UtilitaireFenetre {
 	 * Dimension des fenêtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
+	
+	/**
+	 * Dimension des fenêtres usuelles
+	 */
+	public static final Dimension DIM_FENETRE_PAUSE = new Dimension(600, 500);
 
 	/**
 	 * Dimension d'une case vide. Une case vide est une case en fond représentée
