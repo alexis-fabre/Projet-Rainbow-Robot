@@ -7,6 +7,8 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import metier.Partie;
 import evenement.ClicSouris;
@@ -38,7 +41,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JLabel getTimer = new JLabel("00:00");
+	private JLabel timer = new JLabel("00 : 00");
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
@@ -61,6 +64,11 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 	 * Bouton qui permet de mettre en pause la partie en cours
 	 */
 	private JButton bt_Pause;
+	
+	ActionListener tache_timer;
+	
+	private int seconde,minute,delais = 1000;
+	
 
 	/**
 	 * Initialise les composants et les disposent sur un contexte graphique 2D.
@@ -85,6 +93,32 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 		contentMenuHaut.add(getCaiseARecuperer());
 		contentMenuHaut.add(getBt_Pause());
 
+		tache_timer = new ActionListener() {
+			public void actionPerformed(ActionEvent e1) {
+				if (seconde == 59) {
+					seconde = -1;
+					minute++;
+				}
+				seconde ++;
+				if(minute < 10 && seconde < 10) {
+					timer.setText("0" + minute + " : " + "0" + seconde);
+				} else if (minute < 10) {
+					timer.setText("0" + minute + " : " + seconde);
+				} else {
+					timer.setText(minute + " : " + seconde);
+				}
+			}
+		};
+
+		final Timer timer1 = new Timer(delais, tache_timer);
+		
+		timer1.start();
+		
+		// TODO arrêter le timer lors de la pause
+//		if(MenuPause.isVisible()) {
+//			timer1.stop();
+//		}
+		
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
@@ -101,13 +135,14 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 		// On centre l'écran
 		UtilitaireFenetre.centrerFenetre(this);
 	}
+	
 
 	/**
-	 * Affichage des caisses que le joueur doit récypérer
+	 * Affichage des caisses que le joueur doit récupérer
 	 * 
 	 * @return la liste de caisses
 	 */
-	private JLabel getCaiseARecuperer() {
+	public JLabel getCaiseARecuperer() {
 		if (getCaiseARecuperer == null) {
 			getCaiseARecuperer = new JLabel();
 			getCaiseARecuperer
@@ -122,11 +157,11 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 	 * @return le timer
 	 */
 	public JLabel getTimer() {
-		if (getTimer == null) {
-			getTimer = new JLabel();
-			getTimer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+		if (timer == null) {
+			timer = new JLabel();
+			timer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
-		return getTimer;
+		return timer;
 
 	}
 
