@@ -5,12 +5,11 @@
 
 package metier;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
 
 import javax.imageio.ImageIO;
 
@@ -24,7 +23,7 @@ import vue.UtilitaireFenetre;
  * 
  * @author Rainbow Robot
  */
-public class Robot implements Dessinable {
+public class Robot extends Observable implements Dessinable {
 
 	/**
 	 * Chemin de l'image du robot
@@ -62,7 +61,7 @@ public class Robot implements Dessinable {
 	/** */
 	public Robot(int orientation, Position pos_ini, Partie partie)
 			throws IllegalArgumentException {
-		if (partie.isPositionOK(pos_ini)) {
+		if (partie.isPositionOKAvecCaisse(pos_ini)) {
 			this.pos_courante = pos_ini;
 		} else {
 			throw new IllegalArgumentException(
@@ -85,36 +84,81 @@ public class Robot implements Dessinable {
 
 		switch (orientation) {
 
-		case ORIENTATION_GAUCHE:
-			if (partie.isPositionOK(pos_courante.getX() - 1,
-					pos_courante.getY())) {
-				pos_courante.setX(pos_courante.getX() - 1);
+		case ORIENTATION_GAUCHE: // Robot orienté vers la gauche
+			// On vérifie si le robot détient une caisse
+			if (caisse != null) {
+				// On vérifie si le déplacement de la caisse est possible
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
+						caisse.getPosCaisse().getY())) {
+					// On change la position de la caisse
+					setPositionCaisse(caisse.getPosCaisse().getX() - 1, caisse
+							.getPosCaisse().getY());
+					// On change directement la position du robot
+					pos_courante.setX(pos_courante.getX() - 1);
+				}
+			} else { // Aucune caisse associée au robot
+				// On vérifie si la place est libre
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX() - 1,
+						pos_courante.getY())) {
+					// On déplace le robot
+					pos_courante.setX(pos_courante.getX() - 1);
+				}
 			}
 			break;
 
-		case ORIENTATION_BAS:
-			if (partie.isPositionOK(pos_courante.getX(),
-					pos_courante.getY() + 1)) {
-				pos_courante.setY(pos_courante.getY() + 1);
+		case ORIENTATION_BAS:// Robot orienté vers le bas
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
+						.getPosCaisse().getY() + 1)) {
+					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
+							.getPosCaisse().getY() + 1);
+					pos_courante.setY(pos_courante.getY() + 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						pos_courante.getY() + 1)) {
+					pos_courante.setY(pos_courante.getY() + 1);
+				}
 			}
 			break;
 
-		case ORIENTATION_DROITE:
-			if (partie.isPositionOK(pos_courante.getX() + 1,
-					pos_courante.getY())) {
-				pos_courante.setX(pos_courante.getX() + 1);
+		case ORIENTATION_DROITE:// Robot orienté vers la droite
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
+						caisse.getPosCaisse().getY())) {
+					setPositionCaisse(caisse.getPosCaisse().getX() + 1, caisse
+							.getPosCaisse().getY());
+					pos_courante.setX(pos_courante.getX() + 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX() + 1,
+						pos_courante.getY())) {
+					pos_courante.setX(pos_courante.getX() + 1);
+				}
 			}
 			break;
 
-		case ORIENTATION_HAUT:
-			if (partie.isPositionOK(pos_courante.getX(),
-					pos_courante.getY() - 1)) {
-				pos_courante.setY(pos_courante.getY() - 1);
+		case ORIENTATION_HAUT:// Robot orienté vers le haut
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
+						.getPosCaisse().getY() - 1)) {
+					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
+							.getPosCaisse().getY() - 1);
+					pos_courante.setY(pos_courante.getY() - 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						pos_courante.getY() - 1)) {
+					pos_courante.setY(pos_courante.getY() - 1);
+				}
 			}
-
 			break;
 		}
 
+		// Indique que l'état du modèle a changé
+		setChanged();
+		// Met à jour les Observers (ici => FenetreJeu)
+		notifyObservers(this);
 	}
 
 	/**
@@ -124,73 +168,316 @@ public class Robot implements Dessinable {
 		// Reculer d'un indice dans la liste
 		// faire une switch en fonction de orientation
 		switch (orientation) {
-		case ORIENTATION_GAUCHE:
-			if (partie.isPositionOK(pos_courante.getX() + 1,
-					pos_courante.getY())) {
-				pos_courante.setX(pos_courante.getX() + 1);
+		case ORIENTATION_GAUCHE: // Robot orienté vers la gauche
+			// On vérifie si le robot détient une caisse
+			if (caisse != null) {
+				// On vérifie si le déplacement de la caisse est possible
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
+						caisse.getPosCaisse().getY())) {
+					// On change la position de la caisse
+					setPositionCaisse(caisse.getPosCaisse().getX() + 1, caisse
+							.getPosCaisse().getY());
+					// On change directement la position du robot
+					pos_courante.setX(pos_courante.getX() + 1);
+				}
+			} else { // Aucune caisse associée au robot
+				// On vérifie si la place est libre
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX() + 1,
+						pos_courante.getY())) {
+					// On déplace le robot
+					pos_courante.setX(pos_courante.getX() + 1);
+				}
+			}
+			break;
+		case ORIENTATION_BAS: // Robot orienté vers le bas
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
+						.getPosCaisse().getY() - 1)) {
+					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
+							.getPosCaisse().getY() - 1);
+					pos_courante.setY(pos_courante.getY() - 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						pos_courante.getY() - 1)) {
+					pos_courante.setY(pos_courante.getY() - 1);
+					;
+				}
 			}
 			break;
 
-		case ORIENTATION_BAS:
-			if (partie.isPositionOK(pos_courante.getX(),
-					pos_courante.getY() - 1)) {
-				pos_courante.setY(pos_courante.getY() - 1);
+		case ORIENTATION_DROITE: // Robot orienté vers la droite
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
+						caisse.getPosCaisse().getY())) {
+					setPositionCaisse(caisse.getPosCaisse().getX() - 1, caisse
+							.getPosCaisse().getY());
+					pos_courante.setX(pos_courante.getX() - 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX() - 1,
+						pos_courante.getY())) {
+					pos_courante.setX(pos_courante.getX() - 1);
+				}
 			}
 			break;
 
-		case ORIENTATION_DROITE:
-			if (partie.isPositionOK(pos_courante.getX() - 1,
-					pos_courante.getY())) {
-				pos_courante.setX(pos_courante.getX() - 1);
-			}
-			break;
-
-		case ORIENTATION_HAUT:
-			if (partie.isPositionOK(pos_courante.getX(),
-					pos_courante.getY() + 1)) {
-				pos_courante.setY(pos_courante.getY() + 1);
+		case ORIENTATION_HAUT: // Robot orienté vers le haut
+			if (caisse != null) {
+				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
+						.getPosCaisse().getY() + 1)) {
+					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
+							.getPosCaisse().getY() + 1);
+					pos_courante.setY(pos_courante.getY() + 1);
+				}
+			} else {
+				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						pos_courante.getY() + 1)) {
+					pos_courante.setY(pos_courante.getY() + 1);
+				}
 			}
 			break;
 		}
+		// Indique que l'état du modèle a changé
+		setChanged();
+		// Met à jour les Observers (ici => FenetreJeu)
+		notifyObservers(this);
 
 	}
 
 	/**
-	 * Méthode pour faire pivoter le robot
+	 * Méthode pour faire pivoter le robot et la caisse.
+	 * 
+	 * @param position
+	 *            nouvelle angle (prédéfini par les constantes PIVOTER_GAUCHE et
+	 *            PIVOTER_DROITE) du robot
 	 */
 	public void pivoter(int position) {
-		if (position == PIVOTER_GAUCHE) {
-
-			orientation++;
-
-			if (orientation > ORIENTATION_HAUT) {
-				// Si il n'y pas de caisse a cote alors on peut pivoter
-				orientation = ORIENTATION_GAUCHE;
+		if (caisse != null) { // Le robot a une caisse
+			if (position == PIVOTER_GAUCHE) { // On pivote à gauche
+				switch (orientation) {
+				case ORIENTATION_GAUCHE:
+					// On vérifie si la nouvelle position de la caisse existe
+					// On vérifie deux cases qui sont :
+					// - la future place de la caisse
+					// - la case entre la place courante et la place future de
+					// la caisse
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX(),
+							caisse.getPosCaisse().getY() + 1)
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() + 1, caisse
+											.getPosCaisse().getY() + 1)) {
+						// On modifie la position de la caisse
+						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
+								caisse.getPosCaisse().getY() + 1);
+						// Nouvelle orientation du robot
+						orientation++;
+						// Pour faire une rotation cyclique
+						if (orientation > ORIENTATION_HAUT) {
+							orientation = ORIENTATION_GAUCHE;
+						}
+						// Sinon on ne fait rien
+					}
+					break;
+				case ORIENTATION_BAS:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
+							caisse.getPosCaisse().getY())
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() + 1, caisse
+											.getPosCaisse().getY() - 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
+								caisse.getPosCaisse().getY() - 1);
+						orientation++;
+						if (orientation > ORIENTATION_HAUT) {
+							orientation = ORIENTATION_GAUCHE;
+						}
+					}
+					break;
+				case ORIENTATION_DROITE:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
+							caisse.getPosCaisse().getY())
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() - 1, caisse
+											.getPosCaisse().getY() - 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
+								caisse.getPosCaisse().getY() - 1);
+						orientation++;
+						if (orientation > ORIENTATION_HAUT) {
+							orientation = ORIENTATION_GAUCHE;
+						}
+					}
+					break;
+				case ORIENTATION_HAUT:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
+							caisse.getPosCaisse().getY())
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() - 1, caisse
+											.getPosCaisse().getY() + 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
+								caisse.getPosCaisse().getY() + 1);
+						orientation++;
+						if (orientation > ORIENTATION_HAUT) {
+							orientation = ORIENTATION_GAUCHE;
+						}
+					}
+					break;
+				}
 			}
-			// Sinon on ne fait rien
+			if (position == PIVOTER_DROITE) { // On pivote à droite
+				switch (orientation) {
+				case ORIENTATION_GAUCHE:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX(),
+							caisse.getPosCaisse().getY() - 1)
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() + 1, caisse
+											.getPosCaisse().getY() - 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
+								caisse.getPosCaisse().getY() - 1);
+						// Nouvelle orientation du robot
+						orientation--;
+						// Pour faire une rotation cyclique
+						if (orientation < ORIENTATION_GAUCHE) {
+							orientation = ORIENTATION_HAUT;
+						}
+						// Sinon on ne fait rien
+					}
+					break;
+				case ORIENTATION_HAUT:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
+							caisse.getPosCaisse().getY())
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() + 1, caisse
+											.getPosCaisse().getY() + 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
+								caisse.getPosCaisse().getY() + 1);
+						// Nouvelle orientation du robot
+						orientation--;
+						// Pour faire une rotation cyclique
+						if (orientation < ORIENTATION_GAUCHE) {
+							orientation = ORIENTATION_HAUT;
+						}
+						// Sinon on ne fait rien
+					}
+					break;
+				case ORIENTATION_DROITE:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX(),
+							caisse.getPosCaisse().getY() + 1)
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() - 1, caisse
+											.getPosCaisse().getY() + 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
+								caisse.getPosCaisse().getY() + 1);
+						// Nouvelle orientation du robot
+						orientation--;
+						// Pour faire une rotation cyclique
+						if (orientation < ORIENTATION_GAUCHE) {
+							orientation = ORIENTATION_HAUT;
+						}
+						// Sinon on ne fait rien
+					}
+					break;
+				case ORIENTATION_BAS:
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
+							caisse.getPosCaisse().getY())
+							&& deplacementCaisseOK(
+									caisse.getPosCaisse().getX() - 1, caisse
+											.getPosCaisse().getY() - 1)) {
+						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
+								caisse.getPosCaisse().getY() - 1);
+						// Nouvelle orientation du robot
+						orientation--;
+						// Pour faire une rotation cyclique
+						if (orientation < ORIENTATION_GAUCHE) {
+							orientation = ORIENTATION_HAUT;
+						}
+						// Sinon on ne fait rien
+					}
+					break;
+				}
+			}
+		} else { // Le robot n'a pas de caisse
+			if (position == PIVOTER_GAUCHE) { // On pivote à gauche
+				orientation++;
+				if (orientation > ORIENTATION_HAUT) {
+					orientation = ORIENTATION_GAUCHE;
+				}
+				// Sinon on ne fait rien
+			}
+			if (position == PIVOTER_DROITE) { // On pivote à droite
+				orientation--;
+				if (orientation < ORIENTATION_GAUCHE) {
+					orientation = ORIENTATION_HAUT;
+				}
+			}
 		}
 
-		if (position == PIVOTER_DROITE) {
-			orientation--;
-			if (orientation < ORIENTATION_GAUCHE) {
-				orientation = ORIENTATION_HAUT;
-			}
-
-		}
-
+		// Indique que l'état du modèle a changé
+		setChanged();
+		// Met à jour les Observers (ici => FenetreJeu)
+		notifyObservers(this);
 	}
 
 	/**
-	 * Méthode pour que le robot saisisse une caisse
+	 * <p>
+	 * Permet de vérifier si le déplacement de la caisse associée au robot (si
+	 * elle existe) dans toutes les directions (horizontal (= avancer, reculer)
+	 * ou circulaire (=pivoter) est possible.<br />
+	 * La méthode ne vérifie pas si la caisse existe ou non.
+	 * </p>
+	 *
+	 * @param x
+	 *            nouvel abscisse de la caisse
+	 * @param y
+	 *            nouvel ordonnée de la caisse
+	 * @return true si le déplacement est possible ou faux si la caisse ne peut
+	 *         pas se déplacer
 	 */
-	public void saisirCaisse(Caisse aAttraper) {
-		if (caisse == null) {
-			// Le robot peut saisir une caisse
-			// Le robot attrape une caisse
-			caisse = aAttraper;
-		} else {
-			// le robot ne peut pas saisir de caisse
-			// le robot ne fait rien
+	public boolean deplacementCaisseOK(int x, int y) {
+		return partie.isPositionOKAvecCaisse(x, y);
+	}
+
+	/**
+	 * Modifie directement la position de la caisse. Il ne vérifie pas si la
+	 * caisse existe ou si la place est libre (voir deplacementCaisseOK).
+	 * 
+	 * @param x
+	 *            nouvel abscisse de la caisse
+	 * @param y
+	 *            nouvel ordonnée de la caisse
+	 */
+	public void setPositionCaisse(int x, int y) {
+		caisse.getPosCaisse().setX(x);
+		caisse.getPosCaisse().setY(y);
+	}
+
+	/**
+	 * Méthode pour que le robot saisisse ou relache une caisse qui est situé
+	 * devant lui. Le robot relache la caisse si la référence de la caisse est
+	 * null
+	 * 
+	 */
+	public void setCaisse() {
+		if (caisse != null) {// Si on a déjà une caisse, on la relache ...
+			caisse = null;
+		} else {// ... sinon on cherche la position juste devant le robot
+			switch (orientation) {
+			case ORIENTATION_GAUCHE:
+				caisse = partie.getCaisseJeu(new Position(
+						pos_courante.getX() - 1, pos_courante.getY()));
+				break;
+			case ORIENTATION_HAUT:
+				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() + 1));
+				break;
+			case ORIENTATION_DROITE:
+				caisse = partie.getCaisseJeu(new Position(
+						pos_courante.getX() + 1, pos_courante.getY()));
+				break;
+			case ORIENTATION_BAS:
+				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() - 1));
+				break;
+			}
 		}
 	}
 

@@ -14,12 +14,12 @@ import java.util.Observable;
 import vue.UtilitaireFenetre;
 
 /**
- * Classe gérant une partie du Jeu rainbow-robot Elle gère un robot qui va
+ * Classe gérant une partie du Jeu rainbow-robot. Elle gère un robot qui va
  * récuperer les différentes caisses.
  * 
  * @author Rainbow Robot
  */
-public class Partie extends Observable implements Dessinable {
+public class Partie implements Dessinable {
 
 	/** Nombre colonne de la carte */
 	private int nbColonne;
@@ -59,15 +59,7 @@ public class Partie extends Observable implements Dessinable {
 	 * Créer une carte avec un niveau donné
 	 */
 	public Partie(int niveau) {
-
-		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
-		// X = 4..5 Y = -4..-3
-
-		vortex = new Vortex(new Position(0, 0));
-		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0), this);
-
-		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
-
+		this(9, 11);
 	}
 
 	/**
@@ -104,9 +96,6 @@ public class Partie extends Observable implements Dessinable {
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
-		// Le robot
-		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0), this);
-
 		// TODO à généraliser
 		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
@@ -115,6 +104,9 @@ public class Partie extends Observable implements Dessinable {
 		caisses[0] = new Caisse(Color.RED, new Position(0, 0));
 		caisses[1] = new Caisse(Color.BLUE, new Position(3, 2));
 		caisses[2] = new Caisse(Color.YELLOW, new Position(2, 3));
+
+		// Le robot
+		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0), this);
 
 		// Le vortex
 		vortex = new Vortex(new Position(0, 0));
@@ -135,8 +127,8 @@ public class Partie extends Observable implements Dessinable {
 	}
 
 	/**
-	 * Vérifie si la position envoyé en paramètre est correcte. Elle renvoie
-	 * aussi un message sur la console indiquant la nature du message.
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle existe sur le plateau de jeu.
 	 * 
 	 * @param aVerifier
 	 *            position à vérifier
@@ -181,9 +173,8 @@ public class Partie extends Observable implements Dessinable {
 	}
 
 	/**
-	 * Vérifie si les coordonnées envoyées en paramètre sont correctes. La
-	 * fonction renvoie aussi un message sur la console indiquant la nature du
-	 * message.
+	 * Vérifie si les coordonnées envoyées en paramètre sont correctes, c'est à
+	 * dire si elles existent sur le plateau de jeu.
 	 * 
 	 * @param x
 	 *            abscisse de la position à vérifier
@@ -192,8 +183,68 @@ public class Partie extends Observable implements Dessinable {
 	 * @return true si la position est correcte, false sinon
 	 */
 	public boolean isPositionOK(int x, int y) {
-		Position aVerifier = new Position(x, y);
-		return isPositionOK(aVerifier);
+		return isPositionOK(new Position(x, y));
+	}
+
+	/**
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle existe sur le plateau de jeu et si elle n'est pas occupé par une
+	 * caisse.
+	 * 
+	 * @param aVerifier
+	 *            position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecCaisse(Position aVerifier) {
+		boolean positionOK = true;
+		// On regarde si la position a vérifié est sur une caisse déjà existante
+		for (int i = 0; i < caisses.length && positionOK; i++) {
+			if (caisses[i].getPosCaisse().equals(aVerifier)) {
+				positionOK = false;
+			}
+		}
+		return positionOK && isPositionOK(aVerifier);
+	}
+
+	/**
+	 * Vérifie si les coordonnées envoyées en paramètre sont correctes, c'est à
+	 * dire si elles existent sur le plateau de jeu et si elle ne sont pas
+	 * occupés par les coordonnées d'une caisse.
+	 * 
+	 * @param x
+	 *            abscisse de la position à vérifier
+	 * @param y
+	 *            ordonnée de la position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecCaisse(int x, int y) {
+		return isPositionOKAvecCaisse(new Position(x, y));
+	}
+
+	/**
+	 * Cherche la caisse sur le plateau de jeu à la position mentionnée. Si la
+	 * caisse ou la position n'existe pas, on retourne null
+	 * 
+	 * @param position
+	 *            position probable de la caisse
+	 * @return la caisse à la position spécifique ou null si la position ou la
+	 *         caisse n'existe pas
+	 */
+	public Caisse getCaisseJeu(Position position) {
+		// Aucune caisse n'a été trouvée à cette position
+		// Ou la position n'existe pas
+		if (isPositionOKAvecCaisse(position)) {
+			return null;
+		}
+
+		// On recherche la caisse
+		for (Caisse caisse : caisses) {
+			if (caisse.getPosCaisse().equals(position)) {
+				return caisse;
+			}
+		}
+		// Ce cas ne devrait jamais arrivé
+		return null;
 	}
 
 	/**

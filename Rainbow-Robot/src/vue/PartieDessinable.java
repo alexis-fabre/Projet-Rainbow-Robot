@@ -4,19 +4,15 @@
  */
 package vue;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import metier.Partie;
-import evenement.ToucheClavier;
+import metier.Robot;
 
 /**
  * Panneau qui dessine et contrôle une partie de jeu Rainbow Robot. On dessine
@@ -26,7 +22,7 @@ import evenement.ToucheClavier;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class PartieDessinable extends JPanel {
+public class PartieDessinable extends JPanel implements Observer {
 
 	/**
 	 * Référence de la classe qui gère une partie du jeu.
@@ -38,11 +34,11 @@ public class PartieDessinable extends JPanel {
 	 * 
 	 * @param gestion
 	 */
-	public PartieDessinable(ToucheClavier gestion, Partie partie) {
+	public PartieDessinable(Partie partie) {
 		super();
-		setPreferredSize(new Dimension(UtilitaireFenetre.DIM_FENETRE.width,
-				2 * UtilitaireFenetre.DIM_FENETRE.height / 3));
 		jeuRainbowRobot = partie;
+		// abonner cette vue aux changements du modèle (DP observateur)
+		jeuRainbowRobot.getRobot().addObserver(this);
 	}
 
 	/*
@@ -67,6 +63,18 @@ public class PartieDessinable extends JPanel {
 		jeuRainbowRobot.dessiner(contexte);
 
 		contexte.dispose();
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object aRedessiner) {
+
+		if (aRedessiner instanceof Robot || aRedessiner instanceof Caisse) {
+			super.repaint();
+		}
 	}
 }

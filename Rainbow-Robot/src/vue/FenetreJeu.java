@@ -7,6 +7,7 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 
 import metier.Partie;
 import evenement.ClicSouris;
+import evenement.ToucheClavier;
 
 /**
  * TODO Expliquer le fonctionnement de la classe
@@ -24,12 +26,12 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
+public class FenetreJeu extends JFrame implements ChangementLangue {
 
 	/**
 	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
 	 */
-	private PartieDessinable partie;
+	private PartieDessinable partieDessinable;
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -68,7 +70,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
 	 * les cliques de la souris sur les boutons.
 	 */
-	public FenetreJeu(ClicSouris gestion) {
+	public FenetreJeu(ClicSouris gestion, ToucheClavier gestionClavier) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
@@ -88,13 +90,15 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
-		// *********************************************************************
-		// Test expérimental
-		// *********************************************************************
-		partie = new PartieDessinable(null, new Partie(9, 11));
+		partieDessinable = new PartieDessinable(gestionClavier.getMetier());
 
 		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
-		contentPane.add(partie, BorderLayout.CENTER);
+		contentPane.add(partieDessinable, BorderLayout.CENTER);
+
+		// On ajoute les évènements lors de l'appuie d'une touche sur le clavier
+		super.addKeyListener(gestionClavier);
+		super.setFocusable(true);
+		super.requestFocus();
 
 		getBt_Pause().addMouseListener(gestion);
 
@@ -158,14 +162,4 @@ public class FenetreJeu extends JFrame implements ChangementLangue, Observer {
 	public void setLangue() {
 
 	}
-
-	/* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

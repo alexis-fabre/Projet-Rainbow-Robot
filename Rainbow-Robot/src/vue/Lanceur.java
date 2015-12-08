@@ -6,6 +6,8 @@ package vue;
 
 import javax.swing.UIManager;
 
+import metier.Partie;
+
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 
 import evenement.ClicSouris;
@@ -50,22 +52,19 @@ public class Lanceur {
 			ex.printStackTrace();
 		}
 		// On initialise la partie métier
+		Partie partieJouable = new Partie(9, 11);
 
 		// On construit le contrôleur à partir de la partie métier
-		ClicSouris gestion = new ClicSouris();
+		ClicSouris gestion = new ClicSouris(partieJouable);
 
 		// On construit la fenêtre avec le contrôleur
 
 		F_accueil fenetreActive = new F_accueil(gestion);
 
-		//fenetreActive.setVisible(true);
+		fenetreActive.setVisible(true);
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
-		
-		FenetreJeu test = new FenetreJeu(null);
-		test.setVisible(true);
-		
 	}
 
 }
