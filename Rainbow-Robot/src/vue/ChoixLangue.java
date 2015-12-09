@@ -113,11 +113,10 @@ public class ChoixLangue {
 					"Back" } };
 	
 	/**
-	 * Contient les traductions pour la fenêtre Reccords
-	 */
-	private final String[][] MODE_RECCORD = { {"Reccords", "Joueur", "Temps"},
-	        {"High Score", "Player", "Time"}};
-	
+         * Contient les traductions pour la fenêtre Reccords
+         */
+        private final String[][] MODE_RECCORD = { {"Reccords", "Joueur", "Temps", "Niveau"},
+                {"High Score", "Player", "Time", "Level"}};
 
 	/**
 	 * <p>

@@ -4,22 +4,22 @@
  */
 package vue;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.HeadlessException;
+import java.awt.Font;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
+import metier.LigneUsernameScore;
+import metier.OperationsFichier;
 import evenement.ClicSouris;
 
 /**
@@ -48,11 +48,6 @@ public class Reccords extends JFrame implements ChangementLangue {
     
     /** tableau de JPanel pour chaque niveau*/
     private JPanel[] lesPanneaux;
-    
-    /** tableau contenant les couples (nomJoueur, temps effectué) 
-     * chaque colonne représente un niveau dans le jeu 
-     */
-    private HashMap<String, String>[] lesNiveaux;
 
     /** label contenant le titre de la colonne joueur */ 
     private JLabel la_titreJoueur;
@@ -60,15 +55,15 @@ public class Reccords extends JFrame implements ChangementLangue {
     /** label contenant le titre de la colonne temps */ 
     private JLabel la_titreTemps;
 
-//    /**
-//     * label du temps affiché sur la fenêtre
-//     */
-//    private JLabel[] la_temps;
-//
-//    /**
-//     * label du nom du joueur affiché sur la fenêtre
-//     */
-//    private JLabel[] la_joueur;
+    /**
+     * label contenant le tableau a afficher (données)
+     */
+    private JLabel la_contenu;
+
+    /**
+     * label du niveau affiché dans les onglets
+     */
+    private JLabel la_niveau;
 
     /**
      * Constructeur de la fenêtre Reccords 
@@ -81,26 +76,29 @@ public class Reccords extends JFrame implements ChangementLangue {
         super.setResizable(false);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        
         // panneau de la fenêtre
         Container contentPane =  super.getContentPane(); 
         contentPane.setLayout(null);
         
         this.lesOnglets = new JTabbedPane(JTabbedPane.TOP); // onglets en hauts
         this.lesOnglets.setBounds(45, 45, 900, 550);       // position et taille
-        lesOnglets.setBackground(Color.YELLOW);
+        lesOnglets.setBackground(Color.CYAN);
+        lesOnglets.setBorder(BorderFactory.createLineBorder(Color.black));
         this.lesPanneaux = new JPanel[NB_MAX_SCORES];
-        
         
         // On ajoute le nom des composants en fonction de la langue choisie
         setLangue();
-
+        String texte;
         // ajout du contenu du panneau pour chaque niveau
         for(int i = 0; i < lesPanneaux.length ; i++) {
+            texte = getLa_niveau().getText() + " " + (i+1); 
             // ajout des onglets et de leur panneaux
-            lesOnglets.addTab(Integer.toString(i) , ajoutContenu(lesPanneaux[i], i));
+            lesOnglets.addTab(texte , ajoutContenu(lesPanneaux[i], i));
+            
         }
   
-
+        
         // ajout évènement sur bouton retour
         getBt_Retour().addMouseListener(gestion);
         
@@ -113,21 +111,41 @@ public class Reccords extends JFrame implements ChangementLangue {
 
 
     /**
-     * crée le panneau du niveau correspondant et lui ajoute le contenu
+     * Crée le panneau du niveau correspondant et lui ajoute le contenu
      * @param aAjouter
      * @param indice
      * @return aAjouter le panneau avec le contenu
      */
     public JPanel ajoutContenu(JPanel aAjouter, int indice) {
-        aAjouter = new JPanel(new GridLayout(NB_MAX_SCORES, 3));
-        // ajout du numro de classement en haut à gauche
-        aAjouter.add(new JLabel("No."));
-        // ajout du titre joueur en haut au centre
-        aAjouter.add(new JLabel("cc"));
-        // ajout du titre temps en haut au centre
-        aAjouter.add(getLa_titreTemps());
         
-        System.out.println(getLa_titreJoueur().getText());
+        aAjouter = new JPanel();
+        aAjouter.setLayout(null);
+        
+        la_contenu = new JLabel();
+        la_contenu.setBounds(10, 10, 850, 500);
+        la_contenu.setFont(new Font("Georgia", Font.PLAIN, 30));
+        la_contenu.setHorizontalAlignment(SwingConstants.CENTER);
+        // récupération des données
+        ArrayList<LigneUsernameScore> ligneUsernameScore = 
+                OperationsFichier.lectureFichierReccord(new File("highscore1.txt"));
+        
+        
+        String scores;
+        scores = "<html>";
+        // titre des colonnes du tableau
+        scores += "<table>" + "<tr><th style=\"text-align:center; \">No. |</th><th style=\"text-align:center; margin-left: 10px; margin-right: 10px;\">" 
+                + getLa_titreJoueur().getText() + "</th><th style=\"text-align:center;\">| " + getLa_titreTemps().getText() 
+                + "</th></tr><hr/>";
+        // contenu de chaque ligne
+        for(int i = 0; i < ligneUsernameScore.size(); i++) {
+                scores += "<tr><td style=\"text-align:center;\">" + (i+1) + ".</td><td style=\"text-align:center; margin-left: 10px; margin-right: 10px;\">" + ligneUsernameScore.get(i).getUsername() 
+                        + "</td><td style=\"text-align:center;\">" + ligneUsernameScore.get(i).getScore() + "</td></tr><br>";
+        }
+        scores += "</table></html>";
+        
+        la_contenu.setText(scores);
+        
+        aAjouter.add(la_contenu);
         return aAjouter;
     }
 
@@ -157,15 +175,6 @@ public class Reccords extends JFrame implements ChangementLangue {
     }
 
 
-    /**
-     * TODO Expliquer le fonctionnement de la méthode
-     * 
-     * @param nomFichier
-     */
-    public void recupNomScore(String nomFichier) {
-        
-    }
-
     
     /* (non-Javadoc)
      * @see vue.ChangementLangue#setLangue()
@@ -177,6 +186,7 @@ public class Reccords extends JFrame implements ChangementLangue {
         this.setTitle(traductionReccords[0]);
         getLa_titreJoueur().setText(traductionReccords[1]);
         getLa_titreTemps().setText(traductionReccords[2]);
+        getLa_niveau().setText(traductionReccords[3]);
 
     }
 
@@ -187,6 +197,8 @@ public class Reccords extends JFrame implements ChangementLangue {
     public JLabel getLa_titreJoueur() {
         if (la_titreJoueur == null) {
             la_titreJoueur = new JLabel();
+            la_titreJoueur.setFont(new Font("Georgia", Font.PLAIN, 50));
+            la_titreJoueur.setHorizontalAlignment(SwingConstants.CENTER);
         }
         return la_titreJoueur;
     }
@@ -198,6 +210,8 @@ public class Reccords extends JFrame implements ChangementLangue {
     public JLabel getLa_titreTemps() {
         if (la_titreTemps == null) {
             la_titreTemps = new JLabel();
+            la_titreJoueur.setFont(new Font("Georgia", Font.PLAIN, 50));
+            la_titreJoueur.setHorizontalAlignment(SwingConstants.CENTER);
         }
         return la_titreTemps;
     }
@@ -208,6 +222,17 @@ public class Reccords extends JFrame implements ChangementLangue {
      */
     public JTabbedPane getLesOnglets() {
         return lesOnglets;
+    }
+
+
+    /**
+     * @return the la_niveau
+     */
+    public JLabel getLa_niveau() {
+        if (la_niveau == null) {
+            la_niveau = new JLabel();
+        }
+        return la_niveau;
     }
 
 
