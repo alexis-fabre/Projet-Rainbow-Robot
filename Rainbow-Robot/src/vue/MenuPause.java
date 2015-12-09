@@ -53,6 +53,9 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		
+		// Titre de la fenêtre
+		super.setTitle("Pause");
+		
 		// ---------------------------------------------------------------------
 		// Ajout des boutons Story, Arcade et Custom ainsi que de leurs
 		// descriptions

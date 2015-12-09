@@ -7,6 +7,7 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import metier.Partie;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
 
@@ -51,7 +53,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JLabel getCaiseARecuperer = new JLabel(
+	private JLabel caisseARecuperer = new JLabel(
 			"Liste des caisses à récupérer");
 	/**
 	 * Référence des traductions effectuées dans ChoixLangue.java
@@ -81,6 +83,9 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Titre de la fenêtre
+		super.setTitle("Mode Jeu (Story)");
 
 		Container contentPane = super.getContentPane();
 		Container contentMenuHaut = new JPanel();
@@ -90,6 +95,14 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		contentMenuHaut.add(getTimer());
 		contentMenuHaut.add(getCaiseARecuperer());
 		contentMenuHaut.add(getBt_Pause());
+		
+		// Mise en forme du JLabel
+		// Nouvelle police d'écriture
+		Font font = new Font("Arial",Font.BOLD,24);
+		timer.setFont(font);
+		caisseARecuperer.setFont(font);
+		// Ajout d'une bordure
+		timer.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
 		tache_timer = new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
@@ -108,15 +121,16 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 			}
 		};
 
+		// Instanciation du timer
 		final Timer timer1 = new Timer(delais, tache_timer);
 		
 		timer1.start();
 		
-		// TODO arrêter le timer lors de la pause
-//		if(MenuPause.isVisible()) {
+		// TODO arrêter le timer à la fin de la partie et lors du clic sur le bouton pause
+//		if(Partie.isFinished()) {
 //			timer1.stop();
 //		}
-		
+//		
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
@@ -143,12 +157,12 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	 * @return la liste de caisses
 	 */
 	public JLabel getCaiseARecuperer() {
-		if (getCaiseARecuperer == null) {
-			getCaiseARecuperer = new JLabel();
-			getCaiseARecuperer
+		if (caisseARecuperer == null) {
+			caisseARecuperer = new JLabel();
+			caisseARecuperer
 					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
-		return getCaiseARecuperer;
+		return caisseARecuperer;
 	}
 
 	/**
