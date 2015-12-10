@@ -9,7 +9,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Observable;
+import java.util.Arrays;
 
 import vue.UtilitaireFenetre;
 
@@ -63,7 +63,9 @@ public class Partie implements Dessinable {
 	}
 
 	/**
-	 * Créer une carte avec un nombre de nigne et de colonne précis.
+	 * Créer une carte avec un nombre de nigne et de colonne précis. Initialise
+	 * le robot à la position (1,0) et dirigé vers la gauche. Le vortex est
+	 * initialisé à la position (0,0).
 	 * 
 	 * @param nbLigne
 	 *            nombre de ligne que doit faire la carte
@@ -97,11 +99,14 @@ public class Partie implements Dessinable {
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
 		// TODO à généraliser
-		Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
+		caisseARecup.add(new Caisse(Color.RED));
+		caisseARecup.add(new Caisse(Color.BLUE));
+		caisseARecup.add(new Caisse(Color.YELLOW));
+		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
 		// TODO à généraliser
 		caisses = new Caisse[3];
-		caisses[0] = new Caisse(Color.RED, new Position(0, 0));
+		caisses[0] = new Caisse(Color.RED, new Position(-4, 2));
 		caisses[1] = new Caisse(Color.BLUE, new Position(3, 2));
 		caisses[2] = new Caisse(Color.YELLOW, new Position(2, 3));
 
@@ -124,6 +129,33 @@ public class Partie implements Dessinable {
 			ok = true;
 		}
 		return ok;
+	}
+
+	/**
+	 * Vérifie si le vortex peut absorber la caisse (si la caisse à la même
+	 * couleur que celle demandée). Si c'est le cas, on fait disparaître la
+	 * caisse et on actualise la nouvelle caisse a récupéré.
+	 * 
+	 * @return true si le vortex a apsiré la caisse ou false sinon
+	 */
+	public boolean vortexAspire() {
+		// On parcours les caisses sur le plateau de jeu et on vérifie si l'une
+		// d'elle est positionné sur le vortex et si elle est de la même couleur
+		// que celle demandée dans la liste
+		System.out.println(Arrays.toString(caisseARecup.toArray()));
+		for (int i = 0; i < caisses.length; i++) {
+			if (caisses[i].getPosCaisse().equals(vortex.getPosVortex())
+					&& caisses[i].getCouleur().equals(
+							caisseARecup.get(0).getCouleur())) {
+				// On fait disparaître la caisse
+				caisses[i] = null;
+				// On réactualise les caisses a récupéré
+				caisseARecup.remove(0);
+				System.out.println(Arrays.toString(caisseARecup.toArray()));
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -291,6 +323,9 @@ public class Partie implements Dessinable {
 	 */
 	@Override
 	public void dessiner(Graphics2D g) {
+		// On vérifie si une caisse se trouve sur le vortex
+		vortexAspire();
+
 		for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
 			for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
 				Position posADessiner = new Position(x + debutX, y + debutY);
@@ -330,18 +365,21 @@ public class Partie implements Dessinable {
 			// positionner l'image de la caisse
 			// On fait cela pour centrer l'image dans la case
 			// vide
-			int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
-					* UtilitaireFenetre.DIM_CASE_VIDE.width
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-			int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
-					* UtilitaireFenetre.DIM_CASE_VIDE.height
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
-					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
-					UtilitaireFenetre.DIM_CAISSE.height);
-			caisseADessiner.dessiner(contexteCaisse);
+			if (caisseADessiner != null) {
+				int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
+						* UtilitaireFenetre.DIM_CASE_VIDE.width
+						+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+				int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
+						* UtilitaireFenetre.DIM_CASE_VIDE.height
+						+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+				Graphics2D contexteCaisse = (Graphics2D) g.create(
+						abscisseCaisse, ordonneCaisse,
+						UtilitaireFenetre.DIM_CAISSE.width,
+						UtilitaireFenetre.DIM_CAISSE.height);
+				caisseADessiner.dessiner(contexteCaisse);
 
-			contexteCaisse.dispose();
+				contexteCaisse.dispose();
+			}
 		}
 
 		// ---------------------------------------------------------

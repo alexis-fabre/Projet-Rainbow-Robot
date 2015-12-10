@@ -294,8 +294,8 @@ public class Robot extends Observable implements Dessinable {
 					}
 					break;
 				case ORIENTATION_DROITE:
-					if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
-							caisse.getPosCaisse().getY())
+					if (deplacementCaisseOK(caisse.getPosCaisse().getX(),
+							caisse.getPosCaisse().getY() - 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
 											.getPosCaisse().getY() - 1)) {
@@ -467,7 +467,7 @@ public class Robot extends Observable implements Dessinable {
 				break;
 			case ORIENTATION_HAUT:
 				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
-						pos_courante.getY() + 1));
+						pos_courante.getY() - 1));
 				break;
 			case ORIENTATION_DROITE:
 				caisse = partie.getCaisseJeu(new Position(
@@ -475,7 +475,7 @@ public class Robot extends Observable implements Dessinable {
 				break;
 			case ORIENTATION_BAS:
 				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
-						pos_courante.getY() - 1));
+						pos_courante.getY() + 1));
 				break;
 			}
 		}
