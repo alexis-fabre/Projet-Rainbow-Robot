@@ -487,6 +487,10 @@ public class Robot extends Observable implements Dessinable {
 				break;
 			}
 		}
+		// Indique que l'état du modèle a changé
+		setChanged();
+		// Met à jour les Observers (ici => FenetreJeu)
+		notifyObservers(this);
 	}
 
 	/**
