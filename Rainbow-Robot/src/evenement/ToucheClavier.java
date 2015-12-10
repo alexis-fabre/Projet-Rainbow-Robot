@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import metier.Partie;
 import metier.Robot;
@@ -60,25 +61,37 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP: // Flêche du haut
-			metier.getRobot().avancer();
-			break;
-		case KeyEvent.VK_LEFT: // Flêche de gauche
-			metier.getRobot().pivoter(Robot.PIVOTER_GAUCHE);
-			break;
-		case KeyEvent.VK_RIGHT: // Flêche de droite
-			metier.getRobot().pivoter(Robot.PIVOTER_DROITE);
-			break;
-		case KeyEvent.VK_DOWN: // Flêche du bas
-			metier.getRobot().reculer();
-			break;
-		case KeyEvent.VK_CONTROL: // Touche Contrôle
-			break;
-		case KeyEvent.VK_SPACE: // Touche Espace
-			// On attrape la prochaine caisse
-			metier.getRobot().setCaisse();
-			break;
+		if (!metier.isFinished()) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP: // Flêche du haut
+				metier.getRobot().avancer();
+				break;
+			case KeyEvent.VK_LEFT: // Flêche de gauche
+				metier.getRobot().pivoter(Robot.PIVOTER_GAUCHE);
+				break;
+			case KeyEvent.VK_RIGHT: // Flêche de droite
+				metier.getRobot().pivoter(Robot.PIVOTER_DROITE);
+				break;
+			case KeyEvent.VK_DOWN: // Flêche du bas
+				metier.getRobot().reculer();
+				break;
+			case KeyEvent.VK_CONTROL: // Touche Contrôle
+				break;
+			case KeyEvent.VK_SPACE: // Touche Espace
+				// On attrape la prochaine caisse
+				metier.getRobot().setCaisse();
+				break;
+			}
+		}
+		if (metier.isFinished()) {
+			// Fin du jeu
+			// On ouvre un fenêtre de discussion permettant à l'utilisatuer
+			// de recommencer le niveau, de continuer au niveau suivant ou
+			// de quitter
+			new JOptionPane()
+					.showMessageDialog(null, "Fin de la partie",
+							"Vous avez fini la partie",
+							JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

@@ -173,7 +173,9 @@ public class Robot extends Observable implements Dessinable {
 			if (caisse != null) {
 				// On vérifie si le déplacement de la caisse est possible
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
-						caisse.getPosCaisse().getY())) {
+						caisse.getPosCaisse().getY())
+						&& partie.isPositionOKAvecCaisse(
+								pos_courante.getX() + 1, pos_courante.getY())) {
 					// On change la position de la caisse
 					setPositionCaisse(caisse.getPosCaisse().getX() + 1, caisse
 							.getPosCaisse().getY());
@@ -192,7 +194,9 @@ public class Robot extends Observable implements Dessinable {
 		case ORIENTATION_BAS: // Robot orienté vers le bas
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
-						.getPosCaisse().getY() - 1)) {
+						.getPosCaisse().getY() - 1)
+						&& partie.isPositionOKAvecCaisse(pos_courante.getX(),
+								pos_courante.getY() - 1)) {
 					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
 							.getPosCaisse().getY() - 1);
 					pos_courante.setY(pos_courante.getY() - 1);
@@ -209,7 +213,9 @@ public class Robot extends Observable implements Dessinable {
 		case ORIENTATION_DROITE: // Robot orienté vers la droite
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
-						caisse.getPosCaisse().getY())) {
+						caisse.getPosCaisse().getY())
+						&& partie.isPositionOKAvecCaisse(
+								pos_courante.getX() - 1, pos_courante.getY())) {
 					setPositionCaisse(caisse.getPosCaisse().getX() - 1, caisse
 							.getPosCaisse().getY());
 					pos_courante.setX(pos_courante.getX() - 1);
@@ -225,7 +231,9 @@ public class Robot extends Observable implements Dessinable {
 		case ORIENTATION_HAUT: // Robot orienté vers le haut
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
-						.getPosCaisse().getY() + 1)) {
+						.getPosCaisse().getY() + 1)
+						&& partie.isPositionOKAvecCaisse(pos_courante.getX(),
+								pos_courante.getY() + 1)) {
 					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
 							.getPosCaisse().getY() + 1);
 					pos_courante.setY(pos_courante.getY() + 1);

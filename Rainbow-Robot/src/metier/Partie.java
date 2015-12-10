@@ -121,14 +121,7 @@ public class Partie implements Dessinable {
 	 * Savoir si la partie est fini
 	 */
 	public boolean isFinished() {
-		// lorsque toutes les caisseARecup sont récupérer
-		boolean ok = false;
-
-		if (caisseARecup.isEmpty()) {
-			JeuRainbow.setNiveau(niveau);
-			ok = true;
-		}
-		return ok;
+		return caisseARecup.isEmpty();
 	}
 
 	/**
@@ -142,16 +135,17 @@ public class Partie implements Dessinable {
 		// On parcours les caisses sur le plateau de jeu et on vérifie si l'une
 		// d'elle est positionné sur le vortex et si elle est de la même couleur
 		// que celle demandée dans la liste
-		System.out.println(Arrays.toString(caisseARecup.toArray()));
 		for (int i = 0; i < caisses.length; i++) {
-			if (caisses[i].getPosCaisse().equals(vortex.getPosVortex())
+			if (caisses[i] != null
+					&& caisses[i].getPosCaisse().equals(vortex.getPosVortex())
 					&& caisses[i].getCouleur().equals(
 							caisseARecup.get(0).getCouleur())) {
 				// On fait disparaître la caisse
 				caisses[i] = null;
 				// On réactualise les caisses a récupéré
 				caisseARecup.remove(0);
-				System.out.println(Arrays.toString(caisseARecup.toArray()));
+				// On supprime la caisse du robot
+				robot.setCaisse();
 				return true;
 			}
 		}
@@ -231,7 +225,8 @@ public class Partie implements Dessinable {
 		boolean positionOK = true;
 		// On regarde si la position a vérifié est sur une caisse déjà existante
 		for (int i = 0; i < caisses.length && positionOK; i++) {
-			if (caisses[i].getPosCaisse().equals(aVerifier)) {
+			if (caisses[i] != null
+					&& caisses[i].getPosCaisse().equals(aVerifier)) {
 				positionOK = false;
 			}
 		}
@@ -271,7 +266,7 @@ public class Partie implements Dessinable {
 
 		// On recherche la caisse
 		for (Caisse caisse : caisses) {
-			if (caisse.getPosCaisse().equals(position)) {
+			if (caisse != null && caisse.getPosCaisse().equals(position)) {
 				return caisse;
 			}
 		}
