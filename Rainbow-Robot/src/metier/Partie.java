@@ -8,6 +8,7 @@ package metier;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,7 +20,12 @@ import vue.UtilitaireFenetre;
  * 
  * @author Rainbow Robot
  */
-public class Partie implements Dessinable {
+public class Partie implements Dessinable, Serializable {
+
+	/**
+	 * Générer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -6712326189565570979L;
 
 	/** Nombre colonne de la carte */
 	private int nbColonne;
@@ -125,7 +131,7 @@ public class Partie implements Dessinable {
 		boolean ok = false;
 
 		if (caisseARecup.isEmpty()) {
-			JeuRainbow.setNiveau(niveau);
+			// JeuRainbow.setNiveau(niveau);
 			ok = true;
 		}
 		return ok;
@@ -144,7 +150,8 @@ public class Partie implements Dessinable {
 		// que celle demandée dans la liste
 		System.out.println(Arrays.toString(caisseARecup.toArray()));
 		for (int i = 0; i < caisses.length; i++) {
-			if (caisses[i].getPosCaisse().equals(vortex.getPosVortex())
+			if (caisses[i] != null
+					&& caisses[i].getPosCaisse().equals(vortex.getPosVortex())
 					&& caisses[i].getCouleur().equals(
 							caisseARecup.get(0).getCouleur())) {
 				// On fait disparaître la caisse
@@ -231,7 +238,8 @@ public class Partie implements Dessinable {
 		boolean positionOK = true;
 		// On regarde si la position a vérifié est sur une caisse déjà existante
 		for (int i = 0; i < caisses.length && positionOK; i++) {
-			if (caisses[i].getPosCaisse().equals(aVerifier)) {
+			if (caisses[i] != null
+					&& caisses[i].getPosCaisse().equals(aVerifier)) {
 				positionOK = false;
 			}
 		}
@@ -386,5 +394,20 @@ public class Partie implements Dessinable {
 		// On dessine le robot
 		// ---------------------------------------------------------
 		robot.dessiner(g);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Partie [nbColonne=" + nbColonne + ", nbLigne=" + nbLigne
+				+ ", debutX=" + debutX + ", debutY=" + debutY + ", robot="
+				+ robot + ", caisses=" + Arrays.toString(caisses) + ", niveau="
+				+ niveau + ", vortex=" + vortex + ", caisseARecup="
+				+ caisseARecup + ", positionsInaccessibles="
+				+ Arrays.toString(positionsInaccessibles) + "]";
 	}
 }

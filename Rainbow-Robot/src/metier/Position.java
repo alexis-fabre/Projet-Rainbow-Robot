@@ -5,12 +5,20 @@
 
 package metier;
 
+import java.io.Serializable;
+
 /**
- * Classe gérant la position sur un plateau d'une Partie
- * Elle va pouvoir gérer la position d'un robot, des caisses, du vortex
+ * Classe gérant la position sur un plateau d'une Partie Elle va pouvoir gérer
+ * la position d'un robot, des caisses, du vortex
+ * 
  * @author Rainbow Robot
  */
-public class Position {
+public class Position implements Serializable {
+
+	/**
+	 * Générer automatiquement par Eclispe
+	 */
+	private static final long serialVersionUID = 6603202690509989524L;
 
 	/** Coordonnées */
 	private int x;

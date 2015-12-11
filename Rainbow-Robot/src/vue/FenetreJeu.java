@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import metier.Partie;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
 
@@ -27,7 +27,13 @@ import evenement.ToucheClavier;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue {
+public class FenetreJeu extends JFrame implements ChangementLangue,
+		Serializable {
+
+	/**
+	 * Générer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -8242465387808534110L;
 
 	/**
 	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
@@ -64,11 +70,10 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	 * Bouton qui permet de mettre en pause la partie en cours
 	 */
 	private JButton bt_Pause;
-	
+
 	ActionListener tache_timer;
-	
-	private int seconde,minute,delais = 1000;
-	
+
+	private int seconde, minute, delais = 1000;
 
 	/**
 	 * Initialise les composants et les disposent sur un contexte graphique 2D.
@@ -83,7 +88,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		// Titre de la fenêtre
 		super.setTitle("Mode Jeu (Story)");
 
@@ -95,14 +100,15 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		contentMenuHaut.add(getTimer());
 		contentMenuHaut.add(getCaiseARecuperer());
 		contentMenuHaut.add(getBt_Pause());
-		
+
 		// Mise en forme du JLabel
 		// Nouvelle police d'écriture
-		Font font = new Font("Arial",Font.BOLD,24);
+		Font font = new Font("Arial", Font.BOLD, 24);
 		timer.setFont(font);
 		caisseARecuperer.setFont(font);
 		// Ajout d'une bordure
-		timer.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+		timer.setBorder(javax.swing.BorderFactory
+				.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
 		tache_timer = new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
@@ -110,8 +116,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 					seconde = -1;
 					minute++;
 				}
-				seconde ++;
-				if(minute < 10 && seconde < 10) {
+				seconde++;
+				if (minute < 10 && seconde < 10) {
 					timer.setText("0" + minute + " : " + "0" + seconde);
 				} else if (minute < 10) {
 					timer.setText("0" + minute + " : " + seconde);
@@ -123,14 +129,15 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 
 		// Instanciation du timer
 		final Timer timer1 = new Timer(delais, tache_timer);
-		
+
 		timer1.start();
-		
-		// TODO arrêter le timer à la fin de la partie et lors du clic sur le bouton pause
-//		if(Partie.isFinished()) {
-//			timer1.stop();
-//		}
-//		
+
+		// TODO arrêter le timer à la fin de la partie et lors du clic sur le
+		// bouton pause
+		// if(Partie.isFinished()) {
+		// timer1.stop();
+		// }
+		//
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
@@ -149,7 +156,6 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 		// On centre l'écran
 		UtilitaireFenetre.centrerFenetre(this);
 	}
-	
 
 	/**
 	 * Affichage des caisses que le joueur doit récupérer

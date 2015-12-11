@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import metier.Partie;
+import metier.JeuRainbow;
 import vue.ChoixLangue;
 import vue.ChoixMode;
 import vue.F_aPropos;
@@ -35,12 +35,10 @@ import vue.Reccords;
 public class ClicSouris implements MouseListener {
 
 	/**
-	 * Représentation d'un partie du jeu Rainbow Robot (partie métier).
-	 * L'attribut est utilisé ici comme attribut de passage. Il n'intervient
-	 * donc pas directement dans la classe et n'est pas accessible par une autre
-	 * classe.
+	 * Représentation du jeu Rainbow Robot (partie métier). Il permet de passer
+	 * d'une partie à un autre.
 	 */
-	private Partie partie;
+	private JeuRainbow jeu;
 
 	/**
 	 * Détection des clics sur une fenêtre. On peut traiter qu'une seule fenêtre
@@ -57,12 +55,12 @@ public class ClicSouris implements MouseListener {
 	/**
 	 * On initialise le constructeur avec la partie métier du jeu.
 	 * 
-	 * @param partieDuJeu
-	 *            représentation d'un partie du jeu Rainbow Robot (partie
-	 *            métier)
+	 * @param jeu
+	 *            représentation du jeu Rainbow Robot (partie métier). Il
+	 *            contient notamment les différents niveaux.
 	 */
-	public ClicSouris(Partie partieDuJeu) {
-		partie = partieDuJeu;
+	public ClicSouris(JeuRainbow jeu) {
+		this.jeu = jeu;
 	}
 
 	/*
@@ -250,7 +248,8 @@ public class ClicSouris implements MouseListener {
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
-				ToucheClavier clavier = new ToucheClavier(partie, fenetre);
+				ToucheClavier clavier = new ToucheClavier(
+						jeu.getPartieCourante(), fenetre);
 				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
@@ -297,7 +296,8 @@ public class ClicSouris implements MouseListener {
 				fenetre.setVisible(false);
 			}
 			if (e.getSource() == fenetrePause.getBt_Recommencer()) {
-				ToucheClavier clavier = new ToucheClavier(partie, fenetre);
+				ToucheClavier clavier = new ToucheClavier(
+						jeu.getPartieCourante(), fenetre);
 				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
 				fenetre.setVisible(false);
 				setFenetre(nouvelleFenetre);

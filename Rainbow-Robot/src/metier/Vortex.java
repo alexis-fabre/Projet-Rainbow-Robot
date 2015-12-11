@@ -5,11 +5,18 @@
 
 package metier;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Rainbow Robot
  */
-public class Vortex {
+public class Vortex implements Serializable {
+
+	/**
+	 * Générer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 6297297964624363269L;
 
 	private Position pos_vortex;
 

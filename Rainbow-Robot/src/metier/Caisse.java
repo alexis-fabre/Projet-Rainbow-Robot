@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,12 @@ import vue.UtilitaireFenetre;
  * 
  * @author Rainbow Robot
  */
-public class Caisse implements Dessinable {
+public class Caisse implements Dessinable, Serializable {
+
+	/**
+	 * Génerer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -7480744260167787591L;
 
 	/** Couleur de la caisse */
 	private Color couleur;
@@ -61,8 +67,9 @@ public class Caisse implements Dessinable {
 	}
 
 	/**
-	 * Fusion des couleurs de deux caisses par le procédé de la synthèse additive
-	 * Lorsque le Robot effectuera l'action "fusionner"
+	 * Fusion des couleurs de deux caisses par le procédé de la synthèse
+	 * additive Lorsque le Robot effectuera l'action "fusionner"
+	 * 
 	 * @param c1
 	 *            première caisse à fusionner tenue par le robot
 	 * @param c2
@@ -71,38 +78,32 @@ public class Caisse implements Dessinable {
 	 */
 	public static Caisse fusionCouleur(Caisse c1, Caisse c2) {
 		// caisse à retourner avec la couleur noir par défaut
-        Caisse c3 = new Caisse(Color.BLACK); 
+		Caisse c3 = new Caisse(Color.BLACK);
 
-        if (c1.getCouleur() == c2.getCouleur()) {
-        	// Cas d'erreur fusion de deux caisses avec une couleur identique
-        	
-        } else if ( (c1.getCouleur() == Color.RED 
-        		     && c2.getCouleur() == Color.GREEN)
-                 || (c1.getCouleur() == Color.GREEN 
-                     && c2.getCouleur() == Color.RED)) {
-        
-        	// La couleur de la fusion est Jaune
-            c3.setCouleur(Color.YELLOW);
-            
-        } else if ( (c1.getCouleur() == Color.RED 
-        		     && c2.getCouleur() == Color.YELLOW)
-                || (c1.getCouleur() == Color.YELLOW 
-                     && c2.getCouleur() == Color.RED)) {
-        
-        	// La couleur de la fusion est Orange
-            c3.setCouleur(Color.ORANGE);
-            
-        } else if ( (c1.getCouleur() == Color.BLUE 
-        		     && c2.getCouleur() == Color.RED)
-                || (c1.getCouleur() == Color.RED 
-                     && c2.getCouleur() == Color.BLUE)) {
-        
-        	// La couleur de la fusion est violet
-            c3.setCouleur(Color.MAGENTA);
-        } 
-        
-        return c3;
-    }
+		if (c1.getCouleur() == c2.getCouleur()) {
+			// Cas d'erreur fusion de deux caisses avec une couleur identique
+
+		} else if ((c1.getCouleur() == Color.RED && c2.getCouleur() == Color.GREEN)
+				|| (c1.getCouleur() == Color.GREEN && c2.getCouleur() == Color.RED)) {
+
+			// La couleur de la fusion est Jaune
+			c3.setCouleur(Color.YELLOW);
+
+		} else if ((c1.getCouleur() == Color.RED && c2.getCouleur() == Color.YELLOW)
+				|| (c1.getCouleur() == Color.YELLOW && c2.getCouleur() == Color.RED)) {
+
+			// La couleur de la fusion est Orange
+			c3.setCouleur(Color.ORANGE);
+
+		} else if ((c1.getCouleur() == Color.BLUE && c2.getCouleur() == Color.RED)
+				|| (c1.getCouleur() == Color.RED && c2.getCouleur() == Color.BLUE)) {
+
+			// La couleur de la fusion est violet
+			c3.setCouleur(Color.MAGENTA);
+		}
+
+		return c3;
+	}
 
 	/**
 	 * Accesseur sur la couleur de la caisse

@@ -6,6 +6,7 @@ package vue;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,8 +23,12 @@ import metier.Robot;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class PartieDessinable extends JPanel implements Observer {
+public class PartieDessinable extends JPanel implements Observer, Serializable {
 
+	/**
+	 * Générer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -8946384062710778140L;
 	/**
 	 * Référence de la classe qui gère une partie du jeu.
 	 */

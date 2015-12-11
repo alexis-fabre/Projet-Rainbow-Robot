@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Observable;
 
 import javax.imageio.ImageIO;
@@ -23,7 +24,12 @@ import vue.UtilitaireFenetre;
  * 
  * @author Rainbow Robot
  */
-public class Robot extends Observable implements Dessinable {
+public class Robot extends Observable implements Dessinable, Serializable {
+
+	/**
+	 * Générer automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -2940704803433530495L;
 
 	/**
 	 * Chemin de l'image du robot
