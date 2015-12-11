@@ -65,19 +65,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	private Partie partie;
 
 	/** */
-	public Robot(int orientation, Position pos_ini, Partie partie)
-			throws IllegalArgumentException {
-		if (partie.isPositionOKAvecCaisse(pos_ini)) {
-			this.pos_courante = pos_ini;
-		} else {
-			throw new IllegalArgumentException(
-					"La position initiale du robot n'est pas sur le plateau"
-							+ " de la partie." + pos_ini);
-		}
+	public Robot(int orientation, Position pos_ini) {
 
+		this.pos_courante = pos_ini;
 		this.orientation = orientation;
-
-		this.partie = partie;
 
 	}
 
@@ -522,6 +513,21 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		return pos_courante;
 	}
 
+	/**
+	 * @param partie
+	 *            le partie à modifier
+	 * @throws IllegalArgumentException
+	 *             si la position du Robot est déjà occupé dans la partie
+	 */
+	public void setPartie(Partie partie) throws IllegalArgumentException {
+		this.partie = partie;
+		if (!partie.isPositionOKAvecCaisse(pos_courante)) {
+			throw new IllegalArgumentException(
+					"La position initiale du robot n'est pas sur le plateau"
+							+ " de la partie." + pos_courante);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -589,8 +595,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
 					transform, null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out
+					.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
 		contexteRobot.dispose();
 	}
@@ -601,8 +607,22 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * @return L'orientation et la position du robot
 	 */
 	public String toString() {
-		return "L'orientation est " + orientation + "\n et sa postion est"
+		return "L'orientation est " + orientation + " et sa postion est"
 				+ pos_courante.toString() + "\n";
-
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// La caisse n'est pas récupéré car le robot ne peut être cloné avec sa
+		// caisse (ou elle ne sera pas attaché à lui)
+		// La partie n'est pas non plus cloner car sinon il y aurait une boucle
+		// infini entre Partie et Robot
+		return new Robot(orientation, (Position) pos_courante.clone());
+	}
+
 }

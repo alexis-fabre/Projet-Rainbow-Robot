@@ -84,7 +84,6 @@ public class Position implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		return obj instanceof Position
 				&& ((Position) obj).getX() == this.getX()
 				&& ((Position) obj).getY() == this.getY();
@@ -97,5 +96,15 @@ public class Position implements Serializable {
 	 */
 	public String toString() {
 		return " X : " + getX() + " et Y : " + getY();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new Position(this.getX(), this.getY());
 	}
 }

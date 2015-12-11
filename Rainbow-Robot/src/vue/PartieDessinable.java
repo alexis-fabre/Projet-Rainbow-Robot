@@ -10,8 +10,10 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import metier.JeuRainbow;
 import metier.Partie;
 import metier.Robot;
 
@@ -29,21 +31,22 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 	 * Générer automatiquement par Eclipse
 	 */
 	private static final long serialVersionUID = -8946384062710778140L;
+
 	/**
-	 * Référence de la classe qui gère une partie du jeu.
+	 * Partie courante du jeu Rainbow Robot
 	 */
-	Partie jeuRainbowRobot;
+	Partie partieCourante;
 
 	/**
 	 * TODO Expliquer le fonctionnement du constructeur
 	 * 
 	 * @param gestion
 	 */
-	public PartieDessinable(Partie partie) {
+	public PartieDessinable(JeuRainbow jeu) {
 		super();
-		jeuRainbowRobot = partie;
 		// abonner cette vue aux changements du modèle (DP observateur)
-		jeuRainbowRobot.getRobot().addObserver(this);
+		partieCourante = jeu.getPartieCourante();
+		partieCourante.getRobot().addObserver(this);
 	}
 
 	/*
@@ -53,21 +56,31 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		//System.out.println("Partie courante : " + partieCourante);
 		super.paintComponent(g);
 
 		// Nouvelle position pour centrer le jeu dans le JPanel
 		int x = (super.getWidth() / 2)
 				- (((UtilitaireFenetre.DIM_CASE_VIDE.width + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
-				jeuRainbowRobot.getNbColonne()) / 2);
+				partieCourante.getNbColonne()) / 2);
 		int y = (super.getHeight() / 2)
 				- (((UtilitaireFenetre.DIM_CASE_VIDE.height + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
-				jeuRainbowRobot.getNbLigne()) / 2);
+				partieCourante.getNbLigne()) / 2);
 
 		Graphics2D contexte = (Graphics2D) g.create(x, y, super.getWidth() - x,
 				super.getHeight() - y);
-		jeuRainbowRobot.dessiner(contexte);
+		partieCourante.dessiner(contexte);
 
 		contexte.dispose();
+	}
+
+	/**
+	 * Réactualise la partie courante envoyé dans JeuRainbow
+	 */
+	public void setJeuRainbowRobot(Partie nouvellePartie) {
+		this.partieCourante = nouvellePartie;
+		partieCourante.getRobot().addObserver(this);
+		super.repaint();
 	}
 
 	/*
@@ -77,8 +90,7 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 	 */
 	@Override
 	public void update(Observable o, Object aRedessiner) {
-
-		if (aRedessiner instanceof Robot || aRedessiner instanceof Caisse) {
+		if (aRedessiner instanceof Robot) {
 			super.repaint();
 		}
 	}

@@ -7,6 +7,7 @@ package evenement;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -70,8 +71,6 @@ public class ClicSouris implements MouseListener {
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -80,8 +79,6 @@ public class ClicSouris implements MouseListener {
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -90,8 +87,6 @@ public class ClicSouris implements MouseListener {
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -174,9 +169,7 @@ public class ClicSouris implements MouseListener {
 					// On arrête le déroulement logique de l'application
 					System.exit(0);
 				}
-
 			}
-
 		}
 
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
@@ -248,9 +241,11 @@ public class ClicSouris implements MouseListener {
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
-				ToucheClavier clavier = new ToucheClavier(
-						jeu.getPartieCourante(), fenetre);
-				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
+				ToucheClavier clavier = new ToucheClavier(jeu);
+				// On détecte les fins de partie et les pauses
+				PartieEvent evenementPartie = new PartieEvent(this, jeu);
+				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier,
+						evenementPartie);
 				fenetre.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -278,47 +273,88 @@ public class ClicSouris implements MouseListener {
 				}
 			}
 		}
-
 		if (fenetre instanceof FenetreJeu) {
 			FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
-			// On vérifie quel bouton a été utilisé
-			// Bouton Pause
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
-				MenuPause nouvelleFenetre = new MenuPause(this);
-				nouvelleFenetre.setVisible(true);
-				setFenetre(nouvelleFenetre);
-			}
-		}
+				// On vérifie quel bouton a été utilisé
+				// Bouton Pause
+				// 1ère fenêtre de discussion avec l'utilisateur
+				fenetreJeu.stopChrono();
+				String[] traductionMenuPause = ChoixLangue.getChoixLangue()
+						.getMenuPause();
+				String[] traductionBouton = Arrays.copyOfRange(
+						traductionMenuPause, 2, traductionMenuPause.length);
+				int retour = JOptionPane.showOptionDialog(null,
+						traductionMenuPause[0], traductionMenuPause[1],
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
+						traductionBouton[0]);
+				switch (retour) {
+				case 0: // Continuer
+					fenetreJeu.startChrono();
+					fenetreJeu.requestFocus();
+					break;
+				case 1: // Recommencer
+					jeu.reinitialiserPartie();
+					fenetreJeu.getPartieDessinable().setJeuRainbowRobot(
+							jeu.getPartieCourante());
+					fenetreJeu.startChrono();
+					fenetreJeu.requestFocus();
+					break;
+				case 2: // Quitter
+					// On revient à l'accueil
+					String[] traductionMenuQuitterPartie = ChoixLangue
+							.getChoixLangue().getQuitterPartie();
 
-		if (fenetre instanceof MenuPause) {
-			MenuPause fenetrePause = (MenuPause) fenetre;
-			if (e.getSource() == fenetrePause.getBt_Reprendre()) {
-				fenetre.setVisible(false);
-			}
-			if (e.getSource() == fenetrePause.getBt_Recommencer()) {
-				ToucheClavier clavier = new ToucheClavier(
-						jeu.getPartieCourante(), fenetre);
-				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
-				fenetre.setVisible(false);
-				setFenetre(nouvelleFenetre);
-			}
-			if (e.getSource() == fenetrePause.getBt_Quitter()) {
-				int option = JOptionPane.showConfirmDialog(null,
-						"Voulez-vous vraiment quitter la partie en cours ?",
-						"Quitter", JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
-				if (option == JOptionPane.YES_OPTION) {
-					F_accueil nouvelleFenetre = new F_accueil(this);
-					fenetre.setVisible(false);
-					setFenetre(nouvelleFenetre);
-				} else if (option == JOptionPane.NO_OPTION) {
-					setFenetre(fenetre);
-				} else if (option == JOptionPane.CANCEL_OPTION) {
-					setFenetre(fenetre);
+					int option = JOptionPane.showConfirmDialog(null,
+							traductionMenuQuitterPartie[0],
+							traductionMenuQuitterPartie[1],
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE);
+					if (option == JOptionPane.YES_OPTION) {
+						jeu.reinitialiserPartie();
+						F_accueil fenetreAccueil = new F_accueil(this);
+						fenetre.setVisible(false);
+						setFenetre(fenetreAccueil);
+						fenetre.setVisible(true);
+					} else {
+						fenetreJeu.startChrono();
+						fenetreJeu.requestFocus();
+					}
+					break;
 				}
-
 			}
+
 		}
+
+		// if (fenetre instanceof MenuPause) {
+		// MenuPause fenetrePause = (MenuPause) fenetre;
+		// if (e.getSource() == fenetrePause.getBt_Reprendre()) {
+		// fenetre.setVisible(false);
+		// }
+		// if (e.getSource() == fenetrePause.getBt_Recommencer()) {
+		// ToucheClavier clavier = new ToucheClavier(jeu);
+		// FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
+		// fenetre.setVisible(false);
+		// setFenetre(nouvelleFenetre);
+		// }
+		// if (e.getSource() == fenetrePause.getBt_Quitter()) {
+		// int option = JOptionPane.showConfirmDialog(null,
+		// "Voulez-vous vraiment quitter la partie en cours ?",
+		// "Quitter", JOptionPane.YES_NO_CANCEL_OPTION,
+		// JOptionPane.QUESTION_MESSAGE);
+		// if (option == JOptionPane.YES_OPTION) {
+		// F_accueil nouvelleFenetre = new F_accueil(this);
+		// fenetre.setVisible(false);
+		// setFenetre(nouvelleFenetre);
+		// } else if (option == JOptionPane.NO_OPTION) {
+		// setFenetre(fenetre);
+		// } else if (option == JOptionPane.CANCEL_OPTION) {
+		// setFenetre(fenetre);
+		// }
+		//
+		// }
+		// }
 	}
 
 	/*
@@ -329,8 +365,6 @@ public class ClicSouris implements MouseListener {
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**

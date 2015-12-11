@@ -43,7 +43,7 @@ public class Partie implements Dessinable, Serializable {
 	private Robot robot;
 
 	/** Tableau de caisse */
-	private Caisse[] caisses;
+	private Caisse[] caissePlateau;
 
 	/** Niveau de la partie */
 	private int niveau;
@@ -52,7 +52,7 @@ public class Partie implements Dessinable, Serializable {
 	private Vortex vortex;
 
 	/** caisse à recuperer pour finir une partie */
-	private ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>();
+	private ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
 
 	/**
 	 * Position ou le robot ne pourra pas se déplacer. On ne représente que le
@@ -60,13 +60,6 @@ public class Partie implements Dessinable, Serializable {
 	 * valeur absolue des X, des Y et des deux en mêmes temps.
 	 */
 	public Position[] positionsInaccessibles;
-
-	/**
-	 * Créer une carte avec un niveau donné
-	 */
-	public Partie(int niveau) {
-		this(9, 11);
-	}
 
 	/**
 	 * Créer une carte avec un nombre de nigne et de colonne précis. Initialise
@@ -105,29 +98,78 @@ public class Partie implements Dessinable, Serializable {
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
 		// TODO à généraliser
-		caisseARecup.add(new Caisse(Color.RED));
-		caisseARecup.add(new Caisse(Color.BLUE));
-		caisseARecup.add(new Caisse(Color.YELLOW));
+		caisseARecuperee.add(new Caisse(Color.RED));
+		caisseARecuperee.add(new Caisse(Color.BLUE));
+		caisseARecuperee.add(new Caisse(Color.YELLOW));
 		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
 		// TODO à généraliser
-		caisses = new Caisse[3];
-		caisses[0] = new Caisse(Color.RED, new Position(-4, 2));
-		caisses[1] = new Caisse(Color.BLUE, new Position(3, 2));
-		caisses[2] = new Caisse(Color.YELLOW, new Position(2, 3));
+		caissePlateau = new Caisse[3];
+		caissePlateau[0] = new Caisse(Color.RED, new Position(-4, 2));
+		caissePlateau[1] = new Caisse(Color.BLUE, new Position(3, 2));
+		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(2, 3));
 
 		// Le robot
-		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0), this);
+		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
 
 		// Le vortex
 		vortex = new Vortex(new Position(0, 0));
 	}
 
 	/**
+	 * Permet d'intialiser une partie avec tous ces composants
+	 * 
+	 * @param ligne
+	 *            nombre de case vide sur les lignes (sens horizontal)
+	 * @param colonne
+	 *            nombre de case vide sur les colonnes (sens vertical)
+	 * @param posInaccessible
+	 *            position inaccessible par le robot
+	 * @param robot
+	 *            Robot à contrôlé pour la partie
+	 * @param vortex
+	 *            vortex qui va avalé les caisses à récupérer
+	 * @param caisseARecupere
+	 *            caisse à récupérée. On a besoin uniquement de la couleur de la
+	 *            caisse
+	 * @param caissePlateau
+	 *            caisse placé sur le plateau. On a besoin de connaître la
+	 *            position et la couleur de chaque caisse
+	 * @throws IllegalArgumentException
+	 *             <p>
+	 *             si les caissePlateau, robot, vortex ne contienne pas de
+	 *             position ou si leurs positions sont invalides,<br />
+	 *             si les caisseARecupere et les caissePlateau n'ont pas tous
+	 *             une couleur définie,<br />
+	 *             si robot n'a pas une orientation de départ
+	 *             </p>
+	 */
+	public Partie(int ligne, int colonne, Position[] posInaccessible,
+			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecupere,
+			Caisse[] caissePlateau) throws IllegalArgumentException {
+		// TODO continuer le constructeur
+		this.nbLigne = ligne;
+		this.nbColonne = colonne;
+		// Si nbColonne = 11
+		// debutX = -(11 - 1 / 2) = -5
+		// -debutX = 5
+		this.debutX = -((nbColonne - 1) / 2);
+		this.debutY = -((nbLigne - 1) / 2);
+
+		// On initialise les différents composants
+		this.vortex = vortex;
+		this.robot = robot;
+		this.caissePlateau = caissePlateau;
+		this.caisseARecuperee = caisseARecupere;
+		this.positionsInaccessibles = posInaccessible;
+
+	}
+
+	/**
 	 * Savoir si la partie est fini
 	 */
 	public boolean isFinished() {
-		return caisseARecup.isEmpty();
+		return caisseARecuperee.isEmpty();
 	}
 
 	/**
@@ -141,15 +183,16 @@ public class Partie implements Dessinable, Serializable {
 		// On parcours les caisses sur le plateau de jeu et on vérifie si l'une
 		// d'elle est positionné sur le vortex et si elle est de la même couleur
 		// que celle demandée dans la liste
-		for (int i = 0; i < caisses.length; i++) {
-			if (caisses[i] != null
-					&& caisses[i].getPosCaisse().equals(vortex.getPosVortex())
-					&& caisses[i].getCouleur().equals(
-							caisseARecup.get(0).getCouleur())) {
+		for (int i = 0; i < caissePlateau.length; i++) {
+			if (caissePlateau[i] != null
+					&& caissePlateau[i].getPosCaisse().equals(
+							vortex.getPosVortex())
+					&& caissePlateau[i].getCouleur().equals(
+							caisseARecuperee.get(0).getCouleur())) {
 				// On fait disparaître la caisse
-				caisses[i] = null;
+				caissePlateau[i] = null;
 				// On réactualise les caisses a récupéré
-				caisseARecup.remove(0);
+				caisseARecuperee.remove(0);
 				// On supprime la caisse du robot
 				robot.setCaisse();
 				return true;
@@ -228,15 +271,14 @@ public class Partie implements Dessinable, Serializable {
 	 * @return true si la position est correcte, false sinon
 	 */
 	public boolean isPositionOKAvecCaisse(Position aVerifier) {
-		boolean positionOK = true;
 		// On regarde si la position a vérifié est sur une caisse déjà existante
-		for (int i = 0; i < caisses.length && positionOK; i++) {
-			if (caisses[i] != null
-					&& caisses[i].getPosCaisse().equals(aVerifier)) {
-				positionOK = false;
+		for (int i = 0; i < caissePlateau.length; i++) {
+			if (caissePlateau[i] != null
+					&& caissePlateau[i].getPosCaisse().equals(aVerifier)) {
+				return false;
 			}
 		}
-		return positionOK && isPositionOK(aVerifier);
+		return isPositionOK(aVerifier);
 	}
 
 	/**
@@ -271,7 +313,7 @@ public class Partie implements Dessinable, Serializable {
 		}
 
 		// On recherche la caisse
-		for (Caisse caisse : caisses) {
+		for (Caisse caisse : caissePlateau) {
 			if (caisse != null && caisse.getPosCaisse().equals(position)) {
 				return caisse;
 			}
@@ -361,7 +403,7 @@ public class Partie implements Dessinable, Serializable {
 		// ---------------------------------------------------------
 		// On dessine les caisses
 		// ---------------------------------------------------------
-		for (Caisse caisseADessiner : caisses) {
+		for (Caisse caisseADessiner : caissePlateau) {
 			// On calcule la nouvel abscisse et ordonnée pour
 			// positionner l'image de la caisse
 			// On fait cela pour centrer l'image dans la case
@@ -398,9 +440,41 @@ public class Partie implements Dessinable, Serializable {
 	public String toString() {
 		return "Partie [nbColonne=" + nbColonne + ", nbLigne=" + nbLigne
 				+ ", debutX=" + debutX + ", debutY=" + debutY + ", robot="
-				+ robot + ", caisses=" + Arrays.toString(caisses) + ", niveau="
-				+ niveau + ", vortex=" + vortex + ", caisseARecup="
-				+ caisseARecup + ", positionsInaccessibles="
+				+ robot + ", caisses=" + Arrays.toString(caissePlateau)
+				+ ", niveau=" + niveau + ", vortex=" + vortex
+				+ ", caisseARecup=" + caisseARecuperee
+				+ ", positionsInaccessibles="
 				+ Arrays.toString(positionsInaccessibles) + "]";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// On clone les positions inaccessibles
+		Position[] posInaccessible = new Position[positionsInaccessibles.length];
+		for (int i = 0; i < positionsInaccessibles.length; i++) {
+			posInaccessible[i] = (Position) positionsInaccessibles[i].clone();
+		}
+
+		// On clone les caisse à récupérée
+		ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>(
+				caisseARecuperee.size());
+		for (Caisse caisse : caisseARecuperee) {
+			caisseARecup.add((Caisse) caisse.clone());
+		}
+
+		// On clone les caisses disponibles sur le plateau
+		Caisse[] caissePlat = new Caisse[caissePlateau.length];
+		for (int i = 0; i < caissePlateau.length; i++) {
+			caissePlat[i] = (Caisse) caissePlateau[i].clone();
+		}
+
+		return new Partie(nbLigne, nbColonne, posInaccessible,
+				(Robot) robot.clone(), (Vortex) vortex.clone(), caisseARecup,
+				caissePlat);
 	}
 }

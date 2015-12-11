@@ -111,12 +111,13 @@ public class ChoixLangue {
 					"Single player (personnal bests) or 1vs1 against IA",
 					"Single player or 1vs1 against IA on a personalized map",
 					"Back" } };
-	
+
 	/**
-         * Contient les traductions pour la fenêtre Reccords
-         */
-        private final String[][] MODE_RECCORD = { {"Reccords", "Joueur", "Temps", "Niveau"},
-                {"High Score", "Player", "Time", "Level"}};
+	 * Contient les traductions pour la fenêtre Reccords
+	 */
+	private final String[][] MODE_RECCORD = {
+			{ "Reccords", "Joueur", "Temps", "Niveau" },
+			{ "High Score", "Player", "Time", "Level" } };
 
 	/**
 	 * <p>
@@ -257,6 +258,76 @@ public class ChoixLangue {
 					"Hard", "Choose a file", "Search" } };
 
 	/**
+	 * <p>
+	 * Comprend les traductions pour la fin d'une partie de Rainbow Robot.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au titre de la fenêtre.</li>
+	 * <li>La 3ème colonne correspond à la traduction du bouton "Recommencer".</li>
+	 * <li>La 4ème colonne correspond à la traduction du bouton
+	 * "Passer au niveau suivant".</li>
+	 * <li>La 5ème colonne correspond à la traduction du bouton "Quitter".</li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] FIN_PARTIE = {
+			{ "Fin de la partie", "Fin de la partie", "Recommencer",
+					"Passer au niveau suivant", "Quitter" }, //
+			{ "Game over", "Game over", "Restart", "Next level", "Exit" } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la fin d'une partie de Rainbow Robot.<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au titre de la fenêtre.</li>
+	 * <li>La 3ème colonne correspond à la traduction du bouton "Recommencer".</li>
+	 * <li>La 4ème colonne correspond à la traduction du bouton
+	 * "Passer au niveau suivant".</li>
+	 * <li>La 5ème colonne correspond à la traduction du bouton "Quitter".</li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] MENU_PAUSE = {
+			{ "Pause", "Pause", "Continuer", "Recommencer", "Quitter" }, //
+			{ "Pause", "Pause", "Start", "Restart", "Exit" } };
+
+	/**
+	 * <p>
+	 * Comprend les traductions pour la JOptionPane Quitter (ClicSouris.java /
+	 * mouseClicked / Bouton Quitter).<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond à la traduction de la question.</li>
+	 * <li></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private final String[][] QUITTER_PARTIE = {
+
+			{ "Voulez-vous vraiment quitter la partie en cours ?",
+					"Quitter la partie" },
+			{ "Do you want to exit the game ?", "Exit game" } };
+
+	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récupère via
 	 * getLangue()
 	 */
@@ -359,14 +430,12 @@ public class ChoixLangue {
 		return MODE_STORY[langue];
 	}
 
-	
 	/**
-         * @return les traductions utilisées pour pour la JFrame Reccords
-         */
-        public String[] getReccords() {
-                return MODE_RECCORD[langue];
-        }
-
+	 * @return les traductions utilisées pour pour la JFrame Reccords
+	 */
+	public String[] getReccords() {
+		return MODE_RECCORD[langue];
+	}
 
 	/**
 	 * @return les traductions utilisées pour pour la JFrame F_arcade
@@ -382,4 +451,24 @@ public class ChoixLangue {
 		return MODE_CUSTOM[langue];
 	}
 
+	/**
+	 * @return les traductions pour la fin d'une partie de jeu
+	 */
+	public String[] getFinPartie() {
+		return FIN_PARTIE[langue];
+	}
+
+	/**
+	 * @return les traductions pour le menu pause dans une partie de jeu
+	 */
+	public String[] getMenuPause() {
+		return MENU_PAUSE[langue];
+	}
+
+	/**
+	 * @return le qUITTER_PARTIE
+	 */
+	public String[] getQuitterPartie() {
+		return QUITTER_PARTIE[langue];
+	}
 }

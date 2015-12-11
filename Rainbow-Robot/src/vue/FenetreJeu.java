@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import evenement.ClicSouris;
+import evenement.PartieEvent;
 import evenement.ToucheClavier;
 
 /**
@@ -27,23 +28,13 @@ import evenement.ToucheClavier;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue,
-		Serializable {
-
-	/**
-	 * Générer automatiquement par Eclipse
-	 */
-	private static final long serialVersionUID = -8242465387808534110L;
+public class FenetreJeu extends JFrame implements ChangementLangue {
 
 	/**
 	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
 	 */
 	private PartieDessinable partieDessinable;
 
-	/**
-	 * TODO Expliquer le fonctionnement de la variable d'instance
-	 */
-	private PanneauCarte carte;
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
@@ -71,9 +62,20 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 	 */
 	private JButton bt_Pause;
 
-	ActionListener tache_timer;
+	/**
+	 * Chronomètre qui permet de calculer le temps mis pour finir le niveau
+	 */
+	private Timer chrono;
 
-	private int seconde, minute, delais = 1000;
+	/**
+	 * Délais d'une seconde (en microsecondes)
+	 */
+	public static final int DELAIS = 1000;
+
+	/**
+	 * Variable pour afficher le timer
+	 */
+	private int seconde, minute;
 
 	/**
 	 * Initialise les composants et les disposent sur un contexte graphique 2D.
@@ -81,7 +83,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
 	 * les cliques de la souris sur les boutons.
 	 */
-	public FenetreJeu(ClicSouris gestion, ToucheClavier gestionClavier) {
+	public FenetreJeu(ClicSouris gestion, ToucheClavier gestionClavier,
+			PartieEvent gestionPartie) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
@@ -110,7 +113,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 		timer.setBorder(javax.swing.BorderFactory
 				.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-		tache_timer = new ActionListener() {
+		// Instanciation du timer
+		chrono = new Timer(DELAIS, new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
 				if (seconde == 59) {
 					seconde = -1;
@@ -125,19 +129,9 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 					timer.setText(minute + " : " + seconde);
 				}
 			}
-		};
+		});
+		chrono.start();
 
-		// Instanciation du timer
-		final Timer timer1 = new Timer(delais, tache_timer);
-
-		timer1.start();
-
-		// TODO arrêter le timer à la fin de la partie et lors du clic sur le
-		// bouton pause
-		// if(Partie.isFinished()) {
-		// timer1.stop();
-		// }
-		//
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
@@ -152,6 +146,8 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 		super.requestFocus();
 
 		getBt_Pause().addMouseListener(gestion);
+
+		gestionPartie.setVue(this);
 
 		// On centre l'écran
 		UtilitaireFenetre.centrerFenetre(this);
@@ -198,10 +194,24 @@ public class FenetreJeu extends JFrame implements ChangementLangue,
 	}
 
 	/**
-	 * TODO Expliquer le fonctionnement de la méthode
+	 * Permet de lancer le chronomètre
 	 */
-	public void pause() {
-		// TODO - Création automaitque par VisualParadigm
+	public void startChrono() {
+		chrono.start();
+	}
+
+	/**
+	 * Permet de stopper le chronomètre
+	 */
+	public void stopChrono() {
+		chrono.stop();
+	}
+
+	/**
+	 * @return le partieDessinable
+	 */
+	public PartieDessinable getPartieDessinable() {
+		return partieDessinable;
 	}
 
 	/*

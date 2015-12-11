@@ -24,7 +24,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class MenuPause extends JFrame implements ChangementLangue{
+public class MenuPause extends JFrame implements ChangementLangue {
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -52,10 +52,10 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		super.setSize(UtilitaireFenetre.DIM_FENETRE_PAUSE);
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
-		
+
 		// Titre de la fenêtre
 		super.setTitle("Pause");
-		
+
 		// ---------------------------------------------------------------------
 		// Ajout des boutons Story, Arcade et Custom ainsi que de leurs
 		// descriptions
@@ -65,10 +65,10 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		// dépassent pas les 2/3 de la fenêtre
 		contentMenuPause.setPreferredSize(new Dimension(
 				UtilitaireFenetre.DIM_FENETRE_PAUSE.width,
-				(2 * UtilitaireFenetre.DIM_FENETRE_PAUSE.height) /3));
-		contentMenuPause
-		.setLayout(new BoxLayout(contentMenuPause, BoxLayout.Y_AXIS));
-		
+				(2 * UtilitaireFenetre.DIM_FENETRE_PAUSE.height) / 3));
+		contentMenuPause.setLayout(new BoxLayout(contentMenuPause,
+				BoxLayout.Y_AXIS));
+
 		Container contentPane = super.getContentPane();
 		contentPane.add(contentMenuPause, BorderLayout.CENTER);
 
@@ -81,7 +81,7 @@ public class MenuPause extends JFrame implements ChangementLangue{
 				contentMenuPause, 0, 50, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
 				contentMenuPause, 0, 50, Component.CENTER_ALIGNMENT);
-		
+
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
@@ -93,16 +93,8 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		getBt_Recommencer().addMouseListener(gestion);
 		getBt_Quitter().addMouseListener(gestion);
 
-
 	}
 
-	/**
-	 * TODO Expliquer le fonctionnement de la méthode
-	 */
-	public void quitter() {
-		// TODO - Création automaitque par VisualParadigm
-	}
-	
 	/**
 	 * @return the bt_Retour
 	 */
@@ -116,7 +108,7 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		}
 		return bt_Reprendre;
 	}
-	
+
 	/**
 	 * @return the la_titre
 	 */
@@ -127,7 +119,7 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		}
 		return titre;
 	}
-	
+
 	/**
 	 * @return bt_Recommencer
 	 */
@@ -141,11 +133,11 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		}
 		return bt_Recommencer;
 	}
-	
+
 	/**
 	 * @return bt_Quitter
 	 */
-	public JButton getBt_Quitter () {
+	public JButton getBt_Quitter() {
 		if (bt_Quitter == null) {
 			bt_Quitter = new JButton();
 			// On définit une taille pour le bouton
@@ -156,10 +148,12 @@ public class MenuPause extends JFrame implements ChangementLangue{
 		return bt_Quitter;
 	}
 
+	/* (non-Javadoc)
+	 * @see vue.ChangementLangue#setLangue()
+	 */
 	@Override
 	public void setLangue() {
-		// TODO Auto-generated method stub
-		
+		// TODO Faire la traduction
 	}
 
 }

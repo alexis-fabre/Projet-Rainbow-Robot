@@ -7,7 +7,6 @@ import metier.Position;
 public class testRobot {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		testAvancer();
 		testReculer();
 		testPivoter();
@@ -19,7 +18,8 @@ public class testRobot {
 		Position pos_ini = new Position(1, 0);
 		int orientation = Robot.ORIENTATION_BAS;
 		Partie partie = new Partie(9, 11);
-		Robot robot = new Robot(orientation, pos_ini, partie);
+		Robot robot = new Robot(orientation, pos_ini);
+		robot.setPartie(partie);
 		System.out.println("Position de départ \n" + robot.toString());
 		robot.avancer();
 		System.out
@@ -32,7 +32,8 @@ public class testRobot {
 		Position pos_ini = new Position(1, 0);
 		int orientation = Robot.ORIENTATION_BAS;
 		Partie partie = new Partie(9, 11);
-		Robot robot = new Robot(orientation, pos_ini, partie);
+		Robot robot = new Robot(orientation, pos_ini);
+		robot.setPartie(partie);
 		System.out.println("Position de départ \n" + robot.toString());
 		robot.reculer();
 		System.out
@@ -47,7 +48,8 @@ public class testRobot {
 		int orientation = Robot.ORIENTATION_BAS;
 
 		Partie partie = new Partie(9, 11);
-		Robot robot = new Robot(orientation, pos_ini, partie);
+		Robot robot = new Robot(orientation, pos_ini);
+		robot.setPartie(partie);
 
 		int position = Robot.PIVOTER_GAUCHE;
 

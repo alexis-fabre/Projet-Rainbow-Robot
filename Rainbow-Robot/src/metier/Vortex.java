@@ -35,4 +35,15 @@ public class Vortex implements Serializable {
 		return pos_vortex;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return new Vortex((Position) pos_vortex.clone());
+	}
+
 }

@@ -7,6 +7,7 @@ package vue;
 import javax.swing.UIManager;
 
 import metier.JeuRainbow;
+import metier.Partie;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 
@@ -52,11 +53,14 @@ public class Lanceur {
 			ex.printStackTrace();
 		}
 		// On initialise la partie métier
+		JeuRainbow.restartFichierPartie();
+		
 		JeuRainbow jeu = JeuRainbow.lectureFichier();
 
-		System.out.println(JeuRainbow.lectureFichier().getPartieCourante());
+		// System.out.println(JeuRainbow.lectureFichier().getPartieCourante());
 
 		// On construit le contrôleur à partir de la partie métier
+
 		ClicSouris gestion = new ClicSouris(jeu);
 
 		// On construit la fenêtre avec le contrôleur

@@ -5,6 +5,7 @@
 
 package metier;
 
+import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
@@ -36,8 +37,11 @@ public class JeuRainbow implements Serializable {
 	/** Niveau actuel du joueur */
 	private int niveauCourant;
 
-	/** Carte de la partie */
-	private ArrayList<Partie> parties;
+	/** Carte des parties enregistrées dans le fichier */
+	private ArrayList<Partie> partiesEnregistrees;
+
+	/** Carte de la partie jouable en mode Story */
+	private transient Partie partieJouable;
 
 	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
 	public static final String CHEMIN_FICHIER_PARTIE = "./lib/partie_mode_solo.bin";
@@ -46,7 +50,7 @@ public class JeuRainbow implements Serializable {
 	 * Constructeur par défaut pour créer les parties
 	 */
 	public JeuRainbow() {
-		parties = new ArrayList<Partie>();
+		partiesEnregistrees = new ArrayList<Partie>();
 		niveauCourant = DEFAULT_NIVEAU;
 	}
 
@@ -57,16 +61,29 @@ public class JeuRainbow implements Serializable {
 	 *            nouveau niveau à ajouter
 	 */
 	public void addPartie(Partie aAjouter) {
-		parties.add(aAjouter);
+		partiesEnregistrees.add(aAjouter);
 	}
 
 	/**
-	 * Pour récupérer la Carte du niveau courant
+	 * Pour récupérer un clone de la Carte du niveau courant. Cela permet entre
+	 * autre une fois le niveau fini de pouvoir le recommencer
 	 * 
 	 * @return la carte du niveau suivant
 	 */
 	public Partie getPartieCourante() {
-		return parties.get(niveauCourant);
+		if (partieJouable == null) {
+			partieJouable = partiesEnregistrees.get(niveauCourant);
+			try {
+				partieJouable = (Partie) partiesEnregistrees.get(niveauCourant)
+						.clone();
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//
+		partieJouable.getRobot().setPartie(partieJouable);
+		return partieJouable;
 	}
 
 	/**
@@ -85,7 +102,27 @@ public class JeuRainbow implements Serializable {
 	 *            nouveau niveau de jeu
 	 */
 	public void setNiveau(int niveau) {
-		niveauCourant = niveau;
+		// On réactualise partieJouable
+		reinitialiserPartie();
+		niveauCourant = niveau > partiesEnregistrees.size() ? DEFAULT_NIVEAU
+				: niveau;
+	}
+
+	/**
+	 * Permet de passer au niveau suivant ou de retourner au niveau 0
+	 */
+	public void setNiveauSuivant() {
+		// On réactualise partieJouable
+		reinitialiserPartie();
+		niveauCourant = ++niveauCourant > partiesEnregistrees.size() ? DEFAULT_NIVEAU
+				: niveauCourant;
+	}
+
+	/**
+	 * Réinitialise la partie courante
+	 */
+	public void reinitialiserPartie() {
+		partieJouable = null;
 	}
 
 	/**
@@ -164,6 +201,60 @@ public class JeuRainbow implements Serializable {
 		}
 
 		return tampon;
+	}
+
+	/**
+	 * Permet de faire revenir le fichier des parties à une état stable défini
+	 * par le modèle sur le cahier des charges.
+	 */
+	public static void restartFichierPartie() {
+		int nbLigne = 9;
+		int nbColonne = 11;
+		int debutX = -((nbColonne - 1) / 2);
+		int debutY = -((nbLigne - 1) / 2);
+
+		// On ne calcule les positions inaccessibles
+		Position[] positionsInaccessibles = new Position[4];
+		positionsInaccessibles[0] = new Position(debutX, debutY);
+		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
+		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
+		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
+
+		// TODO à généraliser
+		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
+		caisseARecuperee.add(new Caisse(Color.RED));
+		caisseARecuperee.add(new Caisse(Color.BLUE));
+		caisseARecuperee.add(new Caisse(Color.YELLOW));
+		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
+
+		// TODO à généraliser
+		Caisse[] caissePlateau = new Caisse[3];
+		caissePlateau[0] = new Caisse(Color.RED, new Position(-4, 2));
+		caissePlateau[1] = new Caisse(Color.BLUE, new Position(3, 2));
+		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(2, 3));
+
+		// Le vortex
+		Vortex vortex = new Vortex(new Position(0, 0));
+
+		// On créer le robot
+		Robot robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
+
+		// On créer la partie
+		Partie partie = new Partie(nbLigne, nbColonne, positionsInaccessibles,
+				robot, vortex, caisseARecuperee, caissePlateau);
+
+		// On associe le robot à la partie
+		robot.setPartie(partie);
+
+		JeuRainbow jeu = new JeuRainbow();
+
+		jeu.addPartie(partie);
+
+		// On enregistre dans le fichier
+		// On le lit au cas ou il n'existerais pas
+		lectureFichier();
+		enregistrerFichier(jeu);
+
 	}
 
 }

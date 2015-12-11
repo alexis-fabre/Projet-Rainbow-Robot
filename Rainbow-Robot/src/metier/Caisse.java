@@ -189,4 +189,31 @@ public class Caisse implements Dessinable, Serializable {
 			caisseArecup.add(new Caisse(couleur, new Position(2, 0)));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Caisse couleur=" + couleur + ", pos_courante=" + pos_courante
+				+ "\n";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		if (pos_courante == null) {
+			// La couleur n'est jamais changé donc il n'est pas nécessaire de la
+			// cloner
+			return new Caisse(couleur);
+		} else {
+			return new Caisse(couleur, (Position) pos_courante.clone());
+		}
+	}
+
 }
