@@ -10,7 +10,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Serializable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import evenement.ClicSouris;
-import evenement.PartieEvent;
 import evenement.ToucheClavier;
 
 /**
@@ -28,7 +26,7 @@ import evenement.ToucheClavier;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class FenetreJeu extends JFrame implements ChangementLangue {
+public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 	/**
 	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
@@ -83,8 +81,7 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
 	 * les cliques de la souris sur les boutons.
 	 */
-	public FenetreJeu(ClicSouris gestion, ToucheClavier gestionClavier,
-			PartieEvent gestionPartie) {
+	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
@@ -147,8 +144,6 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 
 		getBt_Pause().addMouseListener(gestion);
 
-		gestionPartie.setVue(this);
-
 		// On centre l'écran
 		UtilitaireFenetre.centrerFenetre(this);
 	}
@@ -205,6 +200,14 @@ public class FenetreJeu extends JFrame implements ChangementLangue {
 	 */
 	public void stopChrono() {
 		chrono.stop();
+	}
+
+	/**
+	 * Permet de faire redémarrer le chrono
+	 */
+	public void restartChrono() {
+		minute = seconde = 0;
+		chrono.start();
 	}
 
 	/**

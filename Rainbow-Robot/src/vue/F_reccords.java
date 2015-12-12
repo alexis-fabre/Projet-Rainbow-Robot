@@ -29,7 +29,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Reccords extends JFrame implements ChangementLangue {
+public class F_reccords extends JFrame implements ChangementLangue {
 
     /** nombre de scores à afficher */
     private final int NB_MAX_SCORES = 10;
@@ -69,7 +69,7 @@ public class Reccords extends JFrame implements ChangementLangue {
      * Constructeur de la fenêtre Reccords 
      * @param gestion
      */
-    public Reccords(ClicSouris gestion) {
+    public F_reccords(ClicSouris gestion) {
         super();
         super.setSize(UtilitaireFenetre.DIM_FENETRE);
         // On rend la fenêtre non redimenssionable

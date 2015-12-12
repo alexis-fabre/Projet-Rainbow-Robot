@@ -26,7 +26,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class ChoixMode extends JFrame implements ChangementLangue {
+public class F_choixMode extends JFrame implements ChangementLangue {
 
 	/**
 	 * Titre de la fenêtre
@@ -79,7 +79,7 @@ public class ChoixMode extends JFrame implements ChangementLangue {
 	 * 
 	 * @param gestion
 	 */
-	public ChoixMode(ClicSouris gestion) {
+	public F_choixMode(ClicSouris gestion) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);

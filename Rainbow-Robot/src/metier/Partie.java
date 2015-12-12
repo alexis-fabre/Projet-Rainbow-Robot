@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Observable;
 
 import vue.UtilitaireFenetre;
 
@@ -20,7 +21,7 @@ import vue.UtilitaireFenetre;
  * 
  * @author Rainbow Robot
  */
-public class Partie implements Dessinable, Serializable {
+public class Partie extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * Générer automatiquement par Eclipse
@@ -166,13 +167,6 @@ public class Partie implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Savoir si la partie est fini
-	 */
-	public boolean isFinished() {
-		return caisseARecuperee.isEmpty();
-	}
-
-	/**
 	 * Vérifie si le vortex peut absorber la caisse (si la caisse à la même
 	 * couleur que celle demandée). Si c'est le cas, on fait disparaître la
 	 * caisse et on actualise la nouvelle caisse a récupéré.
@@ -195,6 +189,11 @@ public class Partie implements Dessinable, Serializable {
 				caisseARecuperee.remove(0);
 				// On supprime la caisse du robot
 				robot.setCaisse();
+				// On vérifie s'il reste des caisses à récupérées
+				if (caisseARecuperee.isEmpty()) {
+					setChanged();
+					notifyObservers(this);
+				}
 				return true;
 			}
 		}

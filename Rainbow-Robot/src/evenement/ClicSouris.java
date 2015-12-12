@@ -8,6 +8,8 @@ package evenement;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -15,16 +17,15 @@ import javax.swing.JOptionPane;
 
 import metier.JeuRainbow;
 import vue.ChoixLangue;
-import vue.ChoixMode;
 import vue.F_aPropos;
 import vue.F_abstractModeJeu;
 import vue.F_accueil;
 import vue.F_arcade;
+import vue.F_choixMode;
 import vue.F_custom;
+import vue.F_jeuRainbow;
+import vue.F_reccords;
 import vue.F_story;
-import vue.FenetreJeu;
-import vue.MenuPause;
-import vue.Reccords;
 
 /**
  * Controleur lors d'un clic de la souris. Utilisé surtout pour naviguer entre
@@ -33,19 +34,19 @@ import vue.Reccords;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class ClicSouris implements MouseListener {
+public class ClicSouris implements MouseListener, Observer {
 
 	/**
 	 * Représentation du jeu Rainbow Robot (partie métier). Il permet de passer
 	 * d'une partie à un autre.
 	 */
-	private JeuRainbow jeu;
+	private JeuRainbow metier;
 
 	/**
 	 * Détection des clics sur une fenêtre. On peut traiter qu'une seule fenêtre
 	 * car il n'y aura jamais deux fenêtres affichées en même temps.
 	 */
-	private JFrame fenetre;
+	private JFrame vue;
 
 	/**
 	 * On initialise le constructeur par défaut.
@@ -61,7 +62,14 @@ public class ClicSouris implements MouseListener {
 	 *            contient notamment les différents niveaux.
 	 */
 	public ClicSouris(JeuRainbow jeu) {
-		this.jeu = jeu;
+		this.metier = jeu;
+	}
+
+	/**
+	 * Actualise la nouvelle partie a observé
+	 */
+	public void setObserver() {
+		this.metier.getPartieCourante().addObserver(this);
 	}
 
 	/*
@@ -98,15 +106,15 @@ public class ClicSouris implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// d'accueil
-		if (fenetre instanceof F_accueil) {
-			F_accueil fenetreAccueil = (F_accueil) fenetre;
+		if (vue instanceof F_accueil) {
+			F_accueil fenetreAccueil = (F_accueil) vue;
 
 			// On vérifie quel bouton a été utilisé
 			// Bouton Jouer
 			if (e.getSource() == fenetreAccueil.getBt_Jouer()) {
 				// On lance la fenêtre Jouer ChoixMode.java
-				ChoixMode nouvelleFenetre = new ChoixMode(this);
-				fenetre.setVisible(false);
+				F_choixMode nouvelleFenetre = new F_choixMode(this);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -114,8 +122,8 @@ public class ClicSouris implements MouseListener {
 			// Bouton Reccords
 			if (e.getSource() == fenetreAccueil.getBt_Reccords()) {
 				// On lance la page des reccords Reccords.java
-				Reccords nouvelleFenetre = new Reccords(this);
-				fenetre.setVisible(false);
+				F_reccords nouvelleFenetre = new F_reccords(this);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -143,7 +151,7 @@ public class ClicSouris implements MouseListener {
 			if (e.getSource() == fenetreAccueil.getBt_Apropos()) {
 				// On lance la page d'a propos A Propos.java
 				F_aPropos nouvelleFenetre = new F_aPropos(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -165,7 +173,7 @@ public class ClicSouris implements MouseListener {
 								JOptionPane.QUESTION_MESSAGE);
 				if (resultat == JOptionPane.OK_OPTION) {
 					// On quitte l'application
-					fenetre.setVisible(false);
+					vue.setVisible(false);
 					// On arrête le déroulement logique de l'application
 					System.exit(0);
 				}
@@ -174,14 +182,14 @@ public class ClicSouris implements MouseListener {
 
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// des reccords
-		if (fenetre instanceof Reccords) {
-			Reccords fenetreReccords = (Reccords) fenetre;
+		if (vue instanceof F_reccords) {
+			F_reccords fenetreReccords = (F_reccords) vue;
 			// On vérifie quel bouton a été utilisé
 			// Bouton Retour
 			if (e.getSource() == fenetreReccords.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				F_accueil nouvelleFenetre = new F_accueil(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -189,15 +197,15 @@ public class ClicSouris implements MouseListener {
 
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// de choix du mode
-		if (fenetre instanceof ChoixMode) {
-			ChoixMode fenetreChoixMode = (ChoixMode) fenetre;
+		if (vue instanceof F_choixMode) {
+			F_choixMode fenetreChoixMode = (F_choixMode) vue;
 
 			// On vérifie quel bouton a été utilisé
 			// Bouton Story
 			if (e.getSource() == fenetreChoixMode.getBt_Story()) {
 				// On lance la fenêtre Story F_story.java
 				F_story nouvelleFenetre = new F_story(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -207,7 +215,7 @@ public class ClicSouris implements MouseListener {
 			if (e.getSource() == fenetreChoixMode.getBt_Arcade()) {
 				// On lance la fenêtre Arcade F_arcade.java
 				F_arcade nouvelleFenetre = new F_arcade(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -217,7 +225,7 @@ public class ClicSouris implements MouseListener {
 			if (e.getSource() == fenetreChoixMode.getBt_Custom()) {
 				// On lance la fenêtre Custom F_custom.java
 				F_custom nouvelleFenetre = new F_custom(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -227,26 +235,25 @@ public class ClicSouris implements MouseListener {
 			if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				F_accueil nouvelleFenetre = new F_accueil(this);
-				fenetre.setVisible(false);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
 		}
 
-		if (fenetre instanceof F_abstractModeJeu) {
-			F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) fenetre;
+		if (vue instanceof F_abstractModeJeu) {
+			F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) vue;
 			// On vérifie quel bouton a été utilisé
 			// Bouton Jouer
 			if (e.getSource() == fenetreAbastractModeJeu.getBt_Jouer()
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
-				ToucheClavier clavier = new ToucheClavier(jeu);
+				ToucheClavier clavier = new ToucheClavier(metier);
 				// On détecte les fins de partie et les pauses
-				PartieEvent evenementPartie = new PartieEvent(this, jeu);
-				FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier,
-						evenementPartie);
-				fenetre.setVisible(false);
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
+				setObserver();
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -254,15 +261,15 @@ public class ClicSouris implements MouseListener {
 			// Bouton Retour
 			if (e.getSource() == fenetreAbastractModeJeu.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
-				ChoixMode nouvelleFenetre = new ChoixMode(this);
-				fenetre.setVisible(false);
+				F_choixMode nouvelleFenetre = new F_choixMode(this);
+				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
 		}
 
-		if (fenetre instanceof F_custom) {
-			F_custom fenetreCustom = (F_custom) fenetre;
+		if (vue instanceof F_custom) {
+			F_custom fenetreCustom = (F_custom) vue;
 			if (e.getSource() == fenetreCustom.getBt_Parcourir()) {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				JFileChooser chooser = new JFileChooser();
@@ -273,8 +280,8 @@ public class ClicSouris implements MouseListener {
 				}
 			}
 		}
-		if (fenetre instanceof FenetreJeu) {
-			FenetreJeu fenetreJeu = (FenetreJeu) fenetre;
+		if (vue instanceof F_jeuRainbow) {
+			F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
 				// On vérifie quel bouton a été utilisé
 				// Bouton Pause
@@ -295,10 +302,11 @@ public class ClicSouris implements MouseListener {
 					fenetreJeu.requestFocus();
 					break;
 				case 1: // Recommencer
-					jeu.reinitialiserPartie();
+					metier.reinitialiserPartie();
 					fenetreJeu.getPartieDessinable().setJeuRainbowRobot(
-							jeu.getPartieCourante());
-					fenetreJeu.startChrono();
+							metier.getPartieCourante());
+					setObserver();
+					fenetreJeu.restartChrono();
 					fenetreJeu.requestFocus();
 					break;
 				case 2: // Quitter
@@ -312,11 +320,11 @@ public class ClicSouris implements MouseListener {
 							JOptionPane.YES_NO_CANCEL_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 					if (option == JOptionPane.YES_OPTION) {
-						jeu.reinitialiserPartie();
+						metier.reinitialiserPartie();
 						F_accueil fenetreAccueil = new F_accueil(this);
-						fenetre.setVisible(false);
+						vue.setVisible(false);
 						setFenetre(fenetreAccueil);
-						fenetre.setVisible(true);
+						vue.setVisible(true);
 					} else {
 						fenetreJeu.startChrono();
 						fenetreJeu.requestFocus();
@@ -372,7 +380,54 @@ public class ClicSouris implements MouseListener {
 	 *            la nouvelle fenêtre à controller
 	 */
 	public void setFenetre(JFrame nouvelleFenetre) {
-		this.fenetre = nouvelleFenetre;
+		this.vue = nouvelleFenetre;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg == metier.getPartieCourante()) {
+			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
+			// On reinitialise les paramètres
+			metier.reinitialiserPartie();
+			fenetre.restartChrono();
+			fenetre.stopChrono();
+
+			String[] traductionFinPartie = ChoixLangue.getChoixLangue()
+					.getFinPartie();
+			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
+					2, traductionFinPartie.length);
+			int retour = JOptionPane.showOptionDialog(null,
+					traductionFinPartie[0], traductionFinPartie[1],
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, traductionBouton, traductionBouton[0]);
+			switch (retour) {
+			case 0: // Recommencer
+				fenetre.getPartieDessinable().setJeuRainbowRobot(
+						metier.getPartieCourante());
+				setObserver();
+				fenetre.startChrono();
+				break;
+			case 1: // Partie suivante
+				metier.setNiveauSuivant();
+				fenetre.getPartieDessinable().setJeuRainbowRobot(
+						metier.getPartieCourante());
+				setObserver();
+				fenetre.startChrono();
+				break;
+			case 2: // Quitter
+				// On revient à l'accueil
+				F_accueil fenetreAccueil = new F_accueil(this);
+				vue.setVisible(false);
+				setFenetre(fenetreAccueil);
+				fenetreAccueil.setVisible(true);
+				break;
+			}
+		}
 	}
 
 }
