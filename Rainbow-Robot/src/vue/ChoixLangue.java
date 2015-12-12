@@ -94,12 +94,15 @@ public class ChoixLangue {
 					"A propos",
 					"A propos du projet Rainbow Robot",
 					"<html>Le jeu Rainbow Robot a été réalisé dans le cadre du projet du DUT Informatique (semestre 3 et 4).<br />"
+							+ "Le jeu a été imaginé par le client Mr MONCEL : Responsable du département QLIO<br />"
+							+ "Le but du jeu est de faire connaître le département QLIO au travers d'une application ludique.<br />"
+							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournée de <i>picking</i><br />"
 							+ "Le jeu a été réalisé par :"
 							+ "<ul>"
 							+ "<li>Alexis FABRE : Chef de projet</li>"
 							+ "<li>Sylvain BENARD : Sous-chef de projet</li>"
-							+ "<li>Florian LOUARGANT : secrétaire</li>"
-							+ "<li>Quentin MASSELLAMANY-SORNOM : le gestionnaire de l'organisation informatique</li>"
+							+ "<li>Florian LOUARGANT : Secrétaire</li>"
+							+ "<li>Quentin MASSELLAMANY-SORNOM : Gestionnaire de l'organisation informatique</li>"
 							+ "<li>Benjamin MAZOYER : Gestionnaire des configurations</li>"
 							+ "</ul></html>", "Retour" },
 			{ "About", "About the project Rainbow Robot", "Play", "Back" } };

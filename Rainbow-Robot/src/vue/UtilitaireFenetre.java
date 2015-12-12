@@ -148,10 +148,10 @@ public class UtilitaireFenetre {
 	public static void addAComposantWithBoxLayout(JComponent aAjouter,
 			Container pane, int largeur, int hauteur, float alignementX) {
 		// On aligne le composant horizontalement par rapport à la fenêtre
+		aAjouter.setAlignmentX(alignementX);
 		if (largeur > 0 || hauteur > 0) {
 			pane.add(Box.createRigidArea(new Dimension(largeur, hauteur)));
 		}
-		aAjouter.setAlignmentX(alignementX);
 		pane.add(aAjouter);
 	}
 
