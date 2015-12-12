@@ -129,11 +129,6 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 
 		contentWest.setLayout(new BoxLayout(contentWest, BoxLayout.Y_AXIS));
 
-		// On force la taille des JLabels
-		UtilitaireFenetre.setAllSize(super.getLa_descRegle(), 500, 50);
-
-		UtilitaireFenetre.setAllSize(super.getLa_commande(), 500, 50);
-
 		// ---------------------------------------------------------------------
 		// Contient tous les composants pour rechercher un fichier
 		// ---------------------------------------------------------------------

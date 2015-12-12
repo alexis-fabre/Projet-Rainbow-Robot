@@ -6,11 +6,9 @@ package vue;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import metier.JeuRainbow;
@@ -25,12 +23,7 @@ import metier.Robot;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class PartieDessinable extends JPanel implements Observer, Serializable {
-
-	/**
-	 * Générer automatiquement par Eclipse
-	 */
-	private static final long serialVersionUID = -8946384062710778140L;
+public class P_partieDessinable extends JPanel implements Observer {
 
 	/**
 	 * Partie courante du jeu Rainbow Robot
@@ -42,11 +35,20 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 	 * 
 	 * @param gestion
 	 */
-	public PartieDessinable(JeuRainbow jeu) {
+	public P_partieDessinable(JeuRainbow jeu) {
 		super();
 		// abonner cette vue aux changements du modèle (DP observateur)
 		partieCourante = jeu.getPartieCourante();
 		partieCourante.getRobot().addObserver(this);
+	}
+
+	/**
+	 * Réactualise la partie courante envoyé dans JeuRainbow
+	 */
+	public void setJeuRainbowRobot(Partie nouvellePartie) {
+		this.partieCourante = nouvellePartie;
+		partieCourante.getRobot().addObserver(this);
+		super.repaint();
 	}
 
 	/*
@@ -56,7 +58,7 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		//System.out.println("Partie courante : " + partieCourante);
+		// System.out.println("Partie courante : " + partieCourante);
 		super.paintComponent(g);
 
 		// Nouvelle position pour centrer le jeu dans le JPanel
@@ -72,15 +74,6 @@ public class PartieDessinable extends JPanel implements Observer, Serializable {
 		partieCourante.dessiner(contexte);
 
 		contexte.dispose();
-	}
-
-	/**
-	 * Réactualise la partie courante envoyé dans JeuRainbow
-	 */
-	public void setJeuRainbowRobot(Partie nouvellePartie) {
-		this.partieCourante = nouvellePartie;
-		partieCourante.getRobot().addObserver(this);
-		super.repaint();
 	}
 
 	/*

@@ -180,6 +180,17 @@ public class ClicSouris implements MouseListener, Observer {
 			}
 		}
 
+		if (vue instanceof F_aPropos) {
+			F_aPropos fenetreAPropos = (F_aPropos) vue;
+			if (e.getSource() == fenetreAPropos.getBt_retour()) {
+				// On lance la fenêtre Accueil F_accueil.java
+				F_accueil nouvelleFenetre = new F_accueil(this);
+				vue.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+		}
+
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// des reccords
 		if (vue instanceof F_reccords) {
@@ -303,8 +314,7 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 1: // Recommencer
 					metier.reinitialiserPartie();
-					fenetreJeu.getPartieDessinable().setJeuRainbowRobot(
-							metier.getPartieCourante());
+					fenetreJeu.setJeuRainbowRobot(metier.getPartieCourante());
 					setObserver();
 					fenetreJeu.restartChrono();
 					fenetreJeu.requestFocus();
@@ -332,37 +342,7 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				}
 			}
-
 		}
-
-		// if (fenetre instanceof MenuPause) {
-		// MenuPause fenetrePause = (MenuPause) fenetre;
-		// if (e.getSource() == fenetrePause.getBt_Reprendre()) {
-		// fenetre.setVisible(false);
-		// }
-		// if (e.getSource() == fenetrePause.getBt_Recommencer()) {
-		// ToucheClavier clavier = new ToucheClavier(jeu);
-		// FenetreJeu nouvelleFenetre = new FenetreJeu(this, clavier);
-		// fenetre.setVisible(false);
-		// setFenetre(nouvelleFenetre);
-		// }
-		// if (e.getSource() == fenetrePause.getBt_Quitter()) {
-		// int option = JOptionPane.showConfirmDialog(null,
-		// "Voulez-vous vraiment quitter la partie en cours ?",
-		// "Quitter", JOptionPane.YES_NO_CANCEL_OPTION,
-		// JOptionPane.QUESTION_MESSAGE);
-		// if (option == JOptionPane.YES_OPTION) {
-		// F_accueil nouvelleFenetre = new F_accueil(this);
-		// fenetre.setVisible(false);
-		// setFenetre(nouvelleFenetre);
-		// } else if (option == JOptionPane.NO_OPTION) {
-		// setFenetre(fenetre);
-		// } else if (option == JOptionPane.CANCEL_OPTION) {
-		// setFenetre(fenetre);
-		// }
-		//
-		// }
-		// }
 	}
 
 	/*
@@ -392,9 +372,7 @@ public class ClicSouris implements MouseListener, Observer {
 	public void update(Observable o, Object arg) {
 		if (arg == metier.getPartieCourante()) {
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
-			// On reinitialise les paramètres
-			metier.reinitialiserPartie();
-			fenetre.restartChrono();
+
 			fenetre.stopChrono();
 
 			String[] traductionFinPartie = ChoixLangue.getChoixLangue()
@@ -402,20 +380,23 @@ public class ClicSouris implements MouseListener, Observer {
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
 			int retour = JOptionPane.showOptionDialog(null,
-					traductionFinPartie[0], traductionFinPartie[1],
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-					null, traductionBouton, traductionBouton[0]);
+					traductionFinPartie[0] + " " + fenetre.getScore(),
+					traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
+					traductionBouton[0]);
+
+			// On reinitialise les paramètres
+			metier.reinitialiserPartie();
+			fenetre.restartChrono();
 			switch (retour) {
 			case 0: // Recommencer
-				fenetre.getPartieDessinable().setJeuRainbowRobot(
-						metier.getPartieCourante());
+				fenetre.setJeuRainbowRobot(metier.getPartieCourante());
 				setObserver();
 				fenetre.startChrono();
 				break;
 			case 1: // Partie suivante
 				metier.setNiveauSuivant();
-				fenetre.getPartieDessinable().setJeuRainbowRobot(
-						metier.getPartieCourante());
+				fenetre.setJeuRainbowRobot(metier.getPartieCourante());
 				setObserver();
 				fenetre.startChrono();
 				break;

@@ -38,7 +38,7 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 	/**
 	 * Chemin de la photo que l'on désire afficher
 	 */
-	private final static String CHEMIN_PHOTO = "./img/test.jpg";
+	private final static String CHEMIN_PHOTO = "./img/PresentationJeu.PNG";
 
 	/**
 	 * <p>
@@ -66,7 +66,7 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		// ---------------------------------------------------------------------
 		// Contient la photo
 		// ---------------------------------------------------------------------
-		Photo contentPhoto = new Photo(CHEMIN_PHOTO);
+		P_photo contentPhoto = new P_photo(CHEMIN_PHOTO);
 
 		// ---------------------------------------------------------------------
 		// Contient la description + les règles
@@ -82,11 +82,6 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		contentDescReg
 				.setLayout(new BoxLayout(contentDescReg, BoxLayout.Y_AXIS));
 
-		// On force la taille des JLabels
-		UtilitaireFenetre.setAllSize(super.getLa_descRegle(), 500, 50);
-
-		UtilitaireFenetre.setAllSize(super.getLa_commande(), 500, 50);
-
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_descRegle(),
 				contentDescReg, 20, 100, Component.LEFT_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(super.getLa_commande(),
@@ -95,6 +90,7 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 		// On ajoute les composants sur le JPanel contentStory
 		// On ajoute une marge entre le composant et le bord de la fenêtre
 		contentStory.add(Box.createHorizontalStrut(30));
+		contentStory.add(Box.createVerticalStrut(-100));
 		contentStory.add(contentPhoto);
 		contentStory.add(Box.createGlue());
 		contentStory.add(contentDescReg);

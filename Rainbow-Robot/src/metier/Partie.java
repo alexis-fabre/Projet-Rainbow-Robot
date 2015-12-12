@@ -358,6 +358,13 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		return debutY;
 	}
 
+	/**
+	 * @return le caisseARecuperee
+	 */
+	public ArrayList<Caisse> getCaisseARecuperee() {
+		return caisseARecuperee;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -38,7 +38,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	/**
 	 * Chemin de la photo d'illustration du mode Arcade
 	 */
-	private final static String CHEMIN_PHOTO = "./img/test.jpg";
+	private final static String CHEMIN_PHOTO = "./img/PresentationJeu.PNG";
 
 	/**
 	 * JPanel qui permet de selctionner la difficulté de l'IA. Il n'est affiché
@@ -99,7 +99,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 		// ---------------------------------------------------------------------
 		// Contient la photo
 		// ---------------------------------------------------------------------
-		Photo contentPhoto = new Photo(CHEMIN_PHOTO);
+		P_photo contentPhoto = new P_photo(CHEMIN_PHOTO);
 
 		// ---------------------------------------------------------------------
 		// Contient la description + les règles + tous les radios boutons
@@ -113,11 +113,6 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 				UtilitaireFenetre.DIM_FENETRE.height);
 
 		contentEast.setLayout(new BoxLayout(contentEast, BoxLayout.Y_AXIS));
-
-		// On force la taille des JLabels
-		UtilitaireFenetre.setAllSize(super.getLa_descRegle(), 500, 50);
-
-		UtilitaireFenetre.setAllSize(super.getLa_commande(), 500, 50);
 
 		// On ajoute les composants dans le panneau
 		// On définit un groupe de bouton

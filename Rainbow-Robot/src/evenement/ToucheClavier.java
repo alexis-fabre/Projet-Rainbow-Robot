@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import metier.JeuRainbow;
-import metier.Partie;
 import metier.Robot;
 
 /**

@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class Photo extends JPanel {
+public class P_photo extends JPanel {
 
 	/**
 	 * Image de fond du panneau
@@ -34,7 +34,7 @@ public class Photo extends JPanel {
 	/**
 	 * Dimension du panneau
 	 */
-	private static final Dimension DIM = new Dimension(250, 350);
+	private static final Dimension DIM_PHOTO = new Dimension(300, 250);
 
 	/**
 	 * On créé un panneau avec une image en fond et une bordure qui cadre
@@ -43,14 +43,14 @@ public class Photo extends JPanel {
 	 * @param cheminPhoto
 	 *            chemin absolu ou relatif de la photo
 	 */
-	public Photo(String cheminPhoto) {
+	public P_photo(String cheminPhoto) {
 		super();
 		try {
 			photo = ImageIO.read(new File(cheminPhoto));
 		} catch (IOException e) {
 			System.out.println("Chemin Inexistant");
 		}
-		UtilitaireFenetre.setAllSize(this, DIM);
+		UtilitaireFenetre.setAllSize(this, DIM_PHOTO);
 		super.setBorder(BorderFactory.createLineBorder(Color.black, 3));
 	}
 

@@ -38,7 +38,7 @@ public class UtilitaireFenetre {
 	 * Dimension des fenêtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
-	
+
 	/**
 	 * Dimension des fenêtres usuelles
 	 */
@@ -82,6 +82,36 @@ public class UtilitaireFenetre {
 	 * Couleur du vortex
 	 */
 	public static final Color COULEUR_VORTEX = new Color(88, 88, 90);
+
+	/**
+	 * Dimension d'une case de caisse à récupérée
+	 */
+	public static final Dimension DIM_CAISSE_RECUPEREE = new Dimension(60, 70);
+
+	/**
+	 * Largeur de la bordure des caisses a récupérées.
+	 */
+	public static final float LARGEUR_BORDURE_CAISSE = 5.0f;
+
+	/**
+	 * Couleur de fond des caisses a récupérées
+	 */
+	public static final Color COULEUR_FOND_CAISSE = new Color(190, 191, 193);
+
+	/**
+	 * Couleur de fond de la première caisse à récupérée
+	 */
+	public static final Color COULEUR_FOND_CAISSE_UN = new Color(231, 231, 233);
+
+	/**
+	 * MArge entre deux caisses a récupérées
+	 */
+	public static final int MARGE_ENTRE_CAISSE = 5;
+
+	/**
+	 * Nombre de caisse affichée dans le Panneau
+	 */
+	public static final int NB_CAISSE_AFFICHE = 5;
 
 	/**
 	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le

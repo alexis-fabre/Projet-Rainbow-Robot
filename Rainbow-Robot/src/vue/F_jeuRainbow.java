@@ -11,12 +11,15 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import metier.Partie;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
 
@@ -31,7 +34,7 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	/**
 	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
 	 */
-	private PartieDessinable partieDessinable;
+	private P_partieDessinable partieDessinable;
 
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
@@ -45,15 +48,11 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 * Titre de la fenêtre
 	 */
 	private JLabel la_titre = new JLabel("MODE STORY");
+
 	/**
 	 * TODO Expliquer le fonctionnement de la variable d'instance
 	 */
-	private JLabel caisseARecuperer = new JLabel(
-			"Liste des caisses à récupérer");
-	/**
-	 * Référence des traductions effectuées dans ChoixLangue.java
-	 */
-	private ChoixLangue traducteur = ChoixLangue.getChoixLangue();
+	private P_caisseADessiner caisseARecuperer;
 
 	/**
 	 * Bouton qui permet de mettre en pause la partie en cours
@@ -94,12 +93,26 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 		Container contentPane = super.getContentPane();
 		Container contentMenuHaut = new JPanel();
-		contentMenuHaut.setLayout(new FlowLayout(FlowLayout.CENTER));
+		contentMenuHaut.setLayout(new BoxLayout(contentMenuHaut,
+				BoxLayout.X_AXIS));
 
 		// On ajoute les composants dans la fenêtre
+		contentMenuHaut.add(Box.createHorizontalStrut(30));
 		contentMenuHaut.add(getTimer());
-		contentMenuHaut.add(getCaiseARecuperer());
+		contentMenuHaut.add(Box.createGlue());
+		// On créer les caisses a récupérées
+		caisseARecuperer = new P_caisseADessiner(gestionClavier.getMetier());
+		UtilitaireFenetre.setAllSize(caisseARecuperer,
+				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width
+						* UtilitaireFenetre.NB_CAISSE_AFFICHE
+						+ UtilitaireFenetre.MARGE_ENTRE_CAISSE
+						* UtilitaireFenetre.NB_CAISSE_AFFICHE + 1,
+				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height);
+
+		contentMenuHaut.add(caisseARecuperer);
+		contentMenuHaut.add(Box.createGlue());
 		contentMenuHaut.add(getBt_Pause());
+		contentMenuHaut.add(Box.createHorizontalStrut(30));
 
 		// Mise en forme du JLabel
 		// Nouvelle police d'écriture
@@ -132,7 +145,7 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();
 
-		partieDessinable = new PartieDessinable(gestionClavier.getMetier());
+		partieDessinable = new P_partieDessinable(gestionClavier.getMetier());
 
 		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
 		contentPane.add(partieDessinable, BorderLayout.CENTER);
@@ -149,20 +162,6 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * Affichage des caisses que le joueur doit récupérer
-	 * 
-	 * @return la liste de caisses
-	 */
-	public JLabel getCaiseARecuperer() {
-		if (caisseARecuperer == null) {
-			caisseARecuperer = new JLabel();
-			caisseARecuperer
-					.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-		}
-		return caisseARecuperer;
-	}
-
-	/**
 	 * Affichage du timer de la partie
 	 * 
 	 * @return le timer
@@ -170,19 +169,25 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	public JLabel getTimer() {
 		if (timer == null) {
 			timer = new JLabel();
-			timer.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			UtilitaireFenetre.setAllSize(timer,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
 		return timer;
+	}
 
+	/**
+	 * @return le score de la partie lorsque celle-ci est finie
+	 */
+	public String getScore() {
+		return minute + ":" + seconde;
 	}
 
 	public JButton getBt_Pause() {
 		if (bt_Pause == null) {
 			bt_Pause = new JButton();
 			// On définit une taille pour le bouton
-			bt_Pause.setMaximumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Pause.setMinimumSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-			bt_Pause.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			UtilitaireFenetre.setAllSize(bt_Pause,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 			bt_Pause.setText("Pause");
 		}
 		return bt_Pause;
@@ -213,8 +218,23 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	/**
 	 * @return le partieDessinable
 	 */
-	public PartieDessinable getPartieDessinable() {
+	public P_partieDessinable getPartieDessinable() {
 		return partieDessinable;
+	}
+
+	/**
+	 * @return le partieDessinable
+	 */
+	public P_caisseADessiner getCaisseADessiner() {
+		return caisseARecuperer;
+	}
+
+	/**
+	 * Réactualise la partie courante envoyé dans JeuRainbow
+	 */
+	public void setJeuRainbowRobot(Partie nouvellePartie) {
+		getCaisseADessiner().setJeuRainbowRobot(nouvellePartie);
+		getPartieDessinable().setJeuRainbowRobot(nouvellePartie);
 	}
 
 	/*
