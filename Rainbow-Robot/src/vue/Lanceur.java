@@ -7,7 +7,6 @@ package vue;
 import javax.swing.UIManager;
 
 import metier.JeuRainbow;
-import metier.Partie;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 

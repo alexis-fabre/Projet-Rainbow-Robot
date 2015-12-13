@@ -27,6 +27,11 @@ import javax.swing.JPanel;
 public class P_photo extends JPanel {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 7937412669068967465L;
+
+	/**
 	 * Image de fond du panneau
 	 */
 	private BufferedImage photo;

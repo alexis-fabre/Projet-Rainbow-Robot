@@ -87,7 +87,7 @@ public class Caisse implements Dessinable, Serializable {
 	 */
 	public static Caisse fusionCouleur(Caisse c1, Caisse c2) {
 		// caisse à retourner si on a pas trouvé de couleur
-		Caisse c3 = null;
+		Caisse c3 = new Caisse(Color.BLACK);
 
 		if (c1.getCouleur() == c2.getCouleur()) {
 			// Cas d'erreur fusion de deux caisses avec une couleur identique

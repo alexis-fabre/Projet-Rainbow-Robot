@@ -6,10 +6,8 @@ package vue;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +30,11 @@ import evenement.ClicSouris;
  * @version 1.0
  */
 public class F_accueil extends JFrame implements ChangementLangue {
+
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 6085444981210230627L;
 
 	/**
 	 * Titre de la fenêtre
@@ -92,8 +95,7 @@ public class F_accueil extends JFrame implements ChangementLangue {
 
 		// On définit le layoutManager
 		Container contentPane = super.getContentPane();
-		contentPane
-				.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
 		// On ajoute les composants
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),

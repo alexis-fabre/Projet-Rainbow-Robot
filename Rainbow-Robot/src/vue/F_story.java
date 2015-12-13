@@ -5,16 +5,11 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import evenement.ClicSouris;
@@ -35,6 +30,10 @@ import evenement.ClicSouris;
  */
 public class F_story extends F_abstractModeJeu implements ChangementLangue {
 
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -2717164171767595790L;
 	/**
 	 * Chemin de la photo que l'on désire afficher
 	 */

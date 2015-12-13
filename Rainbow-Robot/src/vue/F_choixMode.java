@@ -5,12 +5,10 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,12 +19,26 @@ import javax.swing.JPanel;
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * *
+ * <p>
+ * Fenêtre qui permet d'accéder au différent mode de jeu (Story, Arcade et
+ * Custom).<br />
+ * Elle permet de consulter un rapide description des modes de jeu.<br />
+ * La fenêtre dispose des boutons pour aller vers les descriptions plus précise
+ * des modes de jeu.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
  */
 public class F_choixMode extends JFrame implements ChangementLangue {
+
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -1947027691507109322L;
 
 	/**
 	 * Titre de la fenêtre

@@ -10,14 +10,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import evenement.ClicSouris;
 
@@ -34,6 +31,11 @@ import evenement.ClicSouris;
  * @version 1.0
  */
 public class F_aPropos extends JFrame implements ChangementLangue {
+
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -3833528985902342508L;
 
 	/**
 	 * Titre de la fenêtre

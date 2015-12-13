@@ -5,7 +5,6 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -41,6 +40,11 @@ import evenement.ClicSouris;
  * @version 1.0
  */
 public class F_custom extends F_abstractModeJeu implements ChangementLangue {
+
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -481810172105832977L;
 
 	/**
 	 * JPanel qui permet de selectionner la difficulté de l'IA. Il n'est affiché

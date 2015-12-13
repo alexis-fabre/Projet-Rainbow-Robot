@@ -36,6 +36,11 @@ import evenement.ClicSouris;
 public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -9195412081957678427L;
+
+	/**
 	 * Chemin de la photo d'illustration du mode Arcade
 	 */
 	private final static String CHEMIN_PHOTO = "./img/PresentationJeu.PNG";

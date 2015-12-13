@@ -100,13 +100,11 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
-		// TODO à généraliser
 		caisseARecuperee.add(new Caisse(Color.RED));
 		caisseARecuperee.add(new Caisse(Color.BLUE));
 		caisseARecuperee.add(new Caisse(Color.YELLOW));
 		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
-		// TODO à généraliser
 		caissePlateau = new Caisse[3];
 		caissePlateau[0] = new Caisse(Color.RED, new Position(-4, 2));
 		caissePlateau[1] = new Caisse(Color.BLUE, new Position(3, 2));

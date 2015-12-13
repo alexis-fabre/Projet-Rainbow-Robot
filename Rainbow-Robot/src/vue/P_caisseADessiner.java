@@ -42,6 +42,10 @@ import metier.Robot;
 public class P_caisseADessiner extends JPanel implements Observer {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 2888426363409236951L;
+	/**
 	 * Partie courante du jeu Rainbow Robot
 	 */
 	Partie partieCourante;

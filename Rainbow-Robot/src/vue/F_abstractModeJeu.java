@@ -36,6 +36,11 @@ public abstract class F_abstractModeJeu extends JFrame implements
 		ChangementLangue {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 7129713215366081711L;
+
+	/**
 	 * Référence des traductions effectuées dans ChoixLangue.java
 	 */
 	private ChoixLangue traducteur = ChoixLangue.getChoixLangue();

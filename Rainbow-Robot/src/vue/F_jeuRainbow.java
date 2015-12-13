@@ -43,6 +43,11 @@ import evenement.ToucheClavier;
 public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 480148649001109779L;
+
+	/**
 	 * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
 	 * (avec le robot, les caisses et le vortex).
 	 */

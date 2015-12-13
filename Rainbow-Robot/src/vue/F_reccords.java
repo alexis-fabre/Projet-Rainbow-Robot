@@ -31,6 +31,11 @@ import evenement.ClicSouris;
  */
 public class F_reccords extends JFrame implements ChangementLangue {
 
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 7296802114481829665L;
+
 	/** nombre de scores à afficher */
 	private final int NB_MAX_SCORES = 10;
 

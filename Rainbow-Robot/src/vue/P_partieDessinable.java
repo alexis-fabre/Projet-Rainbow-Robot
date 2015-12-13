@@ -26,6 +26,10 @@ import metier.Robot;
 public class P_partieDessinable extends JPanel implements Observer {
 
 	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = -1455979274616855880L;
+	/**
 	 * Partie courante du jeu Rainbow Robot
 	 */
 	Partie partieCourante;
