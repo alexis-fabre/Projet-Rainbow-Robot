@@ -126,7 +126,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 		la_contenu.setHorizontalAlignment(SwingConstants.CENTER);
 		// récupération des données
 		ArrayList<LigneUsernameScore> ligneUsernameScore = OperationsFichier
-				.lectureFichierReccord(new File("highscore1.txt"));
+				.lectureFichierReccord(new File("./Ressource/highscore1.txt"));
 
 		String scores;
 		scores = "<html>";

@@ -45,10 +45,10 @@ public class Caisse implements Dessinable, Serializable {
 	 * graphique). Il faut que l'indice des images correspondent aux indices des
 	 * couleurs autorisées. Cela facilite le traitement de l'affichage.
 	 */
-	public static final String[] CHEMIN_IMAGE_CAISSE = { "./img/CaseRouge.PNG",
-			"./img/CaseJaune.PNG", "./img/CaseViolette.PNG",
-			"./img/CaseVerte.PNG", "./img/CaseBleue.PNG",
-			"./img/CaseOrange.PNG" };
+	public static final String[] CHEMIN_IMAGE_CAISSE = { "./Ressource/img/CaseRouge.PNG",
+			"./Ressource/img/CaseJaune.PNG", "./Ressource/img/CaseViolette.PNG",
+			"./Ressource/img/CaseVerte.PNG", "./Ressource/img/CaseBleue.PNG",
+			"./Ressource/img/CaseOrange.PNG" };
 
 	/**
 	 * Constructeur initialisant une caisse en lui attribuant une couleur

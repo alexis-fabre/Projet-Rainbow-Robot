@@ -34,7 +34,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/**
 	 * Chemin de l'image du robot
 	 */
-	public static final String CHEMIN_IMAGE_ROBOT = "./img/robot.jpg";
+	public static final String CHEMIN_IMAGE_ROBOT = "./Ressource/img/robot.jpg";
 
 	/** Orientation du robot vers la gauche */
 	public static final int ORIENTATION_GAUCHE = 1;

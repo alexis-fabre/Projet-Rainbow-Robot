@@ -43,7 +43,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	/**
 	 * Chemin de la photo d'illustration du mode Arcade
 	 */
-	private final static String CHEMIN_PHOTO = "./img/PresentationJeu.PNG";
+	private final static String CHEMIN_PHOTO = "./Ressource/img/PresentationJeu.PNG";
 
 	/**
 	 * JPanel qui permet de selctionner la difficulté de l'IA. Il n'est affiché

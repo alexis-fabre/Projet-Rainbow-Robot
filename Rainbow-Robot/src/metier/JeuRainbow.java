@@ -43,7 +43,7 @@ public class JeuRainbow implements Serializable {
 	private transient Partie partieJouable;
 
 	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
-	public static final String CHEMIN_FICHIER_PARTIE = "./lib/partie_mode_solo.bin";
+	public static final String CHEMIN_FICHIER_PARTIE = "./Ressource/lib/partie_mode_solo.bin";
 
 	/**
 	 * Constructeur par défaut pour créer les parties

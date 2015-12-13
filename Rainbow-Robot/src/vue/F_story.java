@@ -37,7 +37,7 @@ public class F_story extends F_abstractModeJeu implements ChangementLangue {
 	/**
 	 * Chemin de la photo que l'on désire afficher
 	 */
-	private final static String CHEMIN_PHOTO = "./img/PresentationJeu.PNG";
+	private final static String CHEMIN_PHOTO = "./Ressource/img/PresentationJeu.PNG";
 
 	/**
 	 * <p>
