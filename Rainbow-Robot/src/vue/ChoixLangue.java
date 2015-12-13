@@ -98,7 +98,7 @@ public class ChoixLangue {
 					"<html><body style=\"margin-left: 25px;\">Le jeu Rainbow Robot a été réalisé dans le cadre du projet du DUT Informatique (semestre 3 et 4).<br />"
 							+ "Le jeu a été imaginé par le client Mr MONCEL : Responsable du département QLIO.<br />"
 							+ "Le but du jeu est de faire connaître le département QLIO au travers d'une application ludique.<br />"
-							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournée de <i>picking</i>.<br />"
+							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournées de <i>picking</i>.<br />"
 							+ "Le jeu a été réalisé par :"
 							+ "<ul>"
 							+ "<li>Alexis FABRE : Chef de projet</li>"
@@ -236,7 +236,7 @@ public class ChoixLangue {
 					"Mode story",
 					"MODE STORY",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupéré une caisse</pre></html>" }, //
+					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>" }, //
 			{
 					"Story mode",
 					"STORY MODE",
@@ -276,7 +276,7 @@ public class ChoixLangue {
 					"Mode arcade",
 					"MODE ARCADE",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupéré une caisse</pre></html>",
+					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile" }, //
 			{
@@ -323,7 +323,7 @@ public class ChoixLangue {
 					"Mode custom",
 					"MODE CUSTOM",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupéré une caisse</pre></html>",
+					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile", "Choisir un fichier", "Parcourir" }, //
 			{
