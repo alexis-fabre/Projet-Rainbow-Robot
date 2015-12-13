@@ -19,8 +19,7 @@ import java.util.ArrayList;
 
 /**
  * Classe qui va permettre de gérer plusieurs partie et de les récupérer à
- * partir d'un fichier créer par l'utilisateur. Voir la classe Fichier.java
- * (package metier) qui permet d'initaliser un JeuRainbow à partir d'un fichier
+ * partir d'un fichier créer par l'utilisateur.
  * 
  * @author Rainbow Robot
  */
@@ -40,7 +39,7 @@ public class JeuRainbow implements Serializable {
 	/** Carte des parties enregistrées dans le fichier */
 	private ArrayList<Partie> partiesEnregistrees;
 
-	/** Carte de la partie jouable en mode Story */
+	/** Carte de la partie courante du mode Story */
 	private transient Partie partieJouable;
 
 	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
@@ -66,9 +65,9 @@ public class JeuRainbow implements Serializable {
 
 	/**
 	 * Pour récupérer un clone de la Carte du niveau courant. Cela permet entre
-	 * autre une fois le niveau fini de pouvoir le recommencer
+	 * autre une fois le niveau fini de pouvoir le recommencer.
 	 * 
-	 * @return la carte du niveau suivant
+	 * @return la carte du niveau courant
 	 */
 	public Partie getPartieCourante() {
 		if (partieJouable == null) {
@@ -77,11 +76,9 @@ public class JeuRainbow implements Serializable {
 				partieJouable = (Partie) partiesEnregistrees.get(niveauCourant)
 						.clone();
 			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		//
 		partieJouable.getRobot().setPartie(partieJouable);
 		return partieJouable;
 	}
@@ -306,7 +303,6 @@ public class JeuRainbow implements Serializable {
 		// On le lit au cas ou il n'existerais pas
 		lectureFichier();
 		enregistrerFichier(jeu);
-
 	}
 
 }

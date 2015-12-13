@@ -31,7 +31,9 @@ public class P_partieDessinable extends JPanel implements Observer {
 	Partie partieCourante;
 
 	/**
-	 * TODO Expliquer le fonctionnement du constructeur
+	 * Initialise la partie courante au travers de la référence du jeu. On
+	 * ajoute un Observer pour savoir quand est-ce que le robot fait une action
+	 * et des qu'il en fait une, on redessine le plateau de jeu.
 	 * 
 	 * @param gestion
 	 */

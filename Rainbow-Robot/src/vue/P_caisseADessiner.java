@@ -19,7 +19,22 @@ import metier.Partie;
 import metier.Robot;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * <p>
+ * Panneau contenant l'ensemble des caisses à récupérer pour finir le niveau du
+ * jeu. Le panneau est définies par les constantes disponibles dans la classe
+ * utilitaire : UtilitaireFenetre. Ces constantes sont :
+ * <ul>
+ * <li>NB_CAISSE_AFFICHE : Nombre de caisse maximum à afficher dans le panneau</li>
+ * <li>COULEUR_FOND_CAISSE_UN : Couleur de fond de la première caisse (celle que
+ * l'on doit récupérer).</li>
+ * <li>COULEUR_FOND_CAISSE : Couleur de fond des autres caisses.</li>
+ * <li>COULEUR_BORDURE : Couleur de la bordure</li>
+ * <li>DIM_CAISSE_RECUPEREE : Dimension d'une case dont la caisse sera affiché
+ * en son centre</li>
+ * <li>DIM_CAISSE : Dimension d'une caisse qui sera centré dans
+ * DIM_CAISSE_RECUPEREE</li>
+ * </ul>
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -32,9 +47,13 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	Partie partieCourante;
 
 	/**
-	 * TODO Expliquer le fonctionnement du constructeur
+	 * Initialise la partie courante au travers de la référence du jeu. On
+	 * ajoute un Observer pour savoir quand est-ce que le vortex aspire un
+	 * caisse pour ensuite actualiser la liste des caisses à récupérées.
 	 * 
-	 * @param gestion
+	 * @param jeu
+	 *            la partie métier du jeu contenant l'ensemble des instructions
+	 *            pour faire avancer la partie.
 	 */
 	public P_caisseADessiner(JeuRainbow jeu) {
 		super();

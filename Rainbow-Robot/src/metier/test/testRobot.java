@@ -1,17 +1,36 @@
+/*
+ * testRobot.java							28 nov 2015
+ * IUT Info2 2015-2016
+ */
 package metier.test;
 
 import metier.Partie;
 import metier.Robot;
 import metier.Position;
 
+/**
+ * Test des différentes méthodes de la classe Robot
+ * 
+ * @author Rainbow Robot
+ * @version 1.0
+ */
 public class testRobot {
 
+	/**
+	 * Programme principal lançant les différentes méthodes de tests
+	 * 
+	 * @param args
+	 *            non utilisé
+	 */
 	public static void main(String[] args) {
 		testAvancer();
 		testReculer();
 		testPivoter();
 	}
 
+	/**
+	 * Test de la méthode avancer
+	 */
 	public static void testAvancer() {
 		System.out
 				.println("--------------------METHODE AVANCER-------------------\n");
@@ -26,6 +45,9 @@ public class testRobot {
 				.println("Position après avoir avancer \n" + robot.toString());
 	}
 
+	/**
+	 * Test de la méthode reculer
+	 */
 	public static void testReculer() {
 		System.out
 				.println("--------------------METHODE RECULER-------------------\n");
@@ -40,6 +62,9 @@ public class testRobot {
 				.println("Position après avoir avancer \n" + robot.toString());
 	}
 
+	/**
+	 * Test de la méthode pivoter
+	 */
 	public static void testPivoter() {
 		System.out
 				.println("--------------------METHODE PIVOTER-------------------\n");
@@ -88,7 +113,6 @@ public class testRobot {
 		robot.pivoter(position2);
 		System.out
 				.println("Position après avoir avancer \n" + robot.toString());
-
 	}
 
 }

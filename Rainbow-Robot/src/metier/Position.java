@@ -8,8 +8,8 @@ package metier;
 import java.io.Serializable;
 
 /**
- * Classe gérant la position sur un plateau d'une Partie Elle va pouvoir gérer
- * la position d'un robot, des caisses, du vortex
+ * Classe gérant la position sur un plateau d'une Partie. Elle va pouvoir gérer
+ * la position d'un robot, des caisses et du vortex.
  * 
  * @author Rainbow Robot
  */
@@ -25,7 +25,7 @@ public class Position implements Serializable {
 	private int y;
 
 	/**
-	 * Constructeur avec arguemnts pour créer une position
+	 * Constructeur avec arguments pour créer une position
 	 * 
 	 * @param x
 	 *            coordonnées
@@ -38,19 +38,15 @@ public class Position implements Serializable {
 	}
 
 	/**
-	 * Pour récupérer la coordonée x
-	 * 
-	 * @return
+	 * @return l'abscisse de la position
 	 */
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * Pour changer une coordonnée
-	 * 
 	 * @param x
-	 *            coordonnée
+	 *            pour changer l'abscisse
 	 */
 	public void setX(int x) {
 		// X = -5..-4 Y = 3..4 OU X = -5..-4 Y = -4..-3 OU X = 4..5 Y = 3..4 OU
@@ -59,19 +55,15 @@ public class Position implements Serializable {
 	}
 
 	/**
-	 * Pour récupérer la coordonée y
-	 * 
-	 * @return
+	 * @return l'ordonnée de la position
 	 */
 	public int getY() {
 		return y;
 	}
 
 	/**
-	 * Pour changer une coordonnée
-	 * 
 	 * @param y
-	 *            coordonnée
+	 *            pour changer l'ordonnée
 	 */
 	public void setY(int y) {
 		this.y = y;

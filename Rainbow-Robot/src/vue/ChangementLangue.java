@@ -16,7 +16,6 @@ public interface ChangementLangue {
 	/**
 	 * <p>
 	 * Permet de raffraichir les objets en cas de changement de langue.<br />
-	 * public abstract void setLangue().
 	 * </p>
 	 */
 	abstract void setLangue();

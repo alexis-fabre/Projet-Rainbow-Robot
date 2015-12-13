@@ -16,8 +16,9 @@ import java.util.Observable;
 import vue.UtilitaireFenetre;
 
 /**
- * Classe gérant une partie du Jeu rainbow-robot. Elle gère un robot qui va
- * récuperer les différentes caisses.
+ * Classe gérant une partie du Jeu Rainbow Robot. Elle contient un Robot qui va
+ * devoir déposer des caisses dans un vortex. Le robot ne pourra déposer que les
+ * caisses dont la couleur est la même que celles demandées.
  * 
  * @author Rainbow Robot
  */
@@ -43,7 +44,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	/** Robot sur la carte */
 	private Robot robot;
 
-	/** Tableau de caisse */
+	/** Tableau des caisses sur le plateau de jeu */
 	private Caisse[] caissePlateau;
 
 	/** Niveau de la partie */
@@ -52,11 +53,11 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	/** Vortex de la carte */
 	private Vortex vortex;
 
-	/** caisse à recuperer pour finir une partie */
+	/** caisse a recuperée pour finir une partie */
 	private ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
 
 	/**
-	 * Position ou le robot ne pourra pas se déplacer. On ne représente que le
+	 * Position où le robot ne pourra pas se déplacer. On ne représente que le
 	 * carré en bas à gauche. On obtient les autres carré en récupérant la
 	 * valeur absolue des X, des Y et des deux en mêmes temps.
 	 */
@@ -65,7 +66,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	/**
 	 * Créer une carte avec un nombre de nigne et de colonne précis. Initialise
 	 * le robot à la position (1,0) et dirigé vers la gauche. Le vortex est
-	 * initialisé à la position (0,0).
+	 * initialisé à la position (0,0). Il y a 3 caisses a récupérée et 3 caisses
+	 * sur le plateau de jeu avec les mêmes couleurs.
 	 * 
 	 * @param nbLigne
 	 *            nombre de ligne que doit faire la carte
@@ -118,7 +120,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Permet d'intialiser une partie avec tous ces composants
+	 * Permet d'intialiser une partie avec tous ces composants. Pour l'instant
+	 * aucune exception n'est levé.
 	 * 
 	 * @param ligne
 	 *            nombre de case vide sur les lignes (sens horizontal)
@@ -148,7 +151,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	public Partie(int ligne, int colonne, Position[] posInaccessible,
 			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecupere,
 			Caisse[] caissePlateau) throws IllegalArgumentException {
-		// TODO continuer le constructeur
 		this.nbLigne = ligne;
 		this.nbColonne = colonne;
 		// Si nbColonne = 11
@@ -322,44 +324,42 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * @return le nbColonne
+	 * @return le nombre de colonne de la partie
 	 */
 	public int getNbColonne() {
 		return nbColonne;
 	}
 
 	/**
-	 * @return le nbLigne
+	 * @return le nombre de ligne de la partie
 	 */
 	public int getNbLigne() {
 		return nbLigne;
 	}
 
 	/**
-	 * Renvoie le robot
-	 * 
-	 * @return le robot
+	 * @return le robot de la partie
 	 */
 	public Robot getRobot() {
 		return robot;
 	}
 
 	/**
-	 * @return le debutX
+	 * @return l'abscisse de départ. Il est utilisé pour placer les composants
 	 */
 	public int getDebutX() {
 		return debutX;
 	}
 
 	/**
-	 * @return le debutY
+	 * @return l'ordonnée de départ. Il est utilisé pour placer les composants
 	 */
 	public int getDebutY() {
 		return debutY;
 	}
 
 	/**
-	 * @return le caisseARecuperee
+	 * @return les caisses a récupérée
 	 */
 	public ArrayList<Caisse> getCaisseARecuperee() {
 		return caisseARecuperee;

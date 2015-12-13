@@ -1,6 +1,6 @@
 /*
- *testCaisse                       2 déc. 2015
- *Iut info2 2014/2016
+ * testCaisse.java							28 nov 2015
+ * IUT Info2 2015-2016
  */
 package metier.test;
 
@@ -64,6 +64,14 @@ public class testCaisse {
 
 	}
 
+	/**
+	 * Test de la méthode fusionCouleur
+	 * 
+	 * @param c1
+	 *            1ère couleur a fusionné
+	 * @param c2
+	 *            2ème couleur a fusionné
+	 */
 	public void fusionCouleur(Caisse c1, Caisse c2) {
 		Caisse c3;
 
@@ -75,9 +83,10 @@ public class testCaisse {
 	}
 
 	/**
-	 * TODO commenter le rôle de cette méthode A COMPLéTER
+	 * Programme principal lançant les différentes méthodes de tests
 	 * 
 	 * @param args
+	 *            non utilisé
 	 */
 	public static void main(String[] args) {
 		Caisse c1 = new Caisse(Color.RED);

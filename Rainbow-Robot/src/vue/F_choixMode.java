@@ -74,10 +74,17 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	private JLabel la_custom;
 
 	/**
-	 * Constructeur de la fenêtre ChoixMode Initialise les composants et les
-	 * disposent sur un contexte graphique 2D.
+	 * <p>
+	 * Menu permettant d'accéder au description des modes de jeu Story, Arcade
+	 * et Custom.<br />
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * </p>
 	 * 
 	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
 	 */
 	public F_choixMode(ClicSouris gestion) {
 		super();
@@ -163,7 +170,7 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the la_titre
+	 * @return le JLabel la_titre titre de la fenêtre
 	 */
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
@@ -174,7 +181,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the bt_Story
+	 * @return le JButton bt_Story permettant d'accéder à la description du mode
+	 *         Story.
 	 */
 	public JButton getBt_Story() {
 		if (bt_Story == null) {
@@ -188,7 +196,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the bt_Arcade
+	 * @return le JButton bt_Arcade permettant d'accéder à la description du
+	 *         mode Arcade.
 	 */
 	public JButton getBt_Arcade() {
 		if (bt_Arcade == null) {
@@ -202,7 +211,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the bt_Custom
+	 * @return le JButton bt_Custom permettant d'accéder à la description du
+	 *         mode Custom.
 	 */
 	public JButton getBt_Custom() {
 		if (bt_Custom == null) {
@@ -216,7 +226,7 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the bt_Retour
+	 * @returnle JButton bt_Retour qui revient à la page d'accueil F_accueil
 	 */
 	public JButton getBt_Retour() {
 		if (bt_Retour == null) {
@@ -229,7 +239,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the descStory
+	 * @return le JLabel la_story permettant d'avoir un rapide aperçu de ce que
+	 *         contient le mode story.
 	 */
 	public JLabel getDescStory() {
 		if (la_story == null) {
@@ -239,7 +250,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the descArcade
+	 * @return le JLabel la_arcade permettant d'avoir un rapide aperçu de ce que
+	 *         contient le mode arcade.
 	 */
 	public JLabel getDescArcade() {
 		if (la_arcade == null) {
@@ -249,7 +261,8 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the descCustom
+	 * @return le JLabel la_custom permettant d'avoir un rapide aperçu de ce que
+	 *         contient le mode custom.
 	 */
 	public JLabel getDescCustom() {
 		if (la_custom == null) {

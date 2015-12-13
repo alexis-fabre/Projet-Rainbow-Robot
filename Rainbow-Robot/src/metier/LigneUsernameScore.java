@@ -1,63 +1,61 @@
-/** LigneUsernameScore.java                8 déc. 2015
- * IUT RODEZ INFO2 2015-2016 groupe 2
+/* LigneUsernameScore.java                8 déc. 2015
+ * IUT Info2 2015-2016
  */
 package metier;
 
 /**
- * Classe permettant d'associer un utilisateur à un score
- * @author INFO2
+ * Classe permettant d'associer un utilisateur à un score. Cette classe permet
+ * de gérer les différents reccords.
+ * 
+ * @author Rainbow Robot
  * @version 0.1
  */
 public class LigneUsernameScore {
 
-    /** psseudo de l'utilisateur */
-    private String username;
-    
-    /** temps de l'utilisateur  */
-    private String score;
+	/** pseudo de l'utilisateur */
+	private String username;
 
-    /**
-     * Constructeur de la ligne 
-     * @param username
-     * @param score
-     */
-    public LigneUsernameScore(String username, String score) {
-        this.username = username;
-        this.score = score;
-    }
+	/** temps de l'utilisateur */
+	private String score;
 
-    /**
-     * @return username
-     */
-    public String getUsername() {
-        return username;
-    }
+	/**
+	 * Constructeur de la ligne
+	 * 
+	 * @param username
+	 *            nom (ou pseudo) de l'utilisateur
+	 * @param score
+	 *            score que l'utilisateur a fait
+	 */
+	public LigneUsernameScore(String username, String score) {
+		this.username = username;
+		this.score = score;
+	}
 
-    /**
-     * @return score
-     */
-    public String getScore() {
-        return score;
-    }
+	/**
+	 * @return username le nom de l'utilisateur
+	 */
+	public String getUsername() {
+		return username;
+	}
 
-    /**
-     * TODO commenter la méthode
-     * @param username
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	/**
+	 * @return score le score de l'utilisateur
+	 */
+	public String getScore() {
+		return score;
+	}
 
-    /**
-     * TODO commenter la méthode
-     * @param score
-     */
-    public void setScore(String score) {
-        this.score = score;
-    }
+	/**
+	 * @param username le nom de l'utilisateur a modifié
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-
-
-
-
+	/**
+	 * @param score le score de l'utilisateur a modifié
+	 */
+	public void setScore(String score) {
+		this.score = score;
+	}
 }

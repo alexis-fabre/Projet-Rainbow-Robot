@@ -1,10 +1,10 @@
-Pierre#23 : 50
+Albert Einstein#00 : 10
 Jean#18 : 10
+Francis#20 : 32
+Mickey#21 : 37
+Pierre#23 : 50
+Pierre#26 : 50
 Michel#99 : 45
-Pierre#23 : 50
-Jean#18 : 10
-Michel#99 : 45
-Pierre#23 : 50
-Jean#18 : 10
 MichelIngenieurInfomaticien#99 : 45
+nobody#00 : 00
 nobody#00 : 00

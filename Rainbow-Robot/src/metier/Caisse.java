@@ -17,7 +17,7 @@ import vue.UtilitaireFenetre;
 
 /**
  * Classe gérant les caisses présentent sur la carte et dans les commandes que
- * devra effectuer le joueur via le robot
+ * devra effectuer le joueur via le robot.
  * 
  * @author Rainbow Robot
  */
@@ -34,9 +34,17 @@ public class Caisse implements Dessinable, Serializable {
 	/** Position de la Caisse sur la carte */
 	private Position pos_courante;
 
+	/**
+	 * Couleur autorisé pour une caisse
+	 */
 	public static final Color[] COULEUR_AUTORISEE = { Color.RED, Color.YELLOW,
 			Color.MAGENTA, Color.GREEN, Color.BLUE, Color.ORANGE };
 
+	/**
+	 * Chemin vers les images des caisses (pour l'affichage sur la partie
+	 * graphique). Il faut que l'indice des images correspondent aux indices des
+	 * couleurs autorisées. Cela facilite le traitement de l'affichage.
+	 */
 	public static final String[] CHEMIN_IMAGE_CAISSE = { "./img/CaseRouge.PNG",
 			"./img/CaseJaune.PNG", "./img/CaseViolette.PNG",
 			"./img/CaseVerte.PNG", "./img/CaseBleue.PNG",
@@ -68,17 +76,18 @@ public class Caisse implements Dessinable, Serializable {
 
 	/**
 	 * Fusion des couleurs de deux caisses par le procédé de la synthèse
-	 * additive Lorsque le Robot effectuera l'action "fusionner"
+	 * additive. Lorsque le Robot effectuera l'action "fusionner"
 	 * 
 	 * @param c1
 	 *            première caisse à fusionner tenue par le robot
 	 * @param c2
 	 *            deuxième caisse à fusionner
-	 * @return c3 la caisse de nouvelle couleur
+	 * @return c3 la caisse de nouvelle couleur, ou null si la fusion n'est pas
+	 *         possible
 	 */
 	public static Caisse fusionCouleur(Caisse c1, Caisse c2) {
-		// caisse à retourner avec la couleur noir par défaut
-		Caisse c3 = new Caisse(Color.BLACK);
+		// caisse à retourner si on a pas trouvé de couleur
+		Caisse c3 = null;
 
 		if (c1.getCouleur() == c2.getCouleur()) {
 			// Cas d'erreur fusion de deux caisses avec une couleur identique
@@ -106,8 +115,6 @@ public class Caisse implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Accesseur sur la couleur de la caisse
-	 * 
 	 * @return couleur la couleur de la caisse
 	 */
 	public Color getCouleur() {
@@ -116,8 +123,6 @@ public class Caisse implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Modification de la couleur de caisse par une nouvelle couleur
-	 * 
 	 * @param couleur
 	 *            la nouvelle couleur de la caisse
 	 */
@@ -168,9 +173,7 @@ public class Caisse implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Retourne la position de la caisse
-	 * 
-	 * @return pos_courante la position courante
+	 * @return pos_courante la position courante de la caisse
 	 */
 	public Position getPosCaisse() {
 		return pos_courante;

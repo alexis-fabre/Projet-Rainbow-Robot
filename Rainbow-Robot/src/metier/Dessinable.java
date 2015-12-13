@@ -8,17 +8,18 @@ package metier;
 import java.awt.Graphics2D;
 
 /**
- * Classe qui va gérer les différentes méthodes dessier de chaque composant sur
- * un plateau comme un robot, un vortex, une partie , des caisses
+ * Classe qui va gérer les différentes méthodes dessiner de chaque composant sur
+ * un plateau comme un robot, un vortex, une partie , des caisses, ...
  * 
  * @author Rainbow Robot
  */
 public interface Dessinable {
 
 	/**
-	 * Méhode pour dessiner
+	 * Méhode pour dessiner dans un composant dans un contexte graphique 2D.
 	 * 
 	 * @param g
+	 *            contexte graphique 2D
 	 */
 	public void dessiner(Graphics2D g);
 

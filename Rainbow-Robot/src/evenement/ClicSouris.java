@@ -29,7 +29,8 @@ import vue.F_story;
 
 /**
  * Controleur lors d'un clic de la souris. Utilisé surtout pour naviguer entre
- * les pages.
+ * les fenêtres. Elle contrôle aussi la fin d'une partie grâce au Pattern
+ * Observer/Observable.
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -70,6 +71,14 @@ public class ClicSouris implements MouseListener, Observer {
 	 */
 	public void setObserver() {
 		this.metier.getPartieCourante().addObserver(this);
+	}
+
+	/**
+	 * @param nouvelleFenetre
+	 *            la nouvelle fenêtre à controller
+	 */
+	public void setFenetre(JFrame nouvelleFenetre) {
+		this.vue = nouvelleFenetre;
 	}
 
 	/*
@@ -353,14 +362,6 @@ public class ClicSouris implements MouseListener, Observer {
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-	}
-
-	/**
-	 * @param nouvelleFenetre
-	 *            la nouvelle fenêtre à controller
-	 */
-	public void setFenetre(JFrame nouvelleFenetre) {
-		this.vue = nouvelleFenetre;
 	}
 
 	/*

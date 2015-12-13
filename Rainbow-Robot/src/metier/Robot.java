@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
 import vue.UtilitaireFenetre;
 
 /**
- * Classe gérant le Robot présent sur la carte et pour une partie Il pourra se
- * déplacer grâce a des commandes qu'effectuera le Robot : Notamment avancer,
- * reculer et pivoter. Il sera aussi possible de fusionner deux caisses entre
- * elle.
+ * Classe gérant le Robot présent sur la carte et pour une partie. Il pourra se
+ * déplacer grâce a des commandes qu'effectuera le Robot. Notamment avancer,
+ * reculer et pivoter. Il pourra aussi attraper un caisse et soit la déposer,
+ * soit la fusionner avec une autre caisse.
  * 
  * @author Rainbow Robot
  */
@@ -48,8 +48,14 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Orientation du robot vers la haut */
 	public static final int ORIENTATION_HAUT = 4;
 
+	/**
+	 * Permet de faire pivoter le robot vers la gauche
+	 */
 	public static final int PIVOTER_GAUCHE = 1;
 
+	/**
+	 * Permet de faire pivoter le robot vers la droite
+	 */
 	public static final int PIVOTER_DROITE = 2;
 
 	/** Orientation du robot */
@@ -64,7 +70,14 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Partie du robot */
 	private Partie partie;
 
-	/** */
+	/**
+	 * Construit un robot avec une position et une orientation initiale.
+	 * 
+	 * @param orientation
+	 *            orientation initiale du robot
+	 * @param pos_ini
+	 *            position initiale du robot
+	 */
 	public Robot(int orientation, Position pos_ini) {
 
 		this.pos_courante = pos_ini;
@@ -73,7 +86,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Méthode pour faire avancer le robot
+	 * Méthode pour faire avancer le robot selon son orientation et s'il dispose
+	 * d'un caisse ou non. Si le déplacement est impossible, alors le robot ne
+	 * se déplace pas (ni la caisse s'il en a une qui lui est rattachée).
 	 */
 	public void avancer() {
 		// Avancer d'un indice dans la list
@@ -159,7 +174,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Méthode pour faire reculer le robot
+	 * Méthode pour faire reculer le robot selon son orientation et s'il dispose
+	 * d'un caisse ou non. Si le déplacement est impossible, alors le robot ne
+	 * se déplace pas (ni la caisse s'il en a une qui lui est rattachée).
 	 */
 	public void reculer() {
 		// Reculer d'un indice dans la liste
@@ -251,11 +268,13 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Méthode pour faire pivoter le robot et la caisse.
+	 * Méthode pour faire pivoter le robot et la caisse. Si le déplacement est
+	 * impossible, alors le robot ne se déplace pas (ni la caisse s'il en a une
+	 * qui lui est rattachée).
 	 * 
 	 * @param position
-	 *            nouvelle angle (prédéfini par les constantes PIVOTER_GAUCHE et
-	 *            PIVOTER_DROITE) du robot
+	 *            nouvelle orientation (prédéfini par les constantes
+	 *            PIVOTER_GAUCHE et PIVOTER_DROITE) du robot
 	 */
 	public void pivoter(int position) {
 		if (caisse != null) { // Le robot a une caisse
@@ -459,7 +478,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * Méthode pour que le robot saisisse ou relache une caisse qui est situé
 	 * devant lui. Le robot relache la caisse si la référence de la caisse est
 	 * null
-	 * 
 	 */
 	public void setCaisse() {
 		if (caisse != null) {// Si on a déjà une caisse, on la relache ...
@@ -491,7 +509,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Méthode pour faire fusionner deux caisses
+	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
 	 */
 	public void fusionner(Caisse c2) {
 		if (caisse != null) {
@@ -505,9 +523,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Retourne la position du Robot
-	 * 
-	 * @return pos_courante la position courante
+	 * @return pos_courante la position courante du robot
 	 */
 	public Position getPosRobot() {
 		return pos_courante;
@@ -601,10 +617,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		contexteRobot.dispose();
 	}
 
-	/**
-	 * Méthode Permettant d'afficher la position et l'orientation du robot
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return L'orientation et la position du robot
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		return "L'orientation est " + orientation + " et sa postion est"

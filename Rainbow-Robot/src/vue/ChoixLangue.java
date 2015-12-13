@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 /**
  * <p>
  * Représentation de la traduction de l'application en différentes langues.<br />
- * Pour l'instant seul la langue française ou anglaise.<br />
+ * Pour l'instant seul la langue française ou anglaise sont disponible.<br />
  * On utilise le Pattern Singleton pour n'avoir qu'une seule langue pour toutes
  * les fenêtres.<br />
  * </p>
@@ -39,7 +39,9 @@ public class ChoixLangue {
 	public static final int LANGUE_FR = 0;
 
 	/**
-	 * Constante permettant à l'utilisateur de choisir la langue anglaise
+	 * Constante permettant à l'utilisateur de choisir la langue anglaise. Pour
+	 * une meilleure utilisation la valeur de cette variable soit correspondre à
+	 * l'indice du tableau LANGUE.
 	 */
 	public static final int LANGUE_EN = 1;
 
@@ -64,7 +66,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] ACCUEIL = {
+	private static final String[][] ACCUEIL = {
 			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
 					"A Propos", "Quitter" },
 			{ "Home", "Rainbow Robot", "Play", "High Scores", "Language",
@@ -89,14 +91,14 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] A_PROPOS = {
+	private static final String[][] A_PROPOS = {
 			{
 					"A propos",
 					"A propos du projet Rainbow Robot",
-					"<html>Le jeu Rainbow Robot a été réalisé dans le cadre du projet du DUT Informatique (semestre 3 et 4).<br />"
-							+ "Le jeu a été imaginé par le client Mr MONCEL : Responsable du département QLIO<br />"
+					"<html><body style=\"margin-left: 25px;\">Le jeu Rainbow Robot a été réalisé dans le cadre du projet du DUT Informatique (semestre 3 et 4).<br />"
+							+ "Le jeu a été imaginé par le client Mr MONCEL : Responsable du département QLIO.<br />"
 							+ "Le but du jeu est de faire connaître le département QLIO au travers d'une application ludique.<br />"
-							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournée de <i>picking</i><br />"
+							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournée de <i>picking</i>.<br />"
 							+ "Le jeu a été réalisé par :"
 							+ "<ul>"
 							+ "<li>Alexis FABRE : Chef de projet</li>"
@@ -104,22 +106,22 @@ public class ChoixLangue {
 							+ "<li>Florian LOUARGANT : Secrétaire</li>"
 							+ "<li>Quentin MASSELLAMANY-SORNOM : Gestionnaire de l'organisation informatique</li>"
 							+ "<li>Benjamin MAZOYER : Gestionnaire des configurations</li>"
-							+ "</ul></html>", "Retour" },
+							+ "</ul></body></html>", "Retour" },
 			{
 					"About",
 					"About the project Rainbow Robot",
-					"<html>Le jeu Rainbow Robot a été réalisé dans le cadre du projet du DUT Informatique (semestre 3 et 4).<br />"
-							+ "Le jeu a été imaginé par le client Mr MONCEL : Responsable du département QLIO<br />"
-							+ "Le but du jeu est de faire connaître le département QLIO au travers d'une application ludique.<br />"
-							+ "Rainbow Robot répresente la logistique d'un entrepôt, à savoir l'optimisation des tournée de <i>picking</i><br />"
-							+ "Le jeu a été réalisé par :"
+					"<html><body style=\"margin-left: 25px;\">The game Rainbow Robot has been elaborated in the context of the 2nd year DUT project (semesters 3 and 4).<br />"
+							+ "The game was designed by the client M. MONCEL : Teacher in the QLIO branch.<br />"
+							+ "The goal is to promote the QLIO branch through a fun application.<br />"
+							+ "Rainbow Robot represents the warehouse logistic, namely the order <i>picking</i> optimisations. <br />"
+							+ "This game has been established by :"
 							+ "<ul>"
-							+ "<li>Alexis FABRE : Chef de projet</li>"
-							+ "<li>Sylvain BENARD : Sous-chef de projet</li>"
-							+ "<li>Florian LOUARGANT : Secrétaire</li>"
-							+ "<li>Quentin MASSELLAMANY-SORNOM : Gestionnaire de l'organisation informatique</li>"
-							+ "<li>Benjamin MAZOYER : Gestionnaire des configurations</li>"
-							+ "</ul></html>", "Back" } };
+							+ "<li>Alexis FABRE: Project Manager</li>"
+							+ "<li>Sylvain BENARD : Deputy Chief</li>"
+							+ "<li>Florian LOUARGANT :  Secretary</li>"
+							+ "<li>Quentin MASSELLAMANY-SORNOM : IT organization Manager </li>"
+							+ "<li>Benjamin MAZOYER : Configuration Manager</li>"
+							+ "</ul></body></html>", "Back" } };
 
 	/**
 	 * <p>
@@ -138,14 +140,14 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] LANGUE = {
+	private static final String[][] LANGUE = {
 			{ "Choix de la langue", "Veuillez choisir une langue : " },
 			{ "Language's selection", "Please select a language : " } };
 
 	/**
 	 * Contient toutes les traductions de langues connues pour cette application
 	 */
-	private final String[] TOUTES_LANGUES = { "Français", "English" };
+	private static final String[] TOUTES_LANGUES = { "Français", "English" };
 
 	/**
 	 * Contient les traductions pour la fenêtre ChoixMode
@@ -166,7 +168,7 @@ public class ChoixLangue {
 	/**
 	 * Contient les traductions pour la fenêtre Reccords
 	 */
-	private final String[][] MODE_RECCORD = {
+	private static final String[][] MODE_RECCORD = {
 			{ "Reccords", "Joueur", "Temps", "Niveau", "Retour" },
 			{ "High Score", "Player", "Time", "Level", "Back" } };
 
@@ -187,7 +189,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] QUITTER = {
+	private static final String[][] QUITTER = {
 			{ "Quitter l'application", "Voulez-vous quitter l'application" },
 			{ "Exit application", "Do you want to exit the application ?" } };
 
@@ -207,7 +209,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] MODE_JEU = { { "Retour", "Jouer" },
+	private static final String[][] MODE_JEU = { { "Retour", "Jouer" },
 			{ "Back", "Play" } };
 
 	/**
@@ -229,7 +231,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] MODE_STORY = {
+	private static final String[][] MODE_STORY = {
 			{
 					"Mode story",
 					"MODE STORY",
@@ -269,7 +271,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] MODE_ARCADE = {
+	private static final String[][] MODE_ARCADE = {
 			{
 					"Mode arcade",
 					"MODE ARCADE",
@@ -316,7 +318,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] MODE_CUSTOM = {
+	private static final String[][] MODE_CUSTOM = {
 			{
 					"Mode custom",
 					"MODE CUSTOM",
@@ -330,7 +332,7 @@ public class ChoixLangue {
 					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in reccords.<br /> Let's play!!!</html>",
 					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
 					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
-					"Hard", "Choose a file", "Search" } };
+					"Hard", "Choose a file", "Browse" } };
 
 	/**
 	 * <p>
@@ -351,7 +353,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] FIN_PARTIE = {
+	private static final String[][] FIN_PARTIE = {
 			{ "Fin de la partie", "Fin de la partie", "Recommencer",
 					"Passer au niveau suivant", "Quitter" }, //
 			{ "Game over", "Game over", "Restart", "Next level", "Exit" } };
@@ -375,7 +377,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] MENU_PAUSE = {
+	private static final String[][] MENU_PAUSE = {
 			{ "Pause", "Pause", "Continuer", "Recommencer", "Quitter" }, //
 			{ "Pause", "Pause", "Start", "Restart", "Exit" } };
 
@@ -396,7 +398,7 @@ public class ChoixLangue {
 	 * </li>
 	 * </ul>
 	 */
-	private final String[][] QUITTER_PARTIE = {
+	private static final String[][] QUITTER_PARTIE = {
 
 			{ "Voulez-vous vraiment quitter la partie en cours ?",
 					"Quitter la partie" },

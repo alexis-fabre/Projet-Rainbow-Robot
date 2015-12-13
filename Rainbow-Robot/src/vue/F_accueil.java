@@ -34,11 +34,6 @@ import evenement.ClicSouris;
 public class F_accueil extends JFrame implements ChangementLangue {
 
 	/**
-	 * Chemin de la photo de fond de l'écran
-	 */
-	private final static String CHEMIN_PHOTO = "./img/ImageDeFond.jpg";
-
-	/**
 	 * Titre de la fenêtre
 	 */
 	private JLabel la_titre;
@@ -97,31 +92,22 @@ public class F_accueil extends JFrame implements ChangementLangue {
 
 		// On définit le layoutManager
 		Container contentPane = super.getContentPane();
-
-		// ---------------------------------------------------------------------
-		// Contient la photo en arrière plan
-		// ---------------------------------------------------------------------
-		JLabel contentBackground = new JLabel(new ImageIcon(
-				".\\img\\ImageDeFond.jpg"));
-		contentBackground.setLayout(new BoxLayout(contentBackground,
-				BoxLayout.Y_AXIS));
+		contentPane
+				.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
 		// On ajoute les composants
 		UtilitaireFenetre.addAComposantWithBoxLayout(getLa_titre(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Jouer(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Reccords(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Langue(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Apropos(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 		UtilitaireFenetre.addAComposantWithBoxLayout(getBt_Quitter(),
-				contentBackground, 0, 40, Component.CENTER_ALIGNMENT);
-
-		// On ajoute les composants dans la fenêtre
-		contentPane.add(contentBackground);
+				contentPane, 0, 40, Component.CENTER_ALIGNMENT);
 
 		// On ajoute le nom des composants en fonction de la langue choisie
 		setLangue();

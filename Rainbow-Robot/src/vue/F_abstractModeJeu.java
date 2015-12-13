@@ -164,7 +164,7 @@ public abstract class F_abstractModeJeu extends JFrame implements
 	}
 
 	/**
-	 * @return le JButton bt_Retour qui revient à la page d'accueil
+	 * @return le JButton bt_Retour qui revient à la page d'accueil F_accueil
 	 */
 	public JButton getBt_Retour() {
 		if (bt_Retour == null) {

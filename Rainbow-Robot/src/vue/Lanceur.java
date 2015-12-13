@@ -52,25 +52,21 @@ public class Lanceur {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
 		// On initialise la partie métier
 		JeuRainbow.restartFichierPartie();
-		
 		JeuRainbow jeu = JeuRainbow.lectureFichier();
 
-		// System.out.println(JeuRainbow.lectureFichier().getPartieCourante());
-
 		// On construit le contrôleur à partir de la partie métier
-
 		ClicSouris gestion = new ClicSouris(jeu);
 
 		// On construit la fenêtre avec le contrôleur
-
 		F_accueil fenetreActive = new F_accueil(gestion);
-
-		fenetreActive.setVisible(true);
 
 		// On ajoute la nouvelle fenêtre à contrôler
 		gestion.setFenetre(fenetreActive);
-	}
 
+		// On rend la fenêtre visible
+		fenetreActive.setVisible(true);
+	}
 }

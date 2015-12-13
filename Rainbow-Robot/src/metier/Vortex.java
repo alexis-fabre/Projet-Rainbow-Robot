@@ -8,6 +8,8 @@ package metier;
 import java.io.Serializable;
 
 /**
+ * Classe gérant le vortex qui est uniquement défini par une position initiale
+ * (il ne peut pas se déplacer).
  *
  * @author Rainbow Robot
  */
@@ -18,18 +20,23 @@ public class Vortex implements Serializable {
 	 */
 	private static final long serialVersionUID = 6297297964624363269L;
 
+	/**
+	 * Position initiale du vortex
+	 */
 	private Position pos_vortex;
 
-	// LE VORTEX SERA EN 0,0
-
+	/**
+	 * Construit un vortex avec sa position initiale
+	 * 
+	 * @param pos
+	 *            position initiale du vortex
+	 */
 	public Vortex(Position pos) {
 		pos_vortex = pos;
 	}
 
 	/**
-	 * Retourne la position du Vortex
-	 * 
-	 * @return pos_courante la position courante
+	 * @return pos_courante la position courante du vortex
 	 */
 	public Position getPosVortex() {
 		return pos_vortex;

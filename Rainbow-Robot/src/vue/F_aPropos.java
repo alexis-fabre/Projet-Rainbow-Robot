@@ -22,7 +22,13 @@ import javax.swing.JTextArea;
 import evenement.ClicSouris;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * <p>
+ * Fenêtre présentant le projet et ses objectifs.<br />
+ * On y voit entre autre le but du projet et les personnes impliquées dans le
+ * projet.<br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -46,7 +52,13 @@ public class F_aPropos extends JFrame implements ChangementLangue {
 	private JButton bt_retour;
 
 	/**
-	 * Initialise et place les composants dans un contexte graphique 2D
+	 * <p>
+	 * Initialise et place les composants dans un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * Cette fenêtre détecte uniquement les cliques de la souris sur les
+	 * boutons.
+	 * </p>
 	 * 
 	 * @param gestion
 	 *            le contrôleur qui va controler cette vue = cible
@@ -121,7 +133,7 @@ public class F_aPropos extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return le titre
+	 * @return le JLabel la_titre titre de la fenêtre
 	 */
 	public JLabel getLa_titre() {
 		if (la_titre == null) {
@@ -131,7 +143,7 @@ public class F_aPropos extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return le texte
+	 * @return le JLabel la_texte texte présentant le projet Rainbow Robot
 	 */
 	public JLabel getLa_texte() {
 		if (la_texte == null) {
@@ -141,7 +153,7 @@ public class F_aPropos extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return le bt_retour
+	 * @return le JButton bt_retour qui lance la fenêtre F_Accueil
 	 */
 	public JButton getBt_retour() {
 		if (bt_retour == null) {

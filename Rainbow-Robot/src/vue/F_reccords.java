@@ -24,7 +24,7 @@ import evenement.ClicSouris;
 
 /**
  * Fenetre contenant meilleurs scores (temps) des joueurs en fonction du niveau
- * effectué Chaque onglet correspond à un niveau
+ * effectué. Chaque onglet correspond à un niveau
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -52,14 +52,10 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	/** label contenant le titre de la colonne temps */
 	private JLabel la_titreTemps;
 
-	/**
-	 * label contenant le tableau a afficher (données)
-	 */
+	/** label contenant le tableau a afficher (données) */
 	private JLabel la_contenu;
 
-	/**
-	 * label du niveau affiché dans les onglets
-	 */
+	/** label du niveau affiché dans les onglets */
 	private JLabel la_niveau;
 
 	/**
@@ -93,7 +89,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 		for (int i = 0; i < lesPanneaux.length; i++) {
 			texte = getLa_niveau().getText() + " " + (i + 1);
 			// ajout des onglets et de leur panneaux
-			lesOnglets.addTab(texte, ajoutContenu(lesPanneaux[i], i));
+			lesOnglets.addTab(texte, ajoutContenu(lesPanneaux[i]));
 
 		}
 
@@ -111,10 +107,10 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	 * Crée le panneau du niveau correspondant et lui ajoute le contenu
 	 * 
 	 * @param aAjouter
-	 * @param indice
+	 *            nouveau panneau contenant des scores
 	 * @return aAjouter le panneau avec le contenu
 	 */
-	public JPanel ajoutContenu(JPanel aAjouter, int indice) {
+	public JPanel ajoutContenu(JPanel aAjouter) {
 
 		aAjouter = new JPanel();
 		aAjouter.setLayout(null);
@@ -196,7 +192,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the la_titreJoueur
+	 * @return le JLabel la_titreJoueur le nom du joueur
 	 */
 	public JLabel getLa_titreJoueur() {
 		if (la_titreJoueur == null) {
@@ -208,7 +204,8 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the la_titreTemps
+	 * @return le JLabel la_titreTemps contenant le temps que le joueur a mis
+	 *         pour terminer le niveau.
 	 */
 	public JLabel getLa_titreTemps() {
 		if (la_titreTemps == null) {
@@ -220,14 +217,14 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @return the lesOnglets
+	 * @return JTabbledPane lesOnglets contenant la navigation entre les onglets
 	 */
 	public JTabbedPane getLesOnglets() {
 		return lesOnglets;
 	}
 
 	/**
-	 * @return the la_niveau
+	 * @return le JLabel la_niveau contenant le numéro du niveau
 	 */
 	public JLabel getLa_niveau() {
 		if (la_niveau == null) {

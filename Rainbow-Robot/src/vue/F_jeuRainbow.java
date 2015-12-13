@@ -6,7 +6,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +23,19 @@ import evenement.ClicSouris;
 import evenement.ToucheClavier;
 
 /**
- * TODO Expliquer le fonctionnement de la classe
+ * <p>
+ * Fenêtre qui affiche une partie du jeu Rainbow Robot.<br />
+ * Elle contient un timer qui s'actualise chaque seconde, un panneau contenant
+ * les caisses à récupérer, un bouton Pause pour mettre le jeu en pause et un
+ * panneau contenant le plateau de jeu.<br />
+ * Sur le plateau de jeu, on peut y voir un Robot que l'on peut contrôler grâce
+ * aux touches directionnelles du clavier, la touche espace pour récupérer une
+ * caisse et la touche Ctrl pour faire fusionner deux caisses. Mais aussi des
+ * caisses qu'il faut déposer dans le vortex (case grisé dans le plateau de jeu)
+ * <br />
+ * La fenêtre respecte le modèle MVC. C'est pour cela que chaque composant
+ * dispose d'un getter afin de faciliter les transitions entre les fenêtres.
+ * </p>
  * 
  * @author Rainbow Robot
  * @version 1.0
@@ -32,25 +43,18 @@ import evenement.ToucheClavier;
 public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 	/**
-	 * Panneau du jeu RainbowRobot ou se déroule réelement une partie
+	 * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
+	 * (avec le robot, les caisses et le vortex).
 	 */
 	private P_partieDessinable partieDessinable;
 
 	/**
-	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 * Label contenant le timer qui s'actualise toutes les secondes
 	 */
-	private JLabel timer = new JLabel("00 : 00");
-	/**
-	 * TODO Expliquer le fonctionnement de la variable d'instance
-	 */
-	private JButton menu;
-	/**
-	 * Titre de la fenêtre
-	 */
-	private JLabel la_titre = new JLabel("MODE STORY");
+	private JLabel la_timer = new JLabel("00 : 00");
 
 	/**
-	 * TODO Expliquer le fonctionnement de la variable d'instance
+	 * Panneau qui contient l'interface graphique 2D des caisses a récupérées.
 	 */
 	private P_caisseADessiner caisseARecuperer;
 
@@ -75,10 +79,19 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	private int seconde, minute;
 
 	/**
-	 * Initialise les composants et les disposent sur un contexte graphique 2D.
+	 * <p>
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
 	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
-	 * pour éviter tous soucis de disposition. Cette fenêtre détecte uniquement
-	 * les cliques de la souris sur les boutons.
+	 * pour éviter tous soucis de disposition.<br />
+	 * Cette fenêtre détecte uniquement les cliques de la souris sur les
+	 * boutons.
+	 * </p>
+	 * 
+	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
+	 * @param gestionClavier
+	 *            Le contrôleur qui va détecter les touches du clavier
 	 */
 	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier) {
 		super();
@@ -117,10 +130,9 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		// Mise en forme du JLabel
 		// Nouvelle police d'écriture
 		Font font = new Font("Arial", Font.BOLD, 24);
-		timer.setFont(font);
-		caisseARecuperer.setFont(font);
+		la_timer.setFont(font);
 		// Ajout d'une bordure
-		timer.setBorder(javax.swing.BorderFactory
+		la_timer.setBorder(javax.swing.BorderFactory
 				.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
 		// Instanciation du timer
@@ -132,11 +144,11 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 				}
 				seconde++;
 				if (minute < 10 && seconde < 10) {
-					timer.setText("0" + minute + " : " + "0" + seconde);
+					la_timer.setText("0" + minute + " : " + "0" + seconde);
 				} else if (minute < 10) {
-					timer.setText("0" + minute + " : " + seconde);
+					la_timer.setText("0" + minute + " : " + seconde);
 				} else {
-					timer.setText(minute + " : " + seconde);
+					la_timer.setText(minute + " : " + seconde);
 				}
 			}
 		});
@@ -162,17 +174,15 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * Affichage du timer de la partie
-	 * 
-	 * @return le timer
+	 * @return le JLabel la_timer qui affiche le timer de la partie
 	 */
 	public JLabel getTimer() {
-		if (timer == null) {
-			timer = new JLabel();
-			UtilitaireFenetre.setAllSize(timer,
+		if (la_timer == null) {
+			la_timer = new JLabel();
+			UtilitaireFenetre.setAllSize(la_timer,
 					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 		}
-		return timer;
+		return la_timer;
 	}
 
 	/**
@@ -182,6 +192,9 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		return minute + ":" + seconde;
 	}
 
+	/**
+	 * @return le JButton bt_Pause qui permet de mettre en pause le jeu
+	 */
 	public JButton getBt_Pause() {
 		if (bt_Pause == null) {
 			bt_Pause = new JButton();
@@ -212,18 +225,21 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 */
 	public void restartChrono() {
 		minute = seconde = 0;
+		la_timer.setText("00 : 00");
 		chrono.start();
 	}
 
 	/**
-	 * @return le partieDessinable
+	 * @return le "JPanel" partieDessinable qui contient l'interface graphique
+	 *         2D du jeu (avec le robot, les caisses et le vortex).
 	 */
 	public P_partieDessinable getPartieDessinable() {
 		return partieDessinable;
 	}
 
 	/**
-	 * @return le partieDessinable
+	 * @return le "JPanel" caisseARecuperer qui contient l'interface graphique
+	 *         2D des caisses a récupérées.
 	 */
 	public P_caisseADessiner getCaisseADessiner() {
 		return caisseARecuperer;

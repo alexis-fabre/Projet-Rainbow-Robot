@@ -12,6 +12,9 @@ import metier.JeuRainbow;
 import metier.Robot;
 
 /**
+ * Contrôle les touches du clavier. Elle permet de contrôler le robot lors d'une
+ * partie du jeu.
+ * 
  * @author Rainbow Robot
  *
  */
@@ -29,10 +32,21 @@ public class ToucheClavier implements KeyListener {
 	}
 
 	/**
-	 * TODO Faire le constructeur
+	 * On initialise le constructeur avec la partie métier du jeu.
+	 * 
+	 * @param metier
+	 *            représentation du jeu Rainbow Robot (partie métier). Il
+	 *            contient notamment les différents niveaux.
 	 */
 	public ToucheClavier(JeuRainbow metier) {
 		this.metier = metier;
+	}
+
+	/**
+	 * @return la partie métier du jeu
+	 */
+	public JeuRainbow getMetier() {
+		return metier;
 	}
 
 	/*
@@ -74,19 +88,11 @@ public class ToucheClavier implements KeyListener {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * Non utilisé (non-Javadoc)
 	 * 
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
-	/**
-	 * @return la partie métier du jeu
-	 */
-	public JeuRainbow getMetier() {
-		return metier;
-	}
-
 }
