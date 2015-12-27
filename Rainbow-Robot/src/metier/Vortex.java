@@ -6,6 +6,8 @@
 package metier;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * Classe gérant le vortex qui est uniquement défini par une position initiale
@@ -13,7 +15,7 @@ import java.io.Serializable;
  *
  * @author Rainbow Robot
  */
-public class Vortex implements Serializable {
+public class Vortex extends Observable implements Serializable {
 
 	/**
 	 * Générer automatiquement par Eclipse
@@ -42,6 +44,47 @@ public class Vortex implements Serializable {
 		return pos_vortex;
 	}
 
+	/**
+	 * Vérifie si le vortex peut absorber la caisse (si la caisse à la même
+	 * couleur que celle demandée). Si c'est le cas, on fait disparaître la
+	 * caisse et on actualise la nouvelle caisse a récupéré.
+	 * 
+	 * @param caissePlateau
+	 *            référence des caisses situées sur le plateau de jeu
+	 * @param caisseARecuperee
+	 *            référence des caisses à récupérer
+	 * @param robot
+	 *            référence du robot
+	 * @return true si la partie est finie ou false sinon.
+	 */
+	public boolean vortexAspire(Caisse[] caissePlateau,
+			List<Caisse> caisseARecuperee, Robot robot) {
+		// On parcours les caisses sur le plateau de jeu et on vérifie si l'une
+		// d'elle est positionné sur le vortex et si elle est de la même couleur
+		// que celle demandée dans la liste
+		for (int i = 0; i < caissePlateau.length; i++) {
+			if (caissePlateau[i] != null
+					&& caissePlateau[i].getPosCaisse().equals(pos_vortex)
+					&& caissePlateau[i].getCouleur().equals(
+							caisseARecuperee.get(0).getCouleur())) {
+				// On fait disparaître la caisse
+				caissePlateau[i] = null;
+				// On réactualise les caisses a récupéré
+				caisseARecuperee.remove(0);
+				// On supprime la caisse du robot
+				robot.setCaisse();
+				// On vérifie s'il reste des caisses à récupérées
+				if (caisseARecuperee.isEmpty()) { // On a fini la partie
+					return true;
+				} else { // On a absorber une caisse
+					setChanged();
+					notifyObservers(this);
+				}
+			}
+		}
+		return false;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -49,8 +92,6 @@ public class Vortex implements Serializable {
 	 */
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
 		return new Vortex((Position) pos_vortex.clone());
 	}
-
 }

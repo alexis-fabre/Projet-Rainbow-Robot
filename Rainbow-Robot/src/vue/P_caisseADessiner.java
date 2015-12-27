@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import metier.Caisse;
 import metier.JeuRainbow;
 import metier.Partie;
-import metier.Robot;
+import metier.Vortex;
 
 /**
  * <p>
@@ -62,7 +62,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	public P_caisseADessiner(JeuRainbow jeu) {
 		super();
 		partieCourante = jeu.getPartieCourante();
-		partieCourante.getRobot().addObserver(this);
+		partieCourante.getVortex().addObserver(this);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 */
 	public void setJeuRainbowRobot(Partie nouvellePartie) {
 		this.partieCourante = nouvellePartie;
-		partieCourante.getRobot().addObserver(this);
+		partieCourante.getVortex().addObserver(this);
 		super.repaint();
 	}
 
@@ -139,7 +139,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object aRedessiner) {
-		if (aRedessiner instanceof Robot) {
+		if (aRedessiner instanceof Vortex) {
 			super.repaint();
 		}
 	}

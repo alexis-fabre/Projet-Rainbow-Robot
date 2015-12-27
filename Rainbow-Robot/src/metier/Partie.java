@@ -54,7 +54,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	private Vortex vortex;
 
 	/** caisse a recuperée pour finir une partie */
-	private ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
+	private ArrayList<Caisse> caisseARecuperee;
 
 	/**
 	 * Position où le robot ne pourra pas se déplacer. On ne représente que le
@@ -100,6 +100,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
 
+		caisseARecuperee = new ArrayList<Caisse>();
 		caisseARecuperee.add(new Caisse(Color.RED));
 		caisseARecuperee.add(new Caisse(Color.BLUE));
 		caisseARecuperee.add(new Caisse(Color.YELLOW));
@@ -164,40 +165,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		this.caisseARecuperee = caisseARecupere;
 		this.positionsInaccessibles = posInaccessible;
 
-	}
-
-	/**
-	 * Vérifie si le vortex peut absorber la caisse (si la caisse à la même
-	 * couleur que celle demandée). Si c'est le cas, on fait disparaître la
-	 * caisse et on actualise la nouvelle caisse a récupéré.
-	 * 
-	 * @return true si le vortex a apsiré la caisse ou false sinon
-	 */
-	public boolean vortexAspire() {
-		// On parcours les caisses sur le plateau de jeu et on vérifie si l'une
-		// d'elle est positionné sur le vortex et si elle est de la même couleur
-		// que celle demandée dans la liste
-		for (int i = 0; i < caissePlateau.length; i++) {
-			if (caissePlateau[i] != null
-					&& caissePlateau[i].getPosCaisse().equals(
-							vortex.getPosVortex())
-					&& caissePlateau[i].getCouleur().equals(
-							caisseARecuperee.get(0).getCouleur())) {
-				// On fait disparaître la caisse
-				caissePlateau[i] = null;
-				// On réactualise les caisses a récupéré
-				caisseARecuperee.remove(0);
-				// On supprime la caisse du robot
-				robot.setCaisse();
-				// On vérifie s'il reste des caisses à récupérées
-				if (caisseARecuperee.isEmpty()) {
-					setChanged();
-					notifyObservers(this);
-				}
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -336,10 +303,17 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * @return le robot de la partie
+	 * @return le robot de la partie courante
 	 */
 	public Robot getRobot() {
 		return robot;
+	}
+
+	/**
+	 * @return le vortex de la partie courante
+	 */
+	public Vortex getVortex() {
+		return vortex;
 	}
 
 	/**
@@ -370,69 +344,67 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 */
 	@Override
 	public void dessiner(Graphics2D g) {
-		// On vérifie si une caisse se trouve sur le vortex
-		vortexAspire();
+		// On vérifie si la partie est finie
+		if (vortex.vortexAspire(caissePlateau, caisseARecuperee, robot)) {
+			setChanged();
+			notifyObservers(this);
+		} else {
+			for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
+				for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
+					Position posADessiner = new Position(x + debutX, y + debutY);
+					if (isPositionOK(posADessiner)) {
+						// ---------------------------------------------------------
+						// On dessine les cases vides et le vortex
+						// ---------------------------------------------------------
+						if (posADessiner.equals(vortex.getPosVortex())) { // Vortex
+							g.setColor(UtilitaireFenetre.COULEUR_VORTEX);
+						} else { // Case vide
+							g.setColor(UtilitaireFenetre.COULEUR_FOND);
+						}
 
-		for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
-			for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
-				Position posADessiner = new Position(x + debutX, y + debutY);
-				if (isPositionOK(posADessiner)) {
-					// ---------------------------------------------------------
-					// On dessine les cases vides et le vortex
-					// ---------------------------------------------------------
-					if (posADessiner.equals(vortex.getPosVortex())) { // Vortex
-						g.setColor(UtilitaireFenetre.COULEUR_VORTEX);
-					} else { // Case vide
-						g.setColor(UtilitaireFenetre.COULEUR_FOND);
+						// On dessine le fond de la case
+						g.fillRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
+								* UtilitaireFenetre.DIM_CASE_VIDE.height,
+								UtilitaireFenetre.DIM_CASE_VIDE.width,
+								UtilitaireFenetre.DIM_CASE_VIDE.height);
+
+						// On dessine la bordure de la case
+						g.setStroke(new BasicStroke(
+								UtilitaireFenetre.LARGEUR_BORDURE));
+						g.setColor(UtilitaireFenetre.COULEUR_BORDURE);
+						g.drawRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
+								* UtilitaireFenetre.DIM_CASE_VIDE.height,
+								UtilitaireFenetre.DIM_CASE_VIDE.width,
+								UtilitaireFenetre.DIM_CASE_VIDE.height);
 					}
+				}
+			}
 
-					// On dessine le fond de la case
-					g.fillRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
-							* UtilitaireFenetre.DIM_CASE_VIDE.height,
-							UtilitaireFenetre.DIM_CASE_VIDE.width,
-							UtilitaireFenetre.DIM_CASE_VIDE.height);
-
-					// On dessine la bordure de la case
-					g.setStroke(new BasicStroke(
-							UtilitaireFenetre.LARGEUR_BORDURE));
-					g.setColor(UtilitaireFenetre.COULEUR_BORDURE);
-					g.drawRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
-							* UtilitaireFenetre.DIM_CASE_VIDE.height,
-							UtilitaireFenetre.DIM_CASE_VIDE.width,
-							UtilitaireFenetre.DIM_CASE_VIDE.height);
+			// ---------------------------------------------------------
+			// On dessine les caisses
+			// ---------------------------------------------------------
+			for (Caisse caisseADessiner : caissePlateau) {
+				// On ne redessine pas la caisse du robot
+				if (caisseADessiner != null
+						&& caisseADessiner != robot.getCaisse()) {
+					// On calcule la nouvel abscisse et ordonnée pour
+					// positionner l'image de la caisse
+					// On fait cela pour centrer l'image dans la case
+					// vide
+					int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
+							* UtilitaireFenetre.DIM_CASE_VIDE.width
+							+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+					int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
+							* UtilitaireFenetre.DIM_CASE_VIDE.height
+							+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+					Graphics2D contexteCaisse = (Graphics2D) g.create(
+							abscisseCaisse, ordonneCaisse,
+							UtilitaireFenetre.DIM_CAISSE.width,
+							UtilitaireFenetre.DIM_CAISSE.height);
+					caisseADessiner.dessiner(contexteCaisse);
 				}
 			}
 		}
-
-		// ---------------------------------------------------------
-		// On dessine les caisses
-		// ---------------------------------------------------------
-		for (Caisse caisseADessiner : caissePlateau) {
-			// On calcule la nouvel abscisse et ordonnée pour
-			// positionner l'image de la caisse
-			// On fait cela pour centrer l'image dans la case
-			// vide
-			if (caisseADessiner != null) {
-				int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
-						* UtilitaireFenetre.DIM_CASE_VIDE.width
-						+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-				int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
-						* UtilitaireFenetre.DIM_CASE_VIDE.height
-						+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-				Graphics2D contexteCaisse = (Graphics2D) g.create(
-						abscisseCaisse, ordonneCaisse,
-						UtilitaireFenetre.DIM_CAISSE.width,
-						UtilitaireFenetre.DIM_CAISSE.height);
-				caisseADessiner.dessiner(contexteCaisse);
-
-				contexteCaisse.dispose();
-			}
-		}
-
-		// ---------------------------------------------------------
-		// On dessine le robot
-		// ---------------------------------------------------------
-		robot.dessiner(g);
 	}
 
 	/*

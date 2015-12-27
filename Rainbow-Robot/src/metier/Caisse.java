@@ -45,8 +45,9 @@ public class Caisse implements Dessinable, Serializable {
 	 * graphique). Il faut que l'indice des images correspondent aux indices des
 	 * couleurs autorisées. Cela facilite le traitement de l'affichage.
 	 */
-	public static final String[] CHEMIN_IMAGE_CAISSE = { "./Ressource/img/CaseRouge.PNG",
-			"./Ressource/img/CaseJaune.PNG", "./Ressource/img/CaseViolette.PNG",
+	public static final String[] CHEMIN_IMAGE_CAISSE = {
+			"./Ressource/img/CaseRouge.PNG", "./Ressource/img/CaseJaune.PNG",
+			"./Ressource/img/CaseViolette.PNG",
 			"./Ressource/img/CaseVerte.PNG", "./Ressource/img/CaseBleue.PNG",
 			"./Ressource/img/CaseOrange.PNG" };
 
@@ -148,6 +149,26 @@ public class Caisse implements Dessinable, Serializable {
 		return couleurOK;
 	}
 
+	/**
+	 * @return pos_courante la position courante de la caisse
+	 */
+	public Position getPosCaisse() {
+		return pos_courante;
+	}
+
+	/**
+	 * Créer une liste de caisse pour que l'utilisateur puisse les recuperer
+	 * dans sa partie
+	 * 
+	 * @param nbCaisse
+	 *            nombre de caisses a récuperer
+	 */
+	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
+			int nbCaisse, Color couleur) {
+		for (int i = 0; i < nbCaisse; i++)
+			caisseArecup.add(new Caisse(couleur, new Position(2, 0)));
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -170,26 +191,6 @@ public class Caisse implements Dessinable, Serializable {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @return pos_courante la position courante de la caisse
-	 */
-	public Position getPosCaisse() {
-		return pos_courante;
-	}
-
-	/**
-	 * Créer une liste de caisse pour que l'utilisateur puisse les recuperer
-	 * dans sa partie
-	 * 
-	 * @param nbCaisse
-	 *            nombre de caisses a récuperer
-	 */
-	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
-			int nbCaisse, Color couleur) {
-		for (int i = 0; i < nbCaisse; i++)
-			caisseArecup.add(new Caisse(couleur, new Position(2, 0)));
 	}
 
 	/*
@@ -218,5 +219,4 @@ public class Caisse implements Dessinable, Serializable {
 			return new Caisse(couleur, (Position) pos_courante.clone());
 		}
 	}
-
 }

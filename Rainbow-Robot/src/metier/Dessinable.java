@@ -16,7 +16,8 @@ import java.awt.Graphics2D;
 public interface Dessinable {
 
 	/**
-	 * Méhode pour dessiner dans un composant dans un contexte graphique 2D.
+	 * Méhode pour dessiner dans un composant à son état final dans un contexte
+	 * graphique 2D.
 	 * 
 	 * @param g
 	 *            contexte graphique 2D

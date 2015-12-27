@@ -244,7 +244,7 @@ public class JeuRainbow implements Serializable {
 		Partie partie = new Partie(nbLigne, nbColonne, positionsInaccessibles,
 				robot, vortex, caisseARecuperee, caissePlateau);
 
-		// On associe le robot à la partie
+		// On associe la partie au robot
 		robot.setPartie(partie);
 
 		// On ajoute la partie au jeu

@@ -159,9 +159,6 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		});
 		chrono.start();
 
-		// On ajoute le nom des composants en fonction de la langue choisie
-		setLangue();
-
 		partieDessinable = new P_partieDessinable(gestionClavier.getMetier());
 
 		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
@@ -171,6 +168,9 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		super.addKeyListener(gestionClavier);
 		super.setFocusable(true);
 		super.requestFocus();
+
+		// On ajoute le nom des composants en fonction de la langue choisie
+		setLangue();
 
 		getBt_Pause().addMouseListener(gestion);
 
