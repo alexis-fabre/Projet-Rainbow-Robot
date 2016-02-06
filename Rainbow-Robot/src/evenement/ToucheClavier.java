@@ -82,7 +82,7 @@ public class ToucheClavier implements KeyListener {
 			break;
 		case KeyEvent.VK_SPACE: // Touche Espace
 			// On attrape la prochaine caisse
-			metier.getPartieCourante().getRobot().setCaisse();
+			metier.getPartieCourante().getRobot().charger();
 			break;
 		}
 	}

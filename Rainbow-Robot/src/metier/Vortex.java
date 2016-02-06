@@ -72,7 +72,7 @@ public class Vortex extends Observable implements Serializable {
 				// On réactualise les caisses a récupéré
 				caisseARecuperee.remove(0);
 				// On supprime la caisse du robot
-				robot.setCaisse();
+				robot.charger();
 				// On vérifie s'il reste des caisses à récupérées
 				if (caisseARecuperee.isEmpty()) { // On a fini la partie
 					return true;

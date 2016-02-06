@@ -80,9 +80,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Permet de faire pivoter le robot vers la droite */
 	public static final int PIVOTER_DROITE = 2;
 
-	/** Unité de temps (en seconde) */
-	public static final int UNITE_TEMPS = 1;
-
 	/**
 	 * Indique que le robot n'a fait aucune action, c'est le cas lors de
 	 * l'initialisation du robot.
@@ -97,6 +94,15 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 	/** Indique que la dernière action du robot a été de pivoter */
 	public static final int ACTION_PIVOTER = 3;
+
+	/** Indique que la dernière action du robot a été de charger une caisse */
+	public static final int ACTION_CHARGER = 4;
+
+	/** Indique que la dernière action du robot a été de fusionner deux caisses */
+	public static final int ACTION_FUSIONNER = 5;
+
+	/** Unité de temps (en seconde) */
+	public static final float UNITE_TEMPS = 1.0f;
 
 	/**
 	 * <p>
@@ -208,6 +214,18 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Ordonnee où le caisse sera dessinée. Utiliser pour l'animation */
 	private int ordonneeDessinCaisse;
 
+	/**
+	 * Abscisse où la caisse sera dessinée lorsque l'on pivote. Utiliser pour
+	 * l'animation
+	 */
+	private int abscisseDessinCaissePivoter;
+
+	/**
+	 * Ordonnee où le caisse sera dessinée lorsque l'on pivote. Utiliser pour
+	 * l'animation
+	 */
+	private int ordonneeDessinCaissePivoter;
+
 	/** Dernière action effectué par le robot */
 	private int derniereAction;
 
@@ -258,6 +276,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * déplacer le robot.
 	 */
 	private void updateObserver() {
+
 		abscisseDessinMax = (pos_courante.getX() - partie.getDebutX())
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
@@ -266,6 +285,11 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
 		angleDessinMax = orientation * FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE;
 
+		if (derniereAction == ACTION_PIVOTER) {
+			abscisseDessinCaissePivoter = abscisseDessinCaisse;
+			ordonneeDessinCaissePivoter = ordonneeDessinCaisse;
+		}
+		
 		// On envoie au Observers que l'on s'est déplacé
 		setChanged();
 		notifyObservers(this);
@@ -615,6 +639,49 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
+	 * Méthode pour que le robot saisisse ou relache une caisse qui est situé
+	 * devant lui. Le robot relache la caisse si la référence de la caisse est
+	 * null
+	 */
+	public void charger() {
+		final long timerDebut = System.currentTimeMillis();
+		derniereAction = ACTION_CHARGER;
+		if (caisse != null) {// Si on a déjà une caisse, on la relache ...
+			caisse = null;
+		} else {// ... sinon on cherche la position juste devant le robot
+			switch (orientation) {
+			case ORIENTATION_GAUCHE:
+				caisse = partie.getCaisseJeu(new Position(
+						pos_courante.getX() - 1, pos_courante.getY()));
+				break;
+			case ORIENTATION_HAUT:
+				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() - 1));
+				break;
+			case ORIENTATION_DROITE:
+				caisse = partie.getCaisseJeu(new Position(
+						pos_courante.getX() + 1, pos_courante.getY()));
+				break;
+			case ORIENTATION_BAS:
+				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() + 1));
+				break;
+			}
+		}
+		// On convertit de seconde en milli secondes
+		float tempsPauseNominal = tempsDerniereAction() * 1000;
+		final long tempsMis = System.currentTimeMillis() - timerDebut;
+		final long tempsPause = (long) tempsPauseNominal - tempsMis;
+		// On fait une pause dépendant du temps mis et du temps qu'il faut
+		// patienter
+		try {
+			Thread.sleep(tempsPause);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * <p>
 	 * Permet de vérifier si le déplacement de la caisse associée au robot (si
 	 * elle existe) dans toutes les directions (horizontal (= avancer, reculer)
@@ -647,8 +714,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Permet de passer d'un angle en degré à une orientation de robot. Cette
-	 * fonction ne modifie pas l'orientation du robot
+	 * Permet de passer d'un angle en degré à une orientation de robot.
 	 * 
 	 * @param angle
 	 *            angle dont on veux connaître son orientation
@@ -675,6 +741,40 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		return ((orientationArrivee > orientationDepart || (orientationArrivee == Robot.ORIENTATION_GAUCHE && orientationDepart == Robot.ORIENTATION_BAS)) && (orientationArrivee != Robot.ORIENTATION_BAS || orientationDepart != Robot.ORIENTATION_GAUCHE)) //
 		? PIVOTER_DROITE
 				: PIVOTER_GAUCHE;
+	}
+
+	/**
+	 * Retourne le temps qu'a mis la dernière action pour étre exécuté
+	 * 
+	 * @return temps en seconde
+	 */
+	public float tempsDerniereAction() {
+		switch (derniereAction) {
+		case ACTION_AVANCER:
+			if (caisse != null) {
+				return UNITE_TEMPS / VITESSE_AVANCER_CHARGE;
+			} else {
+				return UNITE_TEMPS / VITESSE_AVANCER_VIDE;
+			}
+		case ACTION_RECULER:
+			if (caisse != null) {
+				return UNITE_TEMPS / VITESSE_RECULER_CHARGE;
+			} else {
+				return UNITE_TEMPS / VITESSE_RECULER_VIDE;
+			}
+		case ACTION_PIVOTER:
+			if (caisse != null) {
+				return UNITE_TEMPS / VITESSE_PIVOTER_CHARGE;
+			} else {
+				return UNITE_TEMPS / VITESSE_PIVOTER_VIDE;
+			}
+		case ACTION_CHARGER:
+			return UNITE_TEMPS / VITESSE_CHARGER;
+		case ACTION_FUSIONNER:
+			return UNITE_TEMPS / VITESSE_FUSIONNER;
+		}
+		// Ce cas ne devrait jamais arrivé
+		return 0.0f;
 	}
 
 	/** @return pos_courante la position courante du robot */
@@ -714,20 +814,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * @return l'abscisse de dessin de la caisse à l'état précédent
-	 */
-	public int getAbscisseDessinCaisse() {
-		return abscisseDessinCaisse;
-	}
-
-	/**
-	 * @return l'ordonnee de dessin de la caisse à l'état précédent
-	 */
-	public int getOrdonneeDessinCaisse() {
-		return ordonneeDessinCaisse;
-	}
-
-	/**
 	 * @return l'abscisse de dessin du robot et de la caisse à la fin de
 	 *         l'animation
 	 */
@@ -753,37 +839,21 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * @param aAjouter
-	 *            Modifie l'abscisse de dessin du robot en lui ajoutant un
-	 *            nombre (en pixel)
+	 *            Modifie l'abscisse de dessin du robot et de la caisse en lui
+	 *            ajoutant un nombre (en pixel)
 	 */
 	public void addAbscisseDessin(int aAjouter) {
 		abscisseDessin += aAjouter;
-	}
-
-	/**
-	 * @param aAjouter
-	 *            Modifie l'ordonnée de dessin du robot en lui ajoutant un
-	 *            nombre (en pixel)
-	 */
-	public void addOrdonneeDessin(int aAjouter) {
-		ordonneeDessin += aAjouter;
-	}
-
-	/**
-	 * @param aAjouter
-	 *            Modifie l'abscisse de dessin de la caisse transporté par le
-	 *            robot en lui ajoutant un nombre (en pixel)
-	 */
-	public void addAbscisseDessinCaisse(int aAjouter) {
 		abscisseDessinCaisse += aAjouter;
 	}
 
 	/**
 	 * @param aAjouter
-	 *            Modifie l'ordonnée de dessin de la caisse transporté par le
-	 *            robot en lui ajoutant un nombre (en pixel)
+	 *            Modifie l'ordonnée de dessin du robot et de la caisse en lui
+	 *            ajoutant un nombre (en pixel)
 	 */
-	public void addOrdonneeDessinCaisse(int aAjouter) {
+	public void addOrdonneeDessin(int aAjouter) {
+		ordonneeDessin += aAjouter;
 		ordonneeDessinCaisse += aAjouter;
 	}
 
@@ -796,8 +866,44 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		angleDessin += aAjouter;
 		angleDessin %= 360;
 		if (angleDessin < 0) {
-			angleDessin = 359;
+			angleDessin = 360 + angleDessin;
 		}
+
+		// On modifie les coordonnées de la caisse selon l'équation d'un cercle
+		// Soit un cercle de centre C (a,b)
+		// Soit r => le rayon du cercle
+		// Soit alpha => un arc de cercle (en radian)
+		// Le point M (x,y) qui se trouve à l'intersection entre le cercle et la
+		// droite d qui passe par C et d'angle alpha par rapport à l'axe des
+		// abscisses
+		// Alors x = a + r*cos(alpha)
+		// y = b + r*sin(alpha)
+
+		// Convertion de l'angle de dessin en l'angle 'alpha'
+		final int alpha = -(180 - angleDessin);
+		// Centre du robot
+		final int xr = abscisseDessin + (UtilitaireFenetre.DIM_ROBOT.width / 2);
+		final int yr = ordonneeDessin
+				+ (UtilitaireFenetre.DIM_ROBOT.height / 2);
+		// Centre de la caisse
+		final int xc = abscisseDessinCaissePivoter
+				+ (UtilitaireFenetre.DIM_CAISSE.width / 2);
+		final int yc = ordonneeDessinCaissePivoter
+				+ (UtilitaireFenetre.DIM_CAISSE.height / 2);
+		// distance entre le centre du robot et le centre de la caisse
+		// On utilise la formule :
+		// Sqrt( (xr-xc)² + (yr-yc)² )
+		final int r = (int) Math.sqrt(Math.pow(xr - xc, 2)
+				+ Math.pow(yr - yc, 2));
+
+		// a => abscisseDessin
+		// b => ordonneeDessin
+		// x => abscisseDessinCaisse
+		// y => ordonneeDessinCaisse
+		abscisseDessinCaisse = (int) (xr + r
+				* Math.cos((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+		ordonneeDessinCaisse = (int) (yr + r
+				* Math.sin((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
 	}
 
 	/**
@@ -812,36 +918,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	private void setPositionCaisse(int x, int y) {
 		caisse.getPosCaisse().setX(x);
 		caisse.getPosCaisse().setY(y);
-	}
-
-	/**
-	 * Méthode pour que le robot saisisse ou relache une caisse qui est situé
-	 * devant lui. Le robot relache la caisse si la référence de la caisse est
-	 * null
-	 */
-	public void setCaisse() {
-		if (caisse != null) {// Si on a déjà une caisse, on la relache ...
-			caisse = null;
-		} else {// ... sinon on cherche la position juste devant le robot
-			switch (orientation) {
-			case ORIENTATION_GAUCHE:
-				caisse = partie.getCaisseJeu(new Position(
-						pos_courante.getX() - 1, pos_courante.getY()));
-				break;
-			case ORIENTATION_HAUT:
-				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
-						pos_courante.getY() - 1));
-				break;
-			case ORIENTATION_DROITE:
-				caisse = partie.getCaisseJeu(new Position(
-						pos_courante.getX() + 1, pos_courante.getY()));
-				break;
-			case ORIENTATION_BAS:
-				caisse = partie.getCaisseJeu(new Position(pos_courante.getX(),
-						pos_courante.getY() + 1));
-				break;
-			}
-		}
 	}
 
 	/**
@@ -918,6 +994,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		// Permet de tourner l'image selon l'orientation du robot
 		AffineTransform transform = new AffineTransform();
 
+		transform.rotate((angleDessin * Math.PI) / 180,
+				UtilitaireFenetre.DIM_ROBOT.width / 2,
+				UtilitaireFenetre.DIM_ROBOT.height / 2);
 		if (caisse != null) {
 			Graphics2D contexteCaisse = (Graphics2D) g.create(
 					abscisseDessinCaisse, ordonneeDessinCaisse,
@@ -925,9 +1004,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					UtilitaireFenetre.DIM_CAISSE.height);
 			caisse.dessiner(contexteCaisse);
 		}
-		transform.rotate((angleDessin * Math.PI) / 180,
-				UtilitaireFenetre.DIM_ROBOT.width / 2,
-				UtilitaireFenetre.DIM_ROBOT.height / 2);
 		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseDessin,
 				ordonneeDessin, UtilitaireFenetre.DIM_ROBOT.width,
 				UtilitaireFenetre.DIM_ROBOT.height);

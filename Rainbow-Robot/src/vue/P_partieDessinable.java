@@ -30,10 +30,14 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 * Généré automatiquement par Eclipse
 	 */
 	private static final long serialVersionUID = -1455979274616855880L;
+
 	/**
 	 * Partie courante du jeu Rainbow Robot
 	 */
 	Partie partieCourante;
+
+	/** Temps passé entre deux animation en (millisecondes) */
+	private static final int PAUSE_ANIMATION = 1;
 
 	/**
 	 * Initialise la partie courante au travers de la référence du jeu. On
@@ -58,14 +62,27 @@ public class P_partieDessinable extends JPanel implements Observer {
 		super.repaint();
 	}
 
-	/**
-	 * Permet d'avoir une animation lorsque le robot se déplace
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param g
-	 *            contexte de dessin
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
-	public void animation(Graphics g) {
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		// Déplacement du robot (en pixel)
+		float deplacementPixel = 0;
+		// On récupère la référence du robot
 		Robot robot = partieCourante.getRobot();
+		// Temps que doit mettre l'animation
+		final float TEMPS_PAUSE_NOMINAL = robot.tempsDerniereAction() * 1000;
+		// Temps en début et fin pour gérer les dépassements de temps
+		long debutboucle, finboucle;
+		// Temps mis pour effectuer un tour de boucle
+		long tempsMis = PAUSE_ANIMATION;
+		// Mesure l'évolution (de l'angle ou de la distance) du robot au cours
+		// du temps
+		long deplacementRobot = 0;
 
 		// Nouvelle position pour centrer le jeu dans le JPanel
 		final int x = (super.getWidth() / 2)
@@ -77,108 +94,221 @@ public class P_partieDessinable extends JPanel implements Observer {
 		Graphics2D contexte = (Graphics2D) g.create(x, y, super.getWidth() - x,
 				super.getHeight() - y);
 
+		// Animation
 		switch (robot.getDerniereAction()) {
 		case Robot.ACTION_AVANCER:// Cas similaire à ACTION_RECULER
 		case Robot.ACTION_RECULER:
+
 			// On récupère toutes les variables nécessaires pour connaître
 			// l'évolution du robot
 			// Utilisé pour connaître le sens de direction du robot
-			final int deltaX = robot.getAbscisseDessinMax()
+			int deltaX = robot.getAbscisseDessinMax()
 					- robot.getAbscisseDessin();
-			final int deltaY = robot.getOrdonneeDessinMax()
+			int deltaY = robot.getOrdonneeDessinMax()
 					- robot.getOrdonneeDessin();
+
 			// Sachant que le robot se déplace dans un sens unilatéral, s'il se
-			// déplace selon le sens deltaX alors deltaY = 0
+			// déplace selon le sens deltaX alors deltaY = 0 et inversement
+
 			if (deltaX > 0) { // Axe Horizontal et vers la droite
-				final int abscisseArrivee = robot.getAbscisseDessinMax();
-				super.paintComponent(g);
-				while (robot.getAbscisseDessin() < abscisseArrivee) {
-					robot.addAbscisseDessin(1);
-					robot.addAbscisseDessinCaisse(1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+
+				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.width;
+
+				while (deplacementRobot < distanceArrivee) {
+
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							+ ((deltaX * tempsMis) / TEMPS_PAUSE_NOMINAL);
+
+					if (deplacementPixel >= 1.0f) {
+
+						robot.addAbscisseDessin((int) deplacementPixel);
+						deplacementRobot += (int) deplacementPixel;
+
+						// Du à des latences imprévisibles
+						if (deplacementRobot >= distanceArrivee) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
 					}
+
+					// Pause entre les animations
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
 				}
 			} else if (deltaX < 0) { // Axe Horizontal et vers la gauche
-				final int abscisseArrivee = robot.getAbscisseDessinMax();
-				super.paintComponent(g);
-				while (robot.getAbscisseDessin() > abscisseArrivee) {
-					robot.addAbscisseDessin(-1);
-					robot.addAbscisseDessinCaisse(-1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+
+				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.width;
+
+				while (deplacementRobot < distanceArrivee) {
+
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							+ ((deltaX * tempsMis) / TEMPS_PAUSE_NOMINAL);
+
+					if (deplacementPixel <= -1.0f) {
+
+						robot.addAbscisseDessin((int) deplacementPixel);
+						deplacementRobot += -((int) deplacementPixel);
+
+						if (deplacementRobot >= distanceArrivee) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
 					}
+
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
 				}
 			} else if (deltaY > 0) { // Axe vertical et vers le bas
-				final int ordonneeArrivee = robot.getOrdonneeDessinMax();
-				super.paintComponent(g);
-				while (robot.getOrdonneeDessin() < ordonneeArrivee) {
-					robot.addOrdonneeDessin(1);
-					robot.addOrdonneeDessinCaisse(1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+
+				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.height;
+
+				while (deplacementRobot < distanceArrivee) {
+
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							+ ((deltaY * tempsMis) / TEMPS_PAUSE_NOMINAL);
+
+					if (deplacementPixel >= 1.0f) {
+
+						robot.addOrdonneeDessin((int) deplacementPixel);
+						deplacementRobot += (int) deplacementPixel;
+
+						if (deplacementRobot >= distanceArrivee) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
 					}
+
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
 				}
 			} else { // Axe vertical et vers le haut <=> deltaY < 0
-				final int ordonneeArrivee = robot.getOrdonneeDessinMax();
-				super.paintComponent(g);
-				while (robot.getOrdonneeDessin() > ordonneeArrivee) {
-					robot.addOrdonneeDessin(-1);
-					robot.addOrdonneeDessinCaisse(-1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+
+				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.height;
+
+				while (deplacementRobot < distanceArrivee) {
+
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							+ ((deltaY * tempsMis) / TEMPS_PAUSE_NOMINAL);
+					if (deplacementPixel <= -1.0f) {
+
+						robot.addOrdonneeDessin((int) deplacementPixel);
+						deplacementRobot += -((int) deplacementPixel);
+
+						if (deplacementRobot >= distanceArrivee) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
 					}
+
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
 				}
 			}
 			break;
 		case Robot.ACTION_PIVOTER:
-			final int orientationDepart = Robot.angleToOrientation(robot
-					.getAngleDessin());
-			final int orientationArrivee = Robot.angleToOrientation(robot
-					.getAngleDessinMax());
-			System.out.println("Angle départ : " + orientationDepart
-					+ "\nAngle d'arrivée : " + orientationArrivee);
 			if (robot.sensPivoter() == Robot.PIVOTER_DROITE) { // Rotation à
-																// droite
-				final int angleArrivee = robot.getAngleDessinMax();
-				while (robot.getAngleDessin() != angleArrivee) {
-					robot.addAngleDessin(1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+				// droite
+				while (deplacementRobot < Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) {
 
-			} else { // Rotation à gauche
-				final int angleArrivee = robot.getAngleDessinMax();
-				while (robot.getAngleDessin() != angleArrivee) {
-					robot.addAngleDessin(-1);
-					partieCourante.dessiner(contexte);
-					partieCourante.getRobot().animation(contexte);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							+ (Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE * (tempsMis / TEMPS_PAUSE_NOMINAL));
+
+					if (deplacementPixel >= 1.0f) {
+
+						robot.addAngleDessin((int) deplacementPixel);
+						deplacementRobot += (int) deplacementPixel;
+
+						if (deplacementRobot >= Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
 					}
+
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
+				}
+			} else { // Rotation à gauche
+
+				while (deplacementRobot < Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) {
+
+					debutboucle = System.currentTimeMillis();
+					deplacementPixel = deplacementPixel
+							- (Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE * (tempsMis / TEMPS_PAUSE_NOMINAL));
+
+					if (deplacementPixel <= -1.0f) {
+
+						robot.addAngleDessin((int) deplacementPixel);
+						deplacementRobot += -((int) deplacementPixel);
+
+						if (deplacementRobot >= Robot.FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) {
+							break;
+						}
+
+						deplacementPixel = deplacementPixel
+								- (int) deplacementPixel;
+
+						partieCourante.dessiner(contexte);
+						robot.animation(contexte);
+					}
+
+					try {
+						Thread.sleep(PAUSE_ANIMATION);
+					} catch (InterruptedException e) {
+					}
+
+					finboucle = System.currentTimeMillis();
+					tempsMis = finboucle - debutboucle;
 				}
 			}
 			break;
@@ -188,31 +318,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 		// On dessine le robot et le plateau à sa position finale
 		super.paintComponent(g);
 		partieCourante.dessiner(contexte);
-		partieCourante.getRobot().dessiner(contexte);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-	 */
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		// Nouvelle position pour centrer le jeu dans le JPanel
-		int x = (super.getWidth() / 2)
-				- (((UtilitaireFenetre.DIM_CASE_VIDE.width + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
-				partieCourante.getNbColonne()) / 2);
-		int y = (super.getHeight() / 2)
-				- (((UtilitaireFenetre.DIM_CASE_VIDE.height + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
-				partieCourante.getNbLigne()) / 2);
-
-		Graphics2D contexte = (Graphics2D) g.create(x, y, super.getWidth() - x,
-				super.getHeight() - y);
-
-		// On dessine le robot et le plateau à sa position finale
-		partieCourante.dessiner(contexte);
-		partieCourante.getRobot().dessiner(contexte);
+		robot.dessiner(contexte);
 	}
 
 	/*
@@ -223,7 +329,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object aRedessiner) {
 		if (aRedessiner instanceof Robot) {
-			animation(getGraphics());
+			paintComponent(getGraphics());
 		}
 	}
 }

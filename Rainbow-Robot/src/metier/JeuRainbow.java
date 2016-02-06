@@ -216,11 +216,30 @@ public class JeuRainbow implements Serializable {
 		int debutY = -((nbLigne - 1) / 2);
 
 		// On ne calcule les positions inaccessibles
-		Position[] positionsInaccessibles = new Position[4];
+		Position[] positionsInaccessibles = new Position[16];
+		// Angle en haut à gauche
 		positionsInaccessibles[0] = new Position(debutX, debutY);
 		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
+
+		// Angle en haut à droite
+		positionsInaccessibles[4] = new Position(-debutX, debutY);
+		positionsInaccessibles[5] = new Position(-debutX, debutY + 1);
+		positionsInaccessibles[6] = new Position(-debutX - 1, debutY);
+		positionsInaccessibles[7] = new Position(-debutX - 1, debutY + 1);
+
+		// Angle en bas à gauche
+		positionsInaccessibles[8] = new Position(debutX, -debutY);
+		positionsInaccessibles[9] = new Position(debutX, -debutY - 1);
+		positionsInaccessibles[10] = new Position(debutX + 1, -debutY);
+		positionsInaccessibles[11] = new Position(debutX + 1, -debutY - 1);
+
+		// Angle en bas à droite
+		positionsInaccessibles[12] = new Position(-debutX, -debutY);
+		positionsInaccessibles[13] = new Position(-debutX, -debutY - 1);
+		positionsInaccessibles[14] = new Position(-debutX - 1, -debutY);
+		positionsInaccessibles[15] = new Position(-debutX - 1, -debutY - 1);
 
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
 		caisseARecuperee.add(new Caisse(Color.RED));
@@ -258,11 +277,23 @@ public class JeuRainbow implements Serializable {
 		debutX = -((nbColonne - 1) / 2);
 		debutY = -((nbLigne - 1) / 2);
 
-		positionsInaccessibles = new Position[4];
+		positionsInaccessibles = new Position[16];
 		positionsInaccessibles[0] = new Position(debutX, debutY);
 		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
 		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
 		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
+		positionsInaccessibles[4] = new Position(-debutX, debutY);
+		positionsInaccessibles[5] = new Position(-debutX, debutY + 1);
+		positionsInaccessibles[6] = new Position(-debutX - 1, debutY);
+		positionsInaccessibles[7] = new Position(-debutX - 1, debutY + 1);
+		positionsInaccessibles[8] = new Position(debutX, -debutY);
+		positionsInaccessibles[9] = new Position(debutX, -debutY - 1);
+		positionsInaccessibles[10] = new Position(debutX + 1, -debutY);
+		positionsInaccessibles[11] = new Position(debutX + 1, -debutY - 1);
+		positionsInaccessibles[12] = new Position(-debutX, -debutY);
+		positionsInaccessibles[13] = new Position(-debutX, -debutY - 1);
+		positionsInaccessibles[14] = new Position(-debutX - 1, -debutY);
+		positionsInaccessibles[15] = new Position(-debutX - 1, -debutY - 1);
 
 		caisseARecuperee = new ArrayList<Caisse>();
 		caisseARecuperee.add(new Caisse(Color.YELLOW));
