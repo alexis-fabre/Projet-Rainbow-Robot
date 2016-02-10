@@ -6,6 +6,7 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -53,15 +55,13 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 */
 	private P_partieDessinable partieDessinable;
 
+	/** Panneau qui contient l'interface graphique 2D des caisses a récupérées. */
+	private P_caisseADessiner caisseARecuperer;
+
 	/**
 	 * Label contenant le timer qui s'actualise toutes les secondes
 	 */
 	private JLabel la_timer = new JLabel("00 : 00");
-
-	/**
-	 * Panneau qui contient l'interface graphique 2D des caisses a récupérées.
-	 */
-	private P_caisseADessiner caisseARecuperer;
 
 	/**
 	 * Bouton qui permet de mettre en pause la partie en cours
@@ -114,18 +114,13 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		contentMenuHaut.setLayout(new BoxLayout(contentMenuHaut,
 				BoxLayout.X_AXIS));
 
-		// On ajoute les composants dans la fenêtre
+		// On ajoute le timer
 		contentMenuHaut.add(Box.createHorizontalStrut(30));
 		contentMenuHaut.add(getTimer());
 		contentMenuHaut.add(Box.createGlue());
+
 		// On créer les caisses a récupérées
 		caisseARecuperer = new P_caisseADessiner(gestionClavier.getMetier());
-		UtilitaireFenetre.setAllSize(caisseARecuperer,
-				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width
-						* UtilitaireFenetre.NB_CAISSE_AFFICHE
-						+ UtilitaireFenetre.MARGE_ENTRE_CAISSE
-						* UtilitaireFenetre.NB_CAISSE_AFFICHE + 1,
-				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height);
 
 		contentMenuHaut.add(caisseARecuperer);
 		contentMenuHaut.add(Box.createGlue());
@@ -159,7 +154,9 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		});
 		chrono.start();
 
-		partieDessinable = new P_partieDessinable(gestionClavier.getMetier());
+		// On créé le plateau de jeu
+		partieDessinable = new P_partieDessinable(gestionClavier.getMetier()
+				.getPartieCourante());
 
 		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
 		contentPane.add(partieDessinable, BorderLayout.CENTER);
@@ -236,7 +233,7 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 	/**
 	 * @return le "JPanel" partieDessinable qui contient l'interface graphique
-	 *         2D du jeu (avec le robot, les caisses et le vortex).
+	 *         2D du jeu (avec les caisses et le vortex).
 	 */
 	public P_partieDessinable getPartieDessinable() {
 		return partieDessinable;

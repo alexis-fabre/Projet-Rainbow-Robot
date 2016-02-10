@@ -109,8 +109,6 @@ public class JeuRainbow implements Serializable {
 	 * Permet de passer au niveau suivant ou de retourner au niveau 0
 	 */
 	public void setNiveauSuivant() {
-		// On réactualise partieJouable
-		reinitialiserPartie();
 		setNiveau(niveauCourant + 1);
 	}
 

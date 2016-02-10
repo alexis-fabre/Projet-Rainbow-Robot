@@ -150,7 +150,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * (en nombre de case / unite de temps)
 	 * </p>
 	 */
-	public static final int VITESSE_PIVOTER_CHARGE = 2;
+	public static final float VITESSE_PIVOTER_CHARGE = 0.5f;
 
 	/**
 	 * <p>
@@ -229,6 +229,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Dernière action effectué par le robot */
 	private int derniereAction;
 
+	/** true si le robot est en train d'effectuer une action, false sinon */
+	private boolean estOccupe;
+
 	/**
 	 * Construit un robot avec une position et une orientation initiale.
 	 * 
@@ -241,15 +244,13 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		this.pos_courante = pos_ini;
 		this.orientation = orientation;
 		derniereAction = AUCUNE_ACTION;
-		// On initialise les variables de dessin lorsque l'on associe une partie
-		// au robot
 	}
 
 	/**
 	 * Modifie les variables internes pour dessiner le robot. Cette fonction est
 	 * à appeler avant chaque déplacement du robot.
 	 */
-	private void setVariableDessin() {
+	private void initRobotAction() {
 		angleDessin = orientation * FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE;
 		abscisseDessin = (pos_courante.getX() - partie.getDebutX())
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
@@ -276,7 +277,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * déplacer le robot.
 	 */
 	private void updateObserver() {
-
 		abscisseDessinMax = (pos_courante.getX() - partie.getDebutX())
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
@@ -289,10 +289,13 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			abscisseDessinCaissePivoter = abscisseDessinCaisse;
 			ordonneeDessinCaissePivoter = ordonneeDessinCaisse;
 		}
-		
+
+		setEstOccupe(true);
 		// On envoie au Observers que l'on s'est déplacé
 		setChanged();
 		notifyObservers(this);
+		// L'observers renverra setEstOccupe(false) une fois qu'il aura fini son
+		// traitement
 	}
 
 	/**
@@ -302,7 +305,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public void avancer() {
 		// On garde les anciennes positions
-		setVariableDessin();
+		initRobotAction();
 		derniereAction = ACTION_AVANCER;
 
 		// Avancer d'un indice dans la liste
@@ -395,7 +398,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public void reculer() {
 		// On garde les anciennes positions
-		setVariableDessin();
+		initRobotAction();
 		derniereAction = ACTION_RECULER;
 
 		// Reculer d'un indice dans la liste
@@ -500,7 +503,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public void pivoter(int position) {
 		// On garde les anciennes positions
-		setVariableDessin();
+		initRobotAction();
 		derniereAction = ACTION_PIVOTER;
 
 		if (caisse != null) { // Le robot a une caisse
@@ -838,6 +841,21 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
+	 * @return true si le robot est en train d'effectuer une action, false sinon
+	 */
+	public boolean estOccupe() {
+		return estOccupe;
+	}
+
+	/**
+	 * @param estOccupe
+	 *            nouveau statu du robot
+	 */
+	public void setEstOccupe(boolean estOccupe) {
+		this.estOccupe = estOccupe;
+	}
+
+	/**
 	 * @param aAjouter
 	 *            Modifie l'abscisse de dessin du robot et de la caisse en lui
 	 *            ajoutant un nombre (en pixel)
@@ -965,6 +983,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
 					UtilitaireFenetre.DIM_CAISSE.height);
 			caisse.dessiner(contexteCaisse);
+			contexteCaisse.dispose();
 		}
 		transform.rotate((angleDessinMax * Math.PI) / 180,
 				UtilitaireFenetre.DIM_ROBOT.width / 2,
@@ -980,6 +999,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			System.out
 					.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
+
+		contexteRobot.dispose();
 	}
 
 	/**
@@ -1003,6 +1024,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					UtilitaireFenetre.DIM_CAISSE.width,
 					UtilitaireFenetre.DIM_CAISSE.height);
 			caisse.dessiner(contexteCaisse);
+			contexteCaisse.dispose();
 		}
 		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseDessin,
 				ordonneeDessin, UtilitaireFenetre.DIM_ROBOT.width,
@@ -1015,6 +1037,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			System.out
 					.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
+		contexteRobot.dispose();
 	}
 
 	/*

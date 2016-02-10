@@ -61,6 +61,14 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 */
 	public P_caisseADessiner(JeuRainbow jeu) {
 		super();
+		// On définit une taille dynamique en fonction du nombre de caisse à
+		// afficher
+		UtilitaireFenetre.setAllSize(this,
+				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width
+						* UtilitaireFenetre.NB_CAISSE_AFFICHE
+						+ UtilitaireFenetre.MARGE_ENTRE_CAISSE
+						* UtilitaireFenetre.NB_CAISSE_AFFICHE + 1,
+				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height);
 		partieCourante = jeu.getPartieCourante();
 		partieCourante.getVortex().addObserver(this);
 	}
@@ -118,18 +126,19 @@ public class P_caisseADessiner extends JPanel implements Observer {
 		// ---------------------------------------------------------------------
 		ArrayList<Caisse> aDessiner = partieCourante.getCaisseARecuperee();
 		// Contexte graphique de la caisse a dessiné
-		Graphics2D contexteCaisse;
 		for (int i = 0; i < UtilitaireFenetre.NB_CAISSE_AFFICHE
 				&& i < aDessiner.size(); i++) {
 			int abscisseCaisse = (i * ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width) + UtilitaireFenetre.MARGE_ENTRE_CAISSE))
 					+ ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
 			int ordonneCaisse = ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-			contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
+			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
 					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
 					UtilitaireFenetre.DIM_CAISSE.height);
 			aDessiner.get(i).dessiner(contexteCaisse);
+			contexteCaisse.dispose();
 		}
 		contexte.dispose();
+		g.dispose();
 	}
 
 	/*

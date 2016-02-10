@@ -2,10 +2,11 @@
  * Lanceur.java							28 nov. 2015
  * IUT Info2 2015-2016
  */
-package vue;
+package launcher;
 
 import javax.swing.UIManager;
 
+import vue.F_accueil;
 import metier.JeuRainbow;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;

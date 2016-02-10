@@ -77,6 +77,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 *             si le nombre de ligne est différent de 9 et le nombre de
 	 *             colonne est différent de 11.
 	 */
+	@Deprecated
 	public Partie(int nbLigne, int nbColonne) throws IllegalArgumentException {
 		// Si nbLigne != 9 ou nbColonne != 11, on aura des problèmes pour créer
 		// les zones inaccessibles (POSITIONS_INACCESSIBLES)
@@ -177,7 +178,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 */
 	public boolean isPositionOK(Position aVerifier) {
 		// On vérifie si la position ne dépasse pas des dimensions de la partie.
-
 		if (aVerifier.getX() < debutX || aVerifier.getX() > -debutX) {
 			return false;
 		}
@@ -328,6 +328,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 */
 	@Override
 	public void dessiner(Graphics2D g) {
+		Graphics2D fond = (Graphics2D) g.create();
 		for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
 			for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
 				Position posADessiner = new Position(x + debutX, y + debutY);
@@ -336,28 +337,29 @@ public class Partie extends Observable implements Dessinable, Serializable {
 					// On dessine les cases vides et le vortex
 					// ---------------------------------------------------------
 					if (posADessiner.equals(vortex.getPosVortex())) { // Vortex
-						g.setColor(UtilitaireFenetre.COULEUR_VORTEX);
+						fond.setColor(UtilitaireFenetre.COULEUR_VORTEX);
 					} else { // Case vide
-						g.setColor(UtilitaireFenetre.COULEUR_FOND);
+						fond.setColor(UtilitaireFenetre.COULEUR_FOND);
 					}
 
 					// On dessine le fond de la case
-					g.fillRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
+					fond.fillRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
 							* UtilitaireFenetre.DIM_CASE_VIDE.height,
 							UtilitaireFenetre.DIM_CASE_VIDE.width,
 							UtilitaireFenetre.DIM_CASE_VIDE.height);
 
 					// On dessine la bordure de la case
-					g.setStroke(new BasicStroke(
+					fond.setStroke(new BasicStroke(
 							UtilitaireFenetre.LARGEUR_BORDURE));
-					g.setColor(UtilitaireFenetre.COULEUR_BORDURE);
-					g.drawRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
+					fond.setColor(UtilitaireFenetre.COULEUR_BORDURE);
+					fond.drawRect(x * UtilitaireFenetre.DIM_CASE_VIDE.width, y
 							* UtilitaireFenetre.DIM_CASE_VIDE.height,
 							UtilitaireFenetre.DIM_CASE_VIDE.width,
 							UtilitaireFenetre.DIM_CASE_VIDE.height);
 				}
 			}
 		}
+		fond.dispose();
 
 		// ---------------------------------------------------------
 		// On dessine les caisses
@@ -380,6 +382,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 						UtilitaireFenetre.DIM_CAISSE.width,
 						UtilitaireFenetre.DIM_CAISSE.height);
 				caisseADessiner.dessiner(contexteCaisse);
+				contexteCaisse.dispose();
 			}
 		}
 	}

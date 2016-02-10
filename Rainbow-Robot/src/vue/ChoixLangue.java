@@ -34,16 +34,21 @@ public class ChoixLangue {
 	/**
 	 * Constante permettant à l'utilisateur de choisir la langue française. Pour
 	 * une meilleure utilisation la valeur de cette variable soit correspondre à
-	 * l'indice du tableau LANGUE.
+	 * l'indice du tableau TOUTES_LANGUES.
 	 */
 	public static final int LANGUE_FR = 0;
 
 	/**
 	 * Constante permettant à l'utilisateur de choisir la langue anglaise. Pour
 	 * une meilleure utilisation la valeur de cette variable soit correspondre à
-	 * l'indice du tableau LANGUE.
+	 * l'indice du tableau TOUTES_LANGUES.
 	 */
 	public static final int LANGUE_EN = 1;
+
+	/**
+	 * Contient toutes les traductions de langues connues pour cette application
+	 */
+	private static final String[] TOUTES_LANGUES = { "Français", "English" };
 
 	/**
 	 * <p>
@@ -145,14 +150,9 @@ public class ChoixLangue {
 			{ "Language's selection", "Please select a language : " } };
 
 	/**
-	 * Contient toutes les traductions de langues connues pour cette application
-	 */
-	private static final String[] TOUTES_LANGUES = { "Français", "English" };
-
-	/**
 	 * Contient les traductions pour la fenêtre ChoixMode
 	 */
-	private final String[][] CHOIXMODE = {
+	private static final String[][] CHOIX_MODE = {
 			{
 					"Choix du mode",
 					"Jouer solo contre l'ordinateur avec des énigmes",
@@ -505,7 +505,7 @@ public class ChoixLangue {
 	 * @return les traductions utilisées pour pour la JFrame ChoixMode
 	 */
 	public String[] getChoixMode() {
-		return CHOIXMODE[langue];
+		return CHOIX_MODE[langue];
 	}
 
 	/**

@@ -26,12 +26,6 @@ public class ToucheClavier implements KeyListener {
 	private JeuRainbow metier;
 
 	/**
-	 * Constructeur par défaut qui permet de détecter les touches du claviers
-	 */
-	public ToucheClavier() {
-	}
-
-	/**
 	 * On initialise le constructeur avec la partie métier du jeu.
 	 * 
 	 * @param metier
@@ -65,25 +59,30 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP: // Flêche du haut
-			metier.getPartieCourante().getRobot().avancer();
-			break;
-		case KeyEvent.VK_LEFT: // Flêche de gauche
-			metier.getPartieCourante().getRobot().pivoter(Robot.PIVOTER_GAUCHE);
-			break;
-		case KeyEvent.VK_RIGHT: // Flêche de droite
-			metier.getPartieCourante().getRobot().pivoter(Robot.PIVOTER_DROITE);
-			break;
-		case KeyEvent.VK_DOWN: // Flêche du bas
-			metier.getPartieCourante().getRobot().reculer();
-			break;
-		case KeyEvent.VK_CONTROL: // Touche Contrôle
-			break;
-		case KeyEvent.VK_SPACE: // Touche Espace
-			// On attrape la prochaine caisse
-			metier.getPartieCourante().getRobot().charger();
-			break;
+		// On vérifie que le robot n'est pas déjà en train de faire une action
+		if (!metier.getPartieCourante().getRobot().estOccupe()) {
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP: // Flêche du haut
+				metier.getPartieCourante().getRobot().avancer();
+				break;
+			case KeyEvent.VK_LEFT: // Flêche de gauche
+				metier.getPartieCourante().getRobot()
+						.pivoter(Robot.PIVOTER_GAUCHE);
+				break;
+			case KeyEvent.VK_RIGHT: // Flêche de droite
+				metier.getPartieCourante().getRobot()
+						.pivoter(Robot.PIVOTER_DROITE);
+				break;
+			case KeyEvent.VK_DOWN: // Flêche du bas
+				metier.getPartieCourante().getRobot().reculer();
+				break;
+			case KeyEvent.VK_CONTROL: // Touche Contrôle
+				break;
+			case KeyEvent.VK_SPACE: // Touche Espace
+				// On attrape la prochaine caisse
+				metier.getPartieCourante().getRobot().charger();
+				break;
+			}
 		}
 	}
 
