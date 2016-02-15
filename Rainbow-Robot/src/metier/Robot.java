@@ -1015,9 +1015,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		// Permet de tourner l'image selon l'orientation du robot
 		AffineTransform transform = new AffineTransform();
 
-		transform.rotate((angleDessin * Math.PI) / 180,
-				UtilitaireFenetre.DIM_ROBOT.width / 2,
-				UtilitaireFenetre.DIM_ROBOT.height / 2);
 		if (caisse != null) {
 			Graphics2D contexteCaisse = (Graphics2D) g.create(
 					abscisseDessinCaisse, ordonneeDessinCaisse,
@@ -1026,11 +1023,17 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			caisse.dessiner(contexteCaisse);
 			contexteCaisse.dispose();
 		}
+		
 		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseDessin,
 				ordonneeDessin, UtilitaireFenetre.DIM_ROBOT.width,
 				UtilitaireFenetre.DIM_ROBOT.height);
+
+		transform.rotate((angleDessin * Math.PI) / 180,
+				UtilitaireFenetre.DIM_ROBOT.width / 2,
+				UtilitaireFenetre.DIM_ROBOT.height / 2);
+		contexteRobot.transform(transform);
+		
 		try {
-			contexteRobot.transform(transform);
 			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
 					0, 0, null);
 		} catch (IOException e) {

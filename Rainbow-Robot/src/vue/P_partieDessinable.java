@@ -23,14 +23,10 @@ import metier.Robot;
  */
 public class P_partieDessinable extends JPanel implements Observer {
 
-	/**
-	 * Généré automatiquement par Eclipse
-	 */
+	/** Généré automatiquement par Eclipse */
 	private static final long serialVersionUID = -1455979274616855880L;
 
-	/**
-	 * Partie courante du jeu Rainbow Robot
-	 */
+	/** Partie courante du jeu Rainbow Robot */
 	private Partie partieCourante;
 
 	/** Temps passé entre deux animation en (millisecondes) */
@@ -40,7 +36,13 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 * Thread gérant le rafraichissement de la fenêtre lorsque l'utilisateur
 	 * fait une action dans le jeu.
 	 */
-	private ThreadAnimation animation;
+	private ThreadAnimation threadAnimation;
+
+	/**
+	 * Permet de savoir si la fenêtre est en train d'effectuer une animation ou
+	 * non
+	 */
+	private boolean isAnimation;
 
 	/**
 	 * Initialise la partie courante au travers de la référence du jeu. On
@@ -52,12 +54,10 @@ public class P_partieDessinable extends JPanel implements Observer {
 	public P_partieDessinable(Partie partie) {
 		super();
 		// Permet d'éviter quelques latences
-		// setDoubleBuffered(true);
+		super.setDoubleBuffered(true);
 		// abonner cette vue aux changements du modèle (DP observateur)
 		partieCourante = partie;
 		partieCourante.getRobot().addObserver(this);
-		animation = new ThreadAnimation();
-		animation.start();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		// super.paintComponent(g);
+		super.paintComponent(g);
 		// Nouvelle position pour centrer le jeu dans le JPanel
 		final int largeurPlateau = ((UtilitaireFenetre.DIM_CASE_VIDE.width + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
 		partieCourante.getNbColonne());
@@ -89,16 +89,18 @@ public class P_partieDessinable extends JPanel implements Observer {
 				hauteurPlateau);
 
 		// Animation du robot
-		animationRobot(contexte);
-
-		// On dessine le robot et le plateau à sa position finale
-		partieCourante.dessiner(contexte);
-		partieCourante.getRobot().dessiner(contexte);
+		if (isAnimation) {
+			partieCourante.dessiner(contexte);
+			partieCourante.getRobot().animation(contexte);
+		} else {
+			// On dessine le robot et le plateau à sa position finale
+			partieCourante.dessiner(contexte);
+			partieCourante.getRobot().dessiner(contexte);
+		}
 
 		// On libère les ressources
 		contexte.dispose();
 		g.dispose();
-		partieCourante.getRobot().setEstOccupe(false);
 	}
 
 	/**
@@ -107,8 +109,8 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 * @param contexte
 	 *            contexte graphique 2D
 	 */
-	public void animationRobot(Graphics2D contexte) {
-
+	public void animationRobot() {
+		isAnimation = true;
 		// Déplacement du robot (en pixel)
 		float deplacementPixel = 0;
 		// Référence du robot
@@ -144,7 +146,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.width;
 
 				while (deplacementRobot < distanceArrivee) {
-
+					
 					debutboucle = System.currentTimeMillis();
 					deplacementPixel = deplacementPixel
 							+ ((deltaX * tempsMis) / TEMPS_PAUSE_NOMINAL);
@@ -161,8 +163,8 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						// On redessine le robot
+						repaint();
 					}
 
 					// Pause entre les animations
@@ -196,8 +198,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						repaint();
 					}
 
 					try {
@@ -230,8 +231,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						repaint();
 					}
 
 					try {
@@ -263,8 +263,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						repaint();
 					}
 
 					try {
@@ -298,8 +297,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						repaint();
 					}
 
 					try {
@@ -330,8 +328,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
 
-						partieCourante.dessiner(contexte);
-						robot.animation(contexte);
+						repaint();
 					}
 
 					try {
@@ -345,6 +342,11 @@ public class P_partieDessinable extends JPanel implements Observer {
 			}
 			break;
 		}
+
+		// Fin de l'animation
+		isAnimation = false;
+		repaint();
+		robot.setEstOccupe(false);
 	}
 
 	/*
@@ -355,8 +357,9 @@ public class P_partieDessinable extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object aRedessiner) {
 		if (aRedessiner instanceof Robot) {
-			if (!animation.isAnimation()) {
-				animation.setAnimation(true);
+			if (threadAnimation == null || !threadAnimation.isAlive()) {
+				threadAnimation = new ThreadAnimation();
+				threadAnimation.start();
 			}
 		}
 	}
@@ -369,11 +372,6 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 * @version 1.0
 	 */
 	public class ThreadAnimation extends Thread {
-		/**
-		 * Permet de savoir si la fenêtre est en train d'effectuer une animation
-		 * ou non
-		 */
-		boolean isAnimation = false;
 
 		/** Constructeur par défaut */
 		public ThreadAnimation() {
@@ -386,36 +384,8 @@ public class P_partieDessinable extends JPanel implements Observer {
 		 */
 		@Override
 		public void run() {
-
-			// Boucle infini
-			while (true) {
-				if (isAnimation) {
-					isAnimation = false;
-					paintComponent(getGraphics());
-				}
-				// Fais une pause le temps que l'utilisateur lance une action
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-				}
-			}
+			animationRobot();
 		}
-
-		/**
-		 * @return le isAnimation
-		 */
-		public boolean isAnimation() {
-			return isAnimation;
-		}
-
-		/**
-		 * @param isAnimation
-		 *            le isAnimation à modifier
-		 */
-		public void setAnimation(boolean isAnimation) {
-			this.isAnimation = isAnimation;
-		}
-
 	}
 
 }
