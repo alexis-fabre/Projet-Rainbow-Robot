@@ -387,5 +387,4 @@ public class P_partieDessinable extends JPanel implements Observer {
 			animationRobot();
 		}
 	}
-
 }
