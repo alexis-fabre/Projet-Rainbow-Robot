@@ -238,7 +238,7 @@ public class F_choixMode extends JFrame implements ChangementLangue {
 	}
 
 	/**
-	 * @returnle JButton bt_Retour qui revient à la page d'accueil F_accueil
+	 * @return bt_Retour qui perme de revenir à la page d'accueil F_accueil
 	 */
 	public JButton getBt_Retour() {
 		if (bt_Retour == null) {

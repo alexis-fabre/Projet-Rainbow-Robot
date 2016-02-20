@@ -26,6 +26,11 @@ public class ToucheClavier implements KeyListener {
 	private JeuRainbow metier;
 
 	/**
+	 * Booléen permettant de savoir si une touche a été pressée ou non
+	 */
+	public static boolean isPressed = false;
+	
+	/**
 	 * On initialise le constructeur avec la partie métier du jeu.
 	 * 
 	 * @param metier
@@ -50,6 +55,37 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+	 // On vérifie que le robot n'est pas déjà en train de faire une action
+            if (!metier.getPartieCourante().getRobot().estOccupe()) {
+                    switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP: // Flêche du haut
+                            isPressed = true;
+                            metier.getPartieCourante().getRobot().avancer();
+                            break;
+                    case KeyEvent.VK_LEFT: // Flêche de gauche
+                            isPressed = true;
+                            metier.getPartieCourante().getRobot()
+                                            .pivoter(Robot.PIVOTER_GAUCHE);
+                            break;
+                    case KeyEvent.VK_RIGHT: // Flêche de droite
+                            isPressed = true;
+                            metier.getPartieCourante().getRobot()
+                                            .pivoter(Robot.PIVOTER_DROITE);
+                            break;
+                    case KeyEvent.VK_DOWN: // Flêche du bas
+                            isPressed = true;
+                            metier.getPartieCourante().getRobot().reculer();
+                            break;
+                    case KeyEvent.VK_CONTROL: // Touche Contrôle
+                            isPressed = true;
+                            break;
+                    case KeyEvent.VK_SPACE: // Touche Espace
+                            isPressed = true;
+                            // On attrape la prochaine caisse
+                            metier.getPartieCourante().getRobot().charger();
+                            break;
+                    }
+            }
 	}
 
 	/*
@@ -59,31 +95,7 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// On vérifie que le robot n'est pas déjà en train de faire une action
-		if (!metier.getPartieCourante().getRobot().estOccupe()) {
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_UP: // Flêche du haut
-				metier.getPartieCourante().getRobot().avancer();
-				break;
-			case KeyEvent.VK_LEFT: // Flêche de gauche
-				metier.getPartieCourante().getRobot()
-						.pivoter(Robot.PIVOTER_GAUCHE);
-				break;
-			case KeyEvent.VK_RIGHT: // Flêche de droite
-				metier.getPartieCourante().getRobot()
-						.pivoter(Robot.PIVOTER_DROITE);
-				break;
-			case KeyEvent.VK_DOWN: // Flêche du bas
-				metier.getPartieCourante().getRobot().reculer();
-				break;
-			case KeyEvent.VK_CONTROL: // Touche Contrôle
-				break;
-			case KeyEvent.VK_SPACE: // Touche Espace
-				// On attrape la prochaine caisse
-				metier.getPartieCourante().getRobot().charger();
-				break;
-			}
-		}
+		
 	}
 
 	/*
@@ -93,5 +105,13 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+	
+	/**
+	 * Accesseur à isPressed
+	 * @return isPressed
+	 */
+	public static boolean getIsPressed() {
+	    return isPressed;
 	}
 }

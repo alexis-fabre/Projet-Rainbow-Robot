@@ -20,8 +20,10 @@ public class Position implements Serializable {
 	 */
 	private static final long serialVersionUID = 6603202690509989524L;
 
-	/** Coordonnées */
+	/** Coordonnées horizontales */
 	private int x;
+	
+	/** Coordonnées verticales */
 	private int y;
 
 	/**

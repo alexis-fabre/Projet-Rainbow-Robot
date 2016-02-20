@@ -705,6 +705,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
+	 * @param c2 la caisse à fusionner
 	 */
 	public void fusionner(Caisse c2) {
 		if (caisse != null) {

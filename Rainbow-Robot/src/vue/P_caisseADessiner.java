@@ -75,6 +75,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 
 	/**
 	 * Réactualise la partie courante envoyé dans JeuRainbow
+	 * @param nouvellePartie la partie actualisée
 	 */
 	public void setJeuRainbowRobot(Partie nouvellePartie) {
 		this.partieCourante = nouvellePartie;

@@ -176,16 +176,13 @@ public class UtilitaireFenetre {
 
 	/**
 	 * On force le composant à prendre la forme qu'il désire, c'est à dire on
-	 * définit la taille minimum, préferrée et maximale qu'un composant peut
+	 * définit la taille minimum, préférée et maximale qu'un composant peut
 	 * prendre. Il est possible qu'avec certain layout, même en forçant cela ne
 	 * marche pas.
 	 * 
 	 * @param component
 	 *            composant dont on veut forcer sa taille
-	 * @param largeur
-	 *            largeur que doit prendre le composant
-	 * @param hauteur
-	 *            hauteur que doit prendre le composant
+	 * @param dim la dimension souhaitée
 	 */
 	public static void setAllSize(JComponent component, Dimension dim) {
 		component.setMinimumSize(dim);

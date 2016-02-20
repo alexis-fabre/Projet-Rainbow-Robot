@@ -157,11 +157,13 @@ public class Caisse implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Créer une liste de caisse pour que l'utilisateur puisse les recuperer
+	 * Créer une liste de caisses pour que l'utilisateur puisse les récupérer
 	 * dans sa partie
+	 * @param caisseArecup 
 	 * 
 	 * @param nbCaisse
 	 *            nombre de caisses a récuperer
+	 * @param couleur couleur de la caisse
 	 */
 	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
 			int nbCaisse, Color couleur) {
