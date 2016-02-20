@@ -411,7 +411,12 @@ public class ChoixLangue {
 	private ChoixLangue() {
 		langue = LANGUE_FR;
 	}
-
+	
+	/**
+	 * Singleton
+	 * Instanciation de ChoixLangue
+	 * @return langueChoisie
+	 */
 	public static ChoixLangue getChoixLangue() {
 		if (langueChoisie == null) {
 			langueChoisie = new ChoixLangue();
@@ -420,7 +425,7 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @param langue
+	 * @param nouvelleLangue
 	 *            la langue à modifier
 	 */
 	public void setLangue(int nouvelleLangue) {
@@ -441,7 +446,7 @@ public class ChoixLangue {
 	 * Cette fonction ne marche uniquement que si les valeurs des constantes
 	 * entières des langues correspondent aux indices du tableau TOUTE_LANGUES.
 	 * 
-	 * @param langue
+	 * @param nouvelleLangue
 	 *            la langue à modifier
 	 */
 	public void setLangue(String nouvelleLangue) {
