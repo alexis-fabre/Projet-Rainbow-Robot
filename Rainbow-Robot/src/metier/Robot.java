@@ -104,68 +104,28 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/** Unité de temps (en seconde) */
 	public static final float UNITE_TEMPS = 1.0f;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on avance à vide ou sans caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on avance à vide ou sans caisse (en nombre de cases) */
 	public static final int VITESSE_AVANCER_VIDE = 2;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on recule à vide ou sans caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on recule à vide ou sans caisse (en nombre de cases) */
 	public static final float VITESSE_RECULER_VIDE = 1.5f;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on pivote à vide ou sans caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on pivote à vide ou sans caisse (en nombre de cases) */
 	public static final int VITESSE_PIVOTER_VIDE = 1;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on avance avec une caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on avance avec une caisse (en nombre de cases) */
 	public static final int VITESSE_AVANCER_CHARGE = 1;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on recule avec une caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on recule avec une caisse (en nombre de cases) */
 	public static final float VITESSE_RECULER_CHARGE = 0.5f;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on pivote avec une caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on pivote avec une caisse (en nombre de cases) */
 	public static final float VITESSE_PIVOTER_CHARGE = 0.5f;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on fusionne deux caisses<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on fusionne deux caisses (en nombre de cases) */
 	public static final int VITESSE_FUSIONNER = 1;
 
-	/**
-	 * <p>
-	 * Vitesse lorsque l'on charge/décharge une caisse<br />
-	 * (en nombre de case / unite de temps)
-	 * </p>
-	 */
+	/** Vitesse lorsque l'on charge/décharge une caisse (en nombre de cases) */
 	public static final int VITESSE_CHARGER = 1;
 
 	/** Orientation du robot */
@@ -252,20 +212,18 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	private void initRobotAction() {
 		angleDessin = orientation * FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE;
-		abscisseDessin = (pos_courante.getX() - partie.getDebutX())
+		abscisseDessin = pos_courante.getX()
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
-		ordonneeDessin = (pos_courante.getY() - partie.getDebutY())
+		ordonneeDessin = pos_courante.getY()
 				* UtilitaireFenetre.DIM_CASE_VIDE.height
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
 
 		if (caisse != null) {
-			abscisseDessinCaisse = (caisse.getPosCaisse().getX() - partie
-					.getDebutX())
+			abscisseDessinCaisse = caisse.getPosCaisse().getX()
 					* UtilitaireFenetre.DIM_CASE_VIDE.width
 					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_CAISSE.width / 2)));
-			ordonneeDessinCaisse = (caisse.getPosCaisse().getY() - partie
-					.getDebutY())
+			ordonneeDessinCaisse = caisse.getPosCaisse().getY()
 					* UtilitaireFenetre.DIM_CASE_VIDE.height
 					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
 		}
@@ -277,10 +235,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * déplacer le robot.
 	 */
 	private void updateObserver() {
-		abscisseDessinMax = (pos_courante.getX() - partie.getDebutX())
+		abscisseDessinMax = pos_courante.getX()
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
-		ordonneeDessinMax = (pos_courante.getY() - partie.getDebutY())
+		ordonneeDessinMax = pos_courante.getY()
 				* UtilitaireFenetre.DIM_CASE_VIDE.height
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
 		angleDessinMax = orientation * FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE;
@@ -326,7 +284,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				}
 			} else { // Aucune caisse associée au robot
 				// On vérifie si la place est libre
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX() - 1,
+				if (partie.isPositionOKAvecTout(pos_courante.getX() - 1,
 						pos_courante.getY())) {
 					// On déplace le robot
 					pos_courante.setX(pos_courante.getX() - 1);
@@ -345,7 +303,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+				if (partie.isPositionOKAvecTout(pos_courante.getX(),
 						pos_courante.getY() + 1)) {
 					pos_courante.setY(pos_courante.getY() + 1);
 					updateObserver();
@@ -363,7 +321,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX() + 1,
+				if (partie.isPositionOKAvecTout(pos_courante.getX() + 1,
 						pos_courante.getY())) {
 					pos_courante.setX(pos_courante.getX() + 1);
 					updateObserver();
@@ -381,7 +339,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+				if (partie.isPositionOKAvecTout(pos_courante.getX(),
 						pos_courante.getY() - 1)) {
 					pos_courante.setY(pos_courante.getY() - 1);
 					updateObserver();
@@ -410,8 +368,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				// On vérifie si le déplacement de la caisse est possible
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX() + 1,
 						caisse.getPosCaisse().getY())
-						&& partie.isPositionOKAvecCaisse(
-								pos_courante.getX() + 1, pos_courante.getY())) {
+						&& partie.isPositionOKAvecTout(pos_courante.getX() + 1,
+								pos_courante.getY())) {
 					// On change la position de la caisse
 					setPositionCaisse(caisse.getPosCaisse().getX() + 1, caisse
 							.getPosCaisse().getY());
@@ -421,7 +379,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				}
 			} else { // Aucune caisse associée au robot
 				// On vérifie si la place est libre
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX() + 1,
+				if (partie.isPositionOKAvecTout(pos_courante.getX() + 1,
 						pos_courante.getY())) {
 					// On déplace le robot
 					pos_courante.setX(pos_courante.getX() + 1);
@@ -434,7 +392,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
 						.getPosCaisse().getY() - 1)
-						&& partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						&& partie.isPositionOKAvecTout(pos_courante.getX(),
 								pos_courante.getY() - 1)) {
 					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
 							.getPosCaisse().getY() - 1);
@@ -442,7 +400,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+				if (partie.isPositionOKAvecTout(pos_courante.getX(),
 						pos_courante.getY() - 1)) {
 					pos_courante.setY(pos_courante.getY() - 1);
 					updateObserver();
@@ -454,15 +412,15 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX() - 1,
 						caisse.getPosCaisse().getY())
-						&& partie.isPositionOKAvecCaisse(
-								pos_courante.getX() - 1, pos_courante.getY())) {
+						&& partie.isPositionOKAvecTout(pos_courante.getX() - 1,
+								pos_courante.getY())) {
 					setPositionCaisse(caisse.getPosCaisse().getX() - 1, caisse
 							.getPosCaisse().getY());
 					pos_courante.setX(pos_courante.getX() - 1);
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX() - 1,
+				if (partie.isPositionOKAvecTout(pos_courante.getX() - 1,
 						pos_courante.getY())) {
 					pos_courante.setX(pos_courante.getX() - 1);
 					updateObserver();
@@ -474,7 +432,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			if (caisse != null) {
 				if (deplacementCaisseOK(caisse.getPosCaisse().getX(), caisse
 						.getPosCaisse().getY() + 1)
-						&& partie.isPositionOKAvecCaisse(pos_courante.getX(),
+						&& partie.isPositionOKAvecTout(pos_courante.getX(),
 								pos_courante.getY() + 1)) {
 					setPositionCaisse(caisse.getPosCaisse().getX(), caisse
 							.getPosCaisse().getY() + 1);
@@ -482,7 +440,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					updateObserver();
 				}
 			} else {
-				if (partie.isPositionOKAvecCaisse(pos_courante.getX(),
+				if (partie.isPositionOKAvecTout(pos_courante.getX(),
 						pos_courante.getY() + 1)) {
 					pos_courante.setY(pos_courante.getY() + 1);
 					updateObserver();
@@ -700,12 +658,14 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 *         pas se déplacer
 	 */
 	private boolean deplacementCaisseOK(int x, int y) {
-		return partie.isPositionOKAvecCaisse(x, y);
+		return partie.isPositionOKAvecTout(x, y);
 	}
 
 	/**
 	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
-	 * @param c2 la caisse à fusionner
+	 * 
+	 * @param c2
+	 *            la caisse à fusionner
 	 */
 	public void fusionner(Caisse c2) {
 		if (caisse != null) {
@@ -942,20 +902,13 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	/**
 	 * @param partie
 	 *            le partie à modifier
-	 * @throws IllegalArgumentException
-	 *             si la position du Robot est déjà occupé dans la partie
 	 */
-	public void setPartie(Partie partie) throws IllegalArgumentException {
-		if (!partie.isPositionOKAvecCaisse(pos_courante)) {
-			throw new IllegalArgumentException(
-					"La position initiale du robot n'est pas sur le plateau"
-							+ " de la partie." + pos_courante);
-		}
+	public void setPartie(Partie partie) {
 		this.partie = partie;
-		abscisseDessinMax = (pos_courante.getX() - partie.getDebutX())
+		abscisseDessinMax = pos_courante.getX()
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_ROBOT.width / 2)));
-		ordonneeDessinMax = (pos_courante.getY() - partie.getDebutY())
+		ordonneeDessinMax = pos_courante.getY()
 				* UtilitaireFenetre.DIM_CASE_VIDE.height
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_ROBOT.height / 2));
 		angleDessinMax = orientation * FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE;
@@ -972,12 +925,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		AffineTransform transform = new AffineTransform();
 
 		if (caisse != null) {
-			int abscisseCaisse = (caisse.getPosCaisse().getX() - partie
-					.getDebutX())
+			int abscisseCaisse = caisse.getPosCaisse().getX()
 					* UtilitaireFenetre.DIM_CASE_VIDE.width
 					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-			int ordonneCaisse = (caisse.getPosCaisse().getY() - partie
-					.getDebutY())
+			int ordonneCaisse = caisse.getPosCaisse().getY()
 					* UtilitaireFenetre.DIM_CASE_VIDE.height
 					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
 			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
@@ -1011,7 +962,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * @param g
 	 *            contexte graphique 2D
 	 */
-	public void animation(Graphics2D g) {
+	public void animationDeplacement(Graphics2D g) {
 
 		// Permet de tourner l'image selon l'orientation du robot
 		AffineTransform transform = new AffineTransform();
@@ -1024,7 +975,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			caisse.dessiner(contexteCaisse);
 			contexteCaisse.dispose();
 		}
-		
+
 		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseDessin,
 				ordonneeDessin, UtilitaireFenetre.DIM_ROBOT.width,
 				UtilitaireFenetre.DIM_ROBOT.height);
@@ -1033,7 +984,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				UtilitaireFenetre.DIM_ROBOT.width / 2,
 				UtilitaireFenetre.DIM_ROBOT.height / 2);
 		contexteRobot.transform(transform);
-		
+
 		try {
 			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
 					0, 0, null);
@@ -1051,7 +1002,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public String toString() {
 		return "Robot : avec une orientation de " + orientation
-				+ " et une postion a" + pos_courante.toString() + "\n";
+				+ " et une postion a " + pos_courante.toString() + "\n";
 	}
 
 	/*

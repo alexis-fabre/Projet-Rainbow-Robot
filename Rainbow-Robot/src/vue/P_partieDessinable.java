@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import metier.Partie;
 import metier.Robot;
+import metier.Vortex;
 
 /**
  * Panneau qui dessine et contrôle une partie de jeu Rainbow Robot. On dessine
@@ -36,13 +37,13 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 * Thread gérant le rafraichissement de la fenêtre lorsque l'utilisateur
 	 * fait une action dans le jeu.
 	 */
-	private ThreadAnimation threadAnimation;
+	private ThreadAnimation threadDeplacement, threadAspiration;
 
-	/**
-	 * Permet de savoir si la fenêtre est en train d'effectuer une animation ou
-	 * non
-	 */
-	private boolean isAnimation;
+	/** Le robot est en train de se déplacer (animationRobot) */
+	private volatile boolean isAnimationRobot;
+
+	/** Le vortex est en train d'aspirer une caisse */
+	private volatile boolean isAnimationVortex;
 
 	/**
 	 * Initialise la partie courante au travers de la référence du jeu. On
@@ -56,17 +57,21 @@ public class P_partieDessinable extends JPanel implements Observer {
 		// Permet d'éviter quelques latences
 		super.setDoubleBuffered(true);
 		// abonner cette vue aux changements du modèle (DP observateur)
-		partieCourante = partie;
-		partieCourante.getRobot().addObserver(this);
+		setPartieCourante(partie);
+		isAnimationRobot = false;
+		isAnimationVortex = false;
 	}
 
 	/**
 	 * Réactualise la partie courante envoyé dans JeuRainbow
-	 * @param nouvellePartie la partie actualisée
+	 * 
+	 * @param nouvellePartie
+	 *            la partie actualisée
 	 */
-	public void setJeuRainbowRobot(Partie nouvellePartie) {
+	public void setPartieCourante(Partie nouvellePartie) {
 		this.partieCourante = nouvellePartie;
 		partieCourante.getRobot().addObserver(this);
+		partieCourante.getVortex().addObserver(this);
 		super.repaint();
 	}
 
@@ -84,21 +89,26 @@ public class P_partieDessinable extends JPanel implements Observer {
 		final int hauteurPlateau = ((UtilitaireFenetre.DIM_CASE_VIDE.height + (int) UtilitaireFenetre.LARGEUR_BORDURE) * //
 		partieCourante.getNbLigne());
 
-		final int x = (super.getWidth() / 2) - (largeurPlateau / 2);
-		final int y = (super.getHeight() / 2) - (hauteurPlateau / 2);
+		final int x = (super.getWidth() - largeurPlateau) / 2;
+		final int y = (super.getHeight() - hauteurPlateau) / 2;
 		Graphics2D contexte = (Graphics2D) g.create(x, y, largeurPlateau,
 				hauteurPlateau);
 
+		partieCourante.dessiner(contexte);
+
 		// Animation du robot
-		if (isAnimation) {
-			partieCourante.dessiner(contexte);
-			partieCourante.getRobot().animation(contexte);
-		} else {
+		if (!isAnimationRobot) {
 			// On dessine le robot et le plateau à sa position finale
-			partieCourante.dessiner(contexte);
 			partieCourante.getRobot().dessiner(contexte);
+		} else {
+			// On dessine le robot à sa position à l'instant t
+			partieCourante.getRobot().animationDeplacement(contexte);
 		}
 
+		// Animation du vortex
+		if (isAnimationVortex) {
+			partieCourante.getVortex().animationAbsorption(contexte);
+		}
 		// On libère les ressources
 		contexte.dispose();
 		g.dispose();
@@ -111,7 +121,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 *            contexte graphique 2D
 	 */
 	public void animationRobot() {
-		isAnimation = true;
+		isAnimationRobot = true;
 		// Déplacement du robot (en pixel)
 		float deplacementPixel = 0;
 		// Référence du robot
@@ -147,7 +157,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 				final int distanceArrivee = UtilitaireFenetre.DIM_CASE_VIDE.width;
 
 				while (deplacementRobot < distanceArrivee) {
-					
+
 					debutboucle = System.currentTimeMillis();
 					deplacementPixel = deplacementPixel
 							+ ((deltaX * tempsMis) / TEMPS_PAUSE_NOMINAL);
@@ -163,8 +173,6 @@ public class P_partieDessinable extends JPanel implements Observer {
 						robot.addAbscisseDessin((int) deplacementPixel);
 						deplacementPixel = deplacementPixel
 								- (int) deplacementPixel;
-
-						// On redessine le robot
 						repaint();
 					}
 
@@ -345,9 +353,88 @@ public class P_partieDessinable extends JPanel implements Observer {
 		}
 
 		// Fin de l'animation
-		isAnimation = false;
+		isAnimationRobot = false;
 		repaint();
 		robot.setEstOccupe(false);
+	}
+
+	/** Simule l'animation d'une caisse qui se fait aspirer dans le vortex */
+	public void animationAspiration() {
+		isAnimationVortex = true;
+		// Temps nominal pour l'animation en millisecondes
+		final double TEMPS_NOMINAL_TOTAL = Vortex.TEMPS_ABSORPTION * 1000.0;
+		// Temps en début et fin pour gérer les dépassements de temps
+		long debutboucle, finboucle;
+		// Temps réel mis pour faire un tour de boucle
+		long tempsBoucle = PAUSE_ANIMATION;
+
+		// Taux de diminution de la caisse
+		double echelleCaisse = 0;
+		// Rotation de la caisse
+		double rotationCaisse = 0;
+		// Référence du vortex
+		Vortex vortex = partieCourante.getVortex();
+
+		// Mesure du taux de diminution au cours du temps
+		float echelle = 0;
+		// Mesure de l'angle au cours du temps
+		float rotation = 0;
+
+		// Du à un problème irrésolu
+		try {
+			Thread.sleep(1700);
+		} catch (InterruptedException e1) {
+			System.err.println("problème innatendu");
+		}
+
+		while (echelle < 1 && rotation < Vortex.NOMBRE_TOUR * 360) {
+			debutboucle = System.currentTimeMillis();
+
+			echelleCaisse = echelleCaisse
+					+ (tempsBoucle * 1.0 / TEMPS_NOMINAL_TOTAL);
+			rotationCaisse = rotationCaisse
+					+ (((Vortex.NOMBRE_TOUR * 360) * tempsBoucle * 1.0) / TEMPS_NOMINAL_TOTAL);
+
+			// On actualise l'échelle de la caisse
+			if (echelleCaisse > 0.01) {
+
+				vortex.addEchelleDessin(-echelleCaisse);
+
+				echelle += echelleCaisse;
+				echelleCaisse = ((echelleCaisse * 100) - (int) (echelleCaisse * 100)) / 100;
+				if (echelle >= 1) {
+					break;
+				}
+
+				repaint();
+			}
+			if (rotationCaisse > 1) {
+
+				vortex.addAngleDessin((int) rotationCaisse);
+				rotation += rotationCaisse;
+				rotationCaisse -= (int) rotationCaisse;
+
+				if (rotation > Vortex.NOMBRE_TOUR * 360) {
+					break;
+				}
+
+				repaint();
+			}
+
+			try {
+				Thread.sleep(PAUSE_ANIMATION);
+			} catch (InterruptedException e) {
+			}
+			finboucle = System.currentTimeMillis();
+			tempsBoucle = finboucle - debutboucle;
+			System.out.println("Animation Vortex :\nEchelle : " + echelle
+					+ "\tRotation : " + rotation);
+		}
+
+		// Fin de l'animation
+		isAnimationVortex = false;
+		vortex.resetDessin();
+		repaint();
 	}
 
 	/*
@@ -357,10 +444,18 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object aRedessiner) {
-		if (aRedessiner instanceof Robot) {
-			if (threadAnimation == null || !threadAnimation.isAlive()) {
-				threadAnimation = new ThreadAnimation();
-				threadAnimation.start();
+		if (o instanceof Robot) {
+			if (threadDeplacement == null || !threadDeplacement.isAlive()) {
+				threadDeplacement = new ThreadAnimation(
+						ThreadAnimation.ANIMATION_DEPLACEMENT);
+				threadDeplacement.start();
+			}
+		}
+		if (o instanceof Vortex) {
+			if (threadAspiration == null || !threadAspiration.isAlive()) {
+				threadAspiration = new ThreadAnimation(
+						ThreadAnimation.ANIMATION_VORTEX);
+				threadAspiration.start();
 			}
 		}
 	}
@@ -374,8 +469,31 @@ public class P_partieDessinable extends JPanel implements Observer {
 	 */
 	public class ThreadAnimation extends Thread {
 
-		/** Constructeur par défaut */
-		public ThreadAnimation() {
+		/**
+		 * On force la fenêtre à dessiner les animations de déplacements du
+		 * robot et de sa caisse
+		 */
+		public static final int ANIMATION_DEPLACEMENT = 1;
+
+		/**
+		 * On force la fenêtre à dessiner les animations de l'aspiration d'une
+		 * caisse par le vortex
+		 */
+		public static final int ANIMATION_VORTEX = 2;
+
+		/**
+		 * Permet de savoir quelles animations le thread doit lancer. On double
+		 * la référence car deux Thread peuvent la modifier en même temps, ainsi
+		 * on est sur du résultat.
+		 * 
+		 * @see vue.P_partieDessinable.ThreadAnimation#ANIMATION_DEPLACEMENT
+		 * @see vue.P_partieDessinable.ThreadAnimation#ANIMATION_VORTEX
+		 */
+		private final int animation;
+
+		/** Constructeur pour l'animation d'un déplacement du robot */
+		public ThreadAnimation(int animation) {
+			this.animation = animation;
 		}
 
 		/*
@@ -385,7 +503,12 @@ public class P_partieDessinable extends JPanel implements Observer {
 		 */
 		@Override
 		public void run() {
-			animationRobot();
+			// Animation du déplacement du robot
+			if (animation == ANIMATION_DEPLACEMENT) {
+				animationRobot();
+			} else { // Animation de l'aspiration du vortex
+				animationAspiration();
+			}
 		}
 	}
 }

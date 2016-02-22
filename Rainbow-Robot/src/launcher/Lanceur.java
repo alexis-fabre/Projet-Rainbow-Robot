@@ -6,8 +6,8 @@ package launcher;
 
 import javax.swing.UIManager;
 
-import vue.F_accueil;
 import metier.JeuRainbow;
+import vue.F_accueil;
 
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 

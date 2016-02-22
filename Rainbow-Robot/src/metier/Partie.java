@@ -24,22 +24,26 @@ import vue.UtilitaireFenetre;
  */
 public class Partie extends Observable implements Dessinable, Serializable {
 
-	/**
-	 * Générer automatiquement par Eclipse
-	 */
+	/** Générer automatiquement par Eclipse */
 	private static final long serialVersionUID = -6712326189565570979L;
+
+	/** Nombre de colonne maximal que peut contenir une partie */
+	public static final int NB_COLONNE_MAX = 19;
+
+	/** Nombre de ligne maximal que peut contenir une partie */
+	public static final int NB_LIGNE_MAX = 12;
+
+	/** Nombre de colonne maximal que peut contenir une partie */
+	public static final int NB_COLONNE_MIN = 2;
+
+	/** Nombre de ligne maximal que peut contenir une partie */
+	public static final int NB_LIGNE_MIN = 2;
 
 	/** Nombre colonne de la carte */
 	private int nbColonne;
 
 	/** Nombre de lignes de la carte */
 	private int nbLigne;
-
-	/** Abscisse minimale que peut prendre une position. finX = -debutX */
-	private int debutX;
-
-	/** Ordonnée minimale que peut prendre une position. finY = -debutY */
-	private int debutY;
 
 	/** Robot sur la carte */
 	private Robot robot;
@@ -54,7 +58,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	private Vortex vortex;
 
 	/** caisse a recuperée pour finir une partie */
-	private ArrayList<Caisse> caisseARecuperee;
+	private ArrayList<Caisse> caisseARecuperer;
 
 	/**
 	 * Position où le robot ne pourra pas se déplacer. On ne représente que le
@@ -88,23 +92,18 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		}
 		this.nbLigne = nbLigne;
 		this.nbColonne = nbColonne;
-		// Si nbColonne = 11
-		// debutX = -(11 - 1 / 2) = -5
-		// -debutX = 5
-		this.debutX = -((nbColonne - 1) / 2);
-		this.debutY = -((nbLigne - 1) / 2);
 
 		// On ne calcule les positions inaccessibles
 		positionsInaccessibles = new Position[4];
-		positionsInaccessibles[0] = new Position(debutX, debutY);
-		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
-		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
-		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
+		positionsInaccessibles[0] = new Position(0, 0);
+		positionsInaccessibles[1] = new Position(0, 1);
+		positionsInaccessibles[2] = new Position(1, 0);
+		positionsInaccessibles[3] = new Position(1, 1);
 
-		caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(Color.RED));
-		caisseARecuperee.add(new Caisse(Color.BLUE));
-		caisseARecuperee.add(new Caisse(Color.YELLOW));
+		caisseARecuperer = new ArrayList<Caisse>();
+		caisseARecuperer.add(new Caisse(Color.RED));
+		caisseARecuperer.add(new Caisse(Color.BLUE));
+		caisseARecuperer.add(new Caisse(Color.YELLOW));
 		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
 		caissePlateau = new Caisse[3];
@@ -133,7 +132,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 *            Robot à contrôlé pour la partie
 	 * @param vortex
 	 *            vortex qui va avalé les caisses à récupérer
-	 * @param caisseARecupere
+	 * @param caisseARecuperer
 	 *            caisse à récupérée. On a besoin uniquement de la couleur de la
 	 *            caisse
 	 * @param caissePlateau
@@ -141,31 +140,257 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 *            position et la couleur de chaque caisse
 	 * @throws IllegalArgumentException
 	 *             <p>
+	 *             si le nombre de ligne est supérieur au nombre de ligne
+	 *             maximale,<br />
+	 *             si le nombre de colonne est supérieur au nombre de colonne
+	 *             maximale,<br />
 	 *             si les caissePlateau, robot, vortex ne contienne pas de
 	 *             position ou si leurs positions sont invalides,<br />
 	 *             si les caisseARecupere et les caissePlateau n'ont pas tous
 	 *             une couleur définie,<br />
-	 *             si robot n'a pas une orientation de départ
+	 *             si robot n'a pas une orientation de départ.
 	 *             </p>
 	 */
 	public Partie(int ligne, int colonne, Position[] posInaccessible,
-			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecupere,
+			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecuperer,
 			Caisse[] caissePlateau) throws IllegalArgumentException {
+		// TODO Bug le robot peut être sur une caisse
+		// TODO Attention on peut créer une partie avec aucune position
+		// inaccessibles
+		// On teste les limites du nombre de ligne et de colonne
+		if (ligne > NB_LIGNE_MAX || ligne < NB_LIGNE_MIN) {
+			throw new IllegalArgumentException(
+					"Le nombre de lignes est supérieur au nombre de lignes maximales : "
+							+ NB_LIGNE_MAX + " ou inférieur ou égal à "
+							+ NB_LIGNE_MIN);
+		}
+		if (colonne > NB_COLONNE_MAX || colonne < NB_COLONNE_MIN) {
+			throw new IllegalArgumentException(
+					"Le nombre de colonnes est supérieur au nombre de colonnes maximales : "
+							+ NB_COLONNE_MAX + " ou inférieur ou égal à "
+							+ NB_COLONNE_MIN);
+		}
 		this.nbLigne = ligne;
 		this.nbColonne = colonne;
-		// Si nbColonne = 11
-		// debutX = -(11 - 1 / 2) = -5
-		// -debutX = 5
-		this.debutX = -((nbColonne - 1) / 2);
-		this.debutY = -((nbLigne - 1) / 2);
 
-		// On initialise les différents composants
-		this.vortex = vortex;
-		this.robot = robot;
-		this.caissePlateau = caissePlateau;
-		this.caisseARecuperee = caisseARecupere;
+		// On vérifie si les positions inaccessibles existent, c'est à dire si
+		// elles sont situées sur le plateau et s'il n'y en a pas deux sur la
+		// même position
+		if (posInaccessible == null) {
+			throw new IllegalArgumentException(
+					"Référence des positions inaccessibles introuvables");
+		}
+		for (int i = 0; i < posInaccessible.length; i++) {
+			if (posInaccessible[i] == null) {
+				throw new IllegalArgumentException("Position à l'indice " + i
+						+ " est introuvable");
+			}
+			if (isPositionOK(posInaccessible[i])) {
+				for (int j = i + 1; j < posInaccessible.length; j++) {
+					if (posInaccessible[i].equals(posInaccessible[j])) {
+						throw new IllegalArgumentException(
+								"La position inaccessible en "
+										+ posInaccessible[i]
+										+ " est présente deux fois");
+					}
+				}
+			} else {
+				throw new IllegalArgumentException(
+						"La position inaccessible en " + posInaccessible[i]
+								+ " est en dehors du plateau de jeu");
+			}
+		}
 		this.positionsInaccessibles = posInaccessible;
 
+		// On vérifie si les caisses sont situées sur le plateau de jeu et
+		// qu'elles ne se trouvent pas sur des positions inaccessibles.
+		if (caissePlateau == null) {
+			throw new IllegalArgumentException(
+					"Référence des caisses sur le plateau introuvables");
+		}
+		for (int i = 0; i < caissePlateau.length; i++) {
+			if (caissePlateau[i] == null) {
+				throw new IllegalArgumentException(
+						"La caisse sur le plateau de jeu à l'indice " + i
+								+ " est introuvable");
+			}
+			if (isPositionOK(caissePlateau[i].getPosCaisse())) {
+				if (isPositionOKAvecPositionInaccessible(caissePlateau[i]
+						.getPosCaisse())) {
+					for (int j = i + 1; j < caissePlateau.length; j++) {
+						if (caissePlateau[j] != null
+								&& caissePlateau[i].getPosCaisse().equals(
+										caissePlateau[j].getPosCaisse())) {
+							throw new IllegalArgumentException(
+									"La caisse à la position "
+											+ caissePlateau[i].getPosCaisse()
+											+ " est présente deux fois");
+						}
+					}
+				} else {
+					throw new IllegalArgumentException(
+							"La caisse sur le plateau de jeu à la position "
+									+ caissePlateau[i].getPosCaisse()
+									+ " est sur une des positions inaccessibles");
+				}
+			} else {
+				throw new IllegalArgumentException(
+						"La caisse sur le plateau de jeu à la position "
+								+ caissePlateau[i].getPosCaisse()
+								+ " est en dehors du plateau de jeu");
+			}
+		}
+		this.caissePlateau = caissePlateau;
+
+		// On vérifie si le vortex est en dehors du plateau ou si il est situé
+		// sur une position inaccessible
+		if (vortex == null) {
+			throw new IllegalArgumentException(
+					"Référence du vortex introuvable");
+		}
+		if (!isPositionOK(vortex.getPosVortex())) {
+			throw new IllegalArgumentException(
+					"Position du vortex en dehors du plateau de jeu");
+		}
+		if (!isPositionOKAvecPositionInaccessible(vortex.getPosVortex())) {
+			throw new IllegalArgumentException(
+					"Position du vortex sur une position inaccessible");
+		}
+		this.vortex = vortex;
+
+		// On vérifie si le Robot est en dehors du plateau de jeu ou s'il est
+		// situé sur une position inaccessible
+		if (robot == null) {
+			throw new IllegalArgumentException("Référence du robot introuvable");
+		}
+		if (!isPositionOK(robot.getPosRobot())) {
+			throw new IllegalArgumentException(
+					"Position du robot en dehors du plateau de jeu");
+		}
+		if (!isPositionOKAvecPositionInaccessible(robot.getPosRobot())) {
+			throw new IllegalArgumentException(
+					"Position du robot sur une position inaccessible");
+		}
+		this.robot = robot;
+
+		// On vérifie si la couleur des caisses à récupérer existent sur le
+		// plateau de jeu ou si elles s'obtiennent par la fusion
+		if (caisseARecuperer == null) {
+			throw new IllegalArgumentException(
+					"Référence des caisses à récupérer introuvable");
+		}
+		if (caisseARecuperer.size() > caissePlateau.length) {
+			throw new IllegalArgumentException(
+					"Il y a plus de caisse à récupérer que de caisse sur le plateau");
+		}
+		// Permet de connaître les indices des caisses du plateau de jeu déjà
+		// utilisé dans les caisses à récupérer
+		int[] indiceDejaUtilise = new int[caisseARecuperer.size()];
+		// On initialise le tableau avec des valeurs erronées
+		for (int i = 0; i < indiceDejaUtilise.length; i++) {
+			indiceDejaUtilise[i] = -1;
+		}
+		// Compteur du tableau indiceDejaUtilise pour gérer l'incrémentation
+		int compteur = 0;
+		BouclePrincipale: for (int i = 0; i < caisseARecuperer.size(); i++) {
+			if (caisseARecuperer.get(i) == null
+					|| caisseARecuperer.get(i).getCouleur() == null) {
+				throw new IllegalArgumentException(
+						"La caisse à récupérer à l'indice " + i
+								+ " est introuvable");
+			}
+			// On vérifie si la couleur de la caisse à récupérer existe dans les
+			// couleurs des caisses sur le plateau ou si on peut l'obtenir par
+			// la fusion
+			// On utilise un label pour simplifier l'algorithme
+			BoucleVerification: for (int j = 0; j < caissePlateau.length; j++) {
+				for (int indice : indiceDejaUtilise) {
+					if (j == indice) {
+						continue BoucleVerification;
+					}
+				}
+				if (caisseARecuperer.get(i).getCouleur()
+						.equals(caissePlateau[j].getCouleur())) {
+					indiceDejaUtilise[compteur] = j;
+					compteur++;
+					continue BouclePrincipale;
+				}
+				// TODO vérifier avec la fusion
+			}
+			// La couleur de la caisse à récupérer ne s'obtient ni par la
+			// fusion, ni par une couleur du plateau de jeu.
+			throw new IllegalArgumentException(
+					"La caisse à la couleur "
+							+ caisseARecuperer.get(i).getCouleur()
+							+ " ne peut pas s'obtenir ni par la fusion, ni directement par une caisse sur le plateau de jeu");
+		}
+		this.caisseARecuperer = caisseARecuperer;
+		if (!verificationPartieResolvable()) {
+			throw new IllegalArgumentException(
+					"La partie n'est pas résolvable. Il est impossible d'amener toutes les caisses à récupérer dans le vortex");
+		}
+		// Une fois que tous c'est bien passé, on set la partie au classe qui en
+		// ont besoin
+		robot.setPartie(this);
+		vortex.setPartie(this);
+	}
+
+	/**
+	 * Vérifie si la partie est réalisable, c'est à dire si le robot peut amener
+	 * toutes les caisses dans le vortex.
+	 * 
+	 * @return true si la partie est réalisable, false sinon
+	 */
+	private boolean verificationPartieResolvable() {
+		// Test avec une partie au format minimal (2,2)
+		// Il faut obligatoirement une seule caisse, un vortex et un robot
+		// Et que la caisse soit en diagonal du robot
+		// Il est possible d'avoir deux caisses mais dans ce cas là la 1ère
+		// caisse à récupérer doit se trouver sur le vortex.
+		if (nbLigne == NB_LIGNE_MIN && nbColonne == NB_COLONNE_MIN) {
+			// Trois cas qui dépendent du nombre de caisse à récupérer
+			// > 2 => Impossible
+			// == 2 => La 1ère caisse doit se situer sur le vortex et la
+			// deuxième sur la diagonale du vortex
+			// == 1 => La caisse doit se situer sur le vortex ou sur la
+			// diagonale du vortex
+			if (caisseARecuperer.size() > 2) {
+				return false;
+			} else if (caisseARecuperer.size() == 2) {
+				return caisseARecuperer.get(0).getPosCaisse()
+						.equals(vortex.getPosVortex())
+						&& caisseARecuperer
+								.get(1)
+								.getPosCaisse()
+								.equals( // Diagonale du vortex avec des
+											// opérations binaires
+								new Position(
+										(~vortex.getPosVortex().getX()) & 1,
+										(~vortex.getPosVortex().getY()) & 1));
+			} else { // caisseARecuperer.size() == 1
+				return caisseARecuperer.get(0).getPosCaisse()
+						.equals(vortex.getPosVortex())
+						|| caisseARecuperer
+								.get(0)
+								.getPosCaisse()
+								.equals( // Diagonale du vortex avec des
+											// opérations binaires
+								new Position(
+										(~vortex.getPosVortex().getX()) & 1,
+										(~vortex.getPosVortex().getY()) & 1));
+			}
+		} // Fin partie (2,2)
+
+		// On vérifie si le robot n'est pas piegé dans la partie
+		return true;
+	}
+
+	/**
+	 * Envoie un signal à la classe ClicSouris pour dire que la partie est finie
+	 */
+	public void partieFinie() {
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -178,22 +403,13 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 */
 	public boolean isPositionOK(Position aVerifier) {
 		// On vérifie si la position ne dépasse pas des dimensions de la partie.
-		if (aVerifier.getX() < debutX || aVerifier.getX() > -debutX) {
+		if (aVerifier.getX() < 0 || aVerifier.getX() >= nbColonne) {
 			return false;
 		}
-		if (aVerifier.getY() < debutY || aVerifier.getY() > -debutY) {
+		if (aVerifier.getY() < 0 || aVerifier.getY() >= nbLigne) {
 			return false;
 		}
-
-		// On vérifie si la position fait partie des position que l'on ne doit
-		// pas atteindre (POSITIONS_INACCESSIBLES)
-		for (Position inaccessibles : positionsInaccessibles) {
-			if (aVerifier.equals(inaccessibles)) {
-				return false;
-			}
-		}
-
-		// Sinon la position est correcte
+		// else
 		return true;
 	}
 
@@ -213,8 +429,43 @@ public class Partie extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
-	 * elle existe sur le plateau de jeu et si elle n'est pas occupé par une
-	 * caisse.
+	 * elle n'est pas située sur une position inaccessible.
+	 * 
+	 * @param aVerifier
+	 *            position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecPositionInaccessible(Position aVerifier) {
+
+		// On vérifie si la position fait partie des position que l'on ne doit
+		// pas atteindre (POSITIONS_INACCESSIBLES)
+		for (Position inaccessibles : positionsInaccessibles) {
+			if (aVerifier.equals(inaccessibles)) {
+				return false;
+			}
+		}
+
+		// Sinon la position est correcte
+		return true;
+	}
+
+	/**
+	 * Vérifie si les coordonnées envoyées en paramètre sont correctes, c'est à
+	 * dire si elle n'est pas située sur une position inaccessible.
+	 * 
+	 * @param x
+	 *            abscisse de la position à vérifier
+	 * @param y
+	 *            ordonnée de la position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecPositionInaccessible(int x, int y) {
+		return isPositionOKAvecPositionInaccessible(new Position(x, y));
+	}
+
+	/**
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle n'est pas occupé par une caisse.
 	 * 
 	 * @param aVerifier
 	 *            position à vérifier
@@ -228,13 +479,12 @@ public class Partie extends Observable implements Dessinable, Serializable {
 				return false;
 			}
 		}
-		return isPositionOK(aVerifier);
+		return true;
 	}
 
 	/**
-	 * Vérifie si les coordonnées envoyées en paramètre sont correctes, c'est à
-	 * dire si elles existent sur le plateau de jeu et si elle ne sont pas
-	 * occupés par les coordonnées d'une caisse.
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle n'est pas occupé par une caisse.
 	 * 
 	 * @param x
 	 *            abscisse de la position à vérifier
@@ -247,6 +497,38 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle existe sur le plateau de jeu, si elle n'est pas située sur une
+	 * position inaccessible, si elle n'est pas occupé par une caisse et si elle
+	 * n'est pas occupé par le robot.
+	 * 
+	 * @param aVerifier
+	 *            position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecTout(Position aVerifier) {
+		return isPositionOK(aVerifier)
+				&& isPositionOKAvecPositionInaccessible(aVerifier)
+				&& isPositionOKAvecCaisse(aVerifier);
+	}
+
+	/**
+	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * elle existe sur le plateau de jeu, si elle n'est pas située sur une
+	 * position inaccessible, si elle n'est pas occupé par une caisse et si elle
+	 * n'est pas occupé par le robot.
+	 * 
+	 * @param x
+	 *            abscisse de la position à vérifier
+	 * @param y
+	 *            ordonnée de la position à vérifier
+	 * @return true si la position est correcte, false sinon
+	 */
+	public boolean isPositionOKAvecTout(int x, int y) {
+		return isPositionOKAvecTout(new Position(x, y));
+	}
+
+	/**
 	 * Cherche la caisse sur le plateau de jeu à la position mentionnée. Si la
 	 * caisse ou la position n'existe pas, on retourne null
 	 * 
@@ -256,12 +538,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 *         caisse n'existe pas
 	 */
 	public Caisse getCaisseJeu(Position position) {
-		// Aucune caisse n'a été trouvée à cette position
-		// Ou la position n'existe pas
-		if (isPositionOKAvecCaisse(position)) {
-			return null;
-		}
-
 		// On recherche la caisse
 		for (Caisse caisse : caissePlateau) {
 			if (caisse != null && caisse.getPosCaisse().equals(position)) {
@@ -301,24 +577,17 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * @return l'abscisse de départ. Il est utilisé pour placer les composants
+	 * @return le caissePlateau
 	 */
-	public int getDebutX() {
-		return debutX;
-	}
-
-	/**
-	 * @return l'ordonnée de départ. Il est utilisé pour placer les composants
-	 */
-	public int getDebutY() {
-		return debutY;
+	public Caisse[] getCaissePlateau() {
+		return caissePlateau;
 	}
 
 	/**
 	 * @return les caisses a récupérée
 	 */
 	public ArrayList<Caisse> getCaisseARecuperee() {
-		return caisseARecuperee;
+		return caisseARecuperer;
 	}
 
 	/*
@@ -331,8 +600,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		Graphics2D fond = (Graphics2D) g.create();
 		for (int y = 0; y < nbLigne; y++) {// Axe des ordonnées
 			for (int x = 0; x < nbColonne; x++) { // Axe des abscisses
-				Position posADessiner = new Position(x + debutX, y + debutY);
-				if (isPositionOK(posADessiner)) {
+				Position posADessiner = new Position(x, y);
+				if (isPositionOKAvecPositionInaccessible(posADessiner)) {
 					// ---------------------------------------------------------
 					// On dessine les cases vides et le vortex
 					// ---------------------------------------------------------
@@ -371,10 +640,10 @@ public class Partie extends Observable implements Dessinable, Serializable {
 				// positionner l'image de la caisse
 				// On fait cela pour centrer l'image dans la case
 				// vide
-				int abscisseCaisse = (caisseADessiner.getPosCaisse().getX() - debutX)
+				int abscisseCaisse = (caisseADessiner.getPosCaisse().getX())
 						* UtilitaireFenetre.DIM_CASE_VIDE.width
 						+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-				int ordonneCaisse = (caisseADessiner.getPosCaisse().getY() - debutY)
+				int ordonneCaisse = (caisseADessiner.getPosCaisse().getY())
 						* UtilitaireFenetre.DIM_CASE_VIDE.height
 						+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
 				Graphics2D contexteCaisse = (Graphics2D) g.create(
@@ -395,10 +664,9 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	@Override
 	public String toString() {
 		return "Partie [nbColonne=" + nbColonne + ", nbLigne=" + nbLigne
-				+ ", debutX=" + debutX + ", debutY=" + debutY + ", robot="
-				+ robot + ", caisses=" + Arrays.toString(caissePlateau)
-				+ ", niveau=" + niveau + ", vortex=" + vortex
-				+ ", caisseARecup=" + caisseARecuperee
+				+ ", robot=" + robot + ", caisses="
+				+ Arrays.toString(caissePlateau) + ", niveau=" + niveau
+				+ ", vortex=" + vortex + ", caisseARecup=" + caisseARecuperer
 				+ ", positionsInaccessibles="
 				+ Arrays.toString(positionsInaccessibles) + "]";
 	}
@@ -418,8 +686,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 
 		// On clone les caisse à récupérée
 		ArrayList<Caisse> caisseARecup = new ArrayList<Caisse>(
-				caisseARecuperee.size());
-		for (Caisse caisse : caisseARecuperee) {
+				caisseARecuperer.size());
+		for (Caisse caisse : caisseARecuperer) {
 			caisseARecup.add((Caisse) caisse.clone());
 		}
 

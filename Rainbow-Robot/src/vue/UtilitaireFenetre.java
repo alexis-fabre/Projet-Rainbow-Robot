@@ -33,16 +33,10 @@ public class UtilitaireFenetre {
 	 */
 	public static final Dimension DIM_COMPOSANT_SECONDAIRE = new Dimension(100,
 			60);
-
 	/**
 	 * Dimension des fenêtres usuelles
 	 */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
-
-	/**
-	 * Dimension des fenêtres usuelles
-	 */
-	public static final Dimension DIM_FENETRE_PAUSE = new Dimension(600, 500);
 
 	/**
 	 * Dimension d'une case vide. Une case vide est une case en fond représentée
@@ -130,7 +124,8 @@ public class UtilitaireFenetre {
 	}
 
 	/**
-	 * Ajoute un nouveau composant dans le container
+	 * Ajoute un nouveau composant dans le container en utilisant le Layout
+	 * Manager BoxLayout.
 	 * 
 	 * @param aAjouter
 	 *            nouveau composant à ajouter
@@ -182,7 +177,8 @@ public class UtilitaireFenetre {
 	 * 
 	 * @param component
 	 *            composant dont on veut forcer sa taille
-	 * @param dim la dimension souhaitée
+	 * @param dim
+	 *            la dimension souhaitée
 	 */
 	public static void setAllSize(JComponent component, Dimension dim) {
 		component.setMinimumSize(dim);

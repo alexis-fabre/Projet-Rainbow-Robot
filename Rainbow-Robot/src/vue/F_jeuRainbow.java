@@ -6,7 +6,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -44,235 +42,233 @@ import evenement.ToucheClavier;
  */
 public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
-    /**
-     * Généré automatiquement par Eclipse
-     */
-    private static final long serialVersionUID = 480148649001109779L;
+	/**
+	 * Généré automatiquement par Eclipse
+	 */
+	private static final long serialVersionUID = 480148649001109779L;
 
-    /**
-     * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
-     * (avec le robot, les caisses et le vortex).
-     */
-    private P_partieDessinable partieDessinable;
+	/**
+	 * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
+	 * (avec le robot, les caisses et le vortex).
+	 */
+	private P_partieDessinable partieDessinable;
 
-    /** Panneau qui contient l'interface graphique 2D des caisses a récupérées. */
-    private P_caisseADessiner caisseARecuperer;
+	/** Panneau qui contient l'interface graphique 2D des caisses a récupérées. */
+	private P_caisseADessiner caisseARecuperer;
 
-    /**
-     * Label contenant le timer qui s'actualise toutes les secondes
-     */
-    private JLabel la_timer = new JLabel("00 : 00");
+	/**
+	 * Label contenant le timer qui s'actualise toutes les secondes
+	 */
+	private JLabel la_timer = new JLabel("00 : 00");
 
-    /**
-     * Bouton qui permet de mettre en pause la partie en cours
-     */
-    private JButton bt_Pause;
+	/**
+	 * Bouton qui permet de mettre en pause la partie en cours
+	 */
+	private JButton bt_Pause;
 
-    /**
-     * Chronomètre qui permet de calculer le temps mis pour finir le niveau
-     */
-    private Timer chrono;
+	/**
+	 * Chronomètre qui permet de calculer le temps mis pour finir le niveau
+	 */
+	private Timer chrono;
 
-    /**
-     * Délais d'une seconde (en microsecondes)
-     */
-    public static final int DELAIS = 1000;
+	/**
+	 * Délais d'une seconde (en microsecondes)
+	 */
+	public static final int DELAIS = 1000;
 
-    /**
-     * Minute(s) du timer
-     */
-    private int minute;
-    
-    /**
-     * Seconde(s) du timer
-     */
-    private int seconde;
+	/**
+	 * Minute(s) du timer
+	 */
+	private int minute;
 
-    /**
-     * <p>
-     * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
-     * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
-     * pour éviter tous soucis de disposition.<br />
-     * Cette fenêtre détecte uniquement les cliques de la souris sur les
-     * boutons.
-     * </p>
-     * 
-     * @param gestion
-     *            le contrôleur qui va controler cette vue = cible
-     *            evenementielle
-     * @param gestionClavier
-     *            Le contrôleur qui va détecter les touches du clavier
-     */
-    public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier) {
-        super();
+	/**
+	 * Seconde(s) du timer
+	 */
+	private int seconde;
 
-        super.setSize(UtilitaireFenetre.DIM_FENETRE);
-        // On rend la fenêtre non redimenssionable
-        super.setResizable(false);
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	/**
+	 * <p>
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * Cette fenêtre détecte uniquement les cliques de la souris sur les
+	 * boutons.
+	 * </p>
+	 * 
+	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
+	 * @param gestionClavier
+	 *            Le contrôleur qui va détecter les touches du clavier
+	 */
+	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier) {
+		super();
 
-        // Titre de la fenêtre
-        super.setTitle("Mode Jeu (Story)");
+		super.setSize(UtilitaireFenetre.DIM_FENETRE);
+		// On rend la fenêtre non redimenssionable
+		super.setResizable(false);
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Container contentPane = super.getContentPane();
-        Container contentMenuHaut = new JPanel();
-        contentMenuHaut.setLayout(new BoxLayout(contentMenuHaut,
-                BoxLayout.X_AXIS));
+		// Titre de la fenêtre
+		super.setTitle("Mode Jeu (Story)");
 
-        // On ajoute le timer
-        contentMenuHaut.add(Box.createHorizontalStrut(30));
-        contentMenuHaut.add(getTimer());
-        contentMenuHaut.add(Box.createGlue());
+		Container contentPane = super.getContentPane();
+		Container contentMenuHaut = new JPanel();
+		contentMenuHaut.setLayout(new BoxLayout(contentMenuHaut,
+				BoxLayout.X_AXIS));
 
-        // On créer les caisses a récupérées
-        caisseARecuperer = new P_caisseADessiner(gestionClavier.getMetier());
+		// On ajoute le timer
+		contentMenuHaut.add(Box.createHorizontalStrut(30));
+		contentMenuHaut.add(getTimer());
+		contentMenuHaut.add(Box.createGlue());
 
-        contentMenuHaut.add(caisseARecuperer);
-        contentMenuHaut.add(Box.createGlue());
-        contentMenuHaut.add(getBt_Pause());
-        contentMenuHaut.add(Box.createHorizontalStrut(30));
+		// On créer les caisses a récupérées
+		caisseARecuperer = new P_caisseADessiner(gestionClavier.getJeuRainbow()
+				.getPartieCourante());
 
-        // Mise en forme du JLabel
-        // Nouvelle police d'écriture
-        Font font = new Font("Arial", Font.BOLD, 24);
-        la_timer.setFont(font);
-        // Ajout d'une bordure
-        la_timer.setBorder(javax.swing.BorderFactory
-                .createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+		contentMenuHaut.add(caisseARecuperer);
+		contentMenuHaut.add(Box.createGlue());
+		contentMenuHaut.add(getBt_Pause());
+		contentMenuHaut.add(Box.createHorizontalStrut(30));
 
-        // Instanciation du timer
-        chrono = new Timer(DELAIS, new ActionListener() {
-            public void actionPerformed(ActionEvent e1) {
-                if (seconde == 59) {
-                    seconde = -1;
-                    minute++;
-                }
-                seconde++;
-                if (minute < 10 && seconde < 10) {
-                    la_timer.setText("0" + minute + " : " + "0" + seconde);
-                } else if (minute < 10 && seconde >= 10) {
-                    la_timer.setText("0" + minute + " : " + seconde);
-                } else if (minute >= 10 && seconde < 10) {
-                    la_timer.setText(minute + " : " + "0" + seconde);
-                } else {
-                    la_timer.setText(minute + " : " + seconde);
-                }
-            }
-        });
-        startChrono();
+		// Mise en forme du JLabel
+		// Nouvelle police d'écriture
+		Font font = new Font("Arial", Font.BOLD, 24);
+		la_timer.setFont(font);
+		// Ajout d'une bordure
+		la_timer.setBorder(javax.swing.BorderFactory
+				.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        // On créé le plateau de jeu
-        partieDessinable = new P_partieDessinable(gestionClavier.getMetier()
-                .getPartieCourante());
+		// Instanciation du timer
+		chrono = new Timer(DELAIS, new ActionListener() {
+			public void actionPerformed(ActionEvent e1) {
+				if (seconde == 59) {
+					seconde = -1;
+					minute++;
+				}
+				seconde++;
+				if (minute < 10 && seconde < 10) {
+					la_timer.setText("0" + minute + " : " + "0" + seconde);
+				} else if (minute < 10 && seconde >= 10) {
+					la_timer.setText("0" + minute + " : " + seconde);
+				} else if (minute >= 10 && seconde < 10) {
+					la_timer.setText(minute + " : " + "0" + seconde);
+				} else {
+					la_timer.setText(minute + " : " + seconde);
+				}
+			}
+		});
 
-        contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
-        contentPane.add(partieDessinable, BorderLayout.CENTER);
+		// On créé le plateau de jeu
+		partieDessinable = new P_partieDessinable(gestionClavier
+				.getJeuRainbow().getPartieCourante());
 
-        // On ajoute les évènements lors de l'appuie d'une touche sur le clavier
-        super.addKeyListener(gestionClavier);
-        super.setFocusable(true);
-        super.requestFocus();
+		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
+		contentPane.add(partieDessinable, BorderLayout.CENTER);
 
-        // On ajoute le nom des composants en fonction de la langue choisie
-        setLangue();
-        
-        getBt_Pause().addMouseListener(gestion);
+		// On ajoute les évènements lors de l'appuie d'une touche sur le clavier
+		super.addKeyListener(gestionClavier);
+		super.setFocusable(true);
+		super.requestFocus();
 
-        // On centre l'écran
-        UtilitaireFenetre.centrerFenetre(this);
-    }
+		// On ajoute le nom des composants en fonction de la langue choisie
+		setLangue();
 
-    /**
-     * @return le JLabel la_timer qui affiche le timer de la partie
-     */
-    public JLabel getTimer() {
-        if (la_timer == null) {
-            la_timer = new JLabel();
-            UtilitaireFenetre.setAllSize(la_timer,
-                    UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-        }
-        return la_timer;
-    }
+		getBt_Pause().addMouseListener(gestion);
 
-    /**
-     * @return le score de la partie lorsque celle-ci est finie
-     */
-    public String getScore() {
-        return minute + ":" + seconde;
-    }
+		// On centre l'écran
+		UtilitaireFenetre.centrerFenetre(this);
+	}
 
-    /**
-     * @return le JButton bt_Pause qui permet de mettre en pause le jeu
-     */
-    public JButton getBt_Pause() {
-        if (bt_Pause == null) {
-            bt_Pause = new JButton();
-            // On définit une taille pour le bouton
-            UtilitaireFenetre.setAllSize(bt_Pause,
-                    UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
-            bt_Pause.setText("Pause");
-        }
-        return bt_Pause;
-    }
+	/**
+	 * @return le JLabel la_timer qui affiche le timer de la partie
+	 */
+	public JLabel getTimer() {
+		if (la_timer == null) {
+			la_timer = new JLabel();
+			UtilitaireFenetre.setAllSize(la_timer,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+		}
+		return la_timer;
+	}
 
-    /**
-     * Permet de lancer le chronomètre
-     */
-    public void startChrono() {
-        if (ToucheClavier.getIsPressed()) {
-            chrono.start();
-        }
+	/**
+	 * @return le score de la partie lorsque celle-ci est finie
+	 */
+	public String getScore() {
+		return minute + ":" + seconde;
+	}
 
-    }
+	/**
+	 * @return le JButton bt_Pause qui permet de mettre en pause le jeu
+	 */
+	public JButton getBt_Pause() {
+		if (bt_Pause == null) {
+			bt_Pause = new JButton();
+			// On définit une taille pour le bouton
+			UtilitaireFenetre.setAllSize(bt_Pause,
+					UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+			bt_Pause.setText("Pause");
+		}
+		return bt_Pause;
+	}
 
-    /**
-     * Permet de stopper le chronomètre
-     */
-    public void stopChrono() {
-        chrono.stop();
-    }
+	/**
+	 * Permet de lancer le chronomètre
+	 */
+	public void startChrono() {
+		chrono.start();
+	}
 
-    /**
-     * Permet de faire redémarrer le chrono
-     */
-    public void restartChrono() {
-        minute = seconde = 0;
-        la_timer.setText("00 : 00");
-        chrono.start();
-    }
+	/**
+	 * Permet de stopper le chronomètre
+	 */
+	public void stopChrono() {
+		chrono.stop();
+	}
 
-    /**
-     * @return le "JPanel" partieDessinable qui contient l'interface graphique
-     *         2D du jeu (avec les caisses et le vortex).
-     */
-    public P_partieDessinable getPartieDessinable() {
-        return partieDessinable;
-    }
+	/**
+	 * Permet de faire redémarrer le chrono
+	 */
+	public void restartChrono() {
+		minute = seconde = 0;
+		la_timer.setText("00 : 00");
+	}
 
-    /**
-     * @return le "JPanel" caisseARecuperer qui contient l'interface graphique
-     *         2D des caisses a récupérées.
-     */
-    public P_caisseADessiner getCaisseADessiner() {
-        return caisseARecuperer;
-    }
+	/**
+	 * @return le "JPanel" partieDessinable qui contient l'interface graphique
+	 *         2D du jeu (avec les caisses et le vortex).
+	 */
+	public P_partieDessinable getPartieDessinable() {
+		return partieDessinable;
+	}
 
-    /**
-     * Réactualise la partie courante envoyé dans JeuRainbow
-     * @param nouvellePartie la partie actualisée
-     */
-    public void setJeuRainbowRobot(Partie nouvellePartie) {
-        getCaisseADessiner().setJeuRainbowRobot(nouvellePartie);
-        getPartieDessinable().setJeuRainbowRobot(nouvellePartie);
-    }
+	/**
+	 * @return le "JPanel" caisseARecuperer qui contient l'interface graphique
+	 *         2D des caisses a récupérées.
+	 */
+	public P_caisseADessiner getCaisseADessiner() {
+		return caisseARecuperer;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see vue.ChangementLangue#setLangue()
-     */
-    @Override
-    public void setLangue() {
+	/**
+	 * Réactualise la partie courante envoyé dans JeuRainbow
+	 * 
+	 * @param nouvellePartie
+	 *            la partie actualisée
+	 */
+	public void setPartieCourante(Partie nouvellePartie) {
+		getCaisseADessiner().setPartieCourante(nouvellePartie);
+		getPartieDessinable().setPartieCourante(nouvellePartie);
+	}
 
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vue.ChangementLangue#setLangue()
+	 */
+	@Override
+	public void setLangue() {
+
+	}
 }

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import metier.JeuRainbow;
+import metier.Partie;
 import vue.ChoixLangue;
 import vue.F_aPropos;
 import vue.F_abstractModeJeu;
@@ -272,6 +273,7 @@ public class ClicSouris implements MouseListener, Observer {
 				ToucheClavier clavier = new ToucheClavier(metier);
 				// On détecte les fins de partie et les pauses
 				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
+				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
@@ -323,9 +325,10 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 1: // Recommencer
 					metier.reinitialiserPartie();
-					fenetreJeu.setJeuRainbowRobot(metier.getPartieCourante());
+					fenetreJeu.setPartieCourante(metier.getPartieCourante());
 					setObserver();
 					fenetreJeu.restartChrono();
+					ToucheClavier.restartPartie();
 					fenetreJeu.requestFocus();
 					break;
 				case 2: // Quitter
@@ -371,7 +374,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == metier.getPartieCourante()) {
+		if (o instanceof Partie) {
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
 
 			fenetre.stopChrono();
@@ -389,17 +392,16 @@ public class ClicSouris implements MouseListener, Observer {
 			// On reinitialise les paramètres
 			metier.reinitialiserPartie();
 			fenetre.restartChrono();
+			ToucheClavier.restartPartie();
 			switch (retour) {
 			case 0: // Recommencer
-				fenetre.setJeuRainbowRobot(metier.getPartieCourante());
+				fenetre.setPartieCourante(metier.getPartieCourante());
 				setObserver();
-				fenetre.startChrono();
 				break;
 			case 1: // Partie suivante
 				metier.setNiveauSuivant();
-				fenetre.setJeuRainbowRobot(metier.getPartieCourante());
+				fenetre.setPartieCourante(metier.getPartieCourante());
 				setObserver();
-				fenetre.startChrono();
 				break;
 			case 2: // Quitter
 				// On revient à l'accueil

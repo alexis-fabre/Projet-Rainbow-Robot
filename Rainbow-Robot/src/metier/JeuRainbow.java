@@ -210,34 +210,32 @@ public class JeuRainbow implements Serializable {
 		// ---------------------------------------------------------------------
 		int nbLigne = 9;
 		int nbColonne = 11;
-		int debutX = -((nbColonne - 1) / 2);
-		int debutY = -((nbLigne - 1) / 2);
 
 		// On ne calcule les positions inaccessibles
 		Position[] positionsInaccessibles = new Position[16];
 		// Angle en haut à gauche
-		positionsInaccessibles[0] = new Position(debutX, debutY);
-		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
-		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
-		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
+		positionsInaccessibles[0] = new Position(0, 0);
+		positionsInaccessibles[1] = new Position(0, 1);
+		positionsInaccessibles[2] = new Position(1, 0);
+		positionsInaccessibles[3] = new Position(1, 1);
 
 		// Angle en haut à droite
-		positionsInaccessibles[4] = new Position(-debutX, debutY);
-		positionsInaccessibles[5] = new Position(-debutX, debutY + 1);
-		positionsInaccessibles[6] = new Position(-debutX - 1, debutY);
-		positionsInaccessibles[7] = new Position(-debutX - 1, debutY + 1);
+		positionsInaccessibles[4] = new Position(nbColonne - 1, 0);
+		positionsInaccessibles[5] = new Position(nbColonne - 1, 1);
+		positionsInaccessibles[6] = new Position(nbColonne - 2, 0);
+		positionsInaccessibles[7] = new Position(nbColonne - 2, 1);
 
 		// Angle en bas à gauche
-		positionsInaccessibles[8] = new Position(debutX, -debutY);
-		positionsInaccessibles[9] = new Position(debutX, -debutY - 1);
-		positionsInaccessibles[10] = new Position(debutX + 1, -debutY);
-		positionsInaccessibles[11] = new Position(debutX + 1, -debutY - 1);
+		positionsInaccessibles[8] = new Position(0, nbLigne - 1);
+		positionsInaccessibles[9] = new Position(1, nbLigne - 1);
+		positionsInaccessibles[10] = new Position(0, nbLigne - 2);
+		positionsInaccessibles[11] = new Position(1, nbLigne - 2);
 
 		// Angle en bas à droite
-		positionsInaccessibles[12] = new Position(-debutX, -debutY);
-		positionsInaccessibles[13] = new Position(-debutX, -debutY - 1);
-		positionsInaccessibles[14] = new Position(-debutX - 1, -debutY);
-		positionsInaccessibles[15] = new Position(-debutX - 1, -debutY - 1);
+		positionsInaccessibles[12] = new Position(nbColonne - 1, nbLigne - 1);
+		positionsInaccessibles[13] = new Position(nbColonne - 2, nbLigne - 1);
+		positionsInaccessibles[14] = new Position(nbColonne - 1, nbLigne - 2);
+		positionsInaccessibles[15] = new Position(nbColonne - 2, nbLigne - 2);
 
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
 		caisseARecuperee.add(new Caisse(Color.RED));
@@ -245,24 +243,21 @@ public class JeuRainbow implements Serializable {
 		caisseARecuperee.add(new Caisse(Color.YELLOW));
 
 		Caisse[] caissePlateau = new Caisse[5];
-		caissePlateau[0] = new Caisse(Color.RED, new Position(-4, 2));
-		caissePlateau[1] = new Caisse(Color.BLUE, new Position(3, 2));
-		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(2, 3));
-		caissePlateau[3] = new Caisse(Color.ORANGE, new Position(5, 2));
-		caissePlateau[4] = new Caisse(Color.GREEN, new Position(2, 4));
+		caissePlateau[0] = new Caisse(Color.RED, new Position(5, 2));
+		caissePlateau[1] = new Caisse(Color.BLUE, new Position(8, 6));
+		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(7, 7));
+		caissePlateau[3] = new Caisse(Color.ORANGE, new Position(10, 6));
+		caissePlateau[4] = new Caisse(Color.GREEN, new Position(7, 8));
 
 		// Le vortex
-		Vortex vortex = new Vortex(new Position(0, 0));
+		Vortex vortex = new Vortex(new Position(5, 4));
 
 		// On créer le robot
-		Robot robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
+		Robot robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(6, 4));
 
 		// On créer la partie
 		Partie partie = new Partie(nbLigne, nbColonne, positionsInaccessibles,
 				robot, vortex, caisseARecuperee, caissePlateau);
-
-		// On associe la partie au robot
-		robot.setPartie(partie);
 
 		// On ajoute la partie au jeu
 		jeu.addPartie(partie);
@@ -272,59 +267,56 @@ public class JeuRainbow implements Serializable {
 		// ---------------------------------------------------------------------
 		nbLigne = 9;
 		nbColonne = 11;
-		debutX = -((nbColonne - 1) / 2);
-		debutY = -((nbLigne - 1) / 2);
 
 		positionsInaccessibles = new Position[16];
-		positionsInaccessibles[0] = new Position(debutX, debutY);
-		positionsInaccessibles[1] = new Position(debutX, debutY + 1);
-		positionsInaccessibles[2] = new Position(debutX + 1, debutY);
-		positionsInaccessibles[3] = new Position(debutX + 1, debutY + 1);
-		positionsInaccessibles[4] = new Position(-debutX, debutY);
-		positionsInaccessibles[5] = new Position(-debutX, debutY + 1);
-		positionsInaccessibles[6] = new Position(-debutX - 1, debutY);
-		positionsInaccessibles[7] = new Position(-debutX - 1, debutY + 1);
-		positionsInaccessibles[8] = new Position(debutX, -debutY);
-		positionsInaccessibles[9] = new Position(debutX, -debutY - 1);
-		positionsInaccessibles[10] = new Position(debutX + 1, -debutY);
-		positionsInaccessibles[11] = new Position(debutX + 1, -debutY - 1);
-		positionsInaccessibles[12] = new Position(-debutX, -debutY);
-		positionsInaccessibles[13] = new Position(-debutX, -debutY - 1);
-		positionsInaccessibles[14] = new Position(-debutX - 1, -debutY);
-		positionsInaccessibles[15] = new Position(-debutX - 1, -debutY - 1);
+		positionsInaccessibles[0] = new Position(0, 0);
+		positionsInaccessibles[1] = new Position(0, 1);
+		positionsInaccessibles[2] = new Position(1, 0);
+		positionsInaccessibles[3] = new Position(1, 1);
+		positionsInaccessibles[4] = new Position(nbColonne - 1, 0);
+		positionsInaccessibles[5] = new Position(nbColonne - 1, 1);
+		positionsInaccessibles[6] = new Position(nbColonne - 2, 0);
+		positionsInaccessibles[7] = new Position(nbColonne - 2, 1);
+		positionsInaccessibles[8] = new Position(0, nbLigne - 1);
+		positionsInaccessibles[9] = new Position(1, nbLigne - 1);
+		positionsInaccessibles[10] = new Position(0, nbLigne - 2);
+		positionsInaccessibles[11] = new Position(1, nbLigne - 2);
+		positionsInaccessibles[12] = new Position(nbColonne - 1, nbLigne - 1);
+		positionsInaccessibles[13] = new Position(nbColonne - 2, nbLigne - 1);
+		positionsInaccessibles[14] = new Position(nbColonne - 1, nbLigne - 2);
+		positionsInaccessibles[15] = new Position(nbColonne - 2, nbLigne - 2);
 
 		caisseARecuperee = new ArrayList<Caisse>();
 		caisseARecuperee.add(new Caisse(Color.YELLOW));
 		caisseARecuperee.add(new Caisse(Color.BLUE));
 
 		caissePlateau = new Caisse[18];
-		caissePlateau[0] = new Caisse(Color.YELLOW, new Position(0, 3));
-		caissePlateau[1] = new Caisse(Color.RED, new Position(-1, 4));
-		caissePlateau[2] = new Caisse(Color.RED, new Position(0, 4));
-		caissePlateau[3] = new Caisse(Color.RED, new Position(1, 4));
-		caissePlateau[4] = new Caisse(Color.RED, new Position(-1, 2));
-		caissePlateau[5] = new Caisse(Color.RED, new Position(0, 2));
-		caissePlateau[6] = new Caisse(Color.RED, new Position(1, 2));
-		caissePlateau[7] = new Caisse(Color.RED, new Position(-1, 3));
-		caissePlateau[8] = new Caisse(Color.RED, new Position(1, 3));
+		caissePlateau[0] = new Caisse(Color.YELLOW, new Position(5, 7));
+		caissePlateau[1] = new Caisse(Color.RED, new Position(4, 6));
+		caissePlateau[2] = new Caisse(Color.RED, new Position(5, 6));
+		caissePlateau[3] = new Caisse(Color.RED, new Position(6, 6));
+		caissePlateau[4] = new Caisse(Color.RED, new Position(4, 7));
+		caissePlateau[5] = new Caisse(Color.RED, new Position(6, 7));
+		caissePlateau[6] = new Caisse(Color.RED, new Position(4, 8));
+		caissePlateau[7] = new Caisse(Color.RED, new Position(5, 8));
+		caissePlateau[8] = new Caisse(Color.RED, new Position(6, 8));
 
-		caissePlateau[9] = new Caisse(Color.BLUE, new Position(0, -3));
-		caissePlateau[10] = new Caisse(Color.GREEN, new Position(-1, -4));
-		caissePlateau[11] = new Caisse(Color.GREEN, new Position(0, -4));
-		caissePlateau[12] = new Caisse(Color.GREEN, new Position(1, -4));
-		caissePlateau[13] = new Caisse(Color.GREEN, new Position(-1, -2));
-		caissePlateau[14] = new Caisse(Color.GREEN, new Position(0, -2));
-		caissePlateau[15] = new Caisse(Color.GREEN, new Position(1, -2));
-		caissePlateau[16] = new Caisse(Color.GREEN, new Position(-1, -3));
-		caissePlateau[17] = new Caisse(Color.GREEN, new Position(1, -3));
+		caissePlateau[9] = new Caisse(Color.BLUE, new Position(5, 1));
+		caissePlateau[10] = new Caisse(Color.GREEN, new Position(4, 0));
+		caissePlateau[11] = new Caisse(Color.GREEN, new Position(5, 0));
+		caissePlateau[12] = new Caisse(Color.GREEN, new Position(6, 0));
+		caissePlateau[13] = new Caisse(Color.GREEN, new Position(4, 2));
+		caissePlateau[14] = new Caisse(Color.GREEN, new Position(5, 2));
+		caissePlateau[15] = new Caisse(Color.GREEN, new Position(6, 2));
+		caissePlateau[16] = new Caisse(Color.GREEN, new Position(4, 1));
+		caissePlateau[17] = new Caisse(Color.GREEN, new Position(6, 1));
 
-		vortex = new Vortex(new Position(3, 1));
+		vortex = new Vortex(new Position(8, 5));
 
-		robot = new Robot(Robot.ORIENTATION_DROITE, new Position(-5, 0));
+		robot = new Robot(Robot.ORIENTATION_DROITE, new Position(0, 4));
 
 		partie = new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 				vortex, caisseARecuperee, caissePlateau);
-		robot.setPartie(partie);
 
 		jeu.addPartie(partie);
 
