@@ -176,28 +176,26 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		// On vérifie si les positions inaccessibles existent, c'est à dire si
 		// elles sont situées sur le plateau et s'il n'y en a pas deux sur la
 		// même position
-		if (posInaccessible == null) {
-			throw new IllegalArgumentException(
-					"Référence des positions inaccessibles introuvables");
-		}
-		for (int i = 0; i < posInaccessible.length; i++) {
-			if (posInaccessible[i] == null) {
-				throw new IllegalArgumentException("Position à l'indice " + i
-						+ " est introuvable");
-			}
-			if (isPositionOK(posInaccessible[i])) {
-				for (int j = i + 1; j < posInaccessible.length; j++) {
-					if (posInaccessible[i].equals(posInaccessible[j])) {
-						throw new IllegalArgumentException(
-								"La position inaccessible en "
-										+ posInaccessible[i]
-										+ " est présente deux fois");
-					}
+		if (posInaccessible != null) {
+			for (int i = 0; i < posInaccessible.length; i++) {
+				if (posInaccessible[i] == null) {
+					throw new IllegalArgumentException("Position à l'indice "
+							+ i + " est introuvable");
 				}
-			} else {
-				throw new IllegalArgumentException(
-						"La position inaccessible en " + posInaccessible[i]
-								+ " est en dehors du plateau de jeu");
+				if (isPositionOK(posInaccessible[i])) {
+					for (int j = i + 1; j < posInaccessible.length; j++) {
+						if (posInaccessible[i].equals(posInaccessible[j])) {
+							throw new IllegalArgumentException(
+									"La position inaccessible en "
+											+ posInaccessible[i]
+											+ " est présente deux fois");
+						}
+					}
+				} else {
+					throw new IllegalArgumentException(
+							"La position inaccessible en " + posInaccessible[i]
+									+ " est en dehors du plateau de jeu");
+				}
 			}
 		}
 		this.positionsInaccessibles = posInaccessible;
@@ -436,6 +434,9 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 * @return true si la position est correcte, false sinon
 	 */
 	public boolean isPositionOKAvecPositionInaccessible(Position aVerifier) {
+		if (positionsInaccessibles == null) {
+			return true;
+		}
 
 		// On vérifie si la position fait partie des position que l'on ne doit
 		// pas atteindre (POSITIONS_INACCESSIBLES)
@@ -679,9 +680,15 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		// On clone les positions inaccessibles
-		Position[] posInaccessible = new Position[positionsInaccessibles.length];
-		for (int i = 0; i < positionsInaccessibles.length; i++) {
-			posInaccessible[i] = (Position) positionsInaccessibles[i].clone();
+		Position[] posInaccessibles;
+		if (positionsInaccessibles != null) {
+			posInaccessibles = new Position[positionsInaccessibles.length];
+			for (int i = 0; i < positionsInaccessibles.length; i++) {
+				posInaccessibles[i] = (Position) positionsInaccessibles[i]
+						.clone();
+			}
+		} else {
+			posInaccessibles = null;
 		}
 
 		// On clone les caisse à récupérée
@@ -697,7 +704,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 			caissePlat[i] = (Caisse) caissePlateau[i].clone();
 		}
 
-		return new Partie(nbLigne, nbColonne, posInaccessible,
+		return new Partie(nbLigne, nbColonne, posInaccessibles,
 				(Robot) robot.clone(), (Vortex) vortex.clone(), caisseARecup,
 				caissePlat);
 	}

@@ -35,10 +35,10 @@ public class Vortex extends Observable implements Serializable, Runnable {
 	private Position pos_vortex;
 
 	/** Temps que doit mettre l'absorption (en seconde) */
-	public static final float TEMPS_ABSORPTION = 1.5f;
+	public static final float TEMPS_ABSORPTION = 3f;
 
 	/** Nombre de tour complet que devra faire la caisse avant de disparaître */
-	public static final float NOMBRE_TOUR = 1.5f;
+	public static final float NOMBRE_TOUR = 2f;
 
 	/** Référence de la partie courante */
 	private Partie partie;
@@ -195,15 +195,17 @@ public class Vortex extends Observable implements Serializable, Runnable {
 		int ordonneCaisse = aAbsorbe.getPosCaisse().getY()
 				* UtilitaireFenetre.DIM_CASE_VIDE.height
 				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-		Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
-				ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
-				UtilitaireFenetre.DIM_CAISSE.height);
+		Graphics2D contexteCaisse = (Graphics2D) g
+				.create((int) (abscisseCaisse + ((UtilitaireFenetre.DIM_CASE_VIDE.width * (1 - echelleDessin)) / 2)),
+						(int) (ordonneCaisse + ((UtilitaireFenetre.DIM_CASE_VIDE.height * (1 - echelleDessin)) / 2)),
+						UtilitaireFenetre.DIM_CAISSE.width,
+						UtilitaireFenetre.DIM_CAISSE.height);
 
 		// On définit un sens de rotation est une échelle
+		transform.scale(echelleDessin, echelleDessin);
 		transform.rotate((angleDessin * Math.PI) / 180,
 				UtilitaireFenetre.DIM_CAISSE.width / 2,
 				UtilitaireFenetre.DIM_CAISSE.height / 2);
-		transform.scale(echelleDessin, echelleDessin);
 
 		contexteCaisse.transform(transform);
 		aAbsorbe.dessiner(contexteCaisse);

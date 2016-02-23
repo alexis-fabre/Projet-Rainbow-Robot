@@ -96,6 +96,11 @@ public class P_partieDessinable extends JPanel implements Observer {
 
 		partieCourante.dessiner(contexte);
 
+		// Animation du vortex
+		if (isAnimationVortex) {
+			partieCourante.getVortex().animationAbsorption(contexte);
+		}
+
 		// Animation du robot
 		if (!isAnimationRobot) {
 			// On dessine le robot et le plateau à sa position finale
@@ -103,11 +108,6 @@ public class P_partieDessinable extends JPanel implements Observer {
 		} else {
 			// On dessine le robot à sa position à l'instant t
 			partieCourante.getRobot().animationDeplacement(contexte);
-		}
-
-		// Animation du vortex
-		if (isAnimationVortex) {
-			partieCourante.getVortex().animationAbsorption(contexte);
 		}
 		// On libère les ressources
 		contexte.dispose();
@@ -362,7 +362,7 @@ public class P_partieDessinable extends JPanel implements Observer {
 	public void animationAspiration() {
 		isAnimationVortex = true;
 		// Temps nominal pour l'animation en millisecondes
-		final double TEMPS_NOMINAL_TOTAL = Vortex.TEMPS_ABSORPTION * 1000.0;
+		final double TEMPS_NOMINAL_TOTAL = Vortex.TEMPS_ABSORPTION * 1000;
 		// Temps en début et fin pour gérer les dépassements de temps
 		long debutboucle, finboucle;
 		// Temps réel mis pour faire un tour de boucle
@@ -379,56 +379,48 @@ public class P_partieDessinable extends JPanel implements Observer {
 		float echelle = 0;
 		// Mesure de l'angle au cours du temps
 		float rotation = 0;
+		// Limite pour la rotation
+		final double LIMITE_ROTATION = Vortex.NOMBRE_TOUR * 360;
 
-		// Du à un problème irrésolu
-		try {
-			Thread.sleep(1700);
-		} catch (InterruptedException e1) {
-			System.err.println("problème innatendu");
-		}
-
-		while (echelle < 1 && rotation < Vortex.NOMBRE_TOUR * 360) {
+		while (echelle < 1 && rotation < LIMITE_ROTATION) {
 			debutboucle = System.currentTimeMillis();
 
-			echelleCaisse = echelleCaisse
-					+ (tempsBoucle * 1.0 / TEMPS_NOMINAL_TOTAL);
+			echelleCaisse = echelleCaisse + (tempsBoucle / TEMPS_NOMINAL_TOTAL);
 			rotationCaisse = rotationCaisse
-					+ (((Vortex.NOMBRE_TOUR * 360) * tempsBoucle * 1.0) / TEMPS_NOMINAL_TOTAL);
+					+ ((LIMITE_ROTATION * tempsBoucle) / TEMPS_NOMINAL_TOTAL);
 
 			// On actualise l'échelle de la caisse
 			if (echelleCaisse > 0.01) {
 
 				vortex.addEchelleDessin(-echelleCaisse);
 
-				echelle += echelleCaisse;
-				echelleCaisse = ((echelleCaisse * 100) - (int) (echelleCaisse * 100)) / 100;
+				echelle += ((int) (echelleCaisse * 100)) / 100.0;
+				echelleCaisse = ((echelleCaisse * 100) - (int) (echelleCaisse * 100)) / 100.0;
 				if (echelle >= 1) {
 					break;
 				}
-
-				repaint();
 			}
 			if (rotationCaisse > 1) {
 
-				vortex.addAngleDessin((int) rotationCaisse);
-				rotation += rotationCaisse;
-				rotationCaisse -= (int) rotationCaisse;
-
-				if (rotation > Vortex.NOMBRE_TOUR * 360) {
+				rotation += (int) rotationCaisse;
+				if (rotation > LIMITE_ROTATION) {
 					break;
 				}
 
-				repaint();
+				vortex.addAngleDessin((int) rotationCaisse);
+				rotationCaisse -= (int) rotationCaisse;
+
 			}
+
+			repaint();
 
 			try {
 				Thread.sleep(PAUSE_ANIMATION);
 			} catch (InterruptedException e) {
 			}
+
 			finboucle = System.currentTimeMillis();
 			tempsBoucle = finboucle - debutboucle;
-			System.out.println("Animation Vortex :\nEchelle : " + echelle
-					+ "\tRotation : " + rotation);
 		}
 
 		// Fin de l'animation
