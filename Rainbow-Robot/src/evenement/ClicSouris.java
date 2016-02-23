@@ -5,6 +5,7 @@
 
 package evenement;
 
+import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
@@ -12,7 +13,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import metier.JeuRainbow;
@@ -23,6 +23,7 @@ import vue.F_abstractModeJeu;
 import vue.F_accueil;
 import vue.F_arcade;
 import vue.F_choixMode;
+import vue.F_choixNiveau;
 import vue.F_custom;
 import vue.F_jeuRainbow;
 import vue.F_reccords;
@@ -48,11 +49,12 @@ public class ClicSouris implements MouseListener, Observer {
 	 * Détection des clics sur une fenêtre. On peut traiter qu'une seule fenêtre
 	 * car il n'y aura jamais deux fenêtres affichées en même temps.
 	 */
-	private JFrame vue;
+	private Window vue;
 
 	/**
 	 * On initialise le constructeur par défaut.
 	 */
+	@Deprecated
 	public ClicSouris() {
 	}
 
@@ -68,6 +70,13 @@ public class ClicSouris implements MouseListener, Observer {
 	}
 
 	/**
+	 * @return le metier
+	 */
+	public JeuRainbow getMetier() {
+		return metier;
+	}
+
+	/**
 	 * Actualise la nouvelle partie a observé
 	 */
 	public void setObserver() {
@@ -78,7 +87,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 * @param nouvelleFenetre
 	 *            la nouvelle fenêtre à controller
 	 */
-	public void setFenetre(JFrame nouvelleFenetre) {
+	public void setFenetre(Window nouvelleFenetre) {
 		this.vue = nouvelleFenetre;
 	}
 
@@ -255,7 +264,7 @@ public class ClicSouris implements MouseListener, Observer {
 			// Bouton Retour
 			if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
-				F_accueil nouvelleFenetre = new F_accueil(this);
+				F_story nouvelleFenetre = new F_story(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -264,26 +273,40 @@ public class ClicSouris implements MouseListener, Observer {
 
 		if (vue instanceof F_abstractModeJeu) {
 			F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) vue;
-			// On vérifie quel bouton a été utilisé
+			// Bouton Retour
+			if (e.getSource() == fenetreAbastractModeJeu.getBt_Retour()) {
+				// On lance la fenêtre Accueil F_accueil.java
+				F_choixMode nouvelleFenetre = new F_choixMode(this);
+				vue.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+		}
+
+		if (vue instanceof F_story) {
+			F_abstractModeJeu fenetreAbastractModeJeu = (F_abstractModeJeu) vue;
 			// Bouton Jouer
 			if (e.getSource() == fenetreAbastractModeJeu.getBt_Jouer()
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
+
+				F_choixNiveau nouvelleFenetre = new F_choixNiveau(this);
+				vue.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+		}
+		if (vue instanceof F_choixNiveau) {
+			F_choixNiveau fenetreChoixNiveau = (F_choixNiveau) vue;
+			if (e.getSource() == fenetreChoixNiveau.getBt_Jouer()) {
+				// On regarde quel niveau a choisi l'utilisateur
+				metier.setNiveau(fenetreChoixNiveau.getNiveauChoisi());
 				ToucheClavier clavier = new ToucheClavier(metier);
 				// On détecte les fins de partie et les pauses
 				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
-				vue.setVisible(false);
-				nouvelleFenetre.setVisible(true);
-				setFenetre(nouvelleFenetre);
-			}
-			// On vérifie quel bouton a été utilisé
-			// Bouton Retour
-			if (e.getSource() == fenetreAbastractModeJeu.getBt_Retour()) {
-				// On lance la fenêtre Accueil F_accueil.java
-				F_choixMode nouvelleFenetre = new F_choixMode(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);

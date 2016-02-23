@@ -8,12 +8,16 @@ package metier;
 import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,8 +37,11 @@ public class JeuRainbow implements Serializable {
 	/** Niveau par défaut de la partie */
 	public static final int DEFAULT_NIVEAU = 0;
 
+	/** Niveau maximal que le joueur a atteint */
+	private int niveauMax;
+
 	/** Niveau actuel du joueur */
-	private int niveauCourant;
+	private static int niveauCourant;
 
 	/** Carte des parties enregistrées dans le fichier */
 	private ArrayList<Partie> partiesEnregistrees;
@@ -45,12 +52,17 @@ public class JeuRainbow implements Serializable {
 	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
 	public static final String CHEMIN_FICHIER_PARTIE = "./Ressource/lib/partie_mode_solo.bin";
 
+	/** Nom du fichier ou se trouve la sauvegarde du mode Story */
+	public static final String CHEMIN_FICHIER_SAUVEGARDE = "./Ressource/sauvegarde.txt";
+
 	/**
 	 * Constructeur par défaut pour créer les parties
 	 */
 	public JeuRainbow() {
 		partiesEnregistrees = new ArrayList<Partie>();
 		niveauCourant = DEFAULT_NIVEAU;
+		// On restaure la sauvegarde
+		restaurerSauvegarde();
 	}
 
 	/**
@@ -91,6 +103,20 @@ public class JeuRainbow implements Serializable {
 	}
 
 	/**
+	 * @return le nombre de niveau de mode story
+	 */
+	public int getNbNiveau() {
+		return partiesEnregistrees.size();
+	}
+
+	/**
+	 * @return le niveau max que le joueur a atteint
+	 */
+	public int getNiveauMax() {
+		return niveauMax;
+	}
+
+	/**
 	 * Change le niveau courant par le niveau demandé. Si vous appelez
 	 * getPartieCourante() après cette fonction vous obtiendrez la partie
 	 * demandée.
@@ -109,6 +135,24 @@ public class JeuRainbow implements Serializable {
 	 * Permet de passer au niveau suivant ou de retourner au niveau 0
 	 */
 	public void setNiveauSuivant() {
+		if (niveauMax < niveauCourant + 1) {
+			niveauMax = niveauCourant + 1;
+			// On sauvegarde dans un autre Thread pour ne pas perturber
+			// l'utilisateur dans sa nouvelle partie
+			new Thread(new Runnable() {
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see java.lang.Runnable#run()
+				 */
+				@Override
+				public void run() {
+					sauvegarderJeu();
+				}
+			}).start();
+			;
+		}
 		setNiveau(niveauCourant + 1);
 	}
 
@@ -117,6 +161,30 @@ public class JeuRainbow implements Serializable {
 	 */
 	public void reinitialiserPartie() {
 		partieJouable = null;
+	}
+
+	/**
+	 * Sauvegarde la progression du mode Story
+	 */
+	public static void sauvegarderJeu() {
+		try (PrintWriter fichier = new PrintWriter(new FileWriter(
+				CHEMIN_FICHIER_SAUVEGARDE))) {
+			fichier.print(niveauCourant);
+		} catch (IOException fichierInexistant) {
+			System.out.println("Fichier inexistant à l'emplacement "
+					+ CHEMIN_FICHIER_SAUVEGARDE);
+		}
+	}
+
+	/** Restaure la sauvegarde du mode story */
+	public static void restaurerSauvegarde() {
+		try (BufferedReader fichier = new BufferedReader(new FileReader(
+				CHEMIN_FICHIER_SAUVEGARDE))) {
+			niveauCourant = Integer.parseInt(fichier.readLine());
+		} catch (IOException donneeErronee) {
+			System.out.println("Fichier inexistant à l'emplacement "
+					+ CHEMIN_FICHIER_SAUVEGARDE);
+		}
 	}
 
 	/**

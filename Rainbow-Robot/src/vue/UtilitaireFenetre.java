@@ -7,10 +7,10 @@ package vue;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Window;
 
 import javax.swing.Box;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 /**
  * <p>
@@ -22,20 +22,15 @@ import javax.swing.JFrame;
  * @version 1.0
  */
 public class UtilitaireFenetre {
-	/**
-	 * Dimension des boutons des fenêtres principales
-	 */
+
+	/** Dimension des boutons des fenêtres principales */
 	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(650,
 			75);
 
-	/**
-	 * Dimension des boutons des fenêtres principales
-	 */
+	/** Dimension des boutons des fenêtres principales */
 	public static final Dimension DIM_COMPOSANT_SECONDAIRE = new Dimension(100,
 			60);
-	/**
-	 * Dimension des fenêtres usuelles
-	 */
+	/** Dimension des fenêtres usuelles */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
 
 	/**
@@ -44,15 +39,14 @@ public class UtilitaireFenetre {
 	 */
 	public static final Dimension DIM_CASE_VIDE = new Dimension(50, 50);
 
-	/**
-	 * Dimension de l'image d'une caisse.
-	 */
+	/** Dimension de l'image d'une caisse */
 	public static final Dimension DIM_CAISSE = new Dimension(40, 40);
 
-	/**
-	 * Dimension de l'image du robot.
-	 */
+	/** Dimension de l'image du robot */
 	public static final Dimension DIM_ROBOT = new Dimension(100, 100);
+
+	/** Dimension d'une case de caisse à récupérée */
+	public static final Dimension DIM_CAISSE_RECUPEREE = new Dimension(60, 70);
 
 	/**
 	 * Largeur de la bordure d'une case vide. Une case vide est une case en fond
@@ -72,40 +66,26 @@ public class UtilitaireFenetre {
 	 */
 	public static final Color COULEUR_BORDURE = new Color(52, 102, 164);
 
-	/**
-	 * Couleur du vortex
-	 */
+	/** Couleur du vortex */
 	public static final Color COULEUR_VORTEX = new Color(88, 88, 90);
 
-	/**
-	 * Dimension d'une case de caisse à récupérée
-	 */
-	public static final Dimension DIM_CAISSE_RECUPEREE = new Dimension(60, 70);
-
-	/**
-	 * Largeur de la bordure des caisses a récupérées.
-	 */
+	/** Largeur de la bordure des caisses a récupérées */
 	public static final float LARGEUR_BORDURE_CAISSE = 5.0f;
 
-	/**
-	 * Couleur de fond des caisses a récupérées
-	 */
+	/** Couleur de fond des caisses a récupérées */
 	public static final Color COULEUR_FOND_CAISSE = new Color(190, 191, 193);
 
-	/**
-	 * Couleur de fond de la première caisse à récupérée
-	 */
+	/** Couleur de fond de la première caisse à récupérée */
 	public static final Color COULEUR_FOND_CAISSE_UN = new Color(231, 231, 233);
 
-	/**
-	 * MArge entre deux caisses a récupérées
-	 */
+	/** Marge entre deux caisses a récupérées */
 	public static final int MARGE_ENTRE_CAISSE = 5;
 
-	/**
-	 * Nombre de caisse affichée dans le Panneau
-	 */
+	/** Nombre de caisse affichée dans le Panneau */
 	public static final int NB_CAISSE_AFFICHE = 5;
+
+	/** Nombre de niveaux par ligne. Utilisé dans F_choixNiveau */
+	public static final int NB_NIVEAU_LIGNE = 5;
 
 	/**
 	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le
@@ -114,7 +94,7 @@ public class UtilitaireFenetre {
 	 * @param aCentrer
 	 *            fenêtre que l'on doit centrer
 	 */
-	public static void centrerFenetre(JFrame aCentrer) {
+	public static void centrerFenetre(Window aCentrer) {
 		// On centre la fenêtre par rapport à la taille de l'écran
 		aCentrer.setLocation(((int) java.awt.Toolkit.getDefaultToolkit()
 				.getScreenSize().getWidth() / 2)

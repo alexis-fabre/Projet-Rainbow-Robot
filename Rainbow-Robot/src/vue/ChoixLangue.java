@@ -399,10 +399,13 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] QUITTER_PARTIE = {
-
 			{ "Voulez-vous vraiment quitter la partie en cours ?",
 					"Quitter la partie" },
 			{ "Do you want to exit the game ?", "Exit game" } };
+
+	private static final String[][] CHOIX_NIVEAU = {
+			{ "Choisissez un niveau du mode story", "Retour", "Jouer" },
+			{ "Choose a level of story mode", "Back", "Play" } };
 
 	/**
 	 * Pour n'avoir qu'une seule instance de la classe que l'on récupère via
@@ -411,10 +414,10 @@ public class ChoixLangue {
 	private ChoixLangue() {
 		langue = LANGUE_FR;
 	}
-	
+
 	/**
-	 * Singleton
-	 * Instanciation de ChoixLangue
+	 * Singleton Instanciation de ChoixLangue
+	 * 
 	 * @return langueChoisie
 	 */
 	public static ChoixLangue getChoixLangue() {
@@ -563,5 +566,12 @@ public class ChoixLangue {
 	 */
 	public String[] getQuitterPartie() {
 		return QUITTER_PARTIE[langue];
+	}
+
+	/**
+	 * @return les traductions pour la JFrame F_choixNiveau
+	 */
+	public String[] getChoixNiveau() {
+		return CHOIX_NIVEAU[langue];
 	}
 }

@@ -52,7 +52,6 @@ public class Lanceur {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		// On initialise la partie métier
 		JeuRainbow.restartFichierPartie();
 		JeuRainbow jeu = JeuRainbow.lectureFichier();
