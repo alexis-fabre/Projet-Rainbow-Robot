@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -156,21 +155,6 @@ public class Caisse implements Dessinable, Serializable {
 		return pos_courante;
 	}
 
-	/**
-	 * Créer une liste de caisses pour que l'utilisateur puisse les récupérer
-	 * dans sa partie
-	 * @param caisseArecup 
-	 * 
-	 * @param nbCaisse
-	 *            nombre de caisses a récuperer
-	 * @param couleur couleur de la caisse
-	 */
-	public static void CaisseARecuperer(ArrayList<Caisse> caisseArecup,
-			int nbCaisse, Color couleur) {
-		for (int i = 0; i < nbCaisse; i++)
-			caisseArecup.add(new Caisse(couleur, new Position(2, 0)));
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -214,8 +198,6 @@ public class Caisse implements Dessinable, Serializable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		if (pos_courante == null) {
-			// La couleur n'est jamais changé donc il n'est pas nécessaire de la
-			// cloner
 			return new Caisse(couleur);
 		} else {
 			return new Caisse(couleur, (Position) pos_courante.clone());

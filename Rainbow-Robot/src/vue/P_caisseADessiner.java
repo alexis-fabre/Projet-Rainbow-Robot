@@ -14,7 +14,6 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import metier.Caisse;
-import metier.JeuRainbow;
 import metier.Partie;
 import metier.Vortex;
 
@@ -54,12 +53,13 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 * Initialise la partie courante au travers de la référence du jeu. On
 	 * ajoute un Observer pour savoir quand est-ce que le vortex aspire un
 	 * caisse pour ensuite actualiser la liste des caisses à récupérées.
+	 * @param partieCourante la partie courante
 	 * 
 	 * @param jeu
 	 *            la partie métier du jeu contenant l'ensemble des instructions
 	 *            pour faire avancer la partie.
 	 */
-	public P_caisseADessiner(JeuRainbow jeu) {
+	public P_caisseADessiner(Partie partieCourante) {
 		super();
 		// On définit une taille dynamique en fonction du nombre de caisse à
 		// afficher
@@ -69,15 +69,17 @@ public class P_caisseADessiner extends JPanel implements Observer {
 						+ UtilitaireFenetre.MARGE_ENTRE_CAISSE
 						* UtilitaireFenetre.NB_CAISSE_AFFICHE + 1,
 				UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height);
-		partieCourante = jeu.getPartieCourante();
-		partieCourante.getVortex().addObserver(this);
+		this.partieCourante = partieCourante;
+		this.partieCourante.getVortex().addObserver(this);
 	}
 
 	/**
 	 * Réactualise la partie courante envoyé dans JeuRainbow
-	 * @param nouvellePartie la partie actualisée
+	 * 
+	 * @param nouvellePartie
+	 *            la partie actualisée
 	 */
-	public void setJeuRainbowRobot(Partie nouvellePartie) {
+	public void setPartieCourante(Partie nouvellePartie) {
 		this.partieCourante = nouvellePartie;
 		partieCourante.getVortex().addObserver(this);
 		super.repaint();
@@ -149,7 +151,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object aRedessiner) {
-		if (aRedessiner instanceof Vortex) {
+		if (o instanceof Vortex) {
 			super.repaint();
 		}
 	}
