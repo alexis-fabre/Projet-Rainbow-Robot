@@ -22,6 +22,27 @@ import javax.swing.JFrame;
  * @version 1.0
  */
 public class UtilitaireFenetre {
+    
+        /**
+         * Dimension des boutons dans la fenêtre de modification des 
+         * commandes
+         */
+        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(45,
+                        30);
+        
+        /**
+         * Dimension des composants(JLabels) de la fenêtre commande
+         */
+        public static final Dimension DIM_COMPOSANT_COMMANDE = new Dimension(150,
+                        60);
+        
+        /**
+         * Dimension des boutons du bas (sauvegarder, annuler, reset)
+         * de la fenêtre commande
+         */
+        public static final Dimension DIM_BOUTON_BAS_COMMANDE = new Dimension(110,
+                        30);
+        
 	/**
 	 * Dimension des boutons des fenêtres principales
 	 */
@@ -44,6 +65,11 @@ public class UtilitaireFenetre {
 	 */
 	public static final Dimension DIM_FENETRE_PAUSE = new Dimension(600, 500);
 
+	/**
+         * Dimension des fenêtres usuelles
+         */
+        public static final Dimension DIM_FENETRE_COMMANDES = new Dimension(450, 400);
+        
 	/**
 	 * Dimension d'une case vide. Une case vide est une case en fond représentée
 	 * lors d'une partie du jeu.

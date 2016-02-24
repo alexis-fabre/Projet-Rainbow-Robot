@@ -335,6 +335,54 @@ public class ChoixLangue {
 					"Hard", "Choose a file", "Browse" } };
 
 	/**
+         * <p>
+         * Comprend les traductions pour la JFrame F_commandes<br />
+         * </p>
+         * <ul>
+         * <li>La 1ère ligne correspond au tradution française.</li>
+         * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+         * <li>
+         * <ul>
+         * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+         * <li>La 2ème colonne correspond au type de commande.</li>
+         * <li>La 3ème colonne correspond au bouton radio "absolu".</li>
+         * <li>La 4ème colonne correspond au bouton radio "relatif"</li>
+         * <li>La 5ème colonne correspond au titre pour avancer.</li>
+         * <li>La 6ème colonne correspond au titre pour reculer.</li>
+         * <li>La 7ème colonne correspond au titre pour tourner à droite.</li>
+         * <li>La 8ème colonne correspond au titre pour tourner à gauche.</li>
+         * <li>La 9ème colonne correspond au titre pour attraper/lâcher 
+         * une caisse </li>
+         * <li>La 10ème colonne correspond au titre pour fusionner.</li>
+         * <li>La 11ème colonne correspond au titre pour restaurer les paramètres
+         * par défaut.</li>
+         * <li>La 12ème colonne correspond au bouton pour annuler l'opération.</li>
+         * <li>La 13ème colonne correspond au bouton pour sauvegarder l'opération.</li>
+         * </ul>
+         * </li>
+         * </ul>
+         */
+        private static final String[][] COMMANDES = {
+                        {
+                                        "Configuration commandes",
+                                        "Type : ", "Absolu", "Relatif",
+                                        "Avancer : ",
+                                        "Reculer : ",
+                                        "Pivoter/aller vers la droite : ",
+                                        "Pivoter/aller vers la gauche : ",
+                                        "Attraper/lâcher une caisse : ",
+                                        "Fusionner : ", "Reset", "Annuler",
+                                        "Sauvegarder"}, //
+                        {
+                                        "Control Settings",
+                                        "Mode", "Absolute", "Relative",
+                                        "Move forward : ",
+                                        "Move backwards : ",
+                                        "Spin/Move right : ",
+                                        "Spin/Move left : ",
+                                        "Catch/drop a box : ", "Merge : ", 
+                                        "Reset", "Cancel", "Save" } };
+	/**
 	 * <p>
 	 * Comprend les traductions pour la fin d'une partie de Rainbow Robot.<br />
 	 * </p>
@@ -513,6 +561,12 @@ public class ChoixLangue {
 		return CHOIX_MODE[langue];
 	}
 
+	/**
+         * @return les traductions utilisées pour pour la JDialog F_commandes
+         */
+        public String[] getCommandes() {
+                return COMMANDES[langue];
+        }
 	/**
 	 * @return les traductions utilisées pour pour la JFrame F_story
 	 */
