@@ -62,6 +62,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * </p>
 	 */
 	public static final int ORIENTATION_DROITE = 2;
+
 	/**
 	 * <p>
 	 * Orientation du robot vers le bas.<br />
@@ -105,16 +106,16 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	public static final float UNITE_TEMPS = 1.0f;
 
 	/** Vitesse lorsque l'on avance à vide ou sans caisse (en nombre de cases) */
-	public static final int VITESSE_AVANCER_VIDE = 2;
+	public static final float VITESSE_AVANCER_VIDE = 2.0f;
 
 	/** Vitesse lorsque l'on recule à vide ou sans caisse (en nombre de cases) */
 	public static final float VITESSE_RECULER_VIDE = 1.5f;
 
 	/** Vitesse lorsque l'on pivote à vide ou sans caisse (en nombre de cases) */
-	public static final int VITESSE_PIVOTER_VIDE = 1;
+	public static final float VITESSE_PIVOTER_VIDE = 1.0f;
 
 	/** Vitesse lorsque l'on avance avec une caisse (en nombre de cases) */
-	public static final int VITESSE_AVANCER_CHARGE = 1;
+	public static final float VITESSE_AVANCER_CHARGE = 1.0f;
 
 	/** Vitesse lorsque l'on recule avec une caisse (en nombre de cases) */
 	public static final float VITESSE_RECULER_CHARGE = 0.5f;
@@ -123,10 +124,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	public static final float VITESSE_PIVOTER_CHARGE = 0.5f;
 
 	/** Vitesse lorsque l'on fusionne deux caisses (en nombre de cases) */
-	public static final int VITESSE_FUSIONNER = 1;
+	public static final float VITESSE_FUSIONNER = 1.0f;
 
 	/** Vitesse lorsque l'on charge/décharge une caisse (en nombre de cases) */
-	public static final int VITESSE_CHARGER = 1;
+	public static final float VITESSE_CHARGER = 1.0f;
 
 	/** Orientation du robot */
 	private int orientation;
@@ -207,6 +208,53 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
+	 * Effectue un demi-tour à une orientation de départ
+	 * 
+	 * @param orientationDepart
+	 *            orientation de départ
+	 * @return demi-tour après l'orientation de départ
+	 */
+	public static int demiTourOrientation(int orientationDepart) {
+		return (orientationDepart + 2) & 3;
+	}
+
+	/**
+	 * Permet de passer d'un angle en degré à une orientation de robot.
+	 * 
+	 * @param angle
+	 *            angle dont on veux connaître son orientation
+	 * @return orientatin de l'angle
+	 */
+	public static int angleToOrientation(int angle) {
+		return (angle / FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) % 4;
+	}
+
+	/**
+	 * Simule l'action d'une rotation sur la gauche selon une orientation de
+	 * base.
+	 * 
+	 * @param orientation
+	 *            orientation de base
+	 * @return orientation de base plus un quart de tour vers la gauche
+	 */
+	public static int pivoterGauche(int orientation) {
+		return (orientation - 1) < ORIENTATION_GAUCHE ? ORIENTATION_BAS
+				: (orientation - 1);
+	}
+
+	/**
+	 * Simule l'action d'une rotation sur la droite selon une orientation de
+	 * base.
+	 * 
+	 * @param orientation
+	 *            orientation de base
+	 * @return orientation de base plus un quart de tour vers la droite
+	 */
+	public static int pivoterDroite(int orientation) {
+		return (orientation + 1) % 4;
+	}
+
+	/**
 	 * Modifie les variables internes pour dessiner le robot. Cette fonction est
 	 * à appeler avant chaque déplacement du robot.
 	 */
@@ -254,6 +302,39 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		notifyObservers(this);
 		// L'observers renverra setEstOccupe(false) une fois qu'il aura fini son
 		// traitement
+	}
+
+	/**
+	 * <p>
+	 * Permet de vérifier si le déplacement de la caisse associée au robot (si
+	 * elle existe) dans toutes les directions (horizontal (= avancer, reculer)
+	 * ou circulaire (=pivoter) est possible.<br />
+	 * La méthode ne vérifie pas si la caisse existe ou non.
+	 * </p>
+	 *
+	 * @param x
+	 *            nouvel abscisse de la caisse
+	 * @param y
+	 *            nouvel ordonnée de la caisse
+	 * @return true si le déplacement est possible ou faux si la caisse ne peut
+	 *         pas se déplacer
+	 */
+	private boolean deplacementCaisseOK(int x, int y) {
+		return partie.isPositionOKAvecTout(x, y);
+	}
+
+	/**
+	 * Modifie directement la position de la caisse. Il ne vérifie pas si la
+	 * caisse existe ou si la place est libre (voir deplacementCaisseOK).
+	 * 
+	 * @param x
+	 *            nouvel abscisse de la caisse
+	 * @param y
+	 *            nouvel ordonnée de la caisse
+	 */
+	private void setPositionCaisse(int x, int y) {
+		caisse.getPosCaisse().setX(x);
+		caisse.getPosCaisse().setY(y);
 	}
 
 	/**
@@ -482,8 +563,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
 						// Nouvelle orientation du robot
-						orientation = (orientation - 1) < ORIENTATION_GAUCHE ? ORIENTATION_BAS
-								: (orientation - 1);
+						orientation = pivoterGauche(orientation);
 						updateObserver();
 					}
 					break;
@@ -495,8 +575,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() - 1);
-						orientation = (orientation - 1) < ORIENTATION_GAUCHE ? ORIENTATION_BAS
-								: (orientation - 1);
+						orientation = pivoterGauche(orientation);
 						updateObserver();
 					}
 					break;
@@ -508,8 +587,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
-						orientation = (orientation - 1) < ORIENTATION_GAUCHE ? ORIENTATION_BAS
-								: (orientation - 1);
+						orientation = pivoterGauche(orientation);
 						updateObserver();
 					}
 					break;
@@ -521,8 +599,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
-						orientation = (orientation - 1) < ORIENTATION_GAUCHE ? ORIENTATION_BAS
-								: (orientation - 1);
+						orientation = pivoterGauche(orientation);
 						updateObserver();
 					}
 					break;
@@ -540,7 +617,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 								caisse.getPosCaisse().getY() - 1);
 						// Nouvelle orientation du robot
 						// Pour faire une rotation cyclique on fait le modulo 4
-						orientation = (orientation + 1) % 4;
+						orientation = pivoterDroite(orientation);
 						updateObserver();
 					}
 					break;
@@ -552,8 +629,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
-						// Nouvelle orientation du robot
-						orientation = (orientation + 1) % 4;
+						orientation = pivoterDroite(orientation);
 						updateObserver();
 					}
 					break;
@@ -565,8 +641,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
-						// Nouvelle orientation du robot
-						orientation = (orientation + 1) % 4;
+						orientation = pivoterDroite(orientation);
 						updateObserver();
 					}
 					break;
@@ -578,8 +653,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
-						// Nouvelle orientation du robot
-						orientation = (orientation + 1) % 4;
+						orientation = pivoterDroite(orientation);
 						updateObserver();
 					}
 
@@ -643,25 +717,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * <p>
-	 * Permet de vérifier si le déplacement de la caisse associée au robot (si
-	 * elle existe) dans toutes les directions (horizontal (= avancer, reculer)
-	 * ou circulaire (=pivoter) est possible.<br />
-	 * La méthode ne vérifie pas si la caisse existe ou non.
-	 * </p>
-	 *
-	 * @param x
-	 *            nouvel abscisse de la caisse
-	 * @param y
-	 *            nouvel ordonnée de la caisse
-	 * @return true si le déplacement est possible ou faux si la caisse ne peut
-	 *         pas se déplacer
-	 */
-	private boolean deplacementCaisseOK(int x, int y) {
-		return partie.isPositionOKAvecTout(x, y);
-	}
-
-	/**
 	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
 	 * 
 	 * @param c2
@@ -675,17 +730,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien
 		}
-	}
-
-	/**
-	 * Permet de passer d'un angle en degré à une orientation de robot.
-	 * 
-	 * @param angle
-	 *            angle dont on veux connaître son orientation
-	 * @return orientatin de l'angle
-	 */
-	public static int angleToOrientation(int angle) {
-		return (angle / FACTEUR_TRANSFORMATION_ORIENTATION_ANGLE) % 4;
 	}
 
 	/**
@@ -741,9 +785,14 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		return 0.0f;
 	}
 
-	/** @return pos_courante la position courante du robot */
+	/** @return la position courante du robot */
 	public Position getPosRobot() {
 		return pos_courante;
+	}
+
+	/** @return orientation du robot */
+	public int getOrientation() {
+		return orientation;
 	}
 
 	/**
@@ -768,13 +817,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public int getOrdonneeDessin() {
 		return ordonneeDessin;
-	}
-
-	/**
-	 * @return l'angle de dessin du robot à l'état précédent
-	 */
-	public int getAngleDessin() {
-		return angleDessin;
 	}
 
 	/**
@@ -883,20 +925,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				* Math.cos((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
 		ordonneeDessinCaisse = (int) (yr + r
 				* Math.sin((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
-	}
-
-	/**
-	 * Modifie directement la position de la caisse. Il ne vérifie pas si la
-	 * caisse existe ou si la place est libre (voir deplacementCaisseOK).
-	 * 
-	 * @param x
-	 *            nouvel abscisse de la caisse
-	 * @param y
-	 *            nouvel ordonnée de la caisse
-	 */
-	private void setPositionCaisse(int x, int y) {
-		caisse.getPosCaisse().setX(x);
-		caisse.getPosCaisse().setY(y);
 	}
 
 	/**

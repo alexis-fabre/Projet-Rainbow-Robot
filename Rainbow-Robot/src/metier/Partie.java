@@ -154,9 +154,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	public Partie(int ligne, int colonne, Position[] posInaccessible,
 			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecuperer,
 			Caisse[] caissePlateau) throws IllegalArgumentException {
-		// TODO Bug le robot peut être sur une caisse
-		// TODO Attention on peut créer une partie avec aucune position
-		// inaccessibles
 		// On teste les limites du nombre de ligne et de colonne
 		if (ligne > NB_LIGNE_MAX || ligne < NB_LIGNE_MIN) {
 			throw new IllegalArgumentException(
@@ -269,6 +266,10 @@ public class Partie extends Observable implements Dessinable, Serializable {
 			throw new IllegalArgumentException(
 					"Position du robot sur une position inaccessible");
 		}
+		if (!isPositionOKAvecCaisse(robot.getPosRobot())) {
+			throw new IllegalArgumentException(
+					"Position du robot sur une caisse");
+		}
 		this.robot = robot;
 
 		// On vérifie si la couleur des caisses à récupérer existent sur le
@@ -340,46 +341,36 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 * @return true si la partie est réalisable, false sinon
 	 */
 	private boolean verificationPartieResolvable() {
-		// Test avec une partie au format minimal (2,2)
-		// Il faut obligatoirement une seule caisse, un vortex et un robot
-		// Et que la caisse soit en diagonal du robot
-		// Il est possible d'avoir deux caisses mais dans ce cas là la 1ère
-		// caisse à récupérer doit se trouver sur le vortex.
-		if (nbLigne == NB_LIGNE_MIN && nbColonne == NB_COLONNE_MIN) {
-			// Trois cas qui dépendent du nombre de caisse à récupérer
-			// > 2 => Impossible
-			// == 2 => La 1ère caisse doit se situer sur le vortex et la
-			// deuxième sur la diagonale du vortex
-			// == 1 => La caisse doit se situer sur le vortex ou sur la
-			// diagonale du vortex
-			if (caisseARecuperer.size() > 2) {
-				return false;
-			} else if (caisseARecuperer.size() == 2) {
-				return caisseARecuperer.get(0).getPosCaisse()
-						.equals(vortex.getPosVortex())
-						&& caisseARecuperer
-								.get(1)
-								.getPosCaisse()
-								.equals( // Diagonale du vortex avec des
-											// opérations binaires
-								new Position(
-										(~vortex.getPosVortex().getX()) & 1,
-										(~vortex.getPosVortex().getY()) & 1));
-			} else { // caisseARecuperer.size() == 1
-				return caisseARecuperer.get(0).getPosCaisse()
-						.equals(vortex.getPosVortex())
-						|| caisseARecuperer
-								.get(0)
-								.getPosCaisse()
-								.equals( // Diagonale du vortex avec des
-											// opérations binaires
-								new Position(
-										(~vortex.getPosVortex().getX()) & 1,
-										(~vortex.getPosVortex().getY()) & 1));
-			}
-		} // Fin partie (2,2)
+		// On vérifie si la partie (dans son ensemble) est résolvable
+		// Le calcul qui est fait ici est un calcul très simplificateur de la
+		// réalité mais il permet entre autre d'éliminer un bon nombre de cas
+		// complexe. Toutefois il est possible que certaines parties soient
+		// résolvable mais que l'algorithme ne l'acceptent pas.
 
 		// On vérifie si le robot n'est pas piegé dans la partie
+		// Légende :
+		// R = Robot
+		// I = position bloquante (inaccessible ou caisse)
+
+		// Deux situations possibles ou le Robot ne pourra pas se déplacer
+		// 1ère situation :
+		//     I
+		//	   I
+		// I I R I I
+		//	   I
+		//	   I
+		
+		
+		// 2ème situation : 
+		//       I
+		//     I   I
+		//	 I I I I I
+		// I   I R I   I
+		//   I I I I I
+		//   I I   I I
+		//       I
+		
+		
 		return true;
 	}
 

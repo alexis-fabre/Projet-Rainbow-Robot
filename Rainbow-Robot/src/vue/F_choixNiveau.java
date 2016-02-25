@@ -5,13 +5,9 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -138,7 +134,6 @@ public class F_choixNiveau extends JFrame implements ChangementLangue {
 						UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 			}
 			contentNiveaux.add(bt_niveaux[i]);
-			// TODO Vérouiller l'accès au niveau que l'on a pas atteint
 		}
 
 		// ---------------------------------------------------------------------
