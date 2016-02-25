@@ -119,8 +119,8 @@ public class IntelligenceArtificielle extends Thread {
 			aRecuperer = listeCaisseRecuperer.get(i);
 			// Pour l'optimisation
 			for (int j = 0; j < i; j++) {
-				if (aRecuperer.getCouleur().equals(
-						listeCaisseRecuperer.get(j).getCouleur())) {
+				if (aRecuperer.getCouleur() ==
+						listeCaisseRecuperer.get(j).getCouleur()) {
 					liste[i] = liste[j];
 					// On continue la boucle principale
 					continue BouclePrincipale;
@@ -133,8 +133,8 @@ public class IntelligenceArtificielle extends Thread {
 			for (int j = 0; j < tableauCaissePlateau.length; j++) {
 				// On ajoute la caisse si elle a la même couleur que celle à
 				// récupérer
-				if (tableauCaissePlateau[j].getCouleur().equals(
-						aRecuperer.getCouleur())) {
+				if (tableauCaissePlateau[j].getCouleur() == 
+						aRecuperer.getCouleur()) {
 					liste[i].add(tableauCaissePlateau[j]);
 					// Pour l'optimisation
 					continue;
