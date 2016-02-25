@@ -5,7 +5,6 @@
 
 package metier;
 
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -38,10 +37,10 @@ public class JeuRainbow implements Serializable {
 	public static final int DEFAULT_NIVEAU = 0;
 
 	/** Niveau maximal que le joueur a atteint */
-	private int niveauMax;
+	private static int niveauMax;
 
 	/** Niveau actuel du joueur */
-	private static int niveauCourant;
+	private int niveauCourant;
 
 	/** Carte des parties enregistrées dans le fichier */
 	private ArrayList<Partie> partiesEnregistrees;
@@ -169,7 +168,7 @@ public class JeuRainbow implements Serializable {
 	public static void sauvegarderJeu() {
 		try (PrintWriter fichier = new PrintWriter(new FileWriter(
 				CHEMIN_FICHIER_SAUVEGARDE))) {
-			fichier.print(niveauCourant);
+			fichier.print(niveauMax);
 		} catch (IOException fichierInexistant) {
 			System.out.println("Fichier inexistant à l'emplacement "
 					+ CHEMIN_FICHIER_SAUVEGARDE);
@@ -180,7 +179,7 @@ public class JeuRainbow implements Serializable {
 	public static void restaurerSauvegarde() {
 		try (BufferedReader fichier = new BufferedReader(new FileReader(
 				CHEMIN_FICHIER_SAUVEGARDE))) {
-			niveauCourant = Integer.parseInt(fichier.readLine());
+			niveauMax = Integer.parseInt(fichier.readLine());
 		} catch (IOException donneeErronee) {
 			System.out.println("Fichier inexistant à l'emplacement "
 					+ CHEMIN_FICHIER_SAUVEGARDE);
