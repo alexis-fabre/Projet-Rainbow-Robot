@@ -23,6 +23,7 @@ import vue.F_abstractModeJeu;
 import vue.F_accueil;
 import vue.F_arcade;
 import vue.F_choixMode;
+import vue.F_commandes;
 import vue.F_choixNiveau;
 import vue.F_custom;
 import vue.F_jeuRainbow;
@@ -331,6 +332,7 @@ public class ClicSouris implements MouseListener, Observer {
 				}
 			}
 		}
+				
 		if (vue instanceof F_jeuRainbow) {
 			F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {

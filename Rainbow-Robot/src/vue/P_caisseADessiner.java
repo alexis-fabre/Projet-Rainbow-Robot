@@ -53,6 +53,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 * Initialise la partie courante au travers de la référence du jeu. On
 	 * ajoute un Observer pour savoir quand est-ce que le vortex aspire un
 	 * caisse pour ensuite actualiser la liste des caisses à récupérées.
+	 * @param partieCourante la partie courante
 	 * 
 	 * @param jeu
 	 *            la partie métier du jeu contenant l'ensemble des instructions

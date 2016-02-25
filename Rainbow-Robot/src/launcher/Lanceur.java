@@ -6,6 +6,8 @@ package launcher;
 
 import javax.swing.UIManager;
 
+import vue.F_accueil;
+import vue.F_commandes;
 import metier.JeuRainbow;
 import vue.F_accueil;
 
@@ -67,5 +69,6 @@ public class Lanceur {
 
 		// On rend la fenêtre visible
 		fenetreActive.setVisible(true);
+		
 	}
 }

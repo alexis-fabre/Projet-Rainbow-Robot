@@ -39,7 +39,7 @@ public class ToucheClavier implements KeyListener {
 	/**
 	 * On initialise le constructeur avec la partie métier du jeu.
 	 * 
-	 * @param metier
+	 * @param jeu
 	 *            représentation du jeu Rainbow Robot (partie métier). Il
 	 *            contient notamment les différents niveaux.
 	 */
