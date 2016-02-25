@@ -4,7 +4,6 @@
  */
 package launcher;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import metier.Caisse;
@@ -66,10 +65,10 @@ public class TestFenetreJeu {
 		positionsInaccessibles[0] = new Position(0, 0);
 
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(Color.YELLOW));
+		caisseARecuperee.add(new Caisse(2));
 
 		Caisse[] caissePlateau = new Caisse[1];
-		caissePlateau[0] = new Caisse(Color.YELLOW, new Position(1, 1));
+		caissePlateau[0] = new Caisse(2, new Position(1, 1));
 
 		Vortex vortex = new Vortex(new Position(2, 1));
 
@@ -96,14 +95,14 @@ public class TestFenetreJeu {
 		positionsInaccessibles[3] = new Position(1, 1);
 		// Caisse à récupérer
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(Color.YELLOW));
-		caisseARecuperee.add(new Caisse(Color.BLUE));
+		caisseARecuperee.add(new Caisse(2));
+		caisseARecuperee.add(new Caisse(5));
 		// Caisse sur le plateau de jeu
 		Caisse[] caissePlateau = new Caisse[4];
-		caissePlateau[0] = new Caisse(Color.RED, new Position(3, 4));
-		caissePlateau[1] = new Caisse(Color.BLUE, new Position(5, 5));
-		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(4, 4));
-		caissePlateau[3] = new Caisse(Color.ORANGE, new Position(2, 2));
+		caissePlateau[0] = new Caisse(1, new Position(3, 4));
+		caissePlateau[1] = new Caisse(5, new Position(5, 5));
+		caissePlateau[2] = new Caisse(2, new Position(4, 4));
+		caissePlateau[3] = new Caisse(6, new Position(2, 2));
 		// Vortex
 		Vortex vortex = new Vortex(new Position(8, 5));
 		// Robot
@@ -255,12 +254,12 @@ public class TestFenetreJeu {
 
 			// Test avec une caisse null
 			try {
-				caissePlateauErronee[0] = new Caisse(Color.RED, //
+				caissePlateauErronee[0] = new Caisse(1, //
 						new Position(3, 4));
-				caissePlateauErronee[1] = new Caisse(Color.BLUE, //
+				caissePlateauErronee[1] = new Caisse(5, //
 						new Position(5, 5));
 				caissePlateauErronee[2] = null;
-				caissePlateauErronee[3] = new Caisse(Color.ORANGE,//
+				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(2, 2));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecuperee, caissePlateauErronee);
@@ -273,13 +272,13 @@ public class TestFenetreJeu {
 
 			// Test avec une position en dehors du plateau de jeu
 			try {
-				caissePlateauErronee[0] = new Caisse(Color.RED, //
+				caissePlateauErronee[0] = new Caisse(1, //
 						new Position(3, 4));
-				caissePlateauErronee[1] = new Caisse(Color.BLUE, //
+				caissePlateauErronee[1] = new Caisse(5, //
 						new Position(5, 5));
-				caissePlateauErronee[2] = new Caisse(Color.YELLOW,//
+				caissePlateauErronee[2] = new Caisse(2,//
 						new Position(4, Partie.NB_LIGNE_MAX + 1));
-				caissePlateauErronee[3] = new Caisse(Color.ORANGE,//
+				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(2, 2));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecuperee, caissePlateauErronee);
@@ -292,13 +291,13 @@ public class TestFenetreJeu {
 
 			// Test avec une caisse sur une position inaccessible
 			try {
-				caissePlateauErronee[0] = new Caisse(Color.RED, //
+				caissePlateauErronee[0] = new Caisse(1, //
 						new Position(3, 4));
-				caissePlateauErronee[1] = new Caisse(Color.BLUE, //
+				caissePlateauErronee[1] = new Caisse(5, //
 						new Position(5, 5));
-				caissePlateauErronee[2] = new Caisse(Color.YELLOW,//
+				caissePlateauErronee[2] = new Caisse(2,//
 						new Position(0, 0));
-				caissePlateauErronee[3] = new Caisse(Color.ORANGE,//
+				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(5, 5));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecuperee, caissePlateauErronee);
@@ -311,13 +310,13 @@ public class TestFenetreJeu {
 
 			// Test avec deux caisses à la même position
 			try {
-				caissePlateauErronee[0] = new Caisse(Color.RED, //
+				caissePlateauErronee[0] = new Caisse(1, //
 						new Position(3, 4));
-				caissePlateauErronee[1] = new Caisse(Color.BLUE, //
+				caissePlateauErronee[1] = new Caisse(5, //
 						new Position(5, 5));
-				caissePlateauErronee[2] = new Caisse(Color.YELLOW,//
+				caissePlateauErronee[2] = new Caisse(2,//
 						new Position(3, 4));
-				caissePlateauErronee[3] = new Caisse(Color.ORANGE,//
+				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(5, 5));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecuperee, caissePlateauErronee);
@@ -346,9 +345,9 @@ public class TestFenetreJeu {
 
 			// Test avec une caisse à récupérer null
 			try {
-				caisseARecupereeErronee.add(new Caisse(Color.YELLOW));
+				caisseARecupereeErronee.add(new Caisse(2));
 				caisseARecupereeErronee.add(null);
-				caisseARecupereeErronee.add(new Caisse(Color.ORANGE));
+				caisseARecupereeErronee.add(new Caisse(6));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecupereeErronee, caissePlateau);
 				testOK = false;
@@ -362,11 +361,11 @@ public class TestFenetreJeu {
 			// Test avec plus de caisses à récupérer que de caisse sur le
 			// plateau de jeu
 			try {
-				caisseARecupereeErronee.add(new Caisse(Color.YELLOW));
-				caisseARecupereeErronee.add(new Caisse(Color.BLUE));
-				caisseARecupereeErronee.add(new Caisse(Color.ORANGE));
-				caisseARecupereeErronee.add(new Caisse(Color.RED));
-				caisseARecupereeErronee.add(new Caisse(Color.GREEN));
+				caisseARecupereeErronee.add(new Caisse(2));
+				caisseARecupereeErronee.add(new Caisse(5));
+				caisseARecupereeErronee.add(new Caisse(6));
+				caisseARecupereeErronee.add(new Caisse(1));
+				caisseARecupereeErronee.add(new Caisse(4));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecupereeErronee, caissePlateau);
 				testOK = false;
@@ -379,8 +378,8 @@ public class TestFenetreJeu {
 
 			// Test avec des caisses à récupérer impossible à récupérer
 			try {
-				caisseARecupereeErronee.add(new Caisse(Color.BLUE));
-				caisseARecupereeErronee.add(new Caisse(Color.MAGENTA));
+				caisseARecupereeErronee.add(new Caisse(5));
+				caisseARecupereeErronee.add(new Caisse(3));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
 						vortex, caisseARecupereeErronee, caissePlateau);
 				testOK = false;

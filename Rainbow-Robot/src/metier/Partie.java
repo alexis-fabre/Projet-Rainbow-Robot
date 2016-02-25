@@ -6,7 +6,6 @@
 package metier;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -101,15 +100,15 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		positionsInaccessibles[3] = new Position(1, 1);
 
 		caisseARecuperer = new ArrayList<Caisse>();
-		caisseARecuperer.add(new Caisse(Color.RED));
-		caisseARecuperer.add(new Caisse(Color.BLUE));
-		caisseARecuperer.add(new Caisse(Color.YELLOW));
+		caisseARecuperer.add(new Caisse(1));
+		caisseARecuperer.add(new Caisse(5));
+		caisseARecuperer.add(new Caisse(2));
 		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
 		caissePlateau = new Caisse[3];
-		caissePlateau[0] = new Caisse(Color.RED, new Position(-4, 2));
-		caissePlateau[1] = new Caisse(Color.BLUE, new Position(3, 2));
-		caissePlateau[2] = new Caisse(Color.YELLOW, new Position(2, 3));
+		caissePlateau[0] = new Caisse(1, new Position(-4, 2));
+		caissePlateau[1] = new Caisse(5, new Position(3, 2));
+		caissePlateau[2] = new Caisse(2, new Position(2, 3));
 
 		// Le robot
 		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
@@ -292,7 +291,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		int compteur = 0;
 		BouclePrincipale: for (int i = 0; i < caisseARecuperer.size(); i++) {
 			if (caisseARecuperer.get(i) == null
-					|| caisseARecuperer.get(i).getCouleur() == null) {
+					|| caisseARecuperer.get(i).getCouleur() == 0) {            // == null
 				throw new IllegalArgumentException(
 						"La caisse à récupérer à l'indice " + i
 								+ " est introuvable");
@@ -308,7 +307,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 					}
 				}
 				if (caisseARecuperer.get(i).getCouleur()
-						.equals(caissePlateau[j].getCouleur())) {
+						== caissePlateau[j].getCouleur()) {
 					indiceDejaUtilise[compteur] = j;
 					compteur++;
 					continue BouclePrincipale;
