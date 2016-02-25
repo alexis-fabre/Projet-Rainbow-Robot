@@ -301,13 +301,40 @@ public class IntelligenceArtificielle extends Thread {
 					// On vérifie si l'on met plus de temps pour avancer ou pour
 					// reculer
 					if (TEMPS_AVANCER < TEMPS_RECULER) {
-						
+						if (TEMPS_AVANCER + TEMPS_PIVOTER < aRetourner[indice]) {
+							aRetourner[indice] = aRetourner[indiceCentral]
+									+ TEMPS_AVANCER + TEMPS_PIVOTER;
+							orientations[indice] = Robot
+									.pivoterDroite(orientations[indiceCentral]);
+						}
 					} else {
-
+						if (TEMPS_RECULER + TEMPS_PIVOTER < aRetourner[indice]) {
+							aRetourner[indice] = aRetourner[indiceCentral]
+									+ TEMPS_RECULER + TEMPS_PIVOTER;
+							orientations[indice] = Robot
+									.pivoterGauche(orientations[indiceCentral]);
+						}
 					}
 
 				} else { // j ==
 							// Robot.pivoterGauche(orientations[indiceCentral])
+					// On vérifie si l'on met plus de temps pour avancer ou pour
+					// reculer
+					if (TEMPS_AVANCER < TEMPS_RECULER) {
+						if (TEMPS_AVANCER + TEMPS_PIVOTER < aRetourner[indice]) {
+							aRetourner[indice] = aRetourner[indiceCentral]
+									+ TEMPS_AVANCER + TEMPS_PIVOTER;
+							orientations[indice] = Robot
+									.pivoterDroite(orientations[indiceCentral]);
+						}
+					} else {
+						if (TEMPS_RECULER + TEMPS_PIVOTER < aRetourner[indice]) {
+							aRetourner[indice] = aRetourner[indiceCentral]
+									+ TEMPS_RECULER + TEMPS_PIVOTER;
+							orientations[indice] = Robot
+									.pivoterGauche(orientations[indiceCentral]);
+						}
+					}
 				}
 				// On calcul le temps pour aller à la position
 			}
