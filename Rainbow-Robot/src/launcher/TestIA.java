@@ -4,7 +4,7 @@
  */
 package launcher;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 
 import metier.Caisse;
@@ -44,29 +44,29 @@ public class TestIA {
 		int nbColonne = 10;
 
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(Color.YELLOW));
-		caisseARecuperee.add(new Caisse(Color.BLUE));
-		caisseARecuperee.add(new Caisse(Color.YELLOW));
-		caisseARecuperee.add(new Caisse(Color.MAGENTA));
-		caisseARecuperee.add(new Caisse(Color.RED));
-		caisseARecuperee.add(new Caisse(Color.GREEN));
+		caisseARecuperee.add(new Caisse(2));
+		caisseARecuperee.add(new Caisse(5));
+		caisseARecuperee.add(new Caisse(2));
+		caisseARecuperee.add(new Caisse(3));
+		caisseARecuperee.add(new Caisse(1));
+		caisseARecuperee.add(new Caisse(4));
 
 		Caisse[] caissePlateau = new Caisse[15];
-		caissePlateau[0] = new Caisse(Color.YELLOW, new Position(0, 0));
-		caissePlateau[1] = new Caisse(Color.BLUE, new Position(1, 1));
-		caissePlateau[2] = new Caisse(Color.BLUE, new Position(2, 2));
-		caissePlateau[3] = new Caisse(Color.MAGENTA, new Position(2, 5));
-		caissePlateau[4] = new Caisse(Color.BLUE, new Position(3, 4));
-		caissePlateau[5] = new Caisse(Color.GREEN, new Position(7, 8));
-		caissePlateau[6] = new Caisse(Color.BLUE, new Position(4, 9));
-		caissePlateau[7] = new Caisse(Color.MAGENTA, new Position(5, 1));
-		caissePlateau[8] = new Caisse(Color.BLUE, new Position(5, 9));
-		caissePlateau[9] = new Caisse(Color.RED, new Position(6, 7));
-		caissePlateau[10] = new Caisse(Color.GREEN, new Position(8, 4));
-		caissePlateau[11] = new Caisse(Color.RED, new Position(8, 5));
-		caissePlateau[12] = new Caisse(Color.GREEN, new Position(8, 6));
-		caissePlateau[13] = new Caisse(Color.RED, new Position(9, 3));
-		caissePlateau[14] = new Caisse(Color.YELLOW, new Position(9, 4));
+		caissePlateau[0] = new Caisse(2, new Position(0, 0));
+		caissePlateau[1] = new Caisse(5, new Position(1, 1));
+		caissePlateau[2] = new Caisse(5, new Position(2, 2));
+		caissePlateau[3] = new Caisse(3, new Position(2, 5));
+		caissePlateau[4] = new Caisse(5, new Position(3, 4));
+		caissePlateau[5] = new Caisse(4, new Position(7, 8));
+		caissePlateau[6] = new Caisse(5, new Position(4, 9));
+		caissePlateau[7] = new Caisse(3, new Position(5, 1));
+		caissePlateau[8] = new Caisse(5, new Position(5, 9));
+		caissePlateau[9] = new Caisse(1, new Position(6, 7));
+		caissePlateau[10] = new Caisse(5, new Position(8, 4));
+		caissePlateau[11] = new Caisse(1, new Position(8, 5));
+		caissePlateau[12] = new Caisse(4, new Position(8, 6));
+		caissePlateau[13] = new Caisse(1, new Position(9, 3));
+		caissePlateau[14] = new Caisse(2, new Position(9, 4));
 
 		Vortex vortex = new Vortex(new Position(5, 5));
 

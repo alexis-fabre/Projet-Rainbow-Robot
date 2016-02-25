@@ -111,8 +111,8 @@ public class Vortex extends Observable implements Serializable, Runnable {
 			for (int i = 0; i < caissePlateau.length; i++) {
 				if (caissePlateau[i] != null
 						&& caissePlateau[i].getPosCaisse().equals(pos_vortex)
-						&& caissePlateau[i].getCouleur().equals(
-								caisseARecuperee.get(0).getCouleur())
+						&& caissePlateau[i].getCouleur() ==
+								caisseARecuperee.get(0).getCouleur()
 						&& !caissePlateau[i].equals(robot.getCaisse())) {
 					// On garde la référence de la caisse
 					aAbsorbe = caissePlateau[i];
