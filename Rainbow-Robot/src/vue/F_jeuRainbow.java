@@ -196,7 +196,15 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 * @return le score de la partie lorsque celle-ci est finie
 	 */
 	public String getScore() {
-		return minute + ":" + seconde;
+		if (minute < 10 && seconde < 10) {
+			return "0" + minute + " : 0" + seconde;
+		} else if (minute < 10 && seconde >= 10) {
+			return "0" + minute + " : " + seconde;
+		} else if (minute >= 10 && seconde < 10) {
+			return minute + " : 0" + seconde;
+		} else {
+			return minute + " : " + seconde;
+		}
 	}
 
 	/**
