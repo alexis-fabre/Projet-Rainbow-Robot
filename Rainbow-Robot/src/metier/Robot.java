@@ -208,17 +208,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Effectue un demi-tour à une orientation de départ
-	 * 
-	 * @param orientationDepart
-	 *            orientation de départ
-	 * @return demi-tour après l'orientation de départ
-	 */
-	public static int demiTourOrientation(int orientationDepart) {
-		return (orientationDepart + 2) & 3;
-	}
-
-	/**
 	 * Permet de passer d'un angle en degré à une orientation de robot.
 	 * 
 	 * @param angle
@@ -252,6 +241,17 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 */
 	public static int pivoterDroite(int orientation) {
 		return (orientation + 1) % 4;
+	}
+
+	/**
+	 * Effectue un demi-tour à une orientation de départ
+	 * 
+	 * @param orientationDepart
+	 *            orientation de départ
+	 * @return demi-tour après l'orientation de départ
+	 */
+	public static int demiTourOrientation(int orientationDepart) {
+		return (orientationDepart + 2) & 3;
 	}
 
 	/**

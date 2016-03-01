@@ -38,14 +38,34 @@ import java.util.List;
  */
 public class IntelligenceArtificielle extends Thread {
 
-	/** Niveau de difficulté de l'IA : Ici niveau facile */
-	public static final int NIVEAU_FACILE = 0;
+	/** Temps que met le Robot pour pivoter sur une case */
+	public static final float TEMPS_PIVOTER = (Robot.UNITE_TEMPS / Robot.VITESSE_PIVOTER_VIDE);
 
-	/** Niveau de difficulté de l'IA : Ici niveau moyen */
-	public static final int NIVEAU_MOYEN = 1;
+	/** Temps que met le Robot pour reculer d'une case */
+	public static final float TEMPS_RECULER = (Robot.UNITE_TEMPS / Robot.VITESSE_RECULER_VIDE);
 
-	/** Niveau de difficulté de l'IA : Ici niveau difficile */
-	public static final int NIVEAU_DIFFICILE = 2;
+	/** Temps que met le robot pour avancer sur une case */
+	public static final float TEMPS_AVANCER = (Robot.UNITE_TEMPS / Robot.VITESSE_AVANCER_VIDE);
+
+	/**
+	 * <p>
+	 * Temps réel que met le Robot pour avancer sur une case.<br />
+	 * On tient compte ici que pour avancer on peut aussi faire 2 rotations plus
+	 * reculer. On calcule donc qu'est ce qui est le plus rapide.
+	 * </p>
+	 */
+	public static final float TEMPS_REEL_AVANCER = (2 * TEMPS_PIVOTER + TEMPS_RECULER) < TEMPS_AVANCER ? (2 * TEMPS_PIVOTER + TEMPS_RECULER)
+			: TEMPS_AVANCER;
+
+	/**
+	 * <p>
+	 * Temps réel que met le Robot pour reculer sur une case.<br />
+	 * On tient compte ici que pour reculer on peut aussi faire 2 rotations plus
+	 * avancer. On calcule donc qu'est ce qui est le plus rapide.
+	 * </p>
+	 */
+	public static final float TEMPS_REEL_RECULER = (2 * TEMPS_PIVOTER + TEMPS_AVANCER) < TEMPS_RECULER ? (2 * TEMPS_PIVOTER + TEMPS_AVANCER)
+			: TEMPS_RECULER;
 
 	/**
 	 * Utilisé pour optimiser la recherche de l'indice minimal. Elle doit
@@ -55,291 +75,76 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	private static final int INOCCUPE = -1;
 
+	/**
+	 * Déplacement du robot : Avancer
+	 * 
+	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(List)
+	 */
+	public static final Integer DEPLACEMENT_AVANCER = new Integer(0);
+
+	/**
+	 * Déplacement du robot : Reculer
+	 * 
+	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(List)
+	 */
+	public static final Integer DEPLACEMENT_RECULER = new Integer(1);
+
+	/**
+	 * Déplacement du robot : Pivoter à gauche
+	 * 
+	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(List)
+	 */
+	public static final Integer DEPLACEMENT_PIVOTER_GAUCHE = new Integer(2);
+
+	/**
+	 * Déplacement du robot : Pivoter à droite
+	 * 
+	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(List)
+	 */
+	public static final Integer DEPLACEMENT_PIVOTER_DROITE = new Integer(3);
+
 	/** Partie que l'IA doit résoudre */
 	private Partie partieCourante;
 
-	/** Niveau de l'IA choisit lors de l'initialisation */
-	private int niveau;
+	/**
+	 * <p>
+	 * Tableau contenant les temps mis pour aller vers n'importe quel position
+	 * du plateau de jeu à partir d'une position initiale.<br />
+	 * Tableau initialisé dans la fonction suivante :
+	 * </p>
+	 * 
+	 * @see metier.IntelligenceArtificielle#setTempsEtOrientations(Position)
+	 */
+	private float[] temps;
+
+	/**
+	 * <p>
+	 * Tableau contenant les orientations successives de n'importe quel position
+	 * du plateau de jeu à partir d'une orientation de départ (celle de la
+	 * position initiale).<br />
+	 * Tableau initialisé dans la fonction suivante :
+	 * </p>
+	 * 
+	 * @see metier.IntelligenceArtificielle#setTempsEtOrientations(Position)
+	 */
+	private int[] orientations;
 
 	/**
 	 * Constructeur qui initialise une IA avec un niveau et une partie
 	 * 
-	 * @param niveau
-	 *            niveau de l'IA
 	 * @param partie
 	 *            partie que l'IA doit résoudre
 	 * 
 	 * @throws IllegalArgumentException
 	 *             si le niveau ou la partie sont inccorects
 	 */
-	public IntelligenceArtificielle(int niveau, Partie partie)
+	public IntelligenceArtificielle(Partie partie)
 			throws IllegalArgumentException {
 		if (partie == null) {
 			throw new IllegalArgumentException(
 					"Impossibilité de construire l'IA car la partie n'existe pas");
 		}
-		switch (niveau) {
-		case NIVEAU_FACILE:
-		case NIVEAU_MOYEN:
-		case NIVEAU_DIFFICILE:
-			break;
-		default:
-			throw new IllegalArgumentException(
-					"Impossibilité de construire l'IA car le niveau n'est pas défini");
-		}
-		this.niveau = niveau;
 		this.partieCourante = partie;
-	}
-
-	/**
-	 * Recherche les caisses que l'IA doit récupérer sur le plateau de jeu. On
-	 * les range selon un tableau de liste dont chaque indice correspond à une
-	 * caisse à récupérer et chaque liste l'équivalent des caisses à récupérer
-	 * sur le plateau de jeu.
-	 * 
-	 * @return un tableau de liste de caisse
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Caisse>[] chercherCaisse() {
-		// Liste retourné par la fonction
-		List<Caisse>[] liste = new ArrayList[partieCourante
-				.getCaisseARecuperee().size()];
-		// Caisse à récupérer, initialiser à chaque tour de boucle
-		Caisse aRecuperer;
-
-		// On récupère les données de la partie courante
-		// Liste des caisses à récupérer
-		List<Caisse> listeCaisseRecuperer = partieCourante
-				.getCaisseARecuperee();
-		// Tableau des caisses sur le plateau de jeu
-		Caisse[] tableauCaissePlateau = partieCourante.getCaissePlateau();
-
-		BouclePrincipale: for (int i = 0; i < liste.length; i++) {
-			// Caisse à récupérer
-			aRecuperer = listeCaisseRecuperer.get(i);
-			// Pour l'optimisation
-			for (int j = 0; j < i; j++) {
-				if (aRecuperer.getCouleur() ==
-						listeCaisseRecuperer.get(j).getCouleur()) {
-					liste[i] = liste[j];
-					// On continue la boucle principale
-					continue BouclePrincipale;
-				}
-			}
-
-			// On initialise les listes du tableau
-			liste[i] = new ArrayList<Caisse>();
-			// On parcours les caisses sur le plateau de jeu
-			for (int j = 0; j < tableauCaissePlateau.length; j++) {
-				// On ajoute la caisse si elle a la même couleur que celle à
-				// récupérer
-				if (tableauCaissePlateau[j].getCouleur() == 
-						aRecuperer.getCouleur()) {
-					liste[i].add(tableauCaissePlateau[j]);
-					// Pour l'optimisation
-					continue;
-				}
-				// TODO faire avec la fusion
-			}
-		}
-		return liste;
-	}
-
-	/**
-	 * La fonction élabore un ensemble de déplacement pour former une
-	 * trajectoire capable d'aller chercher toutes les caisses et de les ramener
-	 * au vortex. Les déplacements sont différents selon le niveau.
-	 * 
-	 * @param liste
-	 *            tableau de liste contenant les caisses à récupérer sur le
-	 *            plateau pour chaque couleur (indice)
-	 */
-	private void chercherChemin(List<Caisse>[] liste) {
-		// Robot que l'IA doit contrôler
-		Robot robot = partieCourante.getRobot();
-		// On regarde les 4 positions adjacentes aux Robots
-		// <=> 4 positions initiales pour l'algorithme de Dijkstra-Hoore
-		Position[] posAdjacentes = getPositionsAdjacentes(robot.getPosRobot());
-
-		parcoursChemin(posAdjacentes[0]);
-		switch (niveau) {
-		case NIVEAU_FACILE:
-
-			break;
-		case NIVEAU_MOYEN:
-			break;
-		case NIVEAU_DIFFICILE:
-			break;
-		}
-	}
-
-	/**
-	 * <p>
-	 * Recherche des plus court chemin à partir d'un position initiale. On
-	 * applique ici l'algorithme de Dijkstra qui permet de déterminer le temps
-	 * mis pour aller de la position initiale à une autre position.<br />
-	 * Le tableau est construit sur une dimension pour retrouver une position il
-	 * suffit de faire : <br />
-	 * x = i % nbLigne<br />
-	 * y = i / nbColonne<br />
-	 * Avec i l'indice du tableau.
-	 * </p>
-	 * 
-	 * @param pos_initiale
-	 *            position initiale d'ou commence l'algorithme
-	 * 
-	 * @return tableau regroupant l'ensemble des temps mis pour aller de la
-	 *         position initiale à la position finale.
-	 */
-	@SuppressWarnings("unused")
-	private int[] parcoursChemin(Position pos_initiale) {
-		// Temps mis pour effectuer les différentes actions
-		// On tient en compte si l'action Avancer et plus longue que de faire
-		// demi-tour (2 rotation) plus reculer.
-		// De même pour Reculer
-		// Temps nominal mis pour parcourir une case
-		final float TEMPS_PIVOTER = (Robot.UNITE_TEMPS / Robot.VITESSE_PIVOTER_VIDE), //
-		TEMPS_RECULER = (Robot.UNITE_TEMPS / Robot.VITESSE_RECULER_VIDE), //
-		TEMPS_AVANCER = (Robot.UNITE_TEMPS / Robot.VITESSE_AVANCER_VIDE);
-
-		// Temps réel mis pour parcourir une case
-		final float TEMPS_REEL_AVANCER = (2 * TEMPS_PIVOTER + TEMPS_RECULER) < TEMPS_AVANCER ? (2 * TEMPS_PIVOTER + TEMPS_RECULER)
-				: TEMPS_AVANCER;
-		final float TEMPS_REEL_RECULER = (2 * TEMPS_PIVOTER + TEMPS_AVANCER) < TEMPS_RECULER ? (2 * TEMPS_PIVOTER + TEMPS_AVANCER)
-				: TEMPS_RECULER;
-		// Tableau contenant les résultats de l'algorithme de Dijkstra
-		float[] aRetourner = new float[partieCourante.getNbLigne()
-				* partieCourante.getNbColonne()];
-		// Indice déjà utilisé dans l'algorithme
-		int[] indiceDejaUtilise = new int[aRetourner.length];
-		// Tableau contenant les orientations du robot pour les plus court
-		// chemin
-		int[] orientations = new int[aRetourner.length];
-
-		// Indice de la valeur minimal du tableau
-		// <=> Indice recherché par l'algorithme
-		int indiceCentral;
-		// Positions aux alentours de la position recherché par l'algorithme
-		Position[] positionsAdjacentes;
-
-		// On initialise les tableaux avec des valeurs négatives pour optimiser
-		// le
-		// parcours
-		for (int i = 0; i < indiceDejaUtilise.length; i++) {
-			indiceDejaUtilise[i] = INOCCUPE;
-		}
-		for (int i = 0; i < orientations.length; i++) {
-			orientations[i] = INOCCUPE;
-		}
-		// On garde néanmoins l'orientation de départ du robot
-		orientations[positionToIndice(pos_initiale)] = partieCourante
-				.getRobot().getOrientation();
-
-		// Algorithme de Dijkstra
-		// Initialisation du tableau
-		// On initialise toutes les valeurs à la valeur maximal
-		// (Integer.MAX_VALUE)
-		// sauf l'indice choisit qui est initialisé à 0
-		for (int i = 0; i < aRetourner.length; i++) {
-			aRetourner[i] = Float.MAX_VALUE;
-		}
-		aRetourner[positionToIndice(pos_initiale)] = 0;
-
-		// Pour chaque tour,
-		// On récupère l'indice de la valeur minimal du tableau, on ne tient pas
-		// compte des précédents indices utilisés
-		// On regarde si les position adjacentes sont occupés ou non
-		// On calcul le temps mis pour aller jusqu'à la position adjacentes
-		// On réactualise le tableau
-
-		indiceCentral = getIndiceMinimal(aRetourner, indiceDejaUtilise);
-
-		positionsAdjacentes = getPositionsAdjacentes(indiceToPosition(indiceCentral));
-
-		for (int j = 0; j < positionsAdjacentes.length; j++) {
-			if (partieCourante.isPositionOKAvecTout(positionsAdjacentes[j])) {
-				// Sachant que l'indice du tableau est équivalent à
-				// l'orientation du robot
-				int indice = positionToIndice(positionsAdjacentes[j]);
-
-				if (j == orientations[indiceCentral]) {
-					// Position qui suit l'orientation du robot
-					// Temps mis = TEMPS_REEL_AVANCER
-
-					if (TEMPS_REEL_AVANCER < aRetourner[indice]) {
-						aRetourner[indice] = aRetourner[indiceCentral]
-								+ TEMPS_REEL_AVANCER;
-						// On regarde l'orientation du robot
-						if (TEMPS_REEL_AVANCER == TEMPS_AVANCER) {
-							// On garde la même orientation
-							orientations[indice] = orientations[indiceCentral];
-						} else { // On a fait un demi-tour puis on a reculer
-							orientations[indice] = Robot
-									.demiTourOrientation(orientations[indiceCentral]);
-						}
-					}
-				} else if (j == Robot
-						.demiTourOrientation(orientations[indiceCentral])) {
-					// Position opposée à l'orientation du robot
-					// Temps mis = TEMPS_REEL_RECULER
-
-					if (TEMPS_REEL_RECULER < aRetourner[indice]) {
-						aRetourner[indice] = aRetourner[indiceCentral]
-								+ TEMPS_REEL_RECULER;
-						// On regarde l'orientation du robot
-						if (TEMPS_REEL_RECULER == TEMPS_RECULER) {
-							// On garde la même orientation
-							orientations[indice] = orientations[indiceCentral];
-						} else { // On a fait un demi-tour puis on a reculer
-							orientations[indice] = Robot
-									.demiTourOrientation(orientations[indiceCentral]);
-						}
-					}
-
-				} else if (j == Robot
-						.pivoterDroite(orientations[indiceCentral])) {
-					// On vérifie si l'on met plus de temps pour avancer ou pour
-					// reculer
-					if (TEMPS_AVANCER < TEMPS_RECULER) {
-						if (TEMPS_AVANCER + TEMPS_PIVOTER < aRetourner[indice]) {
-							aRetourner[indice] = aRetourner[indiceCentral]
-									+ TEMPS_AVANCER + TEMPS_PIVOTER;
-							orientations[indice] = Robot
-									.pivoterDroite(orientations[indiceCentral]);
-						}
-					} else {
-						if (TEMPS_RECULER + TEMPS_PIVOTER < aRetourner[indice]) {
-							aRetourner[indice] = aRetourner[indiceCentral]
-									+ TEMPS_RECULER + TEMPS_PIVOTER;
-							orientations[indice] = Robot
-									.pivoterGauche(orientations[indiceCentral]);
-						}
-					}
-
-				} else { // j ==
-							// Robot.pivoterGauche(orientations[indiceCentral])
-					// On vérifie si l'on met plus de temps pour avancer ou pour
-					// reculer
-					if (TEMPS_AVANCER < TEMPS_RECULER) {
-						if (TEMPS_AVANCER + TEMPS_PIVOTER < aRetourner[indice]) {
-							aRetourner[indice] = aRetourner[indiceCentral]
-									+ TEMPS_AVANCER + TEMPS_PIVOTER;
-							orientations[indice] = Robot
-									.pivoterDroite(orientations[indiceCentral]);
-						}
-					} else {
-						if (TEMPS_RECULER + TEMPS_PIVOTER < aRetourner[indice]) {
-							aRetourner[indice] = aRetourner[indiceCentral]
-									+ TEMPS_RECULER + TEMPS_PIVOTER;
-							orientations[indice] = Robot
-									.pivoterGauche(orientations[indiceCentral]);
-						}
-					}
-				}
-				// On calcul le temps pour aller à la position
-			}
-		}
-		return null; // bouchon
 	}
 
 	/**
@@ -349,7 +154,8 @@ public class IntelligenceArtificielle extends Thread {
 	 *            tableau qui contient les indices que l'on de doit pas utiliser
 	 * @return retourne l'indice de la valeur minimal
 	 */
-	private int getIndiceMinimal(float[] aRechercher, int[] indiceInutilisable) {
+	public static int getIndiceMinimal(float[] aRechercher,
+			int[] indiceInutilisable) {
 		int indice = 0;
 		float valeurMin = Float.MAX_VALUE;
 		BouclePrincipale: for (int i = 0; i < aRechercher.length; i++) {
@@ -396,16 +202,440 @@ public class IntelligenceArtificielle extends Thread {
 	}
 
 	/**
-	 * @param pos
-	 *            position centrale
-	 * @return les positions adjacentes (gauche, haut, droite, bas dans cet
-	 *         ordre) à la position centrale
+	 * Recherche les caisses que l'IA doit récupérer sur le plateau de jeu. On
+	 * les range selon un tableau de liste dont chaque indice correspond à une
+	 * caisse à récupérer et chaque liste l'équivalent des caisses à récupérer
+	 * sur le plateau de jeu.
+	 * 
+	 * @return un tableau de liste de caisse
 	 */
-	private Position[] getPositionsAdjacentes(Position pos) {
-		return new Position[] { new Position(pos.getX() - 1, pos.getY()),
-				new Position(pos.getX(), pos.getY() - 1),
-				new Position(pos.getX() + 1, pos.getY()),
-				new Position(pos.getX(), pos.getY() + 1), };
+	@SuppressWarnings("unchecked")
+	private List<Caisse>[] getCaisseParCouleur() {
+		// Liste retourné par la fonction
+		List<Caisse>[] liste = new ArrayList[partieCourante
+				.getCaisseARecuperee().size()];
+		// Caisse à récupérer, initialiser à chaque tour de boucle
+		Caisse aRecuperer;
+
+		// On récupère les données de la partie courante
+		// Liste des caisses à récupérer
+		List<Caisse> listeCaisseRecuperer = partieCourante
+				.getCaisseARecuperee();
+		// Tableau des caisses sur le plateau de jeu
+		Caisse[] tableauCaissePlateau = partieCourante.getCaissePlateau();
+
+		BouclePrincipale: for (int i = 0; i < liste.length; i++) {
+			// Caisse à récupérer
+			aRecuperer = listeCaisseRecuperer.get(i);
+			// Pour l'optimisation
+			for (int j = 0; j < i; j++) {
+				if (aRecuperer.getCouleur() == listeCaisseRecuperer.get(j)
+						.getCouleur()) {
+					liste[i] = liste[j];
+					// On continue la boucle principale
+					continue BouclePrincipale;
+				}
+			}
+
+			// On initialise les listes du tableau
+			liste[i] = new ArrayList<Caisse>();
+			// On parcours les caisses sur le plateau de jeu
+			for (int j = 0; j < tableauCaissePlateau.length; j++) {
+				// On ajoute la caisse si elle a la même couleur que celle à
+				// récupérer
+				if (tableauCaissePlateau[j].getCouleur() == aRecuperer
+						.getCouleur()) {
+					liste[i].add(tableauCaissePlateau[j]);
+					// Pour l'optimisation
+					continue;
+				}
+				// TODO faire avec la fusion
+			}
+		}
+		return liste;
+	}
+
+	/**
+	 * La fonction élabore un ensemble de déplacement pour former une
+	 * trajectoire capable d'aller chercher toutes les caisses et de les ramener
+	 * au vortex. Les déplacements sont différents selon le niveau.
+	 * 
+	 * @param liste
+	 *            tableau de liste contenant les caisses à récupérer sur le
+	 *            plateau pour chaque couleur (indice)
+	 */
+	private void getCheminVersCaisse(List<Caisse>[] liste) {
+		// On initialise les temps et les orientations du plateau de jeu
+		setTempsEtOrientations(partieCourante.getRobot().getPosRobot());
+		getDeplacementVersCaisse(liste[0]);
+	}
+
+	/**
+	 * <p>
+	 * Recherche des plus court chemin à partir d'un position initiale.<br />
+	 * On applique ici l'algorithme de Dijkstra qui permet de déterminer le
+	 * temps mis pour aller de la position initiale à une autre position.<br />
+	 * A chaque temps est associé une position pour permettre de retrouver le
+	 * trajet<br />
+	 * Le tableau est construit sur une dimension pour retrouver une position il
+	 * suffit de faire : <br />
+	 * x = i % nbLigne<br />
+	 * y = i / nbLigne<br />
+	 * Avec i l'indice du tableau.
+	 * </p>
+	 * 
+	 * @param pos_initiale
+	 *            position initiale d'ou commence l'algorithme
+	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(float[],
+	 *      int[])
+	 */
+	@SuppressWarnings("unused")
+	private void setTempsEtOrientations(Position pos_initiale) {
+		// Tableau contenant les résultats de l'algorithme de Dijkstra
+		temps = new float[partieCourante.getNbLigne()
+				* partieCourante.getNbColonne()];
+		// Indice déjà utilisé dans l'algorithme
+		int[] indiceDejaUtilise = new int[temps.length];
+		// Tableau contenant les orientations du robot pour les plus court
+		// chemin
+		orientations = new int[temps.length];
+
+		// Or indiceDejaUtilise.length = orientations.length = temps.length
+		// Algorithme de Dijkstra
+		// Initialisation du tableau
+		// On initialise toutes les valeurs à la valeur maximal
+		// (Integer.MAX_VALUE)
+		// sauf l'indice choisit qui est initialisé à 0
+		for (int i = 0; i < indiceDejaUtilise.length; i++) {
+			temps[i] = Float.MAX_VALUE;
+
+			// On initialise les tableaux avec des valeurs négatives pour
+			// optimiser le parcours
+			indiceDejaUtilise[i] = INOCCUPE;
+			orientations[i] = INOCCUPE;
+		}
+
+		temps[positionToIndice(pos_initiale)] = 0;
+		// On garde néanmoins l'orientation de départ du robot
+		orientations[positionToIndice(pos_initiale)] = partieCourante
+				.getRobot().getOrientation();
+
+		// Pour chaque tour,
+		// On récupère l'indice de la valeur minimal du tableau sans tenir
+		// compte des indice précédement utilisé
+		// On regarde si les position adjacentes sont occupés ou non
+		// On calcul le temps mis pour aller jusqu'à la position adjacentes
+		// On réactualise le tableau si le temps mis est inférieur au temps déjà
+		// présent sur la position adjacente
+		for (int i = 0; i < indiceDejaUtilise.length; i++) {
+
+			// Indice de la valeur minimal du tableau (temps)
+			int indiceCentral = getIndiceMinimal(temps, indiceDejaUtilise);
+
+			// Position adjacente de l'indice précédent
+			Position[] positionsAdjacentes = Position
+					.getPositionsAdjacentes(indiceToPosition(indiceCentral));
+
+			// Parcours des positions adjacentes
+			for (int j = 0; j < positionsAdjacentes.length; j++) {
+
+				// Sachant que l'indice du tableau (positions adjacentes) est
+				// équivalent à l'orientation du robot
+				if (partieCourante.isPositionOKAvecTout(positionsAdjacentes[j])) {
+
+					// Indice de la position adjacente
+					int indice = positionToIndice(positionsAdjacentes[j]);
+
+					if (j == orientations[indiceCentral]) {
+						// Position qui suit l'orientation du robot
+						// Temps mis = TEMPS_REEL_AVANCER
+
+						if (TEMPS_REEL_AVANCER + temps[indiceCentral] < temps[indice]) {
+							temps[indice] = temps[indiceCentral]
+									+ TEMPS_REEL_AVANCER;
+							// On regarde l'orientation du robot
+							if (TEMPS_REEL_AVANCER == TEMPS_AVANCER) {
+								// On garde la même orientation
+								orientations[indice] = orientations[indiceCentral];
+							} else { // On a fait un demi-tour puis on a reculer
+								orientations[indice] = Robot
+										.demiTourOrientation(orientations[indiceCentral]);
+							}
+						}
+					} else if (j == Robot
+							.demiTourOrientation(orientations[indiceCentral])) {
+						// Position opposée à l'orientation du robot
+						// Temps mis = TEMPS_REEL_RECULER
+
+						if (TEMPS_REEL_RECULER + temps[indiceCentral] < temps[indice]) {
+							temps[indice] = temps[indiceCentral]
+									+ TEMPS_REEL_RECULER;
+							// On regarde l'orientation du robot
+							if (TEMPS_REEL_RECULER == TEMPS_RECULER) {
+								// On garde la même orientation
+								orientations[indice] = orientations[indiceCentral];
+							} else { // On a fait un demi-tour puis on a reculer
+								orientations[indice] = Robot
+										.demiTourOrientation(orientations[indiceCentral]);
+							}
+						}
+
+					} else if (j == Robot
+							.pivoterDroite(orientations[indiceCentral])) {
+						// On vérifie si l'on met plus de temps pour avancer ou
+						// pour reculer
+						if (TEMPS_AVANCER < TEMPS_RECULER) {
+							if (TEMPS_AVANCER + TEMPS_PIVOTER
+									+ temps[indiceCentral] < temps[indice]) {
+								temps[indice] = temps[indiceCentral]
+										+ TEMPS_AVANCER + TEMPS_PIVOTER;
+								orientations[indice] = Robot
+										.pivoterDroite(orientations[indiceCentral]);
+							}
+						} else {
+							if (TEMPS_RECULER + TEMPS_PIVOTER
+									+ temps[indiceCentral] < temps[indice]) {
+								temps[indice] = temps[indiceCentral]
+										+ TEMPS_RECULER + TEMPS_PIVOTER;
+								orientations[indice] = Robot
+										.pivoterGauche(orientations[indiceCentral]);
+							}
+						}
+
+					} else { // j ==
+								// Robot.pivoterGauche(orientations[indiceCentral])
+						// On vérifie si l'on met plus de temps pour avancer ou
+						// pour reculer
+						if (TEMPS_AVANCER < TEMPS_RECULER) {
+							if (TEMPS_AVANCER + TEMPS_PIVOTER
+									+ temps[indiceCentral] < temps[indice]) {
+								temps[indice] = temps[indiceCentral]
+										+ TEMPS_AVANCER + TEMPS_PIVOTER;
+								orientations[indice] = Robot
+										.pivoterGauche(orientations[indiceCentral]);
+							}
+						} else {
+							if (TEMPS_RECULER + TEMPS_PIVOTER
+									+ temps[indiceCentral] < temps[indice]) {
+								temps[indice] = temps[indiceCentral]
+										+ TEMPS_RECULER + TEMPS_PIVOTER;
+								orientations[indice] = Robot
+										.pivoterDroite(orientations[indiceCentral]);
+							}
+						}
+					}
+				}
+			}
+			indiceDejaUtilise[i] = indiceCentral;
+		}
+
+		for (int j = 0; j < temps.length; j++) {
+			if (j % partieCourante.getNbLigne() == 0) {
+				System.out.println();
+			}
+			if (temps[j] == Float.MAX_VALUE) {
+				System.out.print("-1\t");
+			} else {
+				System.out.printf("%.3f\t", temps[j]);
+			}
+		}
+		System.out.println();
+		for (int j = 0; j < orientations.length; j++) {
+			if (j % partieCourante.getNbLigne() == 0) {
+				System.out.println();
+			}
+			System.out.print(orientations[j] + "\t");
+		}
+	}
+
+	/**
+	 * <p>
+	 * Détermine la meilleure trajectoire que l'IA puisse prendre pour aller
+	 * rechercher une caisse parmis celle proposée. L'IA utilise un tableau
+	 * contenant les temps que mettra le Robot pour atteindre une position et
+	 * l'orientation qu'il devra avoir.<br />
+	 * ATTENTION L'algorithme ne tient pas compte de l'orientation d'arrivée et
+	 * il est possible que l'on choississe d'aller chercher une caisse qui ne
+	 * soit pas la plus courte en temps.
+	 * </p>
+	 * 
+	 * @param caissePotentielle
+	 *            liste de caisse potentielle que le robot doit aller chercher
+	 * @return Liste des déplacements pour aller chercher une caisse
+	 * 
+	 * @see metier.Robot#ACTION_AVANCER
+	 * @see metier.Robot#ACTION_CHARGER
+	 * @see metier.Robot#ACTION_RECULER
+	 * @see metier.Robot#ACTION_PIVOTER
+	 */
+	private List<Integer> getDeplacementVersCaisse(
+			List<Caisse> caissePotentielle) {
+		if (orientations == null || temps == null) {
+			System.out
+					.println("IA : Trajectoire incalculable : Temps ou orientation indéfinie");
+			return null;
+		}
+		// else
+
+		// Position la plus proche du robot en temps
+		Position posMin = null;
+		// Temps mis pour atteindre posMin
+		float tempsMis = Float.MAX_VALUE;
+		// Positions adjacentes à la caisse
+		Position[] positionsAdjacentesCaisses;
+		for (int i = 0; i < caissePotentielle.size(); i++) {
+			positionsAdjacentesCaisses = Position
+					.getPositionsAdjacentes(caissePotentielle.get(i)
+							.getPosCaisse());
+			for (int j = 0; j < positionsAdjacentesCaisses.length; j++) {
+				if (partieCourante
+						.isPositionOKAvecTout(positionsAdjacentesCaisses[j])
+						&& temps[positionToIndice(positionsAdjacentesCaisses[j])] < tempsMis) {
+					tempsMis = temps[positionToIndice(positionsAdjacentesCaisses[j])];
+					posMin = positionsAdjacentesCaisses[j];
+				}
+			}
+		}
+		if (posMin == null) {
+			System.out.println("IA : Impossible d'accéder à une des caisses");
+			return null;
+		}
+		// else
+
+		// Liste des déplacements (variable de retour de la fonction)
+		List<Integer> deplacement = new ArrayList<Integer>();
+
+		// On recherche la trajectoire pour atteindre posMin en utilisant les
+		// deux tableaux temps et orientations
+
+		// Position courante à un instant t
+		int indiceCourant = positionToIndice(posMin);
+
+		while (temps[indiceCourant] != 0.0f) {
+			// On cherche les positions adjacentes à posMin
+			Position[] posAdjacentes = Position
+					.getPositionsAdjacentes(indiceToPosition(indiceCourant));
+
+			for (int j = 0; j < posAdjacentes.length; j++) {
+
+				// Indice dans le tableau de la position adjacente
+				int indiceAdj = positionToIndice(posAdjacentes[j]);
+
+				if (partieCourante.isPositionOKAvecTout(posAdjacentes[j])
+						&& temps[indiceCourant] > temps[indiceAdj]) {
+
+					// Orientation de l'indice courant
+					int orientationCourant = orientations[indiceCourant];
+					// Orientation de la position adjacente
+					int orientationAdj = orientations[indiceAdj];
+
+					if (j == orientationCourant) {
+						// Position qui suit l'orientation du robot
+
+						if (orientationCourant == orientationAdj) {
+							// Action = reculer
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_RECULER) {
+								// Utilisation de l'autoboxing
+								// <=> int to Integer
+								deplacement.add(DEPLACEMENT_RECULER);
+								indiceCourant = indiceAdj;
+								// On cherche un chemin, on ne cherche pas tous
+								// les chemins
+								break;
+							}
+
+						} else if (orientationCourant == Robot
+								.demiTourOrientation(orientationAdj)) {
+							// Action = 2 rotations + reculer
+							if (temps[indiceCourant] == temps[indiceAdj] + 2
+									* TEMPS_PIVOTER + TEMPS_RECULER) {
+								// Utilisation de l'autoboxing
+								// <=> int to Integer
+								deplacement.add(DEPLACEMENT_RECULER);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+								indiceCourant = indiceAdj;
+								// On cherche un chemin, on ne cherche pas tous
+								// les chemins
+								break;
+							}
+
+						} else if (orientationCourant == Robot
+								.pivoterDroite(orientationAdj)) {
+							// Action = Pivoter gauche + Reculer
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_PIVOTER + TEMPS_RECULER) {
+								// Utilisation de l'autoboxing
+								// <=> int to Integer
+								deplacement.add(DEPLACEMENT_RECULER);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+								indiceCourant = indiceAdj;
+								// On cherche un chemin, on ne cherche pas tous
+								// les chemins
+								break;
+							}
+						} else {
+							// orientationCourant ==
+							// Robot.pivoterGauche(orientationAdj)
+						}
+
+					} else if (j == Robot
+							.demiTourOrientation(orientationCourant)) {
+						// Position derrière l'orientation du robot
+
+						if (orientationCourant == orientationAdj) {
+
+						} else if (orientationCourant == Robot
+								.demiTourOrientation(orientationAdj)) {
+
+						} else if (orientationCourant == Robot
+								.pivoterDroite(orientationAdj)) {
+
+						} else {
+							// orientationCourant ==
+							// Robot.pivoterGauche(orientationAdj)
+						}
+
+					} else if (j == Robot.pivoterDroite(orientationCourant)) {
+						// Position sur la perpendiculaire à droite du robot
+
+						if (orientationCourant == orientationAdj) {
+
+						} else if (orientationCourant == Robot
+								.demiTourOrientation(orientationAdj)) {
+
+						} else if (orientationCourant == Robot
+								.pivoterDroite(orientationAdj)) {
+
+						} else {
+							// orientationCourant ==
+							// Robot.pivoterGauche(orientationAdj)
+						}
+
+					} else {
+						// j == Robot.pivoterGauche(orientations[indiceCentral])
+						// Position sur la perpendiculaire à gauche du robot
+
+						if (orientationCourant == orientationAdj) {
+
+						} else if (orientationCourant == Robot
+								.demiTourOrientation(orientationAdj)) {
+
+						} else if (orientationCourant == Robot
+								.pivoterDroite(orientationAdj)) {
+
+						} else {
+							// orientationCourant ==
+							// Robot.pivoterGauche(orientationAdj)
+						}
+					}
+
+				}
+			}
+		}
+
+		return null; // bouchon
 	}
 
 	/*
@@ -415,14 +645,6 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	@Override
 	public void run() {
-		List<Caisse> listeCaisseRecuperer = partieCourante
-				.getCaisseARecuperee();
-		List<Caisse>[] test = chercherCaisse();
-		for (int i = 0; i < test.length; i++) {
-			System.out.println("Couleur rechercher : "
-					+ listeCaisseRecuperer.get(i).getCouleur() + "\nTableau : "
-					+ Arrays.toString(test[i].toArray()));
-			chercherChemin(test);
-		}
+		getCheminVersCaisse(getCaisseParCouleur());
 	}
 }

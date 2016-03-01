@@ -69,6 +69,19 @@ public class Position implements Serializable {
 		this.y = y;
 	}
 
+	/**
+	 * @param pos
+	 *            position centrale
+	 * @return les positions adjacentes (gauche, haut, droite, bas dans cet
+	 *         ordre) à la position centrale
+	 */
+	public static Position[] getPositionsAdjacentes(Position pos) {
+		return new Position[] { new Position(pos.getX() - 1, pos.getY()),
+				new Position(pos.getX(), pos.getY() - 1),
+				new Position(pos.getX() + 1, pos.getY()),
+				new Position(pos.getX(), pos.getY() + 1), };
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

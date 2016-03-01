@@ -133,7 +133,6 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-
 	}
 
 	/*

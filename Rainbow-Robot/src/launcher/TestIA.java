@@ -4,11 +4,14 @@
  */
 package launcher;
 
-
 import java.util.ArrayList;
 
+import vue.F_jeuRainbow;
+import evenement.ClicSouris;
+import evenement.ToucheClavier;
 import metier.Caisse;
 import metier.IntelligenceArtificielle;
+import metier.JeuRainbow;
 import metier.Partie;
 import metier.Position;
 import metier.Robot;
@@ -29,8 +32,23 @@ public class TestIA {
 	 *            non utilisé
 	 */
 	public static void main(String[] args) {
-		new IntelligenceArtificielle(IntelligenceArtificielle.NIVEAU_FACILE,
-				getPartie()).start();
+		Partie partie = getPartie();
+		new IntelligenceArtificielle(partie).start();
+
+		JeuRainbow jeu = new JeuRainbow();
+		jeu.addPartie(partie);
+		// On construit le contrôleur à partir de la partie métier
+		ClicSouris gestion = new ClicSouris(jeu);
+
+		// Détecte les appuie sur les touches de clavier
+		ToucheClavier clavier = new ToucheClavier(jeu);
+		// On détecte les fins de partie et les pauses
+		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier);
+		gestion.setObserver();
+		gestion.setFenetre(nouvelleFenetre);
+		clavier.setFenetre(nouvelleFenetre);
+
+		nouvelleFenetre.setVisible(true);
 	}
 
 	/**
