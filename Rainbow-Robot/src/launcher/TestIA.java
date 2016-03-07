@@ -33,7 +33,6 @@ public class TestIA {
 	 */
 	public static void main(String[] args) {
 		Partie partie = getPartie();
-		new IntelligenceArtificielle(partie).start();
 
 		JeuRainbow jeu = new JeuRainbow();
 		jeu.addPartie(partie);
@@ -49,6 +48,7 @@ public class TestIA {
 		clavier.setFenetre(nouvelleFenetre);
 
 		nouvelleFenetre.setVisible(true);
+		new IntelligenceArtificielle(jeu.getPartieCourante()).start();
 	}
 
 	/**

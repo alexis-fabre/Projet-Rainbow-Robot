@@ -103,6 +103,12 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	public static final Integer DEPLACEMENT_PIVOTER_DROITE = new Integer(3);
 
+	/**
+	 * Pause en millisecondes pour que le Thread puisse recevoir des ordres
+	 * d'interruption
+	 */
+	private static final long PAUSE = 50;
+
 	/** Partie que l'IA doit résoudre */
 	private Partie partieCourante;
 
@@ -154,7 +160,7 @@ public class IntelligenceArtificielle extends Thread {
 	 *            tableau qui contient les indices que l'on de doit pas utiliser
 	 * @return retourne l'indice de la valeur minimal
 	 */
-	public static int getIndiceMinimal(float[] aRechercher,
+	private static int getIndiceMinimal(float[] aRechercher,
 			int[] indiceInutilisable) {
 		int indice = 0;
 		float valeurMin = Float.MAX_VALUE;
@@ -199,6 +205,31 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	private int positionToIndice(Position pos) {
 		return pos.getX() + pos.getY() * partieCourante.getNbLigne();
+	}
+
+	/**
+	 * Inverse le contenu de la liste, c'est à dire que le 1er élément devient
+	 * le dernier élément (et inversément), etc...
+	 * 
+	 * @param aInverser
+	 *            Liste de déplacement à inverser
+	 * @return une ArrayList des déplacements inverser
+	 */
+	private List<Integer> inverserListe(List<Integer> aInverser) {
+		// On récupère la liste sous la forme d'un tableau
+		Integer[] tabInvertion = aInverser.toArray(new Integer[0]);
+		// Variable de temporisation pour inverser le contenu
+		Integer temp;
+
+		// On inverse le contenu du tableau
+		for (int i = 0; i < tabInvertion.length / 2; i++) {
+			temp = tabInvertion[i];
+			tabInvertion[i] = tabInvertion[tabInvertion.length - i - 1];
+			tabInvertion[tabInvertion.length - i - 1] = temp;
+		}
+
+		// On recréer une nouvelle liste avec le tableau inversé
+		return new ArrayList<Integer>(Arrays.asList(tabInvertion));
 	}
 
 	/**
@@ -267,7 +298,8 @@ public class IntelligenceArtificielle extends Thread {
 	private void getCheminVersCaisse(List<Caisse>[] liste) {
 		// On initialise les temps et les orientations du plateau de jeu
 		setTempsEtOrientations(partieCourante.getRobot().getPosRobot());
-		getDeplacementVersCaisse(liste[0]);
+		// On cherche la liste des déplacements pour aller chercher la caisse
+		deplacerIA(getDeplacementVersCaisse(liste[0]));
 	}
 
 	/**
@@ -531,14 +563,15 @@ public class IntelligenceArtificielle extends Thread {
 
 					if (j == orientationCourant) {
 						// Position qui suit l'orientation du robot
-
 						if (orientationCourant == orientationAdj) {
 							// Action = reculer
 							if (temps[indiceCourant] == temps[indiceAdj]
 									+ TEMPS_RECULER) {
+
 								// Utilisation de l'autoboxing
 								// <=> int to Integer
 								deplacement.add(DEPLACEMENT_RECULER);
+
 								indiceCourant = indiceAdj;
 								// On cherche un chemin, on ne cherche pas tous
 								// les chemins
@@ -550,34 +583,41 @@ public class IntelligenceArtificielle extends Thread {
 							// Action = 2 rotations + reculer
 							if (temps[indiceCourant] == temps[indiceAdj] + 2
 									* TEMPS_PIVOTER + TEMPS_RECULER) {
-								// Utilisation de l'autoboxing
-								// <=> int to Integer
+
 								deplacement.add(DEPLACEMENT_RECULER);
 								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
 								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+
 								indiceCourant = indiceAdj;
-								// On cherche un chemin, on ne cherche pas tous
-								// les chemins
 								break;
 							}
 
 						} else if (orientationCourant == Robot
 								.pivoterDroite(orientationAdj)) {
-							// Action = Pivoter gauche + Reculer
+							// Action = Pivoter droite + Reculer
 							if (temps[indiceCourant] == temps[indiceAdj]
 									+ TEMPS_PIVOTER + TEMPS_RECULER) {
-								// Utilisation de l'autoboxing
-								// <=> int to Integer
+
 								deplacement.add(DEPLACEMENT_RECULER);
-								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+								deplacement.add(DEPLACEMENT_PIVOTER_DROITE);
+
 								indiceCourant = indiceAdj;
-								// On cherche un chemin, on ne cherche pas tous
-								// les chemins
 								break;
 							}
 						} else {
 							// orientationCourant ==
 							// Robot.pivoterGauche(orientationAdj)
+
+							// Action = Pivoter gauche + Reculer
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_PIVOTER + TEMPS_RECULER) {
+
+								deplacement.add(DEPLACEMENT_RECULER);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+
+								indiceCourant = indiceAdj;
+								break;
+							}
 						}
 
 					} else if (j == Robot
@@ -585,57 +625,114 @@ public class IntelligenceArtificielle extends Thread {
 						// Position derrière l'orientation du robot
 
 						if (orientationCourant == orientationAdj) {
+							// Action = Avancer
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_AVANCER) {
 
+								deplacement.add(DEPLACEMENT_AVANCER);
+
+								indiceCourant = indiceAdj;
+								break;
+							}
 						} else if (orientationCourant == Robot
 								.demiTourOrientation(orientationAdj)) {
+							// Action = 2 rotations + Avancer
+							if (temps[indiceCourant] == temps[indiceAdj] + 2
+									* TEMPS_PIVOTER + TEMPS_AVANCER) {
+
+								deplacement.add(DEPLACEMENT_AVANCER);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
+
+								indiceCourant = indiceAdj;
+								break;
+							}
 
 						} else if (orientationCourant == Robot
 								.pivoterDroite(orientationAdj)) {
+							// Action = Pivoter droite + Avancer
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_PIVOTER + TEMPS_AVANCER) {
+
+								deplacement.add(DEPLACEMENT_AVANCER);
+								deplacement.add(DEPLACEMENT_PIVOTER_DROITE);
+
+								indiceCourant = indiceAdj;
+								break;
+							}
 
 						} else {
 							// orientationCourant ==
 							// Robot.pivoterGauche(orientationAdj)
-						}
+							// Action = Pivoter gauche
+							if (temps[indiceCourant] == temps[indiceAdj]
+									+ TEMPS_PIVOTER + TEMPS_AVANCER) {
 
-					} else if (j == Robot.pivoterDroite(orientationCourant)) {
-						// Position sur la perpendiculaire à droite du robot
+								deplacement.add(DEPLACEMENT_AVANCER);
+								deplacement.add(DEPLACEMENT_PIVOTER_GAUCHE);
 
-						if (orientationCourant == orientationAdj) {
-
-						} else if (orientationCourant == Robot
-								.demiTourOrientation(orientationAdj)) {
-
-						} else if (orientationCourant == Robot
-								.pivoterDroite(orientationAdj)) {
-
-						} else {
-							// orientationCourant ==
-							// Robot.pivoterGauche(orientationAdj)
-						}
-
-					} else {
-						// j == Robot.pivoterGauche(orientations[indiceCentral])
-						// Position sur la perpendiculaire à gauche du robot
-
-						if (orientationCourant == orientationAdj) {
-
-						} else if (orientationCourant == Robot
-								.demiTourOrientation(orientationAdj)) {
-
-						} else if (orientationCourant == Robot
-								.pivoterDroite(orientationAdj)) {
-
-						} else {
-							// orientationCourant ==
-							// Robot.pivoterGauche(orientationAdj)
+								indiceCourant = indiceAdj;
+								break;
+							}
 						}
 					}
-
 				}
 			}
 		}
+		System.out.println("\nCalcul déplacement : ");
+		System.out.println("Sans invertion : ");
+		deplacement = inverserListe(deplacement);
+		for (Integer integer : deplacement) {
+			if (integer == DEPLACEMENT_AVANCER) {
+				System.out.print("Avancer --> ");
+			} else if (integer == DEPLACEMENT_PIVOTER_GAUCHE) {
+				System.out.print("Pivoter gauche --> ");
+			} else if (integer == DEPLACEMENT_PIVOTER_DROITE) {
+				System.out.print("Pivoter droite --> ");
+			} else if (integer == DEPLACEMENT_RECULER) {
+				System.out.print("Reculer --> ");
+			}
+		}
+		// On inverse le sens de la liste
+		return deplacement;
+	}
 
-		return null; // bouchon
+	/**
+	 * Déplace le Robot de l'IA selon une liste de déplacement dans l'ordre
+	 * logique, c'est à dire que le 1er élément de la liste doit être le 1er
+	 * déplacement, etc...
+	 * 
+	 * @param deplacement
+	 *            liste de déplacement dans l'ordre logique que doit faire le
+	 *            robot
+	 */
+	private void deplacerIA(List<Integer> deplacement) {
+		// Référence du robot de la partie
+		Robot robot = partieCourante.getRobot();
+		while (!deplacement.isEmpty()) {
+			if (!robot.estOccupe()) {
+				if (deplacement.get(0) == DEPLACEMENT_AVANCER) {
+					robot.avancer();
+					deplacement.remove(0);
+				} else if (deplacement.get(0) == DEPLACEMENT_PIVOTER_GAUCHE) {
+					robot.pivoter(Robot.PIVOTER_GAUCHE);
+					deplacement.remove(0);
+				} else if (deplacement.get(0) == DEPLACEMENT_PIVOTER_DROITE) {
+					robot.pivoter(Robot.PIVOTER_DROITE);
+					deplacement.remove(0);
+				} else if (deplacement.get(0) == DEPLACEMENT_RECULER) {
+					robot.reculer();
+					deplacement.remove(0);
+				}
+			}
+			// else
+			// On fait une mini-pause car si on demande au Thread (de l'IA) de
+			// s'arrêter, il recevra l'appel ici
+			try {
+				Thread.sleep(PAUSE);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 
 	/*
