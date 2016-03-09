@@ -305,16 +305,16 @@ public class JeuRainbow implements Serializable {
 		positionsInaccessibles[15] = new Position(nbColonne - 2, nbLigne - 2);
 
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(1));
-		caisseARecuperee.add(new Caisse(5));
-		caisseARecuperee.add(new Caisse(2));
+		caisseARecuperee.add(new Caisse(Caisse.ROUGE));
+		caisseARecuperee.add(new Caisse(Caisse.BLEU));
+		caisseARecuperee.add(new Caisse(Caisse.JAUNE));
 
 		Caisse[] caissePlateau = new Caisse[5];
-		caissePlateau[0] = new Caisse(1, new Position(5, 2));
-		caissePlateau[1] = new Caisse(5, new Position(8, 6));
-		caissePlateau[2] = new Caisse(2, new Position(7, 7));
-		caissePlateau[3] = new Caisse(6, new Position(10, 6));
-		caissePlateau[4] = new Caisse(4, new Position(7, 8));
+		caissePlateau[0] = new Caisse(Caisse.ROUGE, new Position(5, 2));
+		caissePlateau[1] = new Caisse(Caisse.BLEU, new Position(8, 6));
+		caissePlateau[2] = new Caisse(Caisse.JAUNE, new Position(7, 7));
+		caissePlateau[3] = new Caisse(Caisse.ORANGE, new Position(10, 6));
+		caissePlateau[4] = new Caisse(Caisse.VERT, new Position(7, 8));
 
 		// Le vortex
 		Vortex vortex = new Vortex(new Position(5, 4));
@@ -358,25 +358,25 @@ public class JeuRainbow implements Serializable {
 		caisseARecuperee.add(new Caisse(5));
 
 		caissePlateau = new Caisse[18];
-		caissePlateau[0] = new Caisse(2, new Position(5, 7));
-		caissePlateau[1] = new Caisse(1, new Position(4, 6));
-		caissePlateau[2] = new Caisse(1, new Position(5, 6));
-		caissePlateau[3] = new Caisse(1, new Position(6, 6));
-		caissePlateau[4] = new Caisse(1, new Position(4, 7));
-		caissePlateau[5] = new Caisse(1, new Position(6, 7));
-		caissePlateau[6] = new Caisse(1, new Position(4, 8));
-		caissePlateau[7] = new Caisse(1, new Position(5, 8));
-		caissePlateau[8] = new Caisse(1, new Position(6, 8));
+		caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(5, 7));
+		caissePlateau[1] = new Caisse(Caisse.ROUGE, new Position(4, 6));
+		caissePlateau[2] = new Caisse(Caisse.ROUGE, new Position(5, 6));
+		caissePlateau[3] = new Caisse(Caisse.ROUGE, new Position(6, 6));
+		caissePlateau[4] = new Caisse(Caisse.ROUGE, new Position(4, 7));
+		caissePlateau[5] = new Caisse(Caisse.ROUGE, new Position(6, 7));
+		caissePlateau[6] = new Caisse(Caisse.ROUGE, new Position(4, 8));
+		caissePlateau[7] = new Caisse(Caisse.ROUGE, new Position(5, 8));
+		caissePlateau[8] = new Caisse(Caisse.ROUGE, new Position(6, 8));
 
-		caissePlateau[9] = new Caisse(5, new Position(5, 1));
-		caissePlateau[10] = new Caisse(4, new Position(4, 0));
-		caissePlateau[11] = new Caisse(4, new Position(5, 0));
-		caissePlateau[12] = new Caisse(4, new Position(6, 0));
-		caissePlateau[13] = new Caisse(4, new Position(4, 2));
-		caissePlateau[14] = new Caisse(4, new Position(5, 2));
-		caissePlateau[15] = new Caisse(4, new Position(6, 2));
-		caissePlateau[16] = new Caisse(4, new Position(4, 1));
-		caissePlateau[17] = new Caisse(4, new Position(6, 1));
+		caissePlateau[9] = new Caisse(Caisse.BLEU, new Position(5, 1));
+		caissePlateau[10] = new Caisse(Caisse.VERT, new Position(4, 0));
+		caissePlateau[11] = new Caisse(Caisse.VERT, new Position(5, 0));
+		caissePlateau[12] = new Caisse(Caisse.VERT, new Position(6, 0));
+		caissePlateau[13] = new Caisse(Caisse.VERT, new Position(4, 2));
+		caissePlateau[14] = new Caisse(Caisse.VERT, new Position(5, 2));
+		caissePlateau[15] = new Caisse(Caisse.VERT, new Position(6, 2));
+		caissePlateau[16] = new Caisse(Caisse.VERT, new Position(4, 1));
+		caissePlateau[17] = new Caisse(Caisse.VERT, new Position(6, 1));
 
 		vortex = new Vortex(new Position(8, 5));
 

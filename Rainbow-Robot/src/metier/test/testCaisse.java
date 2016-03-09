@@ -19,7 +19,8 @@ public class testCaisse {
 	 * Jeu de test comportant toutes les couleurs qui sont acceptés pour une
 	 * caisse
 	 */
-	public static final int[] JEU_TEST_OK = { 1, 2, 3, 4, 5, 6 };
+	public static final int[] JEU_TEST_OK = { Caisse.ROUGE, Caisse.JAUNE, 
+		Caisse.VIOLET, Caisse.VERT, Caisse.BLEU, Caisse.ORANGE };
 
 	/**
 	 * Jeu de test comportant toutes les couleurs qui ne sont pas acceptés pour
@@ -30,7 +31,8 @@ public class testCaisse {
 	/**
 	 * Jeu de test comportant des couleurs valides pour la fusion 
 	 */
-	public static final int[] JEU_FUSION_OK1 = {1, 2, 3, 4, 5, 6};
+	public static final int[] JEU_FUSION_OK1 = {Caisse.ROUGE, Caisse.JAUNE, 
+		Caisse.VIOLET, Caisse.VERT, Caisse.BLEU, Caisse.ORANGE};
 	
 	/**
 	 * Jeu de test comportant des couleurs valides pour la fusion 

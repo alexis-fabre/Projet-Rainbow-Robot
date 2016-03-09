@@ -33,18 +33,29 @@ public class Caisse implements Dessinable, Serializable {
 	 */
 	public static final int COULEUR_DEFAUT = 0;
 
+	/** Indique que la caisse est de couleur rouge */
+	public static final int ROUGE = 1;
+	
+	/**  Indique que la caisse est de couleur jaune */
+	public static final int JAUNE = 2;
+	
+	/** Indique que la caisse est de couleur violet */
+	public static final int VIOLET = 3;
+	
+	/**  Indique que la caisse est de couleur vert */
+	public static final int VERT = 4;
+	
+	/**  Indique que la caisse est de couleur bleu */
+	public static final int BLEU = 5;
+	
+	/**  Indique que la caisse est de couleur orange */
+	public static final int ORANGE = 6;
+	
 	/**
-	 * Couleur autorisé pour une caisse
-	 * <ul>
-	 * <li>1: Rouge</li>
-	 * <li>2: Jaune</li>
-	 * <li>3: Violet</li>
-	 * <li>4: Vert</li>
-	 * <li>5: Bleu</li>
-	 * <li>6: Orange</li>
-	 * </ul>
+	 * Couleur autorisée pour une caisse dans l'application
 	 */
-	public static final int[] COULEUR_AUTORISEE = { 1, 2, 3, 4, 5, 6 };
+	public static final int[] COULEUR_AUTORISEE = {ROUGE,JAUNE,VIOLET,VERT,
+		                                          BLEU,ORANGE};
 
 	/**
 	 * Matrice carré d'ordre "COULEUR_AUTORISEE" représentant le résultat obtenu
@@ -52,9 +63,12 @@ public class Caisse implements Dessinable, Serializable {
 	 * de deux couleurs (intersection L/C de la matrice). Lorqu'une fusion est
 	 * impossible l'intersection de ces deux couleurs vaut 0.
 	 */
-	public static final int[][] FUSION_COULEUR = { { 0, 6, 0, 2, 3, 0 },
-			{ 6, 0, 0, 0, 4, 0 }, { 0, 0, 0, 0, 0, 0 }, { 2, 0, 0, 0, 0, 0 },
-			{ 3, 4, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
+	public static final int[][] FUSION_COULEUR = { 
+		    { 0, ORANGE, 0, JAUNE, VIOLET, 0 },
+			{ ORANGE, 0, 0, 0, VERT, 0 }, { 0, 0, 0, 0, 0, 0 }, 
+			{ JAUNE, 0, 0, 0, 0, 0 },{ VIOLET, VERT, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0 }                 };
+
 
 	/**
 	 * Chemin vers les images des caisses (pour l'affichage sur la partie

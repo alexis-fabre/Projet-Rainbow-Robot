@@ -100,15 +100,15 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		positionsInaccessibles[3] = new Position(1, 1);
 
 		caisseARecuperer = new ArrayList<Caisse>();
-		caisseARecuperer.add(new Caisse(1));
-		caisseARecuperer.add(new Caisse(5));
-		caisseARecuperer.add(new Caisse(2));
+		caisseARecuperer.add(new Caisse(Caisse.ROUGE));
+		caisseARecuperer.add(new Caisse(Caisse.BLEU));
+		caisseARecuperer.add(new Caisse(Caisse.JAUNE));
 		// Caisse.CaisseARecuperer(caisseARecup, 1, Color.RED);
 
 		caissePlateau = new Caisse[3];
-		caissePlateau[0] = new Caisse(1, new Position(-4, 2));
-		caissePlateau[1] = new Caisse(5, new Position(3, 2));
-		caissePlateau[2] = new Caisse(2, new Position(2, 3));
+		caissePlateau[0] = new Caisse(Caisse.ROUGE, new Position(-4, 2));
+		caissePlateau[1] = new Caisse(Caisse.BLEU, new Position(3, 2));
+		caissePlateau[2] = new Caisse(Caisse.JAUNE, new Position(2, 3));
 
 		// Le robot
 		robot = new Robot(Robot.ORIENTATION_GAUCHE, new Position(1, 0));
