@@ -354,8 +354,8 @@ public class JeuRainbow implements Serializable {
 		positionsInaccessibles[15] = new Position(nbColonne - 2, nbLigne - 2);
 
 		caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(2));
-		caisseARecuperee.add(new Caisse(5));
+		caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+		caisseARecuperee.add(new Caisse(Caisse.BLEU));
 
 		caissePlateau = new Caisse[18];
 		caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(5, 7));

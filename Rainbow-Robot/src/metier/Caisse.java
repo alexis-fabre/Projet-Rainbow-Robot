@@ -28,34 +28,34 @@ public class Caisse implements Dessinable, Serializable {
 	private static final long serialVersionUID = -7480744260167787591L;
 
 	/**
-	 * Couleur par défaut de la caisse Une caisse possédant cette couleur ne
+	 * Couleur par défaut de la caisse. Une caisse possédant cette couleur ne
 	 * pourra ni être dessiner ni être fusionner
 	 */
 	public static final int COULEUR_DEFAUT = 0;
 
 	/** Indique que la caisse est de couleur rouge */
 	public static final int ROUGE = 1;
-	
-	/**  Indique que la caisse est de couleur jaune */
+
+	/** Indique que la caisse est de couleur jaune */
 	public static final int JAUNE = 2;
-	
+
 	/** Indique que la caisse est de couleur violet */
 	public static final int VIOLET = 3;
-	
-	/**  Indique que la caisse est de couleur vert */
+
+	/** Indique que la caisse est de couleur vert */
 	public static final int VERT = 4;
-	
-	/**  Indique que la caisse est de couleur bleu */
+
+	/** Indique que la caisse est de couleur bleu */
 	public static final int BLEU = 5;
-	
-	/**  Indique que la caisse est de couleur orange */
+
+	/** Indique que la caisse est de couleur orange */
 	public static final int ORANGE = 6;
-	
+
 	/**
 	 * Couleur autorisée pour une caisse dans l'application
 	 */
-	public static final int[] COULEUR_AUTORISEE = {ROUGE,JAUNE,VIOLET,VERT,
-		                                          BLEU,ORANGE};
+	public static final int[] COULEUR_AUTORISEE = { ROUGE, JAUNE, VIOLET, VERT,
+			BLEU, ORANGE };
 
 	/**
 	 * Matrice carré d'ordre "COULEUR_AUTORISEE" représentant le résultat obtenu
@@ -63,12 +63,14 @@ public class Caisse implements Dessinable, Serializable {
 	 * de deux couleurs (intersection L/C de la matrice). Lorqu'une fusion est
 	 * impossible l'intersection de ces deux couleurs vaut 0.
 	 */
-	public static final int[][] FUSION_COULEUR = { 
-		    { 0, ORANGE, 0, JAUNE, VIOLET, 0 },
-			{ ORANGE, 0, 0, 0, VERT, 0 }, { 0, 0, 0, 0, 0, 0 }, 
-			{ JAUNE, 0, 0, 0, 0, 0 },{ VIOLET, VERT, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }                 };
-
+	public static final int[][] FUSION_COULEUR = {
+			{ 0, ORANGE, 0, JAUNE, VIOLET, 0 },//
+			{ ORANGE, 0, 0, 0, VERT, 0 },//
+			{ 0, 0, 0, 0, 0, 0 },//
+			{ JAUNE, 0, 0, 0, 0, 0 },//
+			{ VIOLET, VERT, 0, 0, 0, 0 },//
+			{ 0, 0, 0, 0, 0, 0 } //
+	};
 
 	/**
 	 * Chemin vers les images des caisses (pour l'affichage sur la partie

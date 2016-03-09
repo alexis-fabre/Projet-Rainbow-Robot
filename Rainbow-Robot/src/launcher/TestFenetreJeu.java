@@ -95,14 +95,14 @@ public class TestFenetreJeu {
 		positionsInaccessibles[3] = new Position(1, 1);
 		// Caisse à récupérer
 		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		caisseARecuperee.add(new Caisse(2));
-		caisseARecuperee.add(new Caisse(5));
+		caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+		caisseARecuperee.add(new Caisse(Caisse.BLEU));
 		// Caisse sur le plateau de jeu
 		Caisse[] caissePlateau = new Caisse[4];
-		caissePlateau[0] = new Caisse(1, new Position(3, 4));
-		caissePlateau[1] = new Caisse(5, new Position(5, 5));
-		caissePlateau[2] = new Caisse(2, new Position(4, 4));
-		caissePlateau[3] = new Caisse(6, new Position(2, 2));
+		caissePlateau[0] = new Caisse(Caisse.ROUGE, new Position(3, 4));
+		caissePlateau[1] = new Caisse(Caisse.BLEU, new Position(5, 5));
+		caissePlateau[2] = new Caisse(Caisse.JAUNE, new Position(4, 4));
+		caissePlateau[3] = new Caisse(Caisse.ORANGE, new Position(2, 2));
 		// Vortex
 		Vortex vortex = new Vortex(new Position(8, 5));
 		// Robot
