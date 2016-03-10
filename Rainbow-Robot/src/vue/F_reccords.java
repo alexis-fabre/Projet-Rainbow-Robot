@@ -7,8 +7,13 @@ package vue;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -124,6 +129,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 		la_contenu.setBounds(10, 10, 850, 500);
 		la_contenu.setFont(new Font("Georgia", Font.PLAIN, 30));
 		la_contenu.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		// récupération des données
 		ArrayList<LigneUsernameScore> ligneUsernameScore = OperationsFichier
 				.lectureFichierReccord(new File("./Ressource/highscore1.txt"));
@@ -151,6 +157,72 @@ public class F_reccords extends JFrame implements ChangementLangue {
 
 		aAjouter.add(la_contenu);
 		return aAjouter;
+	}
+	
+	/**
+	 * Méthode permettant de savoir si un score est dans le top 10 du niveau
+	 * @param score Score à comparer
+	 * @return la place dans le classement ou -1 si ce n'est pas un record
+	 */
+	public int estRecord(String score) {
+		String ligne;
+		String carMinute = null, carSeconde = null;
+		BufferedReader fichier;
+		int[][] records = new int[10][2];
+		int nbTokenName, nbTkenScore;
+		StringTokenizer tokenName;
+		StringTokenizer tokenScore;
+		try {
+			fichier = new BufferedReader(new FileReader("./Ressource/highscore1.txt"));
+			 // Lecture ligne par ligne
+			try {
+				while((ligne = fichier.readLine()) != null) {
+					// Pour séparer les pseudos et les temps
+					tokenName = new StringTokenizer(ligne,"#");
+					// On compte le nombre de sous-chaîne pour le parcours
+					nbTokenName = tokenName.countTokens();
+					
+					// Parcours des toutes les chaînes
+					for (int i = 0; i < nbTokenName; i++) {
+						// On "ignore" le pseudo
+						tokenName.nextToken();
+						// Séparation des minutes et secondes
+						tokenScore = new StringTokenizer(ligne, " : ");
+						// Sauvegarde des minutes
+						records [i][0] = Integer.parseInt(tokenScore.nextToken());
+						// Sauvegarde des secondes
+						records [i][1] = Integer.parseInt(tokenScore.nextToken());
+					}
+				}	
+			} catch (IOException erreur) {
+					System.out.println("Problème avec la lecture du fichier des records");
+				} finally {
+					try {
+						fichier.close();	// fermeture du fichier
+					} catch (IOException erreur) {
+						System.out.println("Problème avec la fermeture du fichier record");
+					}
+				}
+			} catch (FileNotFoundException erreur) {
+				System.out.println("Fichier records non trouvé");
+			}
+		// On découpe pour récupérer séparemment les minutes et les secondes
+		String[] tabScore = score.split(" : ");
+		
+		tabScore[0] = carMinute;
+		tabScore[1] = carSeconde;
+		int minute, seconde;
+		minute = Integer.parseInt(carMinute);
+		seconde = Integer.parseInt(carSeconde);
+		
+		// Parcours du tableau des records
+		for (int i = 0; i <= records.length; i++) {
+			// Si le temps le score du joueur courant est inférieur on retourne true
+			if (minute <= records[i][0] && seconde <= records[i][1]) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	/*
