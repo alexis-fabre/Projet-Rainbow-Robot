@@ -219,7 +219,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 		for (int i = 0; i <= records.length; i++) {
 			// Si le temps le score du joueur courant est inférieur on retourne true
 			if (minute <= records[i][0] && seconde <= records[i][1]) {
-				return i;
+				return i + 1;
 			}
 		}
 		return -1;

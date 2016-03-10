@@ -328,11 +328,11 @@ public class ClicSouris implements MouseListener, Observer {
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					fenetreCustom.getTf_cheminFichier().setText(
 							chooser.getSelectedFile().getAbsolutePath()
-									.toString());
+							.toString());
 				}
 			}
 		}
-				
+
 		if (vue instanceof F_jeuRainbow) {
 			F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
@@ -365,7 +365,7 @@ public class ClicSouris implements MouseListener, Observer {
 				case 2: // Quitter
 					// On revient à l'accueil
 					String[] traductionMenuQuitterPartie = ChoixLangue
-							.getChoixLangue().getQuitterPartie();
+					.getChoixLangue().getQuitterPartie();
 
 					int option = JOptionPane.showConfirmDialog(null,
 							traductionMenuQuitterPartie[0],
@@ -407,6 +407,7 @@ public class ClicSouris implements MouseListener, Observer {
 	public void update(Observable o, Object arg) {
 		if (o instanceof Partie) {
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
+			F_reccords classement = (F_reccords) vue;
 
 			fenetre.stopChrono();
 
@@ -414,6 +415,15 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
+			// Si le joueur est dans le top 10 du niveau
+			if (classement.estRecord(fenetre.getScore()) != -1) {
+				int classementJoueur = classement.estRecord(fenetre.getScore());
+				JOptionPane jop = new JOptionPane();
+				String nom = jop.showInputDialog(null, "Vous avez fait le " + classementJoueur +
+						"ème temps de ce niveau !\nVeuillez entrer un pseudo ", 
+						"Temps record !", JOptionPane.QUESTION_MESSAGE);
+			}
+			
 			int retour = JOptionPane.showOptionDialog(null,
 					traductionFinPartie[0] + " " + fenetre.getScore(),
 					traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
@@ -442,6 +452,7 @@ public class ClicSouris implements MouseListener, Observer {
 				fenetreAccueil.setVisible(true);
 				break;
 			}
+			// Si le joueur fait partie du classement
 		}
 	}
 
