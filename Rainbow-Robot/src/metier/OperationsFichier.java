@@ -96,4 +96,52 @@ public class OperationsFichier {
 		}
 	}
 
+	/**
+	 * Lit un fichier et le transforme en une partie. Le fichier doit respecter
+	 * certaines règles et des vérifications seront faites sur la cohérence et
+	 * la resolvabilité de la partie.
+	 *
+	 * @param fichier
+	 *            contenu de la partie
+	 */
+	public static void recupFichier(File fichier) {
+		int numLigne = 0;
+		int ligne;
+		int colonne;
+		String temp;
+		char tableau[][];
+		ArrayList<Caisse> caisseARecuperer = null;
+		try (BufferedReader fich = new BufferedReader(new FileReader(fichier))) {
+			ligne = Integer.valueOf(fich.readLine());
+			colonne = Integer.valueOf(fich.readLine());
+
+			temp = fich.readLine();
+
+			for (int i = 0; i < temp.length(); i++) {
+				// créer une focntion pour recuperer le nombre en fonction de la
+				// lettre
+				// caisseARecuperer.add(temp.charAt(i));
+			}
+
+			tableau = new char[ligne][colonne];
+
+			do {
+				temp = fich.readLine();
+				if (temp != null && temp.length() != 0) {
+
+					for (int i = 0; i < temp.length(); i++) {
+						tableau[numLigne][i] = temp.charAt(i);
+					}
+					numLigne++;
+				}
+			} while (temp != null);
+
+			new Partie(Integer.valueOf(tableau[0][0]),
+					Integer.valueOf(tableau[1][0]), null, null, null, null,
+					null);
+		} catch (IOException e) {
+			System.out.println("Probl鮥 d'acc鳠au fichier " + fichier);
+		}
+	}
+
 }
