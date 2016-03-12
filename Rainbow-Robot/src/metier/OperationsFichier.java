@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import metier.LigneUsernameScore;
 
 /**
@@ -109,8 +111,16 @@ public class OperationsFichier {
 		int ligne;
 		int colonne;
 		String temp;
+		Robot robot = null;
+		Vortex vortex = null;
+		Caisse[] caissePlateau;
+		Caisse[] resultatCaisse;
+		Position[] posInacessible;
+		Position[] resultatPos;
+		int indice = 0;
+		int parcours = 0;
 		char tableau[][];
-		ArrayList<Caisse> caisseARecuperer = null;
+		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
 		try (BufferedReader fich = new BufferedReader(new FileReader(fichier))) {
 			ligne = Integer.valueOf(fich.readLine());
 			colonne = Integer.valueOf(fich.readLine());
@@ -118,17 +128,19 @@ public class OperationsFichier {
 			temp = fich.readLine();
 
 			for (int i = 0; i < temp.length(); i++) {
-				// créer une focntion pour recuperer le nombre en fonction de la
-				// lettre
-				// caisseARecuperer.add(temp.charAt(i));
+				if(Caisse.getCaisse(temp.charAt(i))== -1){
+					throw new IllegalArgumentException("Le fichier n'est pas bon");
+				} else {
+					caisseARecuperer.add(new Caisse(Caisse.getCaisse(temp.charAt(i))));
+				}
 			}
 
 			tableau = new char[ligne][colonne];
-
+			posInacessible = new Position[ligne*colonne];
+			caissePlateau = new Caisse[ligne*colonne];
 			do {
 				temp = fich.readLine();
 				if (temp != null && temp.length() != 0) {
-
 					for (int i = 0; i < temp.length(); i++) {
 						tableau[numLigne][i] = temp.charAt(i);
 					}
@@ -136,11 +148,110 @@ public class OperationsFichier {
 				}
 			} while (temp != null);
 
-			new Partie(Integer.valueOf(tableau[0][0]),
-					Integer.valueOf(tableau[1][0]), null, null, null, null,
-					null);
+			for(int y = 0; y < tableau.length; y++){
+				System.out.println();
+				for(int x= 0; x < tableau[y].length; x++){
+					switch (tableau[y][x]){
+					case 'Z':
+						if(robot==null){
+							robot = new Robot(Robot.ORIENTATION_HAUT,new Position(x,y));
+							break;
+						} else {
+							throw new IllegalArgumentException("Le fichier n'est pas bon");	
+						}
+					case 'Q':
+						if(robot==null){
+							robot = new Robot(Robot.ORIENTATION_GAUCHE,new Position(x,y));
+							break;
+						} else {
+							throw new IllegalArgumentException("Le fichier n'est pas bon");	
+						}
+					case 'W':
+						if(robot==null){
+							robot = new Robot(Robot.ORIENTATION_BAS,new Position(x,y));
+							break;
+						} else {
+							throw new IllegalArgumentException("Le fichier n'est pas bon");	
+						}
+					case 'S':
+						if(robot==null){
+							robot = new Robot(Robot.ORIENTATION_DROITE,new Position(x,y));
+							break;
+						} else {
+							throw new IllegalArgumentException("Le fichier n'est pas bon");	
+						}
+					case 'V':
+						if(vortex==null){
+							vortex = new Vortex(new Position(x,y));
+							break;
+						} else {
+							throw new IllegalArgumentException("Le fichier n'est pas bon");	
+						}
+					case 'B':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('B'),new Position(x,y));
+						break;
+					case 'G':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('G'),new Position(x,y));
+						break;
+					case 'R':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('R'),new Position(x,y));
+						break;
+					case 'Y':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('Y'),new Position(x,y));
+						break;
+					case 'O':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('O'),new Position(x,y));
+						break;
+					case 'P':
+						caissePlateau[x+y*tableau[x].length] = new Caisse(Caisse.getCaisse('P'),new Position(x,y));
+						break;
+					case 'X':
+						posInacessible[x+y*tableau[x].length] = new Position(x,y);
+
+						break;
+					case ' ':
+						break;
+					}
+				}
+			}
+
+
+			for(int i = 0 ; i < caissePlateau.length; i++){
+				if(caissePlateau[i] != null){
+					indice++;
+				}
+			}
+
+			resultatCaisse = new Caisse[indice];
+			for(int y = 0 ; y < caissePlateau.length; y++){
+				if(caissePlateau[y] !=null){
+					resultatCaisse[parcours] = caissePlateau[y];
+					parcours++;
+				}
+
+			}
+
+			parcours = 0;
+			indice = 0;
+			for(int i = 0 ; i < posInacessible.length; i++){
+				if(posInacessible[i] != null){
+					indice++;
+				}
+			}
+			resultatPos = new Position[indice];
+			for(int y = 0 ; y < posInacessible.length; y++){
+				if(posInacessible[y] !=null){
+					resultatPos[parcours] = posInacessible[y];
+					parcours++;
+				}
+			}
+
+			System.out.println(Arrays.toString(resultatCaisse));
+			System.out.println( Arrays.toString(resultatPos));
+			new Partie(ligne,colonne, resultatPos, robot, vortex, caisseARecuperer,
+					resultatCaisse);
 		} catch (IOException e) {
-			System.out.println("Probl鮥 d'acc鳠au fichier " + fichier);
+			System.out.println("Problème d'accès au fichier " + fichier);
 		}
 	}
 

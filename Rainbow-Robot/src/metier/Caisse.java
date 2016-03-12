@@ -296,4 +296,28 @@ public class Caisse implements Dessinable, Serializable {
 			return new Caisse(couleur, (Position) pos_courante.clone());
 		}
 	}
+	
+
+	/**
+	 * Permet de récupérer l'entier correspondant a une caisse
+	 * @param couleur le caractère correpondant à une caisse
+	 * @return la valeur correspondante à la couleur
+	 */
+	public static int getCaisse(char couleur){
+		if(couleur == 'R'){
+			return ROUGE;
+		} else if (couleur =='Y'){
+			return JAUNE;
+		} else if (couleur == 'P'){
+			return VIOLET;
+		}  else if (couleur == 'O'){
+			return ORANGE;
+		} else if (couleur == 'G'){
+			return VERT;
+		} else if (couleur == 'B') {
+			return BLEU;
+		} else {
+			return -1;
+		}
+	}
 }
