@@ -253,8 +253,6 @@ public class F_commandes extends JDialog implements ChangementLangue {
             getBt_reset().setText(traductionCommandes[10]);
             getBt_annuler().setText(traductionCommandes[11]);
             getBt_save().setText(traductionCommandes[12]);
-            
-
     }
 
     /**
@@ -493,6 +491,4 @@ public class F_commandes extends JDialog implements ChangementLangue {
         }
         return la_fusion;
     }
-    
-    
 }
