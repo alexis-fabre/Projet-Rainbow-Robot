@@ -62,20 +62,21 @@ public class ChoixLangue {
 	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
 	 * <li>La 2ème colonne correspond au titre de la page.</li>
 	 * <li>La 3ème colonne correspond au contenu du bouton Jouer.</li>
-	 * <li>La 4ème colonne correspond au contenu du bouton Reccors.</li>
+	 * <li>La 4ème colonne correspond au contenu du bouton Reccords.</li>
 	 * <li>La 5ème colonne correspond au contenu du bouton Langue.</li>
-	 * <li>La 6ème colonne correspond au contenu du bouton A Propos.</li>
-	 * <li>La 7ème colonne correspond au contenu du bouton Quitter.</li>
+	 * <li>La 6ème colonne correspond au contenu du bouton Commandes</li>
+	 * <li>La 7ème colonne correspond au contenu du bouton A Propos.</li>
+	 * <li>La 8ème colonne correspond au contenu du bouton Quitter.</li>
 	 * <li></li>
 	 * </ul>
 	 * </li>
 	 * </ul>
 	 */
 	private static final String[][] ACCUEIL = {
-			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
-					"A Propos", "Quitter" },
+			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue", 
+			    "Commandes", "A Propos", "Quitter" },
 			{ "Home", "Rainbow Robot", "Play", "High Scores", "Language",
-					"About", "Exit" } };
+					"Controls", "About", "Exit" } };
 
 	/**
 	 * *

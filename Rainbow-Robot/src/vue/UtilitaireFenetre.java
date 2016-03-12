@@ -27,7 +27,7 @@ public class UtilitaireFenetre {
          * Dimension des boutons dans la fenêtre de modification des 
          * commandes
          */
-        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(45,
+        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(55,
                         30);
         
         /**
@@ -52,7 +52,10 @@ public class UtilitaireFenetre {
 			60);
 	/** Dimension des fenêtres usuelles */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
-
+	
+	/** Dimensions de la fenêtre d'accueil */
+        public static final Dimension DIM_FENETRE_ACCUEIL = new Dimension(1000, 800);
+        
 	/**
          * Dimension des fenêtres usuelles
          */
