@@ -106,7 +106,8 @@ public class OperationsFichier {
 	 * @param fichier
 	 *            contenu de la partie
 	 */
-	public static void recupFichier(File fichier) {
+	public static Partie recupFichier(File fichier) {
+		Partie partie = null;
 		int numLigne = 0;
 		int ligne;
 		int colonne;
@@ -248,11 +249,13 @@ public class OperationsFichier {
 
 			System.out.println(Arrays.toString(resultatCaisse));
 			System.out.println( Arrays.toString(resultatPos));
-			new Partie(ligne,colonne, resultatPos, robot, vortex, caisseARecuperer,
+			partie = new Partie(ligne,colonne, resultatPos, robot, vortex, caisseARecuperer,
 					resultatCaisse);
+			
 		} catch (IOException e) {
 			System.out.println("Problème d'accès au fichier " + fichier);
 		}
+		return partie;
 	}
 
 }
