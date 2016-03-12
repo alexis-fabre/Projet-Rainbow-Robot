@@ -6,6 +6,8 @@
 package evenement;
 
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
@@ -13,7 +15,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 import metier.JeuRainbow;
 import metier.Partie;
@@ -39,7 +43,7 @@ import vue.F_story;
  * @version 1.0
  */
 public class ClicSouris implements MouseListener, Observer {
-
+                
 	/**
 	 * Représentation du jeu Rainbow Robot (partie métier). Il permet de passer
 	 * d'une partie à un autre.
@@ -166,6 +170,13 @@ public class ClicSouris implements MouseListener, Observer {
 				// On réactualise la fenêtre
 				fenetreAccueil.setLangue();
 			}
+			// Bouton Commandes
+                        if (e.getSource() == fenetreAccueil.getBt_Commande()) {
+                            // On lance la page de modificaion des commandes
+                            F_commandes nouvelleFenetre = new F_commandes(this, (JFrame) vue);
+                            nouvelleFenetre.setVisible(true);
+                            setFenetre(nouvelleFenetre);
+                        }
 
 			// Bouton A Propos
 			if (e.getSource() == fenetreAccueil.getBt_Apropos()) {
@@ -225,7 +236,95 @@ public class ClicSouris implements MouseListener, Observer {
 				setFenetre(nouvelleFenetre);
 			}
 		}
-
+		
+		if (vue instanceof F_commandes) {
+		    F_commandes fenetreCommande = (F_commandes) vue;
+		    
+		    // on modifie le texte des touches par rapport au mode 
+                    // absolu
+		    fenetreCommande.getBr_absolu().addActionListener(new ActionListener() {
+                        
+                        public void actionPerformed(ActionEvent f) {
+                            System.out.println("Selected Button = passé dans abs");
+                            ToucheClavier.setModeAbsolu(true);          
+                            fenetreCommande.setTextBt();
+                            
+                        }
+                    });
+		    // on modifie le texte des touches par rapport au mode 
+		    // relatif
+		    fenetreCommande.getBr_relatif().addActionListener(new ActionListener() {
+                        
+                        public void actionPerformed(ActionEvent g) {
+                            System.out.println("Selected Button = passé dans rel");
+                            ToucheClavier.setModeAbsolu(false);          
+                            fenetreCommande.setTextBt();
+                        }
+                    });
+		    
+		    // bouton avancer
+		    if (e.getSource() == fenetreCommande.getBt_avancer()) {
+		        F_commandes.afficherPressKey(0,fenetreCommande.getBt_avancer());
+		    }
+		    // bouton gauche
+		    if (e.getSource() == fenetreCommande.getBt_gauche()) {
+		        F_commandes.afficherPressKey(1,fenetreCommande.getBt_gauche());
+                    }
+		    // bouton droit
+		    if (e.getSource() == fenetreCommande.getBt_droite()) {
+		        F_commandes.afficherPressKey(2,fenetreCommande.getBt_droite());
+                    }
+		    // bouton reculer
+                    if (e.getSource() == fenetreCommande.getBt_reculer()) {
+                        F_commandes.afficherPressKey(3,fenetreCommande.getBt_reculer());
+                    }
+                    // bouton fusion
+                    if (e.getSource() == fenetreCommande.getBt_fusion()) {
+                        F_commandes.afficherPressKey(4,fenetreCommande.getBt_fusion());
+                    }
+                    // bouton attraper
+                    if (e.getSource() == fenetreCommande.getBt_attraper()) {
+                        F_commandes.afficherPressKey(5,fenetreCommande.getBt_attraper());
+                    }
+                    // bouton reset
+                    if (e.getSource() == fenetreCommande.getBt_reset()) {
+                        if (ToucheClavier.isModeAbsolu) {
+                            for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
+                                ToucheClavier.TOUCHES_ABSOLU[i] = 
+                                        ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
+                            }
+                        } else {
+                            for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
+                                ToucheClavier.TOUCHES_RELATIF[i] = 
+                                        ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
+                            }
+                        }
+                        fenetreCommande.setTextBt();
+                    }
+                    // bouton sauvegarder
+                    if (e.getSource() == fenetreCommande.getBt_save()) {
+                       setFenetre(fenetreCommande.getOwner());
+                       fenetreCommande.dispose();
+                    }
+                    // bouton annuler
+                    if(e.getSource() == fenetreCommande.getBt_annuler()){
+                        // tableau temporaire ayant stocké les touche à 
+                        // l'ouverture de la fenêtre
+                        int[] leTmp = new int[ToucheClavier.NB_TOUCHES];
+                        leTmp = F_commandes.getTemp();
+                        if (ToucheClavier.isModeAbsolu) {
+                            for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
+                                ToucheClavier.TOUCHES_ABSOLU[i] = leTmp[i];
+                            }
+                        } else {
+                            for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
+                                ToucheClavier.TOUCHES_RELATIF[i] = leTmp[i];
+                            }
+                        }
+                        fenetreCommande.setTextBt();
+                    }                    
+                }
+		
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// de choix du mode
 		if (vue instanceof F_choixMode) {
@@ -265,7 +364,7 @@ public class ClicSouris implements MouseListener, Observer {
 			// Bouton Retour
 			if (e.getSource() == fenetreChoixMode.getBt_Retour()) {
 				// On lance la fenêtre Accueil F_accueil.java
-				F_story nouvelleFenetre = new F_story(this);
+				F_accueil nouvelleFenetre = new F_accueil(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -308,12 +407,6 @@ public class ClicSouris implements MouseListener, Observer {
 				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
-				vue.setVisible(false);
-				nouvelleFenetre.setVisible(true);
-				setFenetre(nouvelleFenetre);
-			}
-			if (e.getSource() == fenetreChoixNiveau.getBt_Precedent()) {
-				F_story nouvelleFenetre = new F_story(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -445,4 +538,7 @@ public class ClicSouris implements MouseListener, Observer {
 		}
 	}
 
+	
+    
+    
 }
