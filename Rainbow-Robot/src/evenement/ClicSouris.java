@@ -23,7 +23,6 @@ import vue.F_abstractModeJeu;
 import vue.F_accueil;
 import vue.F_arcade;
 import vue.F_choixMode;
-import vue.F_commandes;
 import vue.F_choixNiveau;
 import vue.F_custom;
 import vue.F_jeuRainbow;

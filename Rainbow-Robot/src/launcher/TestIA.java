@@ -71,20 +71,20 @@ public class TestIA {
 
 		Caisse[] caissePlateau = new Caisse[15];
 		caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(0, 0));
-		caissePlateau[1] = new Caisse(Caisse.BLEU, new Position(1, 1));
-		caissePlateau[2] = new Caisse(Caisse.BLEU, new Position(2, 2));
-		caissePlateau[3] = new Caisse(Caisse.VIOLET, new Position(2, 5));
-		caissePlateau[4] = new Caisse(Caisse.BLEU, new Position(3, 4));
-		caissePlateau[5] = new Caisse(Caisse.VERT, new Position(7, 8));
-		caissePlateau[6] = new Caisse(Caisse.BLEU, new Position(4, 9));
-		caissePlateau[7] = new Caisse(Caisse.VIOLET, new Position(5, 1));
-		caissePlateau[8] = new Caisse(Caisse.BLEU, new Position(5, 9));
-		caissePlateau[9] = new Caisse(Caisse.ROUGE, new Position(6, 7));
-		caissePlateau[10] = new Caisse(Caisse.BLEU, new Position(8, 4));
-		caissePlateau[11] = new Caisse(Caisse.ROUGE, new Position(8, 5));
-		caissePlateau[12] = new Caisse(Caisse.VERT, new Position(8, 6));
-		caissePlateau[13] = new Caisse(Caisse.ROUGE, new Position(9, 3));
-		caissePlateau[14] = new Caisse(Caisse.JAUNE, new Position(9, 4));
+		caissePlateau[1] = new Caisse(Caisse.JAUNE, new Position(9, 5));
+		caissePlateau[2] = new Caisse(Caisse.BLEU, new Position(1, 1));
+		caissePlateau[3] = new Caisse(Caisse.BLEU, new Position(2, 2));
+		caissePlateau[4] = new Caisse(Caisse.BLEU, new Position(4, 9));
+		caissePlateau[5] = new Caisse(Caisse.BLEU, new Position(3, 4));
+		caissePlateau[6] = new Caisse(Caisse.BLEU, new Position(8, 4));
+		caissePlateau[7] = new Caisse(Caisse.BLEU, new Position(5, 9));
+		caissePlateau[8] = new Caisse(Caisse.VIOLET, new Position(2, 5));
+		caissePlateau[9] = new Caisse(Caisse.VIOLET, new Position(5, 1));
+		caissePlateau[10] = new Caisse(Caisse.VERT, new Position(7, 8));
+		caissePlateau[11] = new Caisse(Caisse.VERT, new Position(8, 6));
+		caissePlateau[12] = new Caisse(Caisse.ROUGE, new Position(6, 7));
+		caissePlateau[13] = new Caisse(Caisse.ROUGE, new Position(8, 5));
+		caissePlateau[14] = new Caisse(Caisse.ROUGE, new Position(9, 3));
 
 		Vortex vortex = new Vortex(new Position(5, 5));
 

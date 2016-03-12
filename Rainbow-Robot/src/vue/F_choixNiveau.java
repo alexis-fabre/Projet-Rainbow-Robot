@@ -44,13 +44,22 @@ public class F_choixNiveau extends JFrame implements ChangementLangue {
 	private int niveauChoisi;
 
 	/**
-	 * TODO Expliquer le fonctionnement du constructeur
+	 * <p>
+	 * Menu permettant d'accéder au différent niveau du mode story.<br />
+	 * La fenêtre permet de selectionner un niveau puis de cliquer sur Jouer
+	 * pour lancer la partie.<br />
+	 * Par défaut, c'est le premier niveau qui est choisit.<br />
+	 * Initialise les composants et les disposent sur un contexte graphique 2D.<br />
+	 * La fenêtre s'affiche au centre de l'écran et n'est pas redimensionnable
+	 * pour éviter tous soucis de disposition.<br />
+	 * </p>
 	 * 
 	 * @param gestion
+	 *            le contrôleur qui va controler cette vue = cible
+	 *            evenementielle
 	 */
 	public F_choixNiveau(ClicSouris gestion) {
 		super();
-		// TODO Redéfinir une taille
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
