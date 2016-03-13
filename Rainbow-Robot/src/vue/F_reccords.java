@@ -161,15 +161,18 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	
 	/**
 	 * Méthode permettant de savoir si un score est dans le top 10 du niveau
+	 * et à quelle place
 	 * @param score Score à comparer
-	 * @return la place dans le classement ou -1 si ce n'est pas un record
+	 * @return la place dans le classement 
+	 * 		   -1 si ce n'est pas un record
 	 */
 	public int estRecord(String score) {
 		String ligne;
-		String carMinute = null, carSeconde = null;
+		String carMinute, carSeconde;
 		BufferedReader fichier;
 		int[][] records = new int[10][2];
-		int nbTokenName, nbTkenScore;
+		int nbTokenName;
+		int minute, seconde;
 		StringTokenizer tokenName;
 		StringTokenizer tokenScore;
 		try {
@@ -207,21 +210,24 @@ public class F_reccords extends JFrame implements ChangementLangue {
 				System.out.println("Fichier records non trouvé");
 			}
 		// On découpe pour récupérer séparemment les minutes et les secondes
+		// su score que l'on souhaite analyser
 		String[] tabScore = score.split(" : ");
+		carMinute = tabScore[0];
+		carSeconde = tabScore[1];
 		
-		tabScore[0] = carMinute;
-		tabScore[1] = carSeconde;
-		int minute, seconde;
+		// On parse les string en int pour pouvoir les comparer
 		minute = Integer.parseInt(carMinute);
 		seconde = Integer.parseInt(carSeconde);
 		
 		// Parcours du tableau des records
 		for (int i = 0; i <= records.length; i++) {
-			// Si le temps le score du joueur courant est inférieur on retourne true
+			// Si le temps le score du joueur courant est inférieur on retourne
+			// son classement
 			if (minute <= records[i][0] && seconde <= records[i][1]) {
 				return i + 1;
 			}
 		}
+		// Cas où le score ne fait pas parti du top 10
 		return -1;
 	}
 
