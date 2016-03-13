@@ -9,21 +9,23 @@ import vue.F_commandes;
 
 /**
  * TODO commenter l'objectif du programme
+ * 
  * @author Florian
  * @version 0.1
  */
 public class TestCommandes {
 
-    /**
-     * TODO commenter la méthode
-     * @param args
-     */
-    public static void main(String[] args) {
-        JeuRainbow jeu = JeuRainbow.lectureFichier();
-        ClicSouris gestion = new ClicSouris(jeu);
+	/**
+	 * TODO commenter la méthode
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		JeuRainbow jeu = JeuRainbow.lectureFichier();
+		ClicSouris gestion = new ClicSouris(jeu);
 
-        F_commandes testCmd = new F_commandes(gestion);
-        testCmd.setVisible(true);
-    }
+		// F_commandes testCmd = new F_commandes(gestion);
+		// testCmd.setVisible(true);
+	}
 
 }
