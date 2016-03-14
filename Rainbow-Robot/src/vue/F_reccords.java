@@ -224,6 +224,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 			// Si le temps le score du joueur courant est inférieur on retourne
 			// son classement
 			if (minute <= records[i][0] && seconde <= records[i][1]) {
+				// Retourne le classement si le score fait parti du top 10
 				return i + 1;
 			}
 		}
