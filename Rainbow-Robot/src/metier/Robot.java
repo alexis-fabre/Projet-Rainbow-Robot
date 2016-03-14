@@ -717,71 +717,83 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
-	 * TODO enlever sysout et bout de code en commentaire 
+	 * Méthode pour faire fusionner deux caisses.
+	 * TODO caisse Jaune de mes couilles va te faire foutre
+	 * Méthode qui fonction 2 fois sur 3 avec les niveaux à ma disposition
 	 */
 	public void fusionner() {
-		
 		initRobotAction();
 		derniereAction = ACTION_FUSIONNER;
 		Caisse c2 = new Caisse(0) ;
+		Caisse[] caissePlateau = partie.getCaissePlateau();
 		
 		if (caisse != null) {
-			// fusionne en récupérant les informations de la 2ème caisse en 
-			// fonction de la position du robot et de son orientation 
+			// fusionne
 			switch (orientation) {
 			case ORIENTATION_GAUCHE:
 				c2.setCouleur(partie.getCaisseJeu(new Position(
-				   pos_courante.getX() - 2, pos_courante.getY())).getCouleur());
+						pos_courante.getX() - 2, pos_courante.getY())).getCouleur());
 				c2.setPosCaisse(new Position(pos_courante.getX() - 2, 
-						                                  pos_courante.getY()));
-				
-//				c2 = new Caisse(partie.getCaisseJeu(new Position(
-//						pos_courante.getX() - 2, pos_courante.getY())).getCouleur()
-//						,new Position(pos_courante.getX() - 2, pos_courante.getY()));
-				System.out.println(c2.toString()+ caisse.toString());
+						pos_courante.getY()));
 				break;
-				
+
 			case ORIENTATION_HAUT:
 				c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
 						pos_courante.getY() - 2)).getCouleur());
 				c2.setPosCaisse(new Position(pos_courante.getX(),
-						                               pos_courante.getY() - 2));
-//				c2 = new Caisse(partie.getCaisseJeu(new Position(pos_courante.getX(),
-//						pos_courante.getY() - 2)).getCouleur()
-//						,new Position(pos_courante.getX(), pos_courante.getY() -2));
-				System.out.println(c2.toString() + caisse.toString());
+						pos_courante.getY() - 2));
 				break;
+				
 			case ORIENTATION_DROITE:
 				c2.setCouleur(partie.getCaisseJeu(new Position(
 						pos_courante.getX() + 2,
 						pos_courante.getY())).getCouleur());
 				c2.setPosCaisse(new Position(pos_courante.getX() + 2,
-						                               pos_courante.getY()));
-//				c2 = new Caisse(partie.getCaisseJeu(new Position(
-//						pos_courante.getX() + 2, pos_courante.getY())).getCouleur()
-//						,new Position(pos_courante.getX()+2, pos_courante.getY()));
-				System.out.println(c2.toString()+ caisse.toString());
+						pos_courante.getY()));
 				break;
+				
 			case ORIENTATION_BAS:
 				c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
 						pos_courante.getY() + 2)).getCouleur());
 				c2.setPosCaisse(new Position(pos_courante.getX(),
-						                               pos_courante.getY() + 2));
-//				c2 = new Caisse(partie.getCaisseJeu(new Position(pos_courante.getX(),
-//						pos_courante.getY() + 2)).getCouleur()
-//						,new Position(pos_courante.getX(), pos_courante.getY() +2));
-				System.out.println(c2.toString()+ caisse.toString());
+						pos_courante.getY() + 2));
 				break;
 			}
-			Caisse.fusionCouleur(caisse, c2);
-			System.out.println(Caisse.fusionCouleur(caisse, c2).toString());
-			updateObserver();
+
+			// on initialise la caisse résultat fusion
+			Caisse c3 = Caisse.fusionCouleur(caisse, c2);
+			
+			for (int i = 0; i < caissePlateau.length; i++) {
+				
+				if (caissePlateau[i] != null
+						&& caissePlateau[i].getPosCaisse().equals(
+								                     caisse.getPosCaisse()) ) {
+					
+					// On fait disparaître la caisse
+					caissePlateau[i] = null;
+			        updateObserver();
+			
+				} else if(caissePlateau[i] != null
+					&& caissePlateau[i].getPosCaisse().equals(c2.getPosCaisse())
+					&& c3.getCouleur() != 0){
+				
+						//Robot prend la position de Caisse
+						pos_courante = new Position(caisse.getPosCaisse().getX(),
+								caisse.getPosCaisse().getY());
+						// On fait disparaître la caisse devant la caisse tenue
+						c2 = null;
+						// on fait disparaitre la caisse tenue
+						caisse = null;
+						// on fait apparaitre la caisse issue de la fusion 
+						caissePlateau[i] = c3;
+					    updateObserver();
+					
+				}
+			}
 		} else {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien
 		}
-		updateObserver();
 	}
 
 
