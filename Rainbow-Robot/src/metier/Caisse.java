@@ -133,7 +133,7 @@ public class Caisse implements Dessinable, Serializable {
 	 * @param c1
 	 *            première caisse à fusionner tenue par le robot
 	 * @param c2
-	 *            deuxième caisse à fusionner
+	 *            deuxième caisse à fusionner située devant la caisse tenue
 	 * @return c3 la caisse de nouvelle couleur, ou caisse de couleur 0 si la
 	 *         fusion n'est pas possible
 	 * 
@@ -147,7 +147,12 @@ public class Caisse implements Dessinable, Serializable {
 			// la nouvelle caisse prend comme couleur
 			// la fusion des couleurs des caisses c1 et c2
 			// couleur -1 car le premier indice d'un tableau est 0
-			c3.setCouleur(FUSION_COULEUR[c1.getCouleur() - 1][c2.getCouleur() - 1]);
+			c3.setCouleur(FUSION_COULEUR[c1.getCouleur() - 1]
+					                                     [c2.getCouleur() - 1]);
+			
+			// La caisse résultat de la fusion prend la position de c2
+			c3.setPosCaisse(new Position (c2.getPosCaisse().getX(),
+					                                c2.getPosCaisse().getY()));
 		}
 
 		return c3;
@@ -227,6 +232,15 @@ public class Caisse implements Dessinable, Serializable {
 	 */
 	public Position getPosCaisse() {
 		return pos_courante;
+	}
+	
+	/**
+	 * Modifie la position de la caisse
+	 * @param position
+	 *                nouvelle position
+	 */
+	public void setPosCaisse(Position position){
+		this.pos_courante = position;
 	}
 
 	/**

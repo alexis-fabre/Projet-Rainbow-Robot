@@ -170,6 +170,7 @@ public class ToucheClavier implements KeyListener {
                 } else if (e.getKeyCode() == TOUCHES_ABSOLU[4]) {
                     // touche pour fusionner
                     startPartie();
+                    metier.getPartieCourante().getRobot().fusionner();
                 } else if (e.getKeyCode() == TOUCHES_ABSOLU[5]) {
                     // touche pour attraper
                     startPartie();
@@ -252,6 +253,7 @@ public class ToucheClavier implements KeyListener {
                 } else if (e.getKeyCode() == TOUCHES_RELATIF[4]) {
                     // touche pour fusionner
                     startPartie();
+                    metier.getPartieCourante().getRobot().fusionner();
                 } else if (e.getKeyCode() == TOUCHES_RELATIF[5]) {
                     // touche pour attraper
                     startPartie();

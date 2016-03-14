@@ -718,19 +718,72 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * Méthode pour faire fusionner deux caisses. Ne pas l'utiliser
-	 * 
-	 * @param c2
-	 *            la caisse à fusionner
+	 * TODO enlever sysout et bout de code en commentaire 
 	 */
-	public void fusionner(Caisse c2) {
+	public void fusionner() {
+		
+		initRobotAction();
+		derniereAction = ACTION_FUSIONNER;
+		Caisse c2 = new Caisse(0) ;
+		
 		if (caisse != null) {
-			// fusionne
+			// fusionne en récupérant les informations de la 2ème caisse en 
+			// fonction de la position du robot et de son orientation 
+			switch (orientation) {
+			case ORIENTATION_GAUCHE:
+				c2.setCouleur(partie.getCaisseJeu(new Position(
+				   pos_courante.getX() - 2, pos_courante.getY())).getCouleur());
+				c2.setPosCaisse(new Position(pos_courante.getX() - 2, 
+						                                  pos_courante.getY()));
+				
+//				c2 = new Caisse(partie.getCaisseJeu(new Position(
+//						pos_courante.getX() - 2, pos_courante.getY())).getCouleur()
+//						,new Position(pos_courante.getX() - 2, pos_courante.getY()));
+				System.out.println(c2.toString()+ caisse.toString());
+				break;
+				
+			case ORIENTATION_HAUT:
+				c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() - 2)).getCouleur());
+				c2.setPosCaisse(new Position(pos_courante.getX(),
+						                               pos_courante.getY() - 2));
+//				c2 = new Caisse(partie.getCaisseJeu(new Position(pos_courante.getX(),
+//						pos_courante.getY() - 2)).getCouleur()
+//						,new Position(pos_courante.getX(), pos_courante.getY() -2));
+				System.out.println(c2.toString() + caisse.toString());
+				break;
+			case ORIENTATION_DROITE:
+				c2.setCouleur(partie.getCaisseJeu(new Position(
+						pos_courante.getX() + 2,
+						pos_courante.getY())).getCouleur());
+				c2.setPosCaisse(new Position(pos_courante.getX() + 2,
+						                               pos_courante.getY()));
+//				c2 = new Caisse(partie.getCaisseJeu(new Position(
+//						pos_courante.getX() + 2, pos_courante.getY())).getCouleur()
+//						,new Position(pos_courante.getX()+2, pos_courante.getY()));
+				System.out.println(c2.toString()+ caisse.toString());
+				break;
+			case ORIENTATION_BAS:
+				c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
+						pos_courante.getY() + 2)).getCouleur());
+				c2.setPosCaisse(new Position(pos_courante.getX(),
+						                               pos_courante.getY() + 2));
+//				c2 = new Caisse(partie.getCaisseJeu(new Position(pos_courante.getX(),
+//						pos_courante.getY() + 2)).getCouleur()
+//						,new Position(pos_courante.getX(), pos_courante.getY() +2));
+				System.out.println(c2.toString()+ caisse.toString());
+				break;
+			}
 			Caisse.fusionCouleur(caisse, c2);
+			System.out.println(Caisse.fusionCouleur(caisse, c2).toString());
+			updateObserver();
 		} else {
 			// le robot ne peut pas fusionner
 			// le robot ne fait rien
 		}
+		updateObserver();
 	}
+
 
 	/**
 	 * Détermine, uniquement si la dernière action était de pivoter, le sens de
