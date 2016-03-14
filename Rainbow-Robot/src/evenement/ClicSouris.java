@@ -500,13 +500,19 @@ public class ClicSouris implements MouseListener, Observer {
 	public void update(Observable o, Object arg) {
 		if (o instanceof Partie) {
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
-
+			F_reccords records = (F_reccords) vue;
+			
 			fenetre.stopChrono();
 
 			String[] traductionFinPartie = ChoixLangue.getChoixLangue()
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
+			if(records.estRecord(fenetre.getScore()) != -1) {
+				JOptionPane panePseudo = new JOptionPane();
+			    String pseudo = panePseudo.showInputDialog(null, "Veuillez entrer votre pseudo", "Nouveau record !",
+			    		JOptionPane.QUESTION_MESSAGE);
+			}
 			int retour = JOptionPane.showOptionDialog(null,
 					traductionFinPartie[0] + " " + fenetre.getScore(),
 					traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
