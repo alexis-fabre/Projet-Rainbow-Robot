@@ -166,7 +166,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	 * @return la place dans le classement 
 	 * 		   -1 si ce n'est pas un record
 	 */
-	public int estRecord(String score) {
+	public static int estRecord(String score) {
 		String ligne;
 		String carMinute, carSeconde;
 		BufferedReader fichier;
@@ -184,7 +184,6 @@ public class F_reccords extends JFrame implements ChangementLangue {
 					tokenName = new StringTokenizer(ligne,"#");
 					// On compte le nombre de sous-chaîne pour le parcours
 					nbTokenName = tokenName.countTokens();
-					
 					// Parcours des toutes les chaînes
 					for (int i = 0; i < nbTokenName; i++) {
 						// On "ignore" le pseudo
