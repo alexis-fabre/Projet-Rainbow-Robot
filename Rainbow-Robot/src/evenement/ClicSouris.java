@@ -523,10 +523,12 @@ public class ClicSouris implements MouseListener, Observer {
 			    		"Nouveau record !",
 			    		JOptionPane.QUESTION_MESSAGE);		
 				try {
-					File temp = new File("./Ressource/highscore1.txt");
+					File temp = new File(".Ressource/tempo.txt");
 					temp.createNewFile();
 					PrintWriter nouvFichier = new PrintWriter(temp);
-					BufferedReader fichier = new BufferedReader(new FileReader(".Ressource/tempo.txt"));
+					FileReader temp2 = new FileReader("./Ressource/highcrore1.txt");
+					BufferedReader fichier = new BufferedReader(temp2);
+					File aSupprimer = new File("./Ressource/highcrore1.txt");
 					String ligne;
 					int compteur = 1;
 					// On lit le fichier jusqu'au classement du joueur ou la fin du fichier
@@ -541,6 +543,7 @@ public class ClicSouris implements MouseListener, Observer {
 						nouvFichier.println(ligne);
 						compteur++;
 					}
+					aSupprimer.delete();
 					temp.renameTo(new File("./Ressource/highcrore1.txt"));
 				} catch (IOException erreur) {
 						System.out.println("Fichier records non trouvé");
