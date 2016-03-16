@@ -62,7 +62,7 @@ public class ToucheClavier implements KeyListener {
      * Boolean permettant de savoir dans quelle configuration des touches joue
      * l'utilisateur
      */
-    public static boolean isModeAbsolu = false;
+    public static boolean isModeAbsolu = true;
 
     /** On garde une référence du jeu pour pouvoir changer de niveaux */
     private JeuRainbow metier;
