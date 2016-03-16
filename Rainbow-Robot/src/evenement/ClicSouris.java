@@ -10,9 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -500,7 +508,6 @@ public class ClicSouris implements MouseListener, Observer {
 	public void update(Observable o, Object arg) {
 		if (o instanceof Partie) {
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
-			F_reccords records = (F_reccords) vue;
 			
 			fenetre.stopChrono();
 
@@ -508,10 +515,39 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
-			if(records.estRecord(fenetre.getScore()) != -1) {
+			if(F_reccords.estRecord(fenetre.getScore()) != -1) {
 				JOptionPane panePseudo = new JOptionPane();
-			    String pseudo = panePseudo.showInputDialog(null, "Veuillez entrer votre pseudo", "Nouveau record !",
-			    		JOptionPane.QUESTION_MESSAGE);
+				int classement = F_reccords.estRecord(fenetre.getScore());
+			    String pseudo = panePseudo.showInputDialog(null, "Vous avez fait le " + classement + "ième score\n"
+			    		+ "Veuillez entrer votre pseudo", 
+			    		"Nouveau record !",
+			    		JOptionPane.QUESTION_MESSAGE);		
+				try {
+					File temp = new File(".Ressource/tempo.txt");
+					temp.createNewFile();
+					PrintWriter nouvFichier = new PrintWriter(temp);
+					FileReader temp2 = new FileReader("./Ressource/highcrore1.txt");
+					BufferedReader fichier = new BufferedReader(temp2);
+					File aSupprimer = new File("./Ressource/highcrore1.txt");
+					String ligne;
+					int compteur = 1;
+					// On lit le fichier jusqu'au classement du joueur ou la fin du fichier
+					while((ligne = fichier.readLine()) != null && compteur <= 10) {
+						// Si on arrive au classement du joueur
+						if (compteur == classement) {
+							// On écrit la ligne
+							nouvFichier.println(pseudo + "#" + fenetre.getScore());
+						}
+						// else
+						// On recopie la ligne;
+						nouvFichier.println(ligne);
+						compteur++;
+					}
+					aSupprimer.delete();
+					temp.renameTo(new File("./Ressource/highcrore1.txt"));
+				} catch (IOException erreur) {
+						System.out.println("Fichier records non trouvé");
+				}
 			}
 			int retour = JOptionPane.showOptionDialog(null,
 					traductionFinPartie[0] + " " + fenetre.getScore(),
