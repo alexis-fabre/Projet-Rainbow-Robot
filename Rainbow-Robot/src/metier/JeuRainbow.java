@@ -392,5 +392,11 @@ public class JeuRainbow implements Serializable {
 		lectureFichier();
 		enregistrerFichier(jeu);
 	}
+	
+	public static JeuRainbow carteAleatoire(){
+		
+		return null;
+		
+	}
 
 }
