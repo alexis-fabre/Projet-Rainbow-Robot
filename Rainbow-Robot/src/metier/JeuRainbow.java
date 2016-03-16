@@ -19,6 +19,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Classe qui va permettre de gérer plusieurs partie et de les récupérer à
@@ -393,10 +394,31 @@ public class JeuRainbow implements Serializable {
 		enregistrerFichier(jeu);
 	}
 	
-	public static JeuRainbow carteAleatoire(){
+	public static Partie carteAleatoire(){
+		Random rand = new Random();
+		int colonne = (rand.nextInt() + 2)* 9;
+		int ligne = (rand.nextInt() + 2 ) * 6;
+		int nbCaisses = (ligne*colonne) /( rand.nextInt()+ 1) *4;
+		Caisse[] caissePlateau = new Caisse[nbCaisses];
+		System.out.println(colonne + ligne);
 		
-		return null;
+		Robot robot = new Robot(rand.nextInt()*4,new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
+		Vortex vortex = new Vortex(new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
+		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
+		int indice = (rand.nextInt()+1)*6;
 		
+		for( int i = 0 ; i <= indice ; i++)
+		{
+			caisseARecuperer.add(new Caisse((rand.nextInt()+1) *6));
+		}
+		
+		for (int i = 0; i < nbCaisses ; i++){
+			caissePlateau[i] = new Caisse((rand.nextInt()+1) *6, new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
+		}
+		
+		
+		return new Partie(ligne,colonne,null,robot,vortex,caisseARecuperer,caissePlateau);
+		 
 	}
 
 }

@@ -119,7 +119,7 @@ public class ToucheClavier implements KeyListener {
      * thread du vortex. Il abonne aussi la classe à la partie courante pour
      * détecter que la partie c'est lancé.
      */
-    private void startPartie() {
+    public void startPartie() {
         if (!premiereAction) {
             // On démarre le timer
             vue.startChrono();
