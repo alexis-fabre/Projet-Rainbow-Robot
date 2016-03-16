@@ -515,10 +515,10 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
+			// Si le joueur fait un score dans le top 10 du niveau
 			if(F_reccords.estRecord(fenetre.getScore()) != -1) {
-				JOptionPane panePseudo = new JOptionPane();
 				int classement = F_reccords.estRecord(fenetre.getScore());
-			    String pseudo = panePseudo.showInputDialog(null, "Vous avez fait le " + classement + "ième score\n"
+			    String pseudo = JOptionPane.showInputDialog(null, "Vous avez fait le " + classement + "ième score\n"
 			    		+ "Veuillez entrer votre pseudo", 
 			    		"Nouveau record !",
 			    		JOptionPane.QUESTION_MESSAGE);		
