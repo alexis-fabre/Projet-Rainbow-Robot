@@ -718,8 +718,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 	/**
 	 * Méthode pour faire fusionner deux caisses.
-	 * TODO caisse Jaune de mes couilles va te faire foutre
-	 * Méthode qui fonction 2 fois sur 3 avec les niveaux à ma disposition
+	 * TODO NullPointerException à gérer 
 	 */
 	public void fusionner() {
 		initRobotAction();
