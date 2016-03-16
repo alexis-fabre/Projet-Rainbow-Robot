@@ -189,7 +189,7 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 
 		// On rend inactif le bouton jouer (il sera actif dans une future
 		// version)
-		super.getBt_Jouer().setEnabled(false);
+		super.getBt_Jouer().setEnabled(true);
 
 		setLangue();
 
@@ -338,6 +338,8 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 			tf_cheminFichier = new JTextField();
 			UtilitaireFenetre.setAllSize(tf_cheminFichier, 500, 20);
 		}
+		tf_cheminFichier.getText();
+		
 		return tf_cheminFichier;
 	}
 

@@ -558,7 +558,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() + 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-											.getPosCaisse().getY() + 1)) {
+									.getPosCaisse().getY() + 1)) {
 						// On modifie la position de la caisse
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
@@ -572,7 +572,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-											.getPosCaisse().getY() - 1)) {
+									.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterGauche(orientation);
@@ -584,7 +584,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() - 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-											.getPosCaisse().getY() - 1)) {
+									.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterGauche(orientation);
@@ -596,7 +596,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-											.getPosCaisse().getY() + 1)) {
+									.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterGauche(orientation);
@@ -612,7 +612,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() - 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-											.getPosCaisse().getY() - 1)) {
+									.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() - 1);
 						// Nouvelle orientation du robot
@@ -626,7 +626,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-											.getPosCaisse().getY() + 1)) {
+									.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterDroite(orientation);
@@ -638,7 +638,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() + 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-											.getPosCaisse().getY() + 1)) {
+									.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterDroite(orientation);
@@ -650,7 +650,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-											.getPosCaisse().getY() - 1)) {
+									.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterDroite(orientation);
@@ -726,7 +726,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		derniereAction = ACTION_FUSIONNER;
 		Caisse c2 = new Caisse(0) ;
 		Caisse[] caissePlateau = partie.getCaissePlateau();
-		
+
 		if (caisse != null) {
 			// fusionne
 			switch (orientation) {
@@ -743,7 +743,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				c2.setPosCaisse(new Position(pos_courante.getX(),
 						pos_courante.getY() - 2));
 				break;
-				
+
 			case ORIENTATION_DROITE:
 				c2.setCouleur(partie.getCaisseJeu(new Position(
 						pos_courante.getX() + 2,
@@ -751,7 +751,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				c2.setPosCaisse(new Position(pos_courante.getX() + 2,
 						pos_courante.getY()));
 				break;
-				
+
 			case ORIENTATION_BAS:
 				c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
 						pos_courante.getY() + 2)).getCouleur());
@@ -762,35 +762,40 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 			// on initialise la caisse résultat fusion
 			Caisse c3 = Caisse.fusionCouleur(caisse, c2);
-			
+
 			for (int i = 0; i < caissePlateau.length; i++) {
-				
+
 				if (caissePlateau[i] != null
 						&& caissePlateau[i].getPosCaisse().equals(
-								                     caisse.getPosCaisse()) ) {
-					
-					// On fait disparaître la caisse
+								caisse.getPosCaisse()) && c3.getCouleur() != 0 ) {
+
+					//					     // On fait disparaître la caisse
 					caissePlateau[i] = null;
-			        updateObserver();
-			
-				} 
-				   if(caissePlateau[i] != null
-					&& caissePlateau[i].getPosCaisse().equals(c2.getPosCaisse())
-					&& c3.getCouleur() != 0){
-				
-						//Robot prend la position de Caisse
-						pos_courante = new Position(caisse.getPosCaisse().getX(),
-								caisse.getPosCaisse().getY());
-						// On fait disparaître la caisse devant la caisse tenue
-						c2 = null;
-						// on fait disparaitre la caisse tenue
-						caisse = null;
-						// on fait apparaitre la caisse issue de la fusion 
-						caissePlateau[i] = c3;
-					    updateObserver();
-					    break;
-					
+
+					//					           updateObserver();
+					for (int j = 0; i < caissePlateau.length; j++)  {
+						if(caissePlateau[j] != null
+								&& caissePlateau[j].getPosCaisse().equals(c2.getPosCaisse())
+								&& c3.getCouleur() != 0){
+
+							//Robot prend la position de Caisse
+							pos_courante = new Position(caisse.getPosCaisse().getX(),
+									caisse.getPosCaisse().getY());
+							// On fait disparaître la caisse devant la caisse tenue
+							c2 = null;
+							// on fait disparaitre la caisse tenue
+							caisse = null;
+							// on fait apparaitre la caisse issue de la fusion 
+							caissePlateau[j] = c3;
+							updateObserver();
+							break;
+
+
+						}
+					}
+
 				}
+
 			}
 		} else {
 			// le robot ne peut pas fusionner
@@ -814,8 +819,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		final int orientationDepart = Robot.angleToOrientation(angleDessin);
 		final int orientationArrivee = Robot.angleToOrientation(angleDessinMax);
 		return ((orientationArrivee > orientationDepart || (orientationArrivee == Robot.ORIENTATION_GAUCHE && orientationDepart == Robot.ORIENTATION_BAS)) && (orientationArrivee != Robot.ORIENTATION_BAS || orientationDepart != Robot.ORIENTATION_GAUCHE)) //
-		? PIVOTER_DROITE
-				: PIVOTER_GAUCHE;
+				? PIVOTER_DROITE
+						: PIVOTER_GAUCHE;
 	}
 
 	/**
@@ -1044,7 +1049,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					0, 0, null);
 		} catch (IOException e) {
 			System.out
-					.println("Robot : dessiner : Chemin de l'image introuvable");
+			.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
 
 		contexteRobot.dispose();
@@ -1085,7 +1090,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					0, 0, null);
 		} catch (IOException e) {
 			System.out
-					.println("Robot : dessiner : Chemin de l'image introuvable");
+			.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
 		contexteRobot.dispose();
 	}

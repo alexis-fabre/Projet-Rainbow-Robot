@@ -264,8 +264,6 @@ public class OperationsFichier {
 				}
 			}
 
-			System.out.println(Arrays.toString(resultatCaisse));
-			System.out.println(Arrays.toString(resultatPos));
 			partie = new Partie(ligne, colonne, resultatPos, robot, vortex,
 					caisseARecuperer, resultatCaisse);
 		} catch (IOException e) {
