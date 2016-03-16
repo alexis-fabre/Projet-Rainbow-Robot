@@ -178,12 +178,10 @@ public class ToucheClavier implements KeyListener {
                 }
             } else { // mode relatif
                 if (e.getKeyCode() == TOUCHES_RELATIF[0]) {
-                    
                     // touche aller en haut
                     switch (metier.getPartieCourante().getRobot()
                             .getOrientation()) {
                     case Robot.ORIENTATION_HAUT:
-                        System.out.println("haut - haut");
                         startPartie();
                         metier.getPartieCourante().getRobot().avancer();
                         break;
@@ -207,27 +205,20 @@ public class ToucheClavier implements KeyListener {
                     switch (metier.getPartieCourante().getRobot()
                             .getOrientation()) {
                     case Robot.ORIENTATION_HAUT:
-                        System.out.println("haut - gauche");
                         startPartie();
                         metier.getPartieCourante().getRobot()
                                 .pivoter(Robot.PIVOTER_GAUCHE);
                         break;
                     case Robot.ORIENTATION_GAUCHE:
                         startPartie();
-                        System.out.println("Touche : " + TOUCHES_RELATIF[1] 
-                                + "orientation : gauche");
                         metier.getPartieCourante().getRobot().avancer();
                         break;
                     case Robot.ORIENTATION_DROITE:
                         startPartie();
-                        System.out.println("Touche : " + TOUCHES_RELATIF[1] 
-                                + "orientation : droite");
                         metier.getPartieCourante().getRobot().reculer();
                         break;
                     case Robot.ORIENTATION_BAS:
                         startPartie();
-                        System.out.println("Touche : " + TOUCHES_RELATIF[0] 
-                                + "orientation : bas");
                         metier.getPartieCourante().getRobot()
                                 .pivoter(Robot.PIVOTER_DROITE);
                         break;
@@ -237,7 +228,6 @@ public class ToucheClavier implements KeyListener {
                     switch (metier.getPartieCourante().getRobot()
                             .getOrientation()) {
                     case Robot.ORIENTATION_HAUT:
-                        System.out.println("haut - droite");
                         startPartie();
                         metier.getPartieCourante().getRobot()
                                 .pivoter(Robot.PIVOTER_DROITE);
@@ -260,7 +250,6 @@ public class ToucheClavier implements KeyListener {
                     switch (metier.getPartieCourante().getRobot()
                             .getOrientation()) {
                     case Robot.ORIENTATION_HAUT:
-                        System.out.println("haut - bas");
                         startPartie();
                         metier.getPartieCourante().getRobot().reculer();
                         break;

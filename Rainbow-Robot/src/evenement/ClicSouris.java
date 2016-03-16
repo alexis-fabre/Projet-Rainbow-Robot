@@ -253,7 +253,6 @@ public class ClicSouris implements MouseListener, Observer {
 		    fenetreCommande.getBr_absolu().addActionListener(new ActionListener() {
                         
                         public void actionPerformed(ActionEvent f) {
-                            System.out.println("Selected Button = passé dans abs");
                             ToucheClavier.setModeAbsolu(true);          
                             fenetreCommande.setTextBt();
                             
@@ -264,7 +263,6 @@ public class ClicSouris implements MouseListener, Observer {
 		    fenetreCommande.getBr_relatif().addActionListener(new ActionListener() {
                         
                         public void actionPerformed(ActionEvent g) {
-                            System.out.println("Selected Button = passé dans rel");
                             ToucheClavier.setModeAbsolu(false);          
                             fenetreCommande.setTextBt();
                         }
@@ -455,7 +453,14 @@ public class ClicSouris implements MouseListener, Observer {
 					fenetreJeu.startChrono();
 					fenetreJeu.requestFocus();
 					break;
-				case 1: // Recommencer
+				
+				case 1: // commandes
+                                    F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
+                                    fenetreCmd.setVisible(true);
+                                    setFenetre(fenetreCmd);
+                                    break;
+                                    
+				case 2: // Recommencer
 					metier.reinitialiserPartie();
 					fenetreJeu.setPartieCourante(metier.getPartieCourante());
 					setObserver();
@@ -463,7 +468,9 @@ public class ClicSouris implements MouseListener, Observer {
 					ToucheClavier.restartPartie();
 					fenetreJeu.requestFocus();
 					break;
-				case 2: // Quitter
+				
+				        
+				case 3: // Quitter
 					// On revient à l'accueil
 					String[] traductionMenuQuitterPartie = ChoixLangue
 							.getChoixLangue().getQuitterPartie();
