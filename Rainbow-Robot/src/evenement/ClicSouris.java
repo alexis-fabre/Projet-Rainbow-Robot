@@ -39,7 +39,7 @@ import vue.F_commandes;
 import vue.F_choixNiveau;
 import vue.F_custom;
 import vue.F_jeuRainbow;
-import vue.F_reccords;
+import vue.F_records;
 import vue.F_story;
 
 /**
@@ -154,7 +154,7 @@ public class ClicSouris implements MouseListener, Observer {
 			// Bouton Reccords
 			if (e.getSource() == fenetreAccueil.getBt_Reccords()) {
 				// On lance la page des reccords Reccords.java
-				F_reccords nouvelleFenetre = new F_reccords(this);
+				F_records nouvelleFenetre = new F_records(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
@@ -232,8 +232,8 @@ public class ClicSouris implements MouseListener, Observer {
 
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
 		// des reccords
-		if (vue instanceof F_reccords) {
-			F_reccords fenetreReccords = (F_reccords) vue;
+		if (vue instanceof F_records) {
+			F_records fenetreReccords = (F_records) vue;
 			// On vérifie quel bouton a été utilisé
 			// Bouton Retour
 			if (e.getSource() == fenetreReccords.getBt_Retour()) {
@@ -515,9 +515,9 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
-			if(F_reccords.estRecord(fenetre.getScore()) != -1) {
+			if(F_records.estRecord(fenetre.getScore()) != -1) {
 				JOptionPane panePseudo = new JOptionPane();
-				int classement = F_reccords.estRecord(fenetre.getScore());
+				int classement = F_records.estRecord(fenetre.getScore());
 			    String pseudo = panePseudo.showInputDialog(null, "Vous avez fait le " + classement + "ième score\n"
 			    		+ "Veuillez entrer votre pseudo", 
 			    		"Nouveau record !",

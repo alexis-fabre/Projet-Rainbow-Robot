@@ -34,7 +34,7 @@ import evenement.ClicSouris;
  * @author Rainbow Robot
  * @version 1.0
  */
-public class F_reccords extends JFrame implements ChangementLangue {
+public class F_records extends JFrame implements ChangementLangue {
 
 	/**
 	 * Généré automatiquement par Eclipse
@@ -75,7 +75,7 @@ public class F_reccords extends JFrame implements ChangementLangue {
 	 *            le contrôleur qui va controler cette vue = cible
 	 *            evenementielle
 	 */
-	public F_reccords(ClicSouris gestion) {
+	public F_records(ClicSouris gestion) {
 		super();
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
 		// On rend la fenêtre non redimenssionable
