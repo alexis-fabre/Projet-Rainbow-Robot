@@ -773,7 +773,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 					caissePlateau[i] = null;
 			        updateObserver();
 			
-				} else if(caissePlateau[i] != null
+				} 
+				   if(caissePlateau[i] != null
 					&& caissePlateau[i].getPosCaisse().equals(c2.getPosCaisse())
 					&& c3.getCouleur() != 0){
 				
@@ -787,6 +788,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 						// on fait apparaitre la caisse issue de la fusion 
 						caissePlateau[i] = c3;
 					    updateObserver();
+					    break;
 					
 				}
 			}
