@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import evenement.ToucheClavier;
+
 /**
  * <p>
  * Intelligence Artificielle (IA) qui doit résoudre une partie lorsque
@@ -648,7 +650,10 @@ public class IntelligenceArtificielle extends Thread {
 					// Impossible d'amener la caisse au vortex
 					continue;
 				}
-
+				afficherDijkstra(temps, orientations,
+						partieCourante.getNbLigne());
+				afficherDijkstra(tempsCaisse, orientationsCaisse,
+						partieCourante.getNbLigne());
 				// On vérifie si le trajet aller + retour est possible
 				if (tempsCaisse[indicePositionAdjacenteVortex]
 						+ temps[positionToIndice(posCourante)]
@@ -774,7 +779,7 @@ public class IntelligenceArtificielle extends Thread {
 			indiceDejaUtilise[i] = INOCCUPE;
 			orientations[i] = INOCCUPE;
 		}
-
+		System.out.println("Pos ini : " + pos_ini);
 		temps[positionToIndice(pos_ini)] = 0;
 		// On garde néanmoins l'orientation de départ du robot
 		orientations[positionToIndice(pos_ini)] = ori_ini;
@@ -1661,7 +1666,7 @@ public class IntelligenceArtificielle extends Thread {
 			// Le Thread ne s'arrête seulement lorsqu'il reçoit un ordre
 			// d'interruption
 			while (true) {
-				if (!deplacement.isEmpty()) {
+				if (ToucheClavier.isPremiereAction() && !deplacement.isEmpty()) {
 					deplacerIA(deplacement);
 				}
 				// else on récupère des ordres venant de l'IA

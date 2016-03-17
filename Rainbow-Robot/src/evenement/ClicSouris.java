@@ -450,7 +450,21 @@ public class ClicSouris implements MouseListener, Observer {
 				setFenetre(nouvelleFenetre);
 			}
 		}
-
+		if (vue instanceof F_arcade) {
+			F_arcade fenetreArcade = (F_arcade) vue;
+			if (e.getSource() == fenetreArcade.getBt_Jouer()) {
+				// Objet qui permet de naviguer dans les dossiers personnels
+				metier = new JeuRainbow();
+				metier.addPartie(metier.carteAleatoire());
+				ToucheClavier clavier = new ToucheClavier(metier);
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);	
+				clavier.setFenetre(nouvelleFenetre);
+				setObserver();
+				vue.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
+			}
+		}
 		if (vue instanceof F_jeuRainbow) {
 			F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 			if (e.getSource() == fenetreJeu.getBt_Pause()) {
