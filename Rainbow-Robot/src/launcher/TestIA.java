@@ -4,9 +4,15 @@
  */
 package launcher;
 
+import java.util.ArrayList;
+
+import metier.Caisse;
 import metier.IntelligenceArtificielle;
 import metier.JeuRainbow;
 import metier.Partie;
+import metier.Position;
+import metier.Robot;
+import metier.Vortex;
 import vue.F_jeuRainbow;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
@@ -44,7 +50,7 @@ public class TestIA {
 		nouvelleFenetre.setVisible(true);
 
 		// On force le jeu à se lancer
-		// clavier.startPartie();
+		clavier.startPartie();
 		new IntelligenceArtificielle(jeu.getPartieCourante()).start();
 	}
 
@@ -59,7 +65,7 @@ public class TestIA {
 		// ---------------------------------------------------------------------
 
 		// int nbLigne = 10;
-		// int nbColonne = 10;
+		// int nbColonne = 12;
 		//
 		// ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
 		// caisseARecuperee.add(new Caisse(Caisse.JAUNE));
@@ -94,7 +100,32 @@ public class TestIA {
 		//
 		// return new Partie(nbLigne, nbColonne, null, robot, vortex,
 		// caisseARecuperee, caissePlateau);
-		return JeuRainbow.carteAleatoire();
+		int nbLigne = 5;
+		int nbColonne = 7;
+
+		ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
+		caisseARecuperee.add(new Caisse(Caisse.ROUGE));
+		caisseARecuperee.add(new Caisse(Caisse.BLEU));
+		caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+		caisseARecuperee.add(new Caisse(Caisse.BLEU));
+		caisseARecuperee.add(new Caisse(Caisse.ROUGE));
+		caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+
+		Caisse[] caissePlateau = new Caisse[6];
+		caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(1, 0));
+		caissePlateau[1] = new Caisse(Caisse.JAUNE, new Position(6, 4));
+		caissePlateau[2] = new Caisse(Caisse.BLEU, new Position(5, 0));
+		caissePlateau[3] = new Caisse(Caisse.BLEU, new Position(1, 4));
+		caissePlateau[4] = new Caisse(Caisse.ROUGE, new Position(2, 1));
+		caissePlateau[5] = new Caisse(Caisse.ROUGE, new Position(0, 2));
+
+		Vortex vortex = new Vortex(new Position(5, 2));
+
+		Robot robot = new Robot(Robot.ORIENTATION_HAUT, new Position(3, 4));
+
+		return new Partie(nbLigne, nbColonne, null, robot, vortex,
+				caisseARecuperee, caissePlateau);
+		// return JeuRainbow.carteAleatoire();
 
 	}
 

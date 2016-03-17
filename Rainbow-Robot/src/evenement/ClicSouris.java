@@ -463,7 +463,7 @@ public class ClicSouris implements MouseListener, Observer {
 				metier = new JeuRainbow();
 				metier.addPartie(metier.carteAleatoire());
 				ToucheClavier clavier = new ToucheClavier(metier);
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);	
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
