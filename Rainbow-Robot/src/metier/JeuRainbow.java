@@ -8,6 +8,7 @@ package metier;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -55,6 +56,16 @@ public class JeuRainbow implements Serializable {
 	/** Nom du fichier ou se trouve la sauvegarde du mode Story */
 	public static final String CHEMIN_FICHIER_SAUVEGARDE = "./Ressource/sauvegarde.txt";
 
+	public static final String[] FICHIER_STORY = {
+			"./Ressource/fichierStory/Level1.txt",
+			"./Ressource/fichierStory/Level2.txt",
+			"./Ressource/fichierStory/Level3.txt",
+			"./Ressource/fichierStory/Level4.txt",
+			"./Ressource/fichierStory/Level5.txt",
+			"./Ressource/fichierStory/Level6.txt",
+			"./Ressource/fichierStory/Level7.txt",
+			"./Ressource/fichierStory/Level8.txt" };
+
 	/**
 	 * Constructeur par défaut pour créer les parties
 	 */
@@ -73,6 +84,15 @@ public class JeuRainbow implements Serializable {
 	 */
 	public void addPartie(Partie aAjouter) {
 		partiesEnregistrees.add(aAjouter);
+	}
+
+	public static JeuRainbow getStory() {
+		JeuRainbow story = new JeuRainbow();
+		for (int i = 0; i <= FICHIER_STORY.length; i++) {
+			story.addPartie(OperationsFichier.recupFichier(new File(
+					FICHIER_STORY[i])));
+		}
+		return story;
 	}
 
 	/**
@@ -112,7 +132,7 @@ public class JeuRainbow implements Serializable {
 	/**
 	 * @return le niveau max que le joueur a atteint
 	 */
-	public int getNiveauMax() {
+	public static int getNiveauMax() {
 		return niveauMax;
 	}
 
@@ -400,11 +420,14 @@ public class JeuRainbow implements Serializable {
 		int ligne = (rand.nextInt(10)) + 2;
 		int nbCaisses = ((ligne * colonne) / (rand.nextInt(5) + 1));
 		Caisse[] caissePlateau = new Caisse[nbCaisses];
+		System.out.println(colonne + ligne);
+
 		Robot robot = new Robot(rand.nextInt(4), new Position(
 				rand.nextInt(colonne), rand.nextInt(ligne)));
 		Vortex vortex = new Vortex(new Position(rand.nextInt(colonne),
 				rand.nextInt(ligne)));
 		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
+
 		int indice = rand.nextInt(6) + 1;
 		for (int i = 0; i <= indice; i++) {
 			caisseARecuperer.add(new Caisse(rand.nextInt(6) + 1));
@@ -415,7 +438,6 @@ public class JeuRainbow implements Serializable {
 			caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), new Position(
 					rand.nextInt(colonne), rand.nextInt(ligne)));
 		}
-
 		try {
 			return new Partie(ligne, colonne, null, robot, vortex,
 					caisseARecuperer, caissePlateau);

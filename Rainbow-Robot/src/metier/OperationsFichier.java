@@ -224,8 +224,7 @@ public class OperationsFichier {
 								Caisse.getCaisse('P'), new Position(x, y));
 						break;
 					case 'X':
-						posInacessible[x + y * tableau[x].length] = new Position(
-								x, y);
+						posInacessible[x + y * tableau[x].length] = new Position(x, y);
 
 						break;
 					case ' ':
