@@ -248,7 +248,6 @@ public class ClicSouris implements MouseListener, Observer {
 		}
 
 		if (vue instanceof F_commandes) {
-
 			F_commandes fenetreCommande = (F_commandes) vue;
 
 			// on modifie le texte des touches par rapport au mode
@@ -479,14 +478,7 @@ public class ClicSouris implements MouseListener, Observer {
 					fenetreJeu.startChrono();
 					fenetreJeu.requestFocus();
 					break;
-
-				case 1: // commandes
-					F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
-					fenetreCmd.setVisible(true);
-					setFenetre(fenetreCmd);
-					break;
-
-				case 2: // Recommencer
+				case 1: // Recommencer
 					metier.reinitialiserPartie();
 					fenetreJeu.setPartieCourante(metier.getPartieCourante());
 					setObserver();
@@ -494,8 +486,7 @@ public class ClicSouris implements MouseListener, Observer {
 					ToucheClavier.restartPartie();
 					fenetreJeu.requestFocus();
 					break;
-
-				case 3: // Quitter
+				case 2: // Quitter
 					// On revient à l'accueil
 					String[] traductionMenuQuitterPartie = ChoixLangue
 							.getChoixLangue().getQuitterPartie();
@@ -547,7 +538,6 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
-
 			// Si le joueur fait un score dans le top 10 du niveau
 			if (F_records.estRecord(fenetre.getScore()) != -1) {
 				int classement = F_records.estRecord(fenetre.getScore());
