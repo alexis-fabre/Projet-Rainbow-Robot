@@ -393,32 +393,35 @@ public class JeuRainbow implements Serializable {
 		lectureFichier();
 		enregistrerFichier(jeu);
 	}
-	
-	public static Partie carteAleatoire(){
+
+	public static Partie carteAleatoire() {
 		Random rand = new Random();
-		int colonne = (rand.nextInt() + 2)* 9;
-		int ligne = (rand.nextInt() + 2 ) * 6;
-		int nbCaisses = (ligne*colonne) /( rand.nextInt()+ 1) *4;
+		int colonne = (rand.nextInt(17)) + 2;
+		int ligne = (rand.nextInt(10)) + 2;
+		int nbCaisses = ((ligne * colonne) / (rand.nextInt(5) + 1));
 		Caisse[] caissePlateau = new Caisse[nbCaisses];
-		System.out.println(colonne + ligne);
-		
-		Robot robot = new Robot(rand.nextInt()*4,new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
-		Vortex vortex = new Vortex(new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
+		Robot robot = new Robot(rand.nextInt(4), new Position(
+				rand.nextInt(colonne), rand.nextInt(ligne)));
+		Vortex vortex = new Vortex(new Position(rand.nextInt(colonne),
+				rand.nextInt(ligne)));
 		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
-		int indice = (rand.nextInt()+1)*6;
-		
-		for( int i = 0 ; i <= indice ; i++)
-		{
-			caisseARecuperer.add(new Caisse((rand.nextInt()+1) *6));
+		int indice = rand.nextInt(6) + 1;
+		for (int i = 0; i <= indice; i++) {
+			caisseARecuperer.add(new Caisse(rand.nextInt(6) + 1));
+
 		}
-		
-		for (int i = 0; i < nbCaisses ; i++){
-			caissePlateau[i] = new Caisse((rand.nextInt()+1) *6, new Position(rand.nextInt()*colonne,rand.nextInt()*ligne));
+
+		for (int i = 0; i < nbCaisses; i++) {
+			caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), new Position(
+					rand.nextInt(colonne), rand.nextInt(ligne)));
 		}
-		
-		
-		return new Partie(ligne,colonne,null,robot,vortex,caisseARecuperer,caissePlateau);
-		 
+
+		try {
+			return new Partie(ligne, colonne, null, robot, vortex,
+					caisseARecuperer, caissePlateau);
+		} catch (IllegalArgumentException e) {
+			return carteAleatoire();
+		}
 	}
 
 }

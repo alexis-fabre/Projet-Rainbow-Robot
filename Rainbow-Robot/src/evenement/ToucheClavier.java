@@ -107,6 +107,13 @@ public class ToucheClavier implements KeyListener {
 	}
 
 	/**
+	 * @return true si la partie a commencé, false sinon
+	 */
+	public static boolean isPremiereAction() {
+		return premiereAction;
+	}
+
+	/**
 	 * @param nouvelleVue
 	 *            nouvelle vue que l'on contrôle
 	 */
@@ -288,7 +295,6 @@ public class ToucheClavier implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-
 	}
 
 	/*
