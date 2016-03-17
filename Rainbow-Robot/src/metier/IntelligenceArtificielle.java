@@ -1645,7 +1645,6 @@ public class IntelligenceArtificielle extends Thread {
 		 */
 		public void addDeplacement(List<Integer> ajoutDeplacement) {
 			synchronized (deplacement) {
-				IntelligenceArtificielle.afficherDeplacement(ajoutDeplacement);
 				this.deplacement.addAll(ajoutDeplacement);
 			}
 		}
@@ -1672,6 +1671,5 @@ public class IntelligenceArtificielle extends Thread {
 				}
 			}
 		}
-
 	}
 }
