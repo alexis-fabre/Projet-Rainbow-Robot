@@ -4,9 +4,15 @@
  */
 package launcher;
 
+import java.util.ArrayList;
+
+import metier.Caisse;
 import metier.IntelligenceArtificielle;
 import metier.JeuRainbow;
 import metier.Partie;
+import metier.Position;
+import metier.Robot;
+import metier.Vortex;
 import vue.F_jeuRainbow;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
@@ -44,7 +50,7 @@ public class TestIA {
 		nouvelleFenetre.setVisible(true);
 
 		// On force le jeu à se lancer
-		// clavier.startPartie();
+		clavier.startPartie();
 		new IntelligenceArtificielle(jeu.getPartieCourante()).start();
 	}
 
@@ -58,43 +64,43 @@ public class TestIA {
 		// //
 		// ---------------------------------------------------------------------
 
-		// int nbLigne = 10;
-		// int nbColonne = 10;
-		//
-		// ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
-		// caisseARecuperee.add(new Caisse(Caisse.JAUNE));
-		// caisseARecuperee.add(new Caisse(Caisse.BLEU));
-		// caisseARecuperee.add(new Caisse(Caisse.JAUNE));
-		// caisseARecuperee.add(new Caisse(Caisse.VIOLET));
-		// caisseARecuperee.add(new Caisse(Caisse.ROUGE));
-		// caisseARecuperee.add(new Caisse(Caisse.VERT));
-		//
-		// Caisse[] caissePlateau = new Caisse[16];
-		// caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(0, 0));
-		// caissePlateau[1] = new Caisse(Caisse.JAUNE, new Position(9, 5));
-		// caissePlateau[2] = new Caisse(Caisse.BLEU, new Position(1, 1));
-		// caissePlateau[3] = new Caisse(Caisse.BLEU, new Position(2, 2));
-		// caissePlateau[4] = new Caisse(Caisse.BLEU, new Position(4, 9));
-		// caissePlateau[5] = new Caisse(Caisse.BLEU, new Position(3, 4));
-		// caissePlateau[6] = new Caisse(Caisse.BLEU, new Position(8, 4));
-		// caissePlateau[7] = new Caisse(Caisse.BLEU, new Position(5, 9));
-		// caissePlateau[15] = new Caisse(Caisse.BLEU, new Position(3, 3));
-		// caissePlateau[8] = new Caisse(Caisse.JAUNE, new Position(2, 5));
-		// caissePlateau[9] = new Caisse(Caisse.VIOLET, new Position(5, 1));
-		// caissePlateau[10] = new Caisse(Caisse.VERT, new Position(7, 8));
-		// caissePlateau[11] = new Caisse(Caisse.VERT, new Position(8, 6));
-		// caissePlateau[12] = new Caisse(Caisse.ROUGE, new Position(6, 7));
-		// caissePlateau[13] = new Caisse(Caisse.ROUGE, new Position(8, 5));
-		// caissePlateau[14] = new Caisse(Caisse.ROUGE, new Position(9, 3));
-		//
-		// Vortex vortex = new Vortex(new Position(5, 5));
-		//
-		// Robot robot = new Robot(Robot.ORIENTATION_DROITE, new Position(4,
-		// 5));
-		//
-		// return new Partie(nbLigne, nbColonne, null, robot, vortex,
-		// caisseARecuperee, caissePlateau);
-		return JeuRainbow.carteAleatoire();
+		 int nbLigne = 10;
+		 int nbColonne = 12;
+		
+		 ArrayList<Caisse> caisseARecuperee = new ArrayList<Caisse>();
+		 caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+		 caisseARecuperee.add(new Caisse(Caisse.BLEU));
+		 caisseARecuperee.add(new Caisse(Caisse.JAUNE));
+		 caisseARecuperee.add(new Caisse(Caisse.VIOLET));
+		 caisseARecuperee.add(new Caisse(Caisse.ROUGE));
+		 caisseARecuperee.add(new Caisse(Caisse.VERT));
+		
+		 Caisse[] caissePlateau = new Caisse[16];
+		 caissePlateau[0] = new Caisse(Caisse.JAUNE, new Position(0, 0));
+		 caissePlateau[1] = new Caisse(Caisse.JAUNE, new Position(9, 5));
+		 caissePlateau[2] = new Caisse(Caisse.BLEU, new Position(1, 1));
+		 caissePlateau[3] = new Caisse(Caisse.BLEU, new Position(2, 2));
+		 caissePlateau[4] = new Caisse(Caisse.BLEU, new Position(4, 9));
+		 caissePlateau[5] = new Caisse(Caisse.BLEU, new Position(3, 4));
+		 caissePlateau[6] = new Caisse(Caisse.BLEU, new Position(8, 4));
+		 caissePlateau[7] = new Caisse(Caisse.BLEU, new Position(5, 9));
+		 caissePlateau[15] = new Caisse(Caisse.BLEU, new Position(3, 3));
+		 caissePlateau[8] = new Caisse(Caisse.JAUNE, new Position(2, 5));
+		 caissePlateau[9] = new Caisse(Caisse.VIOLET, new Position(5, 1));
+		 caissePlateau[10] = new Caisse(Caisse.VERT, new Position(7, 8));
+		 caissePlateau[11] = new Caisse(Caisse.VERT, new Position(8, 6));
+		 caissePlateau[12] = new Caisse(Caisse.ROUGE, new Position(6, 7));
+		 caissePlateau[13] = new Caisse(Caisse.ROUGE, new Position(8, 5));
+		 caissePlateau[14] = new Caisse(Caisse.ROUGE, new Position(9, 3));
+		
+		 Vortex vortex = new Vortex(new Position(5, 5));
+		
+		 Robot robot = new Robot(Robot.ORIENTATION_DROITE, new Position(4,
+		 5));
+		
+		 return new Partie(nbLigne, nbColonne, null, robot, vortex,
+		 caisseARecuperee, caissePlateau);
+		// return JeuRainbow.carteAleatoire();
 
 	}
 

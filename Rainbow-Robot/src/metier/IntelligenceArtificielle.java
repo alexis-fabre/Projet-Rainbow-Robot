@@ -401,8 +401,8 @@ public class IntelligenceArtificielle extends Thread {
 	 * @return la position associé
 	 */
 	private Position indiceToPosition(int indice) {
-		return new Position(indice % partieCourante.getNbLigne(), indice
-				/ partieCourante.getNbLigne());
+		return new Position(indice % partieCourante.getNbColonne(), indice
+				/ partieCourante.getNbColonne());
 	}
 
 	/**
@@ -414,7 +414,7 @@ public class IntelligenceArtificielle extends Thread {
 	 * @return l'indice associé
 	 */
 	private int positionToIndice(Position pos) {
-		return pos.getX() + pos.getY() * partieCourante.getNbLigne();
+		return pos.getX() + pos.getY() * partieCourante.getNbColonne();
 	}
 
 	/**
@@ -510,7 +510,6 @@ public class IntelligenceArtificielle extends Thread {
 			List<Caisse> caissePotentielle) {
 		// On initialise les temps et les orientations du plateau de jeu
 		dijkstraSansCaisse(positionDepart, orientationDepart);
-
 		// HashMap contenant pour chaque Position (adjacentes aux caisses à
 		// récupérer) un liste de déplacements potentielles.
 		HashMap<Position, List<Integer>> listeOrdonnee = new HashMap<Position, List<Integer>>();
@@ -650,10 +649,6 @@ public class IntelligenceArtificielle extends Thread {
 					// Impossible d'amener la caisse au vortex
 					continue;
 				}
-				afficherDijkstra(temps, orientations,
-						partieCourante.getNbLigne());
-				afficherDijkstra(tempsCaisse, orientationsCaisse,
-						partieCourante.getNbLigne());
 				// On vérifie si le trajet aller + retour est possible
 				if (tempsCaisse[indicePositionAdjacenteVortex]
 						+ temps[positionToIndice(posCourante)]
@@ -779,7 +774,6 @@ public class IntelligenceArtificielle extends Thread {
 			indiceDejaUtilise[i] = INOCCUPE;
 			orientations[i] = INOCCUPE;
 		}
-		System.out.println("Pos ini : " + pos_ini);
 		temps[positionToIndice(pos_ini)] = 0;
 		// On garde néanmoins l'orientation de départ du robot
 		orientations[positionToIndice(pos_ini)] = ori_ini;
@@ -1650,7 +1644,7 @@ public class IntelligenceArtificielle extends Thread {
 		 */
 		public void addDeplacement(List<Integer> ajoutDeplacement) {
 			synchronized (deplacement) {
-				IntelligenceArtificielle.afficherDeplacement(ajoutDeplacement);
+				afficherDeplacement(ajoutDeplacement);
 				this.deplacement.addAll(ajoutDeplacement);
 			}
 		}
@@ -1677,6 +1671,5 @@ public class IntelligenceArtificielle extends Thread {
 				}
 			}
 		}
-
 	}
 }

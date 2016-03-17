@@ -12,20 +12,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 import metier.JeuRainbow;
 import metier.OperationsFichier;
@@ -463,7 +459,7 @@ public class ClicSouris implements MouseListener, Observer {
 				metier = new JeuRainbow();
 				metier.addPartie(metier.carteAleatoire());
 				ToucheClavier clavier = new ToucheClavier(metier);
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);	
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -552,45 +548,58 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
+			String scoreCourant = fenetre.getScore();
 			// Si le joueur fait un score dans le top 10 du niveau
-			if (F_records.estRecord(fenetre.getScore()) != -1) {
-				int classement = F_records.estRecord(fenetre.getScore());
-
+			String nomFichier = F_records.FIC_RECORD
+					+ Integer.toString(metier.getNiveau() + 1)
+					+ F_records.FIC_EXTENSION;
+			int classement = F_records.estRecord(scoreCourant,
+					metier.getNiveau() + 1);
+			if (classement != -1) {
+				// Boite de dialogue pour demander le nom du joueur
 				String pseudo = JOptionPane.showInputDialog(null,
 						"Vous avez fait le " + classement + "ième score\n"
 								+ "Veuillez entrer votre pseudo",
 						"Nouveau record !", JOptionPane.QUESTION_MESSAGE);
 				try {
-					File temp = new File(".Ressource/tempo.txt");
+					// Création d'un fichier temporaire
+					File temp = new File("./Ressource/tempo.txt");
 					temp.createNewFile();
 					PrintWriter nouvFichier = new PrintWriter(temp);
-					FileReader temp2 = new FileReader(
-							"./Ressource/highcrore1.txt");
-					BufferedReader fichier = new BufferedReader(temp2);
-					File aSupprimer = new File("./Ressource/highcrore1.txt");
+					BufferedReader fichier = new BufferedReader(new FileReader(
+							nomFichier));
+					// Fichier que l'on va supprimer à la fin du traitement
+					File aSupprimer = new File(nomFichier);
+					// Ligne pour parcourir le fichier
 					String ligne;
+					// Compteur pour trouver la ligne à ajouter
 					int compteur = 1;
 					// On lit le fichier jusqu'au classement du joueur ou la fin
 					// du fichier
 					while ((ligne = fichier.readLine()) != null
-							&& compteur <= 10) {
+							&& compteur < 10) {
 						// Si on arrive au classement du joueur
 						if (compteur == classement) {
 							// On écrit la ligne
-							nouvFichier.println(pseudo + "#"
-									+ fenetre.getScore());
+							nouvFichier.println(pseudo + "#" + scoreCourant);
 						}
 						// else
 						// On recopie la ligne;
 						nouvFichier.println(ligne);
 						compteur++;
 					}
+					// Fermeture des fichiers
+					nouvFichier.close();
+					fichier.close();
+					// Suppression du fichier temporaire
 					aSupprimer.delete();
-					temp.renameTo(new File("./Ressource/highcrore1.txt"));
+					// Renommage du fichier
+					temp.renameTo(new File(nomFichier));
 				} catch (IOException erreur) {
 					System.out.println("Fichier records non trouvé");
 				}
 			}
+			// else
 			int retour = JOptionPane.showOptionDialog(null,
 					traductionFinPartie[0] + " " + fenetre.getScore(),
 					traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
