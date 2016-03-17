@@ -550,9 +550,11 @@ public class ClicSouris implements MouseListener, Observer {
 					2, traductionFinPartie.length);
 			String scoreCourant = fenetre.getScore();
 			// Si le joueur fait un score dans le top 10 du niveau
-			String nomFichier =  F_records.FIC_RECORD
-					+ Integer.toString(metier.getNiveau()+1) + F_records.FIC_EXTENSION;
-			int classement = F_records.estRecord(scoreCourant,metier.getNiveau()+1);
+			String nomFichier = F_records.FIC_RECORD
+					+ Integer.toString(metier.getNiveau() + 1)
+					+ F_records.FIC_EXTENSION;
+			int classement = F_records.estRecord(scoreCourant,
+					metier.getNiveau() + 1);
 			if (classement != -1) {
 				// Boite de dialogue pour demander le nom du joueur
 				String pseudo = JOptionPane.showInputDialog(null,
@@ -564,7 +566,8 @@ public class ClicSouris implements MouseListener, Observer {
 					File temp = new File("./Ressource/tempo.txt");
 					temp.createNewFile();
 					PrintWriter nouvFichier = new PrintWriter(temp);
-					BufferedReader fichier = new BufferedReader(new FileReader(nomFichier));
+					BufferedReader fichier = new BufferedReader(new FileReader(
+							nomFichier));
 					// Fichier que l'on va supprimer à la fin du traitement
 					File aSupprimer = new File(nomFichier);
 					// Ligne pour parcourir le fichier
@@ -578,8 +581,7 @@ public class ClicSouris implements MouseListener, Observer {
 						// Si on arrive au classement du joueur
 						if (compteur == classement) {
 							// On écrit la ligne
-							nouvFichier.println(pseudo + "#"
-									+ scoreCourant);
+							nouvFichier.println(pseudo + "#" + scoreCourant);
 						}
 						// else
 						// On recopie la ligne;
