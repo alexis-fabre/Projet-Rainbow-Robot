@@ -427,8 +427,9 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] MENU_PAUSE = {
-			{ "Pause", "Pause", "Continuer", "Recommencer", "Quitter" }, //
-			{ "Pause", "Pause", "Start", "Restart", "Exit" } };
+			{ "Pause", "Pause", "Continuer", "Commandes",
+			         "Recommencer", "Quitter" }, //
+			{ "Pause", "Pause", "Continue", "Controls", "Restart", "Exit" } };
 
 	/**
 	 * <p>
