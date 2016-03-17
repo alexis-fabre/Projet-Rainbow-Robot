@@ -405,7 +405,7 @@ public class ClicSouris implements MouseListener, Observer {
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
 				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
-
+				metier = JeuRainbow.getStory();
 				F_choixNiveau nouvelleFenetre = new F_choixNiveau(this);
 				vue.setVisible(false);
 				nouvelleFenetre.setVisible(true);

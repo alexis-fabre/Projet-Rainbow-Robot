@@ -8,6 +8,7 @@ package metier;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -55,6 +56,13 @@ public class JeuRainbow implements Serializable {
 	/** Nom du fichier ou se trouve la sauvegarde du mode Story */
 	public static final String CHEMIN_FICHIER_SAUVEGARDE = "./Ressource/sauvegarde.txt";
 
+	public static final String[] FICHIER_STORY = {"./Ressource/fichierStory/Level1.txt",
+		"./Ressource/fichierStory/Level2.txt",
+		"./Ressource/fichierStory/Level3.txt",
+		"./Ressource/fichierStory/Level4.txt", "./Ressource/fichierStory/Level5.txt",
+		"./Ressource/fichierStory/Level6.txt","./Ressource/fichierStory/Level7.txt",
+		"./Ressource/fichierStory/Level8.txt"};
+
 	/**
 	 * Constructeur par défaut pour créer les parties
 	 */
@@ -73,6 +81,15 @@ public class JeuRainbow implements Serializable {
 	 */
 	public void addPartie(Partie aAjouter) {
 		partiesEnregistrees.add(aAjouter);
+	}
+
+	public static JeuRainbow getStory() {
+		JeuRainbow story = new JeuRainbow();
+		for (int i = 0; i <= FICHIER_STORY.length; i++) {
+			story.addPartie(OperationsFichier.recupFichier(new File(
+					FICHIER_STORY[i])));
+		}
+		return story;
 	}
 
 	/**
