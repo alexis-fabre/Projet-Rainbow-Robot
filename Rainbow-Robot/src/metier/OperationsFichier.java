@@ -200,31 +200,32 @@ public class OperationsFichier {
 									"Le fichier n'est pas bon");
 						}
 					case 'B':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('B'), new Position(x, y));
 						break;
 					case 'G':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('G'), new Position(x, y));
 						break;
 					case 'R':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('R'), new Position(x, y));
 						break;
 					case 'Y':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('Y'), new Position(x, y));
 						break;
 					case 'O':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('O'), new Position(x, y));
 						break;
 					case 'P':
-						caissePlateau[x + y * tableau[x].length] = new Caisse(
+						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('P'), new Position(x, y));
 						break;
 					case 'X':
-						posInacessible[x + y * tableau[x].length] = new Position(x, y);
+						System.out.println("x=" + x + "y = " + y) ;
+						posInacessible[x + y * tableau[y].length] = new Position(x, y);
 
 						break;
 					case ' ':

@@ -13,7 +13,7 @@ public class testFichier {
 	
 	
 	public static void testPartie(){
-		OperationsFichier.recupFichier(new File("./Ressource/testFichier.txt"));
+		OperationsFichier.recupFichier(new File("./Ressource/fichierStory/Level8.txt"));
 	}
 
 }

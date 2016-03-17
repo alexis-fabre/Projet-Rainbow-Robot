@@ -58,7 +58,6 @@ public class JeuRainbow implements Serializable {
 
 	public static final String[] FICHIER_STORY = {"./Ressource/fichierStory/Level1.txt",
 		"./Ressource/fichierStory/Level2.txt",
-		"./Ressource/fichierStory/Level3.txt",
 		"./Ressource/fichierStory/Level4.txt", "./Ressource/fichierStory/Level5.txt",
 		"./Ressource/fichierStory/Level6.txt","./Ressource/fichierStory/Level7.txt",
 		"./Ressource/fichierStory/Level8.txt"};
@@ -85,7 +84,8 @@ public class JeuRainbow implements Serializable {
 
 	public static JeuRainbow getStory() {
 		JeuRainbow story = new JeuRainbow();
-		for (int i = 0; i <= FICHIER_STORY.length; i++) {
+		System.out.println(FICHIER_STORY.length);
+		for (int i = 0; i < FICHIER_STORY.length; i++) {
 			story.addPartie(OperationsFichier.recupFichier(new File(
 					FICHIER_STORY[i])));
 		}
