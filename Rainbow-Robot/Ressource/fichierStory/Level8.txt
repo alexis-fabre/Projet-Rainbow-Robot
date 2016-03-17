@@ -1,0 +1,10 @@
+7
+10
+R
+ G  GXXXXX
+ R  GXXXXX
+  G G  XXX
+  G G  XXX
+  G GGG   
+       SV 
+  GGGGG   

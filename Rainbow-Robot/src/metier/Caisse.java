@@ -171,7 +171,8 @@ public class Caisse implements Dessinable, Serializable {
 	 *            la nouvelle couleur de la caisse
 	 */
 	public void setCouleur(int couleur) {
-		this.couleur = couleur;
+		    this.couleur = couleur;
+		
 	}
 
 	/**
@@ -240,7 +241,8 @@ public class Caisse implements Dessinable, Serializable {
 	 *                nouvelle position
 	 */
 	public void setPosCaisse(Position position){
-		this.pos_courante = position;
+		    this.pos_courante = position;
+		
 	}
 
 	/**

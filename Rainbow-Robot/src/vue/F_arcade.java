@@ -143,7 +143,7 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 
 		// On rend inactif le bouton jouer (il sera actif dans une future
 		// version)
-		super.getBt_Jouer().setEnabled(false);
+		super.getBt_Jouer().setEnabled(true);
 
 		setLangue();
 
