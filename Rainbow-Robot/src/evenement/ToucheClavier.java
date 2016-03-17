@@ -193,76 +193,106 @@ public class ToucheClavier implements KeyListener {
 				}
 			} else { // mode relatif
 				if (e.getKeyCode() == TOUCHES_RELATIF[0]) {
+
 					// touche aller en haut
-					startPartie();
 					switch (metier.getPartieCourante().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
+						System.out.println("haut - haut");
+						startPartie();
 						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_GAUCHE:
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_DROITE:
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_BAS:
+						startPartie();
 						metier.getPartieCourante().getRobot().reculer();
+						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[1]) {
 					// touche aller à gauche
-					startPartie();
 					switch (metier.getPartieCourante().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
+						System.out.println("haut - gauche");
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_GAUCHE:
+						startPartie();
+						System.out.println("Touche : " + TOUCHES_RELATIF[1]
+								+ "orientation : gauche");
 						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_DROITE:
+						startPartie();
+						System.out.println("Touche : " + TOUCHES_RELATIF[1]
+								+ "orientation : droite");
 						metier.getPartieCourante().getRobot().reculer();
+						break;
 					case Robot.ORIENTATION_BAS:
+						startPartie();
+						System.out.println("Touche : " + TOUCHES_RELATIF[0]
+								+ "orientation : bas");
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[2]) {
 					// touche aller à droite
-					startPartie();
 					switch (metier.getPartieCourante().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
+						System.out.println("haut - droite");
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_GAUCHE:
+						startPartie();
 						metier.getPartieCourante().getRobot().reculer();
+						break;
 					case Robot.ORIENTATION_DROITE:
+						startPartie();
 						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_BAS:
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[3]) {
 					// touche aller en bas
-					startPartie();
 					switch (metier.getPartieCourante().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
+						System.out.println("haut - bas");
+						startPartie();
 						metier.getPartieCourante().getRobot().reculer();
+						break;
 					case Robot.ORIENTATION_GAUCHE:
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_DROITE:
+						startPartie();
 						metier.getPartieCourante().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
-						metier.getPartieCourante().getRobot().avancer();
+						break;
 					case Robot.ORIENTATION_BAS:
+						startPartie();
 						metier.getPartieCourante().getRobot().avancer();
+						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[4]) {
 					// touche pour fusionner
