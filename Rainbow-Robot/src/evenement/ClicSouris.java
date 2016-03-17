@@ -182,7 +182,8 @@ public class ClicSouris implements MouseListener, Observer {
 			// Bouton Commandes
 			if (e.getSource() == fenetreAccueil.getBt_Commande()) {
 				// On lance la page de modificaion des commandes
-				F_commandes nouvelleFenetre = new F_commandes(this, (JFrame) vue);
+				F_commandes nouvelleFenetre = new F_commandes(this,
+						(JFrame) vue);
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
@@ -247,66 +248,70 @@ public class ClicSouris implements MouseListener, Observer {
 		}
 
 		if (vue instanceof F_commandes) {
-
 			F_commandes fenetreCommande = (F_commandes) vue;
 
-			// on modifie le texte des touches par rapport au mode 
+			// on modifie le texte des touches par rapport au mode
 			// absolu
-			fenetreCommande.getBr_absolu().addActionListener(new ActionListener() {
+			fenetreCommande.getBr_absolu().addActionListener(
+					new ActionListener() {
 
-				public void actionPerformed(ActionEvent f) {
-					System.out.println("Selected Button = passé dans abs");
-					ToucheClavier.setModeAbsolu(true);          
-					fenetreCommande.setTextBt();
+						public void actionPerformed(ActionEvent f) {
+							System.out
+									.println("Selected Button = passé dans abs");
+							ToucheClavier.setModeAbsolu(true);
+							fenetreCommande.setTextBt();
 
-				}
-			});
-			// on modifie le texte des touches par rapport au mode 
+						}
+					});
+			// on modifie le texte des touches par rapport au mode
 			// relatif
-			fenetreCommande.getBr_relatif().addActionListener(new ActionListener() {
+			fenetreCommande.getBr_relatif().addActionListener(
+					new ActionListener() {
 
-				public void actionPerformed(ActionEvent g) {
-					System.out.println("Selected Button = passé dans rel");
-					ToucheClavier.setModeAbsolu(false);          
-					fenetreCommande.setTextBt();
-				}
-			});
+						public void actionPerformed(ActionEvent g) {
+							System.out
+									.println("Selected Button = passé dans rel");
+							ToucheClavier.setModeAbsolu(false);
+							fenetreCommande.setTextBt();
+						}
+					});
 
 			// bouton avancer
 			if (e.getSource() == fenetreCommande.getBt_avancer()) {
-				F_commandes.afficherPressKey(0,fenetreCommande.getBt_avancer());
+				F_commandes
+						.afficherPressKey(0, fenetreCommande.getBt_avancer());
 			}
 			// bouton gauche
 			if (e.getSource() == fenetreCommande.getBt_gauche()) {
-				F_commandes.afficherPressKey(1,fenetreCommande.getBt_gauche());
+				F_commandes.afficherPressKey(1, fenetreCommande.getBt_gauche());
 			}
 			// bouton droit
 			if (e.getSource() == fenetreCommande.getBt_droite()) {
-				F_commandes.afficherPressKey(2,fenetreCommande.getBt_droite());
+				F_commandes.afficherPressKey(2, fenetreCommande.getBt_droite());
 			}
 			// bouton reculer
 			if (e.getSource() == fenetreCommande.getBt_reculer()) {
-				F_commandes.afficherPressKey(3,fenetreCommande.getBt_reculer());
+				F_commandes
+						.afficherPressKey(3, fenetreCommande.getBt_reculer());
 			}
 			// bouton fusion
 			if (e.getSource() == fenetreCommande.getBt_fusion()) {
-				F_commandes.afficherPressKey(4,fenetreCommande.getBt_fusion());
+				F_commandes.afficherPressKey(4, fenetreCommande.getBt_fusion());
 			}
 			// bouton attraper
 			if (e.getSource() == fenetreCommande.getBt_attraper()) {
-				F_commandes.afficherPressKey(5,fenetreCommande.getBt_attraper());
+				F_commandes.afficherPressKey(5,
+						fenetreCommande.getBt_attraper());
 			}
 			// bouton reset
 			if (e.getSource() == fenetreCommande.getBt_reset()) {
 				if (ToucheClavier.isModeAbsolu) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_ABSOLU[i] = 
-								ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
+						ToucheClavier.TOUCHES_ABSOLU[i] = ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_RELATIF[i] = 
-								ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
+						ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
 					}
 				}
 				fenetreCommande.setTextBt();
@@ -317,8 +322,8 @@ public class ClicSouris implements MouseListener, Observer {
 				fenetreCommande.dispose();
 			}
 			// bouton annuler
-			if(e.getSource() == fenetreCommande.getBt_annuler()){
-				// tableau temporaire ayant stocké les touche à 
+			if (e.getSource() == fenetreCommande.getBt_annuler()) {
+				// tableau temporaire ayant stocké les touche à
 				// l'ouverture de la fenêtre
 				int[] leTmp = new int[ToucheClavier.NB_TOUCHES];
 				leTmp = F_commandes.getTemp();
@@ -332,7 +337,7 @@ public class ClicSouris implements MouseListener, Observer {
 					}
 				}
 				fenetreCommande.setTextBt();
-			}                    
+			}
 		}
 
 		// On vérifie si la fenêtre que l'on contrôle est bien la fenêtre
@@ -431,18 +436,19 @@ public class ClicSouris implements MouseListener, Observer {
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					fenetreCustom.getTf_cheminFichier().setText(
 							chooser.getSelectedFile().getAbsolutePath()
-							.toString());
+									.toString());
 				}
-			}		
+			}
 			if (e.getSource() == fenetreCustom.getBt_Jouer()) {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				String fichier;
 				fichier = fenetreCustom.getTf_cheminFichier().getText();
-				Partie partie = OperationsFichier.recupFichier(new File(fichier));
+				Partie partie = OperationsFichier
+						.recupFichier(new File(fichier));
 				metier = new JeuRainbow();
 				metier.addPartie(partie);
 				ToucheClavier clavier = new ToucheClavier(metier);
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);	
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -486,14 +492,7 @@ public class ClicSouris implements MouseListener, Observer {
 					fenetreJeu.startChrono();
 					fenetreJeu.requestFocus();
 					break;
-				
-				case 1: // commandes
-                                    F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
-                                    fenetreCmd.setVisible(true);
-                                    setFenetre(fenetreCmd);
-                                    break;
-                                    
-				case 2: // Recommencer
+				case 1: // Recommencer
 					metier.reinitialiserPartie();
 					fenetreJeu.setPartieCourante(metier.getPartieCourante());
 					setObserver();
@@ -501,12 +500,10 @@ public class ClicSouris implements MouseListener, Observer {
 					ToucheClavier.restartPartie();
 					fenetreJeu.requestFocus();
 					break;
-				
-				        
-				case 3: // Quitter
+				case 2: // Quitter
 					// On revient à l'accueil
 					String[] traductionMenuQuitterPartie = ChoixLangue
-					.getChoixLangue().getQuitterPartie();
+							.getChoixLangue().getQuitterPartie();
 
 					int option = JOptionPane.showConfirmDialog(null,
 							traductionMenuQuitterPartie[0],
@@ -555,30 +552,33 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
-
 			// Si le joueur fait un score dans le top 10 du niveau
-			if(F_records.estRecord(fenetre.getScore()) != -1) {
+			if (F_records.estRecord(fenetre.getScore()) != -1) {
 				int classement = F_records.estRecord(fenetre.getScore());
 
-			    String pseudo = JOptionPane.showInputDialog(null, "Vous avez fait le " + classement + "ième score\n"
-			    		+ "Veuillez entrer votre pseudo", 
-			    		"Nouveau record !",
-			    		JOptionPane.QUESTION_MESSAGE);		
+				String pseudo = JOptionPane.showInputDialog(null,
+						"Vous avez fait le " + classement + "ième score\n"
+								+ "Veuillez entrer votre pseudo",
+						"Nouveau record !", JOptionPane.QUESTION_MESSAGE);
 				try {
 					File temp = new File(".Ressource/tempo.txt");
 					temp.createNewFile();
 					PrintWriter nouvFichier = new PrintWriter(temp);
-					FileReader temp2 = new FileReader("./Ressource/highcrore1.txt");
+					FileReader temp2 = new FileReader(
+							"./Ressource/highcrore1.txt");
 					BufferedReader fichier = new BufferedReader(temp2);
 					File aSupprimer = new File("./Ressource/highcrore1.txt");
 					String ligne;
 					int compteur = 1;
-					// On lit le fichier jusqu'au classement du joueur ou la fin du fichier
-					while((ligne = fichier.readLine()) != null && compteur <= 10) {
+					// On lit le fichier jusqu'au classement du joueur ou la fin
+					// du fichier
+					while ((ligne = fichier.readLine()) != null
+							&& compteur <= 10) {
 						// Si on arrive au classement du joueur
 						if (compteur == classement) {
 							// On écrit la ligne
-							nouvFichier.println(pseudo + "#" + fenetre.getScore());
+							nouvFichier.println(pseudo + "#"
+									+ fenetre.getScore());
 						}
 						// else
 						// On recopie la ligne;
@@ -621,8 +621,5 @@ public class ClicSouris implements MouseListener, Observer {
 			}
 		}
 	}
-
-
-
 
 }
