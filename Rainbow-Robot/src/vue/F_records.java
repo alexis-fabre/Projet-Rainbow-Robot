@@ -68,6 +68,10 @@ public class F_records extends JFrame implements ChangementLangue {
 	/** label du niveau affiché dans les onglets */
 	private JLabel la_niveau;
 
+	public static final String FIC_RECORD = "./Ressource/highscore";
+
+	public static final String FIC_EXTENSION = ".txt";
+
 	/**
 	 * Constructeur de la fenêtre Reccords
 	 * 
@@ -99,7 +103,7 @@ public class F_records extends JFrame implements ChangementLangue {
 		for (int i = 0; i < lesPanneaux.length; i++) {
 			texte = getLa_niveau().getText() + " " + (i + 1);
 			// ajout des onglets et de leur panneaux
-			lesOnglets.addTab(texte, ajoutContenu(lesPanneaux[i]));
+			lesOnglets.addTab(texte, ajoutContenu(lesPanneaux[i], i + 1));
 
 		}
 
@@ -120,7 +124,7 @@ public class F_records extends JFrame implements ChangementLangue {
 	 *            nouveau panneau contenant des scores
 	 * @return aAjouter le panneau avec le contenu
 	 */
-	public JPanel ajoutContenu(JPanel aAjouter) {
+	public JPanel ajoutContenu(JPanel aAjouter, int indice) {
 
 		aAjouter = new JPanel();
 		aAjouter.setLayout(null);
@@ -129,10 +133,11 @@ public class F_records extends JFrame implements ChangementLangue {
 		la_contenu.setBounds(10, 10, 850, 500);
 		la_contenu.setFont(new Font("Georgia", Font.PLAIN, 30));
 		la_contenu.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		// récupération des données
 		ArrayList<LigneUsernameScore> ligneUsernameScore = OperationsFichier
-				.lectureFichierReccord(new File("./Ressource/highscore1.txt"));
+				.lectureFichierReccord(new File(FIC_RECORD
+						+ Integer.toString(indice) + FIC_EXTENSION));
 
 		String scores;
 		scores = "<html>";
@@ -158,71 +163,74 @@ public class F_records extends JFrame implements ChangementLangue {
 		aAjouter.add(la_contenu);
 		return aAjouter;
 	}
-	
+
 	/**
-	 * Méthode permettant de savoir si un score est dans le top 10 du niveau
-	 * et à quelle place
-	 * @param score Score à comparer
-	 * @return la place dans le classement 
-	 * 		   -1 si ce n'est pas un record
+	 * Méthode permettant de savoir si un score est dans le top 10 du niveau et
+	 * à quelle place
+	 * 
+	 * @param score
+	 *            Score à comparer
+	 * @return la place dans le classement -1 si ce n'est pas un record
 	 */
-	public static int estRecord(String score) {
+	public static int estRecord(String score, int niveau) {
 		String ligne;
 		String carMinute, carSeconde;
 		BufferedReader fichier;
 		int[][] records = new int[10][2];
-		int nbTokenName;
-		int minute, seconde;
+		int minute, seconde, compteur = 0;
 		StringTokenizer tokenName;
 		StringTokenizer tokenScore;
 		try {
-			fichier = new BufferedReader(new FileReader("./Ressource/highscore1.txt"));
-			 // Lecture ligne par ligne
+			fichier = new BufferedReader(new FileReader(FIC_RECORD
+					+ Integer.toString(niveau) + FIC_EXTENSION));
+			// Lecture ligne par ligne
 			try {
-				while((ligne = fichier.readLine()) != null) {
+				while ((ligne = fichier.readLine()) != null) {
 					// Pour séparer les pseudos et les temps
-					tokenName = new StringTokenizer(ligne,"#");
-					// On compte le nombre de sous-chaîne pour le parcours
-					nbTokenName = tokenName.countTokens();
-					// Parcours des toutes les chaînes
-					for (int i = 0; i < nbTokenName; i++) {
-						// On "ignore" le pseudo
-						tokenName.nextToken();
-						// Séparation des minutes et secondes
-						tokenScore = new StringTokenizer(ligne, " : ");
-						// Sauvegarde des minutes
-						records [i][0] = Integer.parseInt(tokenScore.nextToken());
-						// Sauvegarde des secondes
-						records [i][1] = Integer.parseInt(tokenScore.nextToken());
-					}
-				}	
-			} catch (IOException erreur) {
-					System.out.println("Problème avec la lecture du fichier des records");
-				} finally {
-					try {
-						fichier.close();	// fermeture du fichier
-					} catch (IOException erreur) {
-						System.out.println("Problème avec la fermeture du fichier record");
-					}
+					tokenName = new StringTokenizer(ligne, "#");
+					// On "ignore" le pseudo
+					tokenName.nextToken();
+					// Séparation des minutes et secondes
+					tokenScore = new StringTokenizer(tokenName.nextToken(), ":");
+					// Sauvegarde des minutes
+					records[compteur][0] = Integer.parseInt(tokenScore
+							.nextToken().trim());
+					// Sauvegarde des secondes
+					records[compteur][1] = Integer.parseInt(tokenScore
+							.nextToken().trim());
+					compteur++;
 				}
-			} catch (FileNotFoundException erreur) {
-				System.out.println("Fichier records non trouvé");
+			} catch (IOException erreur) {
+				System.out
+						.println("Problème avec la lecture du fichier des records");
+			} finally {
+				try {
+					fichier.close(); // fermeture du fichier
+				} catch (IOException erreur) {
+					System.out
+							.println("Problème avec la fermeture du fichier record");
+				}
 			}
+		} catch (FileNotFoundException erreur) {
+			System.out.println("Fichier records non trouvé");
+		}
+
 		// On découpe pour récupérer séparemment les minutes et les secondes
 		// su score que l'on souhaite analyser
 		String[] tabScore = score.split(" : ");
 		carMinute = tabScore[0];
 		carSeconde = tabScore[1];
-		
+
 		// On parse les string en int pour pouvoir les comparer
 		minute = Integer.parseInt(carMinute);
 		seconde = Integer.parseInt(carSeconde);
-		
+
 		// Parcours du tableau des records
 		for (int i = 0; i <= records.length; i++) {
 			// Si le temps le score du joueur courant est inférieur on retourne
 			// son classement
-			if (minute <= records[i][0] && seconde <= records[i][1]) {
+			if (minute * 60 + seconde <= records[i][0] * 60 + records[i][1]
+					|| records[i][0] * 60 + records[i][1] == 0) {
 				// Retourne le classement si le score fait parti du top 10
 				return i + 1;
 			}
