@@ -275,13 +275,13 @@ public class ClicSouris implements MouseListener, Observer {
 			}
 			// bouton reset
 			if (e.getSource() == fenetreCommande.getBt_reset()) {
-				if (ToucheClavier.isModeAbsolu) {
+				if (ToucheClavier.isModeRelatif) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-					    ToucheClavier.TOUCHES_ABSOLU[i] = ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
+					    ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
+						ToucheClavier.TOUCHES_ABSOLU[i] = ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
 					}
 				}
 				fenetreCommande.setTextBt();
@@ -302,13 +302,13 @@ public class ClicSouris implements MouseListener, Observer {
 				// l'ouverture de la fenêtre
 				int[] leTmp = new int[ToucheClavier.NB_TOUCHES];
 				leTmp = F_commandes.getTemp();
-				if (ToucheClavier.isModeAbsolu) {
+				if (ToucheClavier.isModeRelatif) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_ABSOLU[i] = leTmp[i];
+						ToucheClavier.TOUCHES_RELATIF[i] = leTmp[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_RELATIF[i] = leTmp[i];
+						ToucheClavier.TOUCHES_ABSOLU[i] = leTmp[i];
 					}
 				}
 				fenetreCommande.setTextBt();

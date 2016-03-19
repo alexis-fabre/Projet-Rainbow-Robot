@@ -8,6 +8,8 @@ import java.util.Locale;
 
 import javax.swing.JComponent;
 
+import evenement.ToucheClavier;
+
 /**
  * <p>
  * Représentation de la traduction de l'application en différentes langues.<br />
@@ -348,41 +350,92 @@ public class ChoixLangue {
          * <li>La 2ème colonne correspond au type de commande.</li>
          * <li>La 3ème colonne correspond au bouton radio "absolu".</li>
          * <li>La 4ème colonne correspond au bouton radio "relatif"</li>
-         * <li>La 5ème colonne correspond au titre pour avancer.</li>
-         * <li>La 6ème colonne correspond au titre pour reculer.</li>
-         * <li>La 7ème colonne correspond au titre pour tourner à droite.</li>
-         * <li>La 8ème colonne correspond au titre pour tourner à gauche.</li>
-         * <li>La 9ème colonne correspond au titre pour attraper/lâcher 
+         * <li>La 5ème colonne correspond à la description du mode.</li>
+         * <li>La 6ème colonne correspond au titre pour avancer.</li>
+         * <li>La 7ème colonne correspond au titre pour reculer.</li>
+         * <li>La 8ème colonne correspond au titre pour tourner à droite.</li>
+         * <li>La 9ème colonne correspond au titre pour tourner à gauche.</li>
+         * <li>La 10ème colonne correspond au titre pour attraper/lâcher 
          * une caisse </li>
-         * <li>La 10ème colonne correspond au titre pour fusionner.</li>
-         * <li>La 11ème colonne correspond au titre pour restaurer les paramètres
+         * <li>La 11ème colonne correspond au titre pour fusionner.</li>
+         * <li>La 12ème colonne correspond au titre pour restaurer les paramètres
          * par défaut.</li>
-         * <li>La 12ème colonne correspond au bouton pour annuler l'opération.</li>
-         * <li>La 13ème colonne correspond au bouton pour sauvegarder l'opération.</li>
+         * <li>La 13ème colonne correspond au bouton pour annuler l'opération.</li>
+         * <li>La 14ème colonne correspond au bouton pour sauvegarder l'opération.</li>
+         * <li>La 15ème colonne correspond message de demande d'appui sur une touche.</li>
+         * <li>La 16ème colonne correspond titre de la fenêtre qui s'affiche lorsque 
+         * l'utilisateur entre une touche qui est déjà assignée à une commande.</li>
+         * <li>La 17ème colonne correspond contenu de la fenêtre qui s'affiche lorsque 
+         * l'utilisateur entre une touche qui est déjà assignée à une commande.</li>
          * </ul>
          * </li>
          * </ul>
          */
-        private static final String[][] COMMANDES = {
+        private static final String[][] COMMANDES_ABSOLU = {
                         {
                                         "Configuration commandes",
                                         "Type : ", "Absolu", "Relatif",
-                                        "Avancer : ",
-                                        "Reculer : ",
-                                        "Pivoter/aller vers la droite : ",
-                                        "Pivoter/aller vers la gauche : ",
+                                        "Mode absolu : les déplacements sont "
+                                        + "intuitifs (pas de touche pour la rotation)",                                        
+                                        "Aller en haut : ",
+                                        "Aller en bas : ",
+                                        "Aller vers la droite : ",
+                                        "Aller vers la gauche : ",
                                         "Attraper/lâcher une caisse : ",
                                         "Fusionner : ", "Reset", "Annuler",
-                                        "Sauvegarder"}, //
+                                        "Sauvegarder", "Appuyez sur une touche",
+                                        " Avertissement ",
+                                        "Touche non modifiée car utilisée pour "
+                                        + "une autre action",
+                                        }, //
                         {
                                         "Control Settings",
                                         "Mode", "Absolute", "Relative",
-                                        "Move forward : ",
-                                        "Move backwards : ",
-                                        "Spin/Move right : ",
-                                        "Spin/Move left : ",
+                                        "Absolute mode : movements are intuitive "
+                                        + "(not key to spin)",
+                                        "Go up : ",
+                                        "Go down : ",
+                                        "Go right : ",
+                                        "Go left : ",
                                         "Catch/drop a box : ", "Merge : ", 
-                                        "Reset", "Cancel", "Save" } };
+                                        "Reset", "Cancel", "Save", "Press a key",
+                                        "Warning", "Key unchanged because already "
+                                                + "assigned for another action"
+                                        } };
+        /**
+         * Même signification que COMMANDES_ABSOLU mais pour le mode relatif
+         * Seules les actions de mouvement changent
+         */
+        private static final String[][] COMMANDES_RELATIF = {
+            {
+                            "Configuration commandes",
+                            "Type : ", "Absolu", "Relatif",
+                            "Mode relatif : les déplacements sont "
+                            + "faits par rapport au robot (on gère la "
+                            + "rotation du robot)",      
+                            "Avancer : ",
+                            "Reculer : ",
+                            "Pivoter vers la droite : ",
+                            "Pivoter vers la gauche : ",
+                            "Attraper/lâcher une caisse : ",
+                            "Fusionner : ", "Reset", "Annuler",
+                            "Sauvegarder", "Appuyez sur une touche",
+                            " Avertissement ",
+                            "Touche non modifiée car utilisée pour "
+                            + "une autre action",}, //
+            {
+                            "Control Settings",
+                            "Mode", "Absolute", "Relative",
+                            "Relative Mode: movements are made relative to the "
+                            + "robot (you manage the rotation of it)",
+                            "Move forward : ",
+                            "Move backwards : ",
+                            "Spin right : ",
+                            "Spin left : ",
+                            "Catch/drop a box : ", "Merge : ", 
+                            "Reset", "Cancel", "Save", "Press a key",
+                            "Warning", "Key unchanged because already "
+                                    + "assigned for another action"} };
 	/**
 	 * <p>
 	 * Comprend les traductions pour la fin d'une partie de Rainbow Robot.<br />
@@ -573,7 +626,8 @@ public class ChoixLangue {
          * @return les traductions utilisées pour pour la JDialog F_commandes
          */
         public String[] getCommandes() {
-                return COMMANDES[langue];
+            return (ToucheClavier.isModeRelatif) ? COMMANDES_RELATIF[langue]
+                    : COMMANDES_ABSOLU[langue];
         }
 	/**
 	 * @return les traductions utilisées pour pour la JFrame F_story
