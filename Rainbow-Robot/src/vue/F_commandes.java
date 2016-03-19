@@ -8,6 +8,8 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -330,7 +332,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public void setTextBt() {
         // on modifie le texte des boutons (partie graphique) en fonction du
         // mode
-        
+
         if (ToucheClavier.isModeAbsolu) {
             for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
                 switch (i) {
@@ -437,9 +439,18 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public JRadioButton getBr_relatif() {
         if (br_relatif == null) {
             br_relatif = new JRadioButton();
-            if (!ToucheClavier.isModeAbsolu)
-                br_relatif.setSelected(true);
+            br_relatif.setSelected(!ToucheClavier.isModeAbsolu);
+
         }
+        // on modifie le texte des touches par rapport au mode
+        // relatif
+        br_relatif.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent g) {
+                ToucheClavier.setModeAbsolu(false);
+                setTextBt();
+            }
+        });
         return br_relatif;
     }
 
@@ -449,9 +460,17 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public JRadioButton getBr_absolu() {
         if (br_absolu == null) {
             br_absolu = new JRadioButton();
-            if (ToucheClavier.isModeAbsolu)
-                br_absolu.setSelected(true);
+            br_absolu.setSelected(ToucheClavier.isModeAbsolu);
         }
+        // on modifie le texte des touches par rapport au mode
+        // absolu
+        br_absolu.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                ToucheClavier.setModeAbsolu(true);
+                setTextBt();
+            }
+        });
         return br_absolu;
     }
 
