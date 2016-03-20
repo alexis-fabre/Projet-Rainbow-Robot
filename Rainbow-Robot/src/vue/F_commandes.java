@@ -58,7 +58,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
 
     /** label description du type */
     private JLabel la_desc;
-    
+
     /** Groupe contenant les boutons radio */
     private ButtonGroup rbGroup;
 
@@ -157,7 +157,9 @@ public class F_commandes extends JDialog implements ChangementLangue {
 
         rbGroup.add(getBr_relatif());
         rbGroup.add(getBr_absolu());
-        // axe y ne change pas (1 seule ligne)
+
+        gbcHaut.insets = new Insets(-10, 0, 0, 0);
+        // axe y = ligne, axe x = colonne
         gbcHaut.gridy = 0;
         gbcHaut.gridx = 0;
         // 50% de l'espace supplémentaire pour le label
@@ -172,13 +174,17 @@ public class F_commandes extends JDialog implements ChangementLangue {
         contentHaut.add(getBr_absolu(), gbcHaut);
 
         GridBagConstraints gbcHautDesc = new GridBagConstraints();
+
+        // espaces autours
+        gbcHautDesc.insets = new Insets(10, 0, -30, 0);
         // label description en dessous et prend 3 colonnes
         gbcHautDesc.gridy = 1;
         gbcHautDesc.gridx = 0;
         gbcHautDesc.gridwidth = 3;
-        gbcHautDesc.weighty = 1;
+        gbcHautDesc.weighty = 0;
+        gbcHautDesc.weightx = 0;
         contentHaut.add(getLa_desc(), gbcHautDesc);
-        
+
         /*
          * PANNEAU DU MILIEU contenant les actions associées aux boutons de
          * modification
@@ -272,8 +278,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
             tempRel[i] = ToucheClavier.TOUCHES_RELATIF[i];
             tempAbs[i] = ToucheClavier.TOUCHES_ABSOLU[i];
         }
-        
-        
+
         // on modifie le texte des boutons
         setTextBt();
 
@@ -287,10 +292,6 @@ public class F_commandes extends JDialog implements ChangementLangue {
         getBt_save().addMouseListener(gestion);
         getBt_annuler().addMouseListener(gestion);
         getBt_reset().addMouseListener(gestion);
-        
-        contentHaut.setBackground(Color.cyan);
-        contentActions.setBackground(Color.RED);
-        contentNavigation.setBackground(Color.green);
 
     }
 
@@ -304,7 +305,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
      */
     public static String keyToString(int key) {
         String valeur;
-
+        System.out.println(key);
         // caractères particuliers
         switch (key) {
         case KeyEvent.VK_UP: // Flêche du haut
@@ -331,12 +332,197 @@ public class F_commandes extends JDialog implements ChangementLangue {
         case KeyEvent.VK_BACK_SPACE: // touche backspace
             valeur = "BkSpc";
             break;
+        case KeyEvent.VK_CAPS_LOCK: // Verrouillage majuscule
+            valeur = "CAPS";
+            break;
+
         case KeyEvent.VK_SHIFT:
             valeur = "Maj";
             break;
         case KeyEvent.VK_ALT:
             valeur = "Alt";
             break;
+        case KeyEvent.VK_NUMPAD0:
+            valeur = "0";
+            break;
+        case KeyEvent.VK_NUMPAD1:
+            valeur = "1";
+            break;
+        case KeyEvent.VK_NUMPAD2:
+            valeur = "2";
+            break;
+        case KeyEvent.VK_NUMPAD3:
+            valeur = "3";
+            break;
+        case KeyEvent.VK_NUMPAD4:
+            valeur = "4";
+            break;
+        case KeyEvent.VK_NUMPAD5:
+            valeur = "5";
+            break;
+        case KeyEvent.VK_NUMPAD6:
+            valeur = "6";
+            break;
+        case KeyEvent.VK_NUMPAD7:
+            valeur = "7";
+            break;
+        case KeyEvent.VK_NUMPAD8:
+            valeur = "8";
+            break;
+        case KeyEvent.VK_NUMPAD9:
+            valeur = "9";
+            break;
+        case KeyEvent.VK_SUBTRACT: // -
+            valeur = "-";
+            break;
+        case KeyEvent.VK_ADD: // +
+            valeur = "+";
+            break;
+        case KeyEvent.VK_DIVIDE: // /
+            valeur = "/";
+            break;
+        case KeyEvent.VK_MULTIPLY: // *
+            valeur = "*";
+            break;
+        case KeyEvent.VK_END: // FIN
+            valeur = "END";
+            break;
+        case KeyEvent.VK_DELETE: // SUPPR
+            valeur = "Suppr";
+            break;
+        case KeyEvent.VK_EQUALS: // =
+            valeur = "=";
+            break;
+        case KeyEvent.VK_COMMA: // ,
+            valeur = ",";
+            break;
+        case KeyEvent.VK_SEMICOLON: // ;
+            valeur = ";";
+            break;
+        case KeyEvent.VK_COLON: // :
+            valeur = ":";
+            break;
+        case KeyEvent.VK_EXCLAMATION_MARK: // !
+            valeur = "!";
+            break;
+        case KeyEvent.VK_DECIMAL: // point du clavier numérique
+            valeur = ".";
+            break;
+        case KeyEvent.VK_TAB: // tabulation
+            valeur = "TAB";
+            break;
+        case KeyEvent.VK_1: // &
+            valeur = "&";
+            break;
+        case KeyEvent.VK_2: // é
+            valeur = "é";
+            break;
+        case KeyEvent.VK_3: // "
+            valeur = "\"";
+            break;
+        case KeyEvent.VK_4: // '
+            valeur = "'";
+            break;
+        case KeyEvent.VK_5: // (
+            valeur = "(";
+            break;
+        case KeyEvent.VK_6: // -
+            valeur = "-";
+            break;
+        case KeyEvent.VK_7: // è
+            valeur = "è";
+            break;
+        case KeyEvent.VK_8: // _
+            valeur = "_";
+            break;
+        case KeyEvent.VK_9: // ç
+            valeur = "ç";
+            break;
+        case KeyEvent.VK_0: // à
+            valeur = "à";
+            break;
+        case KeyEvent.VK_RIGHT_PARENTHESIS: // )
+            valeur = ")";
+            break;
+        case KeyEvent.VK_DEAD_CIRCUMFLEX: // ^
+            valeur = "^";
+            break;
+        case KeyEvent.VK_DEAD_DIAERESIS: // ¨ 
+            valeur = "¨";
+            break;
+        case KeyEvent.VK_DOLLAR: // $
+            valeur = "$";
+            break;
+        case KeyEvent.VK_ASTERISK: // *
+            valeur = "*";
+            break;
+        case KeyEvent.VK_INSERT: // insert
+            valeur = "INS";
+            break;
+        case KeyEvent.VK_LESS: // <
+            valeur = "<";
+            break;
+        case KeyEvent.VK_UNDEFINED: // ²
+            valeur = "²";
+            break;
+        case KeyEvent.VK_WINDOWS:
+            valeur = "WINDOWS";
+            break;
+        case KeyEvent.VK_ALT_GRAPH: // Alt Gr
+            valeur = "AltGr";
+            break;
+        case KeyEvent.VK_NUM_LOCK: // verr num
+            valeur = "Verr.Num";
+            break;
+        case KeyEvent.VK_ESCAPE: // echap
+            valeur = "Esc";
+            break;
+        case KeyEvent.VK_PAGE_UP:
+            valeur = "Pg.Up";
+            break;
+        case KeyEvent.VK_PAGE_DOWN: 
+            valeur = "Pg.Down";
+            break;
+        case KeyEvent.VK_HOME: // début
+            valeur = "↖";
+            break;
+        case KeyEvent.VK_F1:
+            valeur = "F1";
+            break;
+        case KeyEvent.VK_F2:
+            valeur = "F2";
+            break;
+        case KeyEvent.VK_F3:
+            valeur = "F3";
+            break;
+        case KeyEvent.VK_F4:
+            valeur = "F4";
+            break;
+        case KeyEvent.VK_F5:
+            valeur = "F5";
+            break;
+        case KeyEvent.VK_F6:
+            valeur = "F6";
+            break;
+        case KeyEvent.VK_F7:
+            valeur = "F7";
+            break;
+        case KeyEvent.VK_F8:
+            valeur = "F8";
+            break;
+        case KeyEvent.VK_F9:
+            valeur = "F9";
+            break;
+        case KeyEvent.VK_F10:
+            valeur = "F10";
+            break;
+        case KeyEvent.VK_F11:
+            valeur = "F11";
+            break;
+        case KeyEvent.VK_F12:
+            valeur = "F12";
+            break;
+        
         default:
             valeur = Character.toString((char) (key));
             break;
@@ -722,6 +908,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
                 UtilitaireFenetre.DIM_COMPOSANT_COMMANDE);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
+        label.setFocusTraversalKeysEnabled(false);
         label.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent f) {
@@ -729,20 +916,24 @@ public class F_commandes extends JDialog implements ChangementLangue {
                 if (f != null) {
                     if (isPresent(f.getKeyCode())) {
                         // traduction
-                        String[] traductionCommandes = traducteur.getCommandes();
+                        String[] traductionCommandes = traducteur
+                                .getCommandes();
                         // message d'avertissement si la touche est déà utilisée
-                        JOptionPane.showMessageDialog(label, 
+                        JOptionPane.showMessageDialog(label,
                                 traductionCommandes[16],
                                 traductionCommandes[15],
                                 JOptionPane.WARNING_MESSAGE);
-                        
+
                     } else {
                         leBt.setText(keyToString(f.getKeyCode()));
-                        // on modifie dans le tableau des commandes correspondant
+                        // on modifie dans le tableau des commandes
+                        // correspondant
                         if (ToucheClavier.isModeRelatif) {
-                            ToucheClavier.TOUCHES_RELATIF[indice] = f.getKeyCode();
+                            ToucheClavier.TOUCHES_RELATIF[indice] = f
+                                    .getKeyCode();
                         } else {
-                            ToucheClavier.TOUCHES_ABSOLU[indice] = f.getKeyCode();
+                            ToucheClavier.TOUCHES_ABSOLU[indice] = f
+                                    .getKeyCode();
                         }
                     }
                 }

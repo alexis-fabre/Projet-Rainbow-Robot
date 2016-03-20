@@ -27,7 +27,7 @@ public class UtilitaireFenetre {
          * Dimension des boutons dans la fenêtre de modification des 
          * commandes
          */
-        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(55,
+        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(65,
                         30);
         
         /**
