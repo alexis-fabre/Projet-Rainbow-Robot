@@ -401,6 +401,11 @@ public class ClicSouris implements MouseListener, Observer {
 				nouvelleFenetre.setVisible(true);
 				setFenetre(nouvelleFenetre);
 			}
+			if (e.getSource() == fenetreChoixNiveau.getBt_Precedent()) {
+			    F_story nouvelleFenetre = new F_story(this);
+			    nouvelleFenetre.setVisible(true);
+			    setFenetre(nouvelleFenetre);
+			}
 		}
 
 		if (vue instanceof F_custom) {

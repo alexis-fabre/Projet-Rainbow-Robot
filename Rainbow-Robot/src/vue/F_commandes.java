@@ -171,7 +171,13 @@ public class F_commandes extends JDialog implements ChangementLangue {
         gbcHaut.weightx = 0.25;
         contentHaut.add(getBr_absolu(), gbcHaut);
 
-        // positionner le label en dessous et prend 3 colonnes
+        GridBagConstraints gbcHautDesc = new GridBagConstraints();
+        // label description en dessous et prend 3 colonnes
+        gbcHautDesc.gridy = 1;
+        gbcHautDesc.gridx = 0;
+        gbcHautDesc.gridwidth = 3;
+        gbcHautDesc.weighty = 1;
+        contentHaut.add(getLa_desc(), gbcHautDesc);
         
         /*
          * PANNEAU DU MILIEU contenant les actions associées aux boutons de
@@ -267,9 +273,6 @@ public class F_commandes extends JDialog implements ChangementLangue {
             tempAbs[i] = ToucheClavier.TOUCHES_ABSOLU[i];
         }
         
-        contentHaut.setBackground(Color.CYAN);
-        contentActions.setBackground(Color.RED);
-        contentNavigation.setBackground(Color.YELLOW);
         
         // on modifie le texte des boutons
         setTextBt();
@@ -284,6 +287,10 @@ public class F_commandes extends JDialog implements ChangementLangue {
         getBt_save().addMouseListener(gestion);
         getBt_annuler().addMouseListener(gestion);
         getBt_reset().addMouseListener(gestion);
+        
+        contentHaut.setBackground(Color.cyan);
+        contentActions.setBackground(Color.RED);
+        contentNavigation.setBackground(Color.green);
 
     }
 
