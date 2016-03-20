@@ -95,6 +95,7 @@ public class Vortex extends Observable implements Serializable, Runnable {
 		List<Caisse> caisseARecuperee = partie.getCaisseARecuperee();
 		// On vérifie s'il reste des caisses à récupérées
 		if (caisseARecuperee.isEmpty()) {
+			// On ne finit la partie qu'à la fin de l'animation du vortex
 			if (!estOccupe) {
 				partie.partieFinie();
 				return false;
@@ -111,8 +112,8 @@ public class Vortex extends Observable implements Serializable, Runnable {
 			for (int i = 0; i < caissePlateau.length; i++) {
 				if (caissePlateau[i] != null
 						&& caissePlateau[i].getPosCaisse().equals(pos_vortex)
-						&& caissePlateau[i].getCouleur() ==
-								caisseARecuperee.get(0).getCouleur()
+						&& caissePlateau[i].getCouleur() == caisseARecuperee
+								.get(0).getCouleur()
 						&& !caissePlateau[i].equals(robot.getCaisse())) {
 					// On garde la référence de la caisse
 					aAbsorbe = caissePlateau[i];

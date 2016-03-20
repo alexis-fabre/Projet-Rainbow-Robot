@@ -110,7 +110,7 @@ public class ToucheClavier implements KeyListener {
 	/**
 	 * @return true si la partie a commencé, false sinon
 	 */
-	public static boolean isPremiereAction() {
+	public static boolean isPartieCommence() {
 		return premiereAction;
 	}
 

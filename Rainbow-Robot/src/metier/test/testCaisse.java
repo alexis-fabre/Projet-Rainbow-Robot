@@ -112,25 +112,13 @@ public class testCaisse {
 				}
 			}
 		}
-		System.out.println("\n" + compteur + " tests OK réussis sur 8\n" 
-				+ cpt +   " tests nok réussis sur 28\n"
+		System.out.println("\n" + compteur + " tests OK réussis sur 6\n" 
+				+ cpt +   " tests nok réussis sur 30\n"
 				+ "sur un total de "+ i*j +" tests effectués");
 
 	}
-	/**
-	 *   BIDON A SUPPRIMER J'AI LA FLEMME
-	 */
-	public static void fusionCaisse() {
-			
-			int a = JEU_FUSION_CAISSE[1].getCouleur();
-			int b = JEU_FUSION_CAISSE[4].getCouleur();
-			System.out.println(Caisse.isFusionOk(a,b));
-			System.out.println(a  + " et " + b);
-			System.out.println(Caisse.fusionCouleur(JEU_FUSION_CAISSE[1],
-					                         JEU_FUSION_CAISSE[4]));
-		
-	}
-
+	
+	
 	/**
 	 * Programme principal lançant les différentes méthodes de tests
 	 * 
