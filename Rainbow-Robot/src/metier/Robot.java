@@ -726,15 +726,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		Caisse c2 = new Caisse(0) ; 
 		// Récupération de toute les caisses présentent sur le niveau en cours
 		Caisse[] caissePlateau = partie.getCaissePlateau();
-		Position pos1= new Position(pos_courante.getX() - 2, 
-				pos_courante.getY());
-		Position pos2= new Position(pos_courante.getX(), 
-				pos_courante.getY() - 2);
-		Position pos3= new Position(pos_courante.getX() + 2, 
-				pos_courante.getY());
-		Position pos4= new Position(pos_courante.getX(), 
-				pos_courante.getY() + 2);
-		
 
 		if (caisse != null ) {
 			// Récupération de la couleur et de la position de c2 en fonction de

@@ -117,20 +117,8 @@ public class testCaisse {
 				+ "sur un total de "+ i*j +" tests effectués");
 
 	}
-	/**
-	 *   BIDON A SUPPRIMER J'AI LA FLEMME
-	 */
-	public static void fusionCaisse() {
-			
-			int a = JEU_FUSION_CAISSE[1].getCouleur();
-			int b = JEU_FUSION_CAISSE[4].getCouleur();
-			System.out.println(Caisse.isFusionOk(a,b));
-			System.out.println(a  + " et " + b);
-			System.out.println(Caisse.fusionCouleur(JEU_FUSION_CAISSE[1],
-					                         JEU_FUSION_CAISSE[4]));
-		
-	}
-
+	
+	
 	/**
 	 * Programme principal lançant les différentes méthodes de tests
 	 * 
