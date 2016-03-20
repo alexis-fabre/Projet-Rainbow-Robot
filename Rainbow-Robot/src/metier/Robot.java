@@ -255,6 +255,26 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
+	 * @param orientation
+	 *            orientation du robot
+	 * @return orientation du robot sous la forme d'une String
+	 */
+	public static String orientationToString(int orientation) {
+		switch (orientation) {
+		case ORIENTATION_BAS:
+			return "BAS";
+		case ORIENTATION_HAUT:
+			return "HAUT";
+		case ORIENTATION_DROITE:
+			return "DROITE";
+		case ORIENTATION_GAUCHE:
+			return "GAUCHE";
+		default: // Autre
+			return "INCONNUE";
+		}
+	}
+
+	/**
 	 * Modifie les variables internes pour dessiner le robot. Cette fonction est
 	 * à appeler avant chaque déplacement du robot.
 	 */
@@ -1118,8 +1138,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "Robot : avec une orientation de " + orientation
-				+ " et une postion a " + pos_courante.toString() + "\n";
+		return "Robot orienté vers " + orientationToString(orientation)
+				+ " et positionné a " + pos_courante.toString() + "\n";
 	}
 
 	/*
