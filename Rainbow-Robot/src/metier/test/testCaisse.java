@@ -112,8 +112,8 @@ public class testCaisse {
 				}
 			}
 		}
-		System.out.println("\n" + compteur + " tests OK réussis sur 8\n" 
-				+ cpt +   " tests nok réussis sur 28\n"
+		System.out.println("\n" + compteur + " tests OK réussis sur 6\n" 
+				+ cpt +   " tests nok réussis sur 30\n"
 				+ "sur un total de "+ i*j +" tests effectués");
 
 	}
