@@ -4,10 +4,13 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -17,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -39,30 +43,33 @@ public class F_commandes extends JDialog implements ChangementLangue {
 
     /**
      * Tableau temporaire contenant les touches au moment de l'ouverture de la
-     * fenetre des commandes pour le mode absolu
+     * fenetre des commandes pour le mode relatif
      */
-    private static int[] tempAbs = new int[ToucheClavier.NB_TOUCHES];
+    private static int[] tempRel = new int[ToucheClavier.NB_TOUCHES];
 
     /**
      * Tableau temporaire contenant les touches au moment de l'ouverture de la
      * fenetre des commandes pour le mode relatif
      */
-    private static int[] tempRel = new int[ToucheClavier.NB_TOUCHES];
+    private static int[] tempAbs = new int[ToucheClavier.NB_TOUCHES];
 
     /** Label changement de type */
     private JLabel la_type;
 
+    /** label description du type */
+    private JLabel la_desc;
+    
     /** Groupe contenant les boutons radio */
     private ButtonGroup rbGroup;
-
-    /** Bouton radio pour mode relatif */
-    private JRadioButton br_relatif;
 
     /** Bouton radio pour mode absolu */
     private JRadioButton br_absolu;
 
+    /** Bouton radio pour mode relatif */
+    private JRadioButton br_relatif;
+
     /** Référence des traductions effectuées dans ChoixLangue.java */
-    private ChoixLangue traducteur = ChoixLangue.getChoixLangue();
+    private static ChoixLangue traducteur = ChoixLangue.getChoixLangue();
 
     /** Bouton qui permet de modifier la commande pour avancer */
     private JButton bt_avancer;
@@ -164,6 +171,8 @@ public class F_commandes extends JDialog implements ChangementLangue {
         gbcHaut.weightx = 0.25;
         contentHaut.add(getBr_absolu(), gbcHaut);
 
+        // positionner le label en dessous et prend 3 colonnes
+        
         /*
          * PANNEAU DU MILIEU contenant les actions associées aux boutons de
          * modification
@@ -254,10 +263,14 @@ public class F_commandes extends JDialog implements ChangementLangue {
         // on sauvegarde les touches au moment de l'ouverture pour pouvoir les
         // restituer en cas d'annulation
         for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-            tempAbs[i] = ToucheClavier.TOUCHES_ABSOLU[i];
             tempRel[i] = ToucheClavier.TOUCHES_RELATIF[i];
+            tempAbs[i] = ToucheClavier.TOUCHES_ABSOLU[i];
         }
-
+        
+        contentHaut.setBackground(Color.CYAN);
+        contentActions.setBackground(Color.RED);
+        contentNavigation.setBackground(Color.YELLOW);
+        
         // on modifie le texte des boutons
         setTextBt();
 
@@ -330,62 +343,62 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public void setTextBt() {
         // on modifie le texte des boutons (partie graphique) en fonction du
         // mode
-        
-        if (ToucheClavier.isModeAbsolu) {
+
+        if (ToucheClavier.isModeRelatif) {
             for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
                 switch (i) {
                 case 0:
                     getBt_avancer().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 case 1:
                     getBt_gauche().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 case 2:
                     getBt_droite().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 case 3:
                     getBt_reculer().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 case 4:
                     getBt_fusion().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 case 5:
                     getBt_attraper().setText(
-                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
+                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
                     break;
                 }
             }
-        } else { // mode relatif
+        } else { // mode absolu
             for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
                 switch (i) {
                 case 0:
                     getBt_avancer().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 case 1:
                     getBt_gauche().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 case 2:
                     getBt_droite().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 case 3:
                     getBt_reculer().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 case 4:
                     getBt_fusion().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 case 5:
                     getBt_attraper().setText(
-                            keyToString(ToucheClavier.TOUCHES_RELATIF[i]));
+                            keyToString(ToucheClavier.TOUCHES_ABSOLU[i]));
                     break;
                 }
             }
@@ -405,17 +418,17 @@ public class F_commandes extends JDialog implements ChangementLangue {
         getLa_type().setText(traductionCommandes[1]);
         getBr_absolu().setText(traductionCommandes[2]);
         getBr_relatif().setText(traductionCommandes[3]);
+        getLa_desc().setText(traductionCommandes[4]);
+        getLa_avancer().setText(traductionCommandes[5]);
+        getLa_reculer().setText(traductionCommandes[6]);
+        getLa_droite().setText(traductionCommandes[7]);
+        getLa_gauche().setText(traductionCommandes[8]);
+        getLa_attraper().setText(traductionCommandes[9]);
+        getLa_fusion().setText(traductionCommandes[10]);
 
-        getLa_avancer().setText(traductionCommandes[4]);
-        getLa_reculer().setText(traductionCommandes[5]);
-        getLa_droite().setText(traductionCommandes[6]);
-        getLa_gauche().setText(traductionCommandes[7]);
-        getLa_attraper().setText(traductionCommandes[8]);
-        getLa_fusion().setText(traductionCommandes[9]);
-
-        getBt_reset().setText(traductionCommandes[10]);
-        getBt_annuler().setText(traductionCommandes[11]);
-        getBt_save().setText(traductionCommandes[12]);
+        getBt_reset().setText(traductionCommandes[11]);
+        getBt_annuler().setText(traductionCommandes[12]);
+        getBt_save().setText(traductionCommandes[13]);
 
     }
 
@@ -432,15 +445,15 @@ public class F_commandes extends JDialog implements ChangementLangue {
     }
 
     /**
-     * @return the br_relatif
+     * @return the la_desc
      */
-    public JRadioButton getBr_relatif() {
-        if (br_relatif == null) {
-            br_relatif = new JRadioButton();
-            if (!ToucheClavier.isModeAbsolu)
-                br_relatif.setSelected(true);
+    public JLabel getLa_desc() {
+        if (la_desc == null) {
+            la_desc = new JLabel();
+            la_desc.setHorizontalAlignment(SwingConstants.LEFT);
+            la_desc.setPreferredSize(UtilitaireFenetre.DIM_COMPOSANT_PRINCIPAL);
         }
-        return br_relatif;
+        return la_desc;
     }
 
     /**
@@ -449,10 +462,41 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public JRadioButton getBr_absolu() {
         if (br_absolu == null) {
             br_absolu = new JRadioButton();
-            if (ToucheClavier.isModeAbsolu)
-                br_absolu.setSelected(true);
+            br_absolu.setSelected(!ToucheClavier.isModeRelatif);
+
         }
+        // on modifie le texte des touches par rapport au mode
+        // absolu
+        br_absolu.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent g) {
+                ToucheClavier.setModeRelatif(false);
+                setTextBt();
+                setLangue();
+            }
+        });
         return br_absolu;
+    }
+
+    /**
+     * @return the br_relatif
+     */
+    public JRadioButton getBr_relatif() {
+        if (br_relatif == null) {
+            br_relatif = new JRadioButton();
+            br_relatif.setSelected(ToucheClavier.isModeRelatif);
+        }
+        // on modifie le texte des touches par rapport au mode
+        // absolu
+        br_relatif.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                ToucheClavier.setModeRelatif(true);
+                setTextBt();
+                setLangue();
+            }
+        });
+        return br_relatif;
     }
 
     /**
@@ -662,22 +706,37 @@ public class F_commandes extends JDialog implements ChangementLangue {
     public static void afficherPressKey(int indice, JButton leBt) {
         JDialog dialog = new JDialog();
         dialog.setModal(true);
-        JLabel label = new JLabel("Press a key");
+        dialog.setResizable(false);
+        // modification de la langue
+        String[] traductionCommandes = traducteur.getCommandes();
+        JLabel label = new JLabel(traductionCommandes[14]);
+
         UtilitaireFenetre.setAllSize(label,
-                UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
+                UtilitaireFenetre.DIM_COMPOSANT_COMMANDE);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
         label.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent f) {
                 SwingUtilities.getWindowAncestor(f.getComponent()).dispose();
-                if (f != null && !isPresent(f.getKeyCode())) {
-                    leBt.setText(keyToString(f.getKeyCode()));
-                    // on modifie dans le tableau des commandes correspondant
-                    if (ToucheClavier.isModeAbsolu) {
-                        ToucheClavier.TOUCHES_ABSOLU[indice] = f.getKeyCode();
+                if (f != null) {
+                    if (isPresent(f.getKeyCode())) {
+                        // traduction
+                        String[] traductionCommandes = traducteur.getCommandes();
+                        // message d'avertissement si la touche est déà utilisée
+                        JOptionPane.showMessageDialog(label, 
+                                traductionCommandes[16],
+                                traductionCommandes[15],
+                                JOptionPane.WARNING_MESSAGE);
+                        
                     } else {
-                        ToucheClavier.TOUCHES_RELATIF[indice] = f.getKeyCode();
+                        leBt.setText(keyToString(f.getKeyCode()));
+                        // on modifie dans le tableau des commandes correspondant
+                        if (ToucheClavier.isModeRelatif) {
+                            ToucheClavier.TOUCHES_RELATIF[indice] = f.getKeyCode();
+                        } else {
+                            ToucheClavier.TOUCHES_ABSOLU[indice] = f.getKeyCode();
+                        }
                     }
                 }
 
@@ -696,7 +755,7 @@ public class F_commandes extends JDialog implements ChangementLangue {
      * @return the temp le tableau temporaire
      */
     public static int[] getTemp() {
-        return (ToucheClavier.isModeAbsolu ? tempAbs : tempRel);
+        return (ToucheClavier.isModeRelatif ? tempRel : tempAbs);
     }
 
     /**
@@ -707,15 +766,15 @@ public class F_commandes extends JDialog implements ChangementLangue {
      */
     public static boolean isPresent(int aVerifier) {
         boolean present = false;
-        if (ToucheClavier.isModeAbsolu) {
+        if (ToucheClavier.isModeRelatif) {
             for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-                if (ToucheClavier.TOUCHES_ABSOLU[i] == aVerifier) {
+                if (ToucheClavier.TOUCHES_RELATIF[i] == aVerifier) {
                     present = true;
                 }
             }
         } else {
             for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-                if (ToucheClavier.TOUCHES_RELATIF[i] == aVerifier) {
+                if (ToucheClavier.TOUCHES_ABSOLU[i] == aVerifier) {
                     present = true;
                 }
             }

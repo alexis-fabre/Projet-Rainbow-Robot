@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import evenement.ClicSouris;
+import evenement.ToucheClavier;
 
 /**
  * <p>

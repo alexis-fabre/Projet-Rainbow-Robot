@@ -246,32 +246,6 @@ public class ClicSouris implements MouseListener, Observer {
 		if (vue instanceof F_commandes) {
 			F_commandes fenetreCommande = (F_commandes) vue;
 
-			// on modifie le texte des touches par rapport au mode
-			// absolu
-			fenetreCommande.getBr_absolu().addActionListener(
-					new ActionListener() {
-
-						public void actionPerformed(ActionEvent f) {
-							System.out
-									.println("Selected Button = passé dans abs");
-							ToucheClavier.setModeAbsolu(true);
-							fenetreCommande.setTextBt();
-
-						}
-					});
-			// on modifie le texte des touches par rapport au mode
-			// relatif
-			fenetreCommande.getBr_relatif().addActionListener(
-					new ActionListener() {
-
-						public void actionPerformed(ActionEvent g) {
-							System.out
-									.println("Selected Button = passé dans rel");
-							ToucheClavier.setModeAbsolu(false);
-							fenetreCommande.setTextBt();
-						}
-					});
-
 			// bouton avancer
 			if (e.getSource() == fenetreCommande.getBt_avancer()) {
 				F_commandes
@@ -301,13 +275,13 @@ public class ClicSouris implements MouseListener, Observer {
 			}
 			// bouton reset
 			if (e.getSource() == fenetreCommande.getBt_reset()) {
-				if (ToucheClavier.isModeAbsolu) {
+				if (ToucheClavier.isModeRelatif) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_ABSOLU[i] = ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
+					    ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
+						ToucheClavier.TOUCHES_ABSOLU[i] = ToucheClavier.TOUCHES_ABSOLU_DEFAUT[i];
 					}
 				}
 				fenetreCommande.setTextBt();
@@ -316,6 +290,11 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreCommande.getBt_save()) {
 				setFenetre(fenetreCommande.getOwner());
 				fenetreCommande.dispose();
+				if (vue instanceof F_jeuRainbow) {
+				    F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
+				    fenetreJeu.startChrono();
+				    fenetreJeu.requestFocus();
+				}
 			}
 			// bouton annuler
 			if (e.getSource() == fenetreCommande.getBt_annuler()) {
@@ -323,13 +302,13 @@ public class ClicSouris implements MouseListener, Observer {
 				// l'ouverture de la fenêtre
 				int[] leTmp = new int[ToucheClavier.NB_TOUCHES];
 				leTmp = F_commandes.getTemp();
-				if (ToucheClavier.isModeAbsolu) {
+				if (ToucheClavier.isModeRelatif) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_ABSOLU[i] = leTmp[i];
+						ToucheClavier.TOUCHES_RELATIF[i] = leTmp[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-						ToucheClavier.TOUCHES_RELATIF[i] = leTmp[i];
+						ToucheClavier.TOUCHES_ABSOLU[i] = leTmp[i];
 					}
 				}
 				fenetreCommande.setTextBt();
@@ -485,10 +464,16 @@ public class ClicSouris implements MouseListener, Observer {
 						traductionBouton[0]);
 				switch (retour) {
 				case 0: // Continuer
-					fenetreJeu.startChrono();
-					fenetreJeu.requestFocus();
+				    fenetreJeu.startChrono();
+                                    fenetreJeu.requestFocus();
 					break;
-				case 1: // Recommencer
+					
+				case 1: // Commandes
+				    F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
+				    fenetreCmd.setVisible(true);
+				    setFenetre(fenetreCmd);
+				    break;
+				case 2: // Recommencer
 					metier.reinitialiserPartie();
 					fenetreJeu.setPartieCourante(metier.getPartieCourante());
 					setObserver();
@@ -496,7 +481,7 @@ public class ClicSouris implements MouseListener, Observer {
 					ToucheClavier.restartPartie();
 					fenetreJeu.requestFocus();
 					break;
-				case 2: // Quitter
+				case 3: // Quitter
 					// On revient à l'accueil
 					String[] traductionMenuQuitterPartie = ChoixLangue
 							.getChoixLangue().getQuitterPartie();
