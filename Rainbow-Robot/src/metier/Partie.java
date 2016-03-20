@@ -292,7 +292,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		int compteur = 0;
 		BouclePrincipale: for (int i = 0; i < caisseARecuperer.size(); i++) {
 			if (caisseARecuperer.get(i) == null
-					|| caisseARecuperer.get(i).getCouleur() == 0) {            // == null
+					|| caisseARecuperer.get(i).getCouleur() == 0) { // == null
 				throw new IllegalArgumentException(
 						"La caisse à récupérer à l'indice " + i
 								+ " est introuvable");
@@ -307,8 +307,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 						continue BoucleVerification;
 					}
 				}
-				if (caisseARecuperer.get(i).getCouleur()
-						== caissePlateau[j].getCouleur()) {
+				if (caisseARecuperer.get(i).getCouleur() == caissePlateau[j]
+						.getCouleur()) {
 					indiceDejaUtilise[compteur] = j;
 					compteur++;
 					continue BouclePrincipale;
@@ -353,23 +353,21 @@ public class Partie extends Observable implements Dessinable, Serializable {
 
 		// Deux situations possibles ou le Robot ne pourra pas se déplacer
 		// 1ère situation :
-		//     I
-		//	   I
+		// I
+		// I
 		// I I R I I
-		//	   I
-		//	   I
-		
-		
-		// 2ème situation : 
-		//       I
-		//     I   I
-		//	 I I I I I
-		// I   I R I   I
-		//   I I I I I
-		//   I I   I I
-		//       I
-		
-		
+		// I
+		// I
+
+		// 2ème situation :
+		// I
+		// I I
+		// I I I I I
+		// I I R I I
+		// I I I I I
+		// I I I I
+		// I
+
 		return true;
 	}
 

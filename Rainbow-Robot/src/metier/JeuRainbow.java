@@ -56,12 +56,14 @@ public class JeuRainbow implements Serializable {
 	/** Nom du fichier ou se trouve la sauvegarde du mode Story */
 	public static final String CHEMIN_FICHIER_SAUVEGARDE = "./Ressource/sauvegarde.txt";
 
-	public static final String[] FICHIER_STORY = {"./Ressource/fichierStory/Level1.txt",
-		"./Ressource/fichierStory/Level2.txt",
-		"./Ressource/fichierStory/Level4.txt", "./Ressource/fichierStory/Level5.txt",
-		"./Ressource/fichierStory/Level6.txt","./Ressource/fichierStory/Level7.txt",
-		"./Ressource/fichierStory/Level8.txt"};
-
+	public static final String[] FICHIER_STORY = {
+			"./Ressource/fichierStory/Level1.txt",
+			"./Ressource/fichierStory/Level2.txt",
+			"./Ressource/fichierStory/Level4.txt",
+			"./Ressource/fichierStory/Level5.txt",
+			"./Ressource/fichierStory/Level6.txt",
+			"./Ressource/fichierStory/Level7.txt",
+			"./Ressource/fichierStory/Level8.txt" };
 
 	/**
 	 * Constructeur par défaut pour créer les parties
@@ -418,8 +420,8 @@ public class JeuRainbow implements Serializable {
 		int ligne = (rand.nextInt(10)) + 2;
 		int nbCaisses = ((ligne * colonne) / (rand.nextInt(5) + 1));
 		Caisse[] caissePlateau = new Caisse[nbCaisses];
-		System.out.println(colonne + ligne);
-
+		Position random = new Position(rand.nextInt(colonne),
+				rand.nextInt(ligne));
 		Robot robot = new Robot(rand.nextInt(4), new Position(
 				rand.nextInt(colonne), rand.nextInt(ligne)));
 		Vortex vortex = new Vortex(new Position(rand.nextInt(colonne),
@@ -429,13 +431,17 @@ public class JeuRainbow implements Serializable {
 		int indice = rand.nextInt(6) + 1;
 		for (int i = 0; i <= indice; i++) {
 			caisseARecuperer.add(new Caisse(rand.nextInt(6) + 1));
-
 		}
 
 		for (int i = 0; i < nbCaisses; i++) {
-			caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), new Position(
-					rand.nextInt(colonne), rand.nextInt(ligne)));
+			random = new Position(rand.nextInt(colonne), rand.nextInt(ligne));
+			if (!random.equals(vortex)) {
+				caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), random);
+			} else {
+				return carteAleatoire();
+			}
 		}
+
 		try {
 			return new Partie(ligne, colonne, null, robot, vortex,
 					caisseARecuperer, caissePlateau);
