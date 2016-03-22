@@ -269,11 +269,34 @@ public class Caisse implements Dessinable, Serializable {
 	public void dessiner(Graphics2D g) {
 		for (int i = 0; i < COULEUR_AUTORISEE.length; i++) {
 			if (couleur == (COULEUR_AUTORISEE[i])) {
-				// dessiner
 				try {
 					g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_CAISSE[i])),
 							0, 0, UtilitaireFenetre.DIM_CAISSE_JEU.width,
 							UtilitaireFenetre.DIM_CAISSE_JEU.height, null);
+				} catch (IOException e) {
+					System.out.println("Caisse : dessiner : "
+							+ "Chemin introuvable");
+				}
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Permet de dessiner les caisses dans la liste des caisses à récupérer
+	 *
+	 * @param g
+	 *            contexte graphique 2D
+	 */
+	public void dessinerARecuperer(Graphics2D g) {
+		for (int i = 0; i < COULEUR_AUTORISEE.length; i++) {
+			if (couleur == (COULEUR_AUTORISEE[i])) {
+				try {
+					g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_CAISSE[i])),
+							0, 0,
+							UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.width,
+							UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.height,
+							null);
 				} catch (IOException e) {
 					System.out.println("Caisse : dessiner : "
 							+ "Chemin introuvable");

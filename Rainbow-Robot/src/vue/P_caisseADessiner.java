@@ -140,7 +140,7 @@ public class P_caisseADessiner extends JPanel implements Observer {
 					ordonneCaisse,
 					UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.width,
 					UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.height);
-			aDessiner.get(i).dessiner(contexteCaisse);
+			aDessiner.get(i).dessinerARecuperer(contexteCaisse);
 			contexteCaisse.dispose();
 		}
 		contexte.dispose();
