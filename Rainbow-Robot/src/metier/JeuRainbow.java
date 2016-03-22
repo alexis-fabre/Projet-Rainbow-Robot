@@ -47,8 +47,11 @@ public class JeuRainbow implements Serializable {
 	/** Carte des parties enregistrées dans le fichier */
 	private ArrayList<Partie> partiesEnregistrees;
 
-	/** Carte de la partie courante du mode Story */
-	private transient Partie partieJouable;
+	/** Carte de la partie courante du joueur */
+	private transient Partie partieJoueur;
+
+	/** Carte de la partie courante de l'IA */
+	private transient Partie partieIA;
 
 	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
 	public static final String CHEMIN_FICHIER_PARTIE = "./Ressource/lib/partie_mode_solo.bin";
@@ -101,18 +104,36 @@ public class JeuRainbow implements Serializable {
 	 * 
 	 * @return la carte du niveau courant
 	 */
-	public Partie getPartieCourante() {
-		if (partieJouable == null) {
-			partieJouable = partiesEnregistrees.get(niveauCourant);
+	public Partie getPartieCouranteJoueur() {
+		if (partieJoueur == null) {
+			partieJoueur = partiesEnregistrees.get(niveauCourant);
 			try {
-				partieJouable = (Partie) partiesEnregistrees.get(niveauCourant)
+				partieJoueur = (Partie) partiesEnregistrees.get(niveauCourant)
 						.clone();
 			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
+				System.out.println("Problème de clonage");
 			}
 		}
-		partieJouable.getRobot().setPartie(partieJouable);
-		return partieJouable;
+		partieJoueur.getRobot().setPartie(partieJoueur);
+		return partieJoueur;
+	}
+
+	/**
+	 * @return la partie courante clonée. Utiliser pour initialiser la partie de
+	 *         l'IA
+	 */
+	public Partie getPartieCouranteIA() {
+		if (partieIA == null) {
+			partieIA = partiesEnregistrees.get(niveauCourant);
+			try {
+				partieIA = (Partie) partiesEnregistrees.get(niveauCourant)
+						.clone();
+			} catch (CloneNotSupportedException e) {
+				System.out.println("Problème de clonage");
+			}
+		}
+		partieIA.getRobot().setPartie(partieIA);
+		return partieIA;
 	}
 
 	/**
@@ -180,7 +201,8 @@ public class JeuRainbow implements Serializable {
 	 * Réinitialise la partie courante
 	 */
 	public void reinitialiserPartie() {
-		partieJouable = null;
+		partieJoueur = null;
+		partieIA = null;
 	}
 
 	/**

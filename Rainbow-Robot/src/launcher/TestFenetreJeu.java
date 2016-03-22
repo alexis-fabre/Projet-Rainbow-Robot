@@ -39,9 +39,10 @@ public class TestFenetreJeu {
 		ClicSouris gestion = new ClicSouris(jeu);
 
 		// Détecte les appuie sur les touches de clavier
-		ToucheClavier clavier = new ToucheClavier(jeu);
+		ToucheClavier clavier = new ToucheClavier(jeu, false);
 		// On détecte les fins de partie et les pauses
-		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier);
+		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier,
+				F_jeuRainbow.MODE_ARCADE, false);
 		gestion.setObserver();
 		gestion.setFenetre(nouvelleFenetre);
 		clavier.setFenetre(nouvelleFenetre);

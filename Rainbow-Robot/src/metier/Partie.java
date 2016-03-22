@@ -631,14 +631,14 @@ public class Partie extends Observable implements Dessinable, Serializable {
 				// vide
 				int abscisseCaisse = (caisseADessiner.getPosCaisse().getX())
 						* UtilitaireFenetre.DIM_CASE_VIDE.width
-						+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+						+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.width / 2));
 				int ordonneCaisse = (caisseADessiner.getPosCaisse().getY())
 						* UtilitaireFenetre.DIM_CASE_VIDE.height
-						+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+						+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2));
 				Graphics2D contexteCaisse = (Graphics2D) g.create(
 						abscisseCaisse, ordonneCaisse,
-						UtilitaireFenetre.DIM_CAISSE.width,
-						UtilitaireFenetre.DIM_CAISSE.height);
+						UtilitaireFenetre.DIM_CAISSE_JEU.width,
+						UtilitaireFenetre.DIM_CAISSE_JEU.height);
 				caisseADessiner.dessiner(contexteCaisse);
 				contexteCaisse.dispose();
 			}

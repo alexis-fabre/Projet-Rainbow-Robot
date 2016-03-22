@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import metier.Partie;
+import metier.JeuRainbow;
 import evenement.ClicSouris;
 import evenement.ToucheClavier;
 
@@ -42,49 +42,47 @@ import evenement.ToucheClavier;
  */
 public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
-	/**
-	 * Généré automatiquement par Eclipse
-	 */
+	/** Généré automatiquement par Eclipse */
 	private static final long serialVersionUID = 480148649001109779L;
+
+	/** Mode Story : Jeu en solo */
+	public static final int MODE_STORY = 1;
+
+	/** Mode arcade : Jeu en solo ou contre l'IA sur des cartes aléatoires */
+	public static final int MODE_ARCADE = 2;
+
+	/** Mode Custom : Jeu en solo ou contre l'IA sur des cartes personalisées */
+	public static final int MODE_CUSTOM = 3;
 
 	/**
 	 * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
 	 * (avec le robot, les caisses et le vortex).
 	 */
-	private P_partieDessinable partieDessinable;
+	private P_partieDessinable partieDessinableJoueur, partieDessinableIA;
 
 	/** Panneau qui contient l'interface graphique 2D des caisses a récupérées. */
 	private P_caisseADessiner caisseARecuperer;
 
-	/**
-	 * Label contenant le timer qui s'actualise toutes les secondes
-	 */
+	/** Label contenant le timer qui s'actualise toutes les secondes */
 	private JLabel la_timer = new JLabel("00 : 00");
 
-	/**
-	 * Bouton qui permet de mettre en pause la partie en cours
-	 */
+	/** Bouton qui permet de mettre en pause la partie en cours */
 	private JButton bt_Pause;
 
-	/**
-	 * Chronomètre qui permet de calculer le temps mis pour finir le niveau
-	 */
+	/** Chronomètre qui permet de calculer le temps mis pour finir le niveau */
 	private Timer chrono;
 
-	/**
-	 * Délais d'une seconde (en microsecondes)
-	 */
+	/** Délais d'une seconde (en microsecondes) */
 	public static final int DELAIS = 1000;
 
-	/**
-	 * Minute(s) du timer
-	 */
+	/** Minute(s) du timer */
 	private int minute;
 
-	/**
-	 * Seconde(s) du timer
-	 */
+	/** Seconde(s) du timer */
 	private int seconde;
+
+	/** Mode de jeu */
+	private int mode;
 
 	/**
 	 * <p>
@@ -100,8 +98,14 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 *            evenementielle
 	 * @param gestionClavier
 	 *            Le contrôleur qui va détecter les touches du clavier
+	 * 
+	 * @param mode
+	 *            mode de jeu (story, arcade, custom) que doit gérer la fenêtre
+	 * @param ecranSepare
+	 *            true si on joue en écran séparé, false sinon
 	 */
-	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier) {
+	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier,
+			int mode, boolean ecranSepare) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
@@ -110,7 +114,18 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Titre de la fenêtre
-		super.setTitle("Mode Jeu (Story)");
+		switch (mode) {
+		case MODE_ARCADE:
+			super.setTitle("Mode Jeu Arcade");
+			break;
+		case MODE_CUSTOM:
+			super.setTitle("Mode Jeu Custom");
+			break;
+		case MODE_STORY:
+			super.setTitle("Mode Jeu Story");
+			break;
+		}
+		this.mode = mode;
 
 		Container contentPane = super.getContentPane();
 		Container contentMenuHaut = new JPanel();
@@ -124,7 +139,7 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 		// On créer les caisses a récupérées
 		caisseARecuperer = new P_caisseADessiner(gestionClavier.getJeuRainbow()
-				.getPartieCourante());
+				.getPartieCouranteJoueur());
 
 		contentMenuHaut.add(caisseARecuperer);
 		contentMenuHaut.add(Box.createGlue());
@@ -160,11 +175,28 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		});
 
 		// On créé le plateau de jeu
-		partieDessinable = new P_partieDessinable(gestionClavier
-				.getJeuRainbow().getPartieCourante());
+		partieDessinableJoueur = new P_partieDessinable(gestionClavier
+				.getJeuRainbow().getPartieCouranteJoueur());
+		if (ecranSepare) {
+			contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
 
-		contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
-		contentPane.add(partieDessinable, BorderLayout.CENTER);
+			// On réinitialise les dimensions du jeu pour l'écran séparé
+			UtilitaireFenetre.setDimensionJeuMulti();
+
+			contentPane.add(partieDessinableJoueur, BorderLayout.WEST);
+
+			// Partie de l'IA
+			partieDessinableIA = new P_partieDessinable(gestionClavier
+					.getJeuRainbow().getPartieCouranteIA());
+			contentPane.add(partieDessinableIA, BorderLayout.EAST);
+		} else {
+			contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
+
+			// On initialise les dimensions pour le mode solo
+			UtilitaireFenetre.setDimensionJeuSolo();
+
+			contentPane.add(partieDessinableJoueur, BorderLayout.CENTER);
+		}
 
 		// On ajoute les évènements lors de l'appuie d'une touche sur le clavier
 		super.addKeyListener(gestionClavier);
@@ -222,6 +254,13 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	}
 
 	/**
+	 * @return le mode
+	 */
+	public int getMode() {
+		return mode;
+	}
+
+	/**
 	 * Permet de lancer le chronomètre
 	 */
 	public void startChrono() {
@@ -244,30 +283,45 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	}
 
 	/**
+	 * On gère en interne les dessins.
+	 * 
 	 * @return le "JPanel" partieDessinable qui contient l'interface graphique
 	 *         2D du jeu (avec les caisses et le vortex).
 	 */
-	public P_partieDessinable getPartieDessinable() {
-		return partieDessinable;
+	private P_partieDessinable getPartieDessinableJoueur() {
+		return partieDessinableJoueur;
+	}
+
+	/**
+	 * @return le partieDessinableIA
+	 */
+	public P_partieDessinable getPartieDessinableIA() {
+		return partieDessinableIA;
 	}
 
 	/**
 	 * @return le "JPanel" caisseARecuperer qui contient l'interface graphique
 	 *         2D des caisses a récupérées.
 	 */
-	public P_caisseADessiner getCaisseADessiner() {
+	private P_caisseADessiner getCaisseADessiner() {
 		return caisseARecuperer;
 	}
 
 	/**
 	 * Réactualise la partie courante envoyé dans JeuRainbow
 	 * 
-	 * @param nouvellePartie
-	 *            la partie actualisée
+	 * @param jeu
+	 *            jeu controllant les parties du joueur et de l'IA si elle
+	 *            existe
 	 */
-	public void setPartieCourante(Partie nouvellePartie) {
-		getCaisseADessiner().setPartieCourante(nouvellePartie);
-		getPartieDessinable().setPartieCourante(nouvellePartie);
+	public void setPartieCourante(JeuRainbow jeu) {
+		getCaisseADessiner().setPartieCourante(jeu.getPartieCouranteJoueur());
+		getPartieDessinableJoueur().setPartieCourante(
+				jeu.getPartieCouranteJoueur());
+		if (getPartieDessinableIA() != null) {
+			getPartieDessinableIA()
+					.setPartieCourante(jeu.getPartieCouranteIA());
+		}
 	}
 
 	/*

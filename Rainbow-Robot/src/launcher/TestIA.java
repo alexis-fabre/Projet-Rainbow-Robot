@@ -43,11 +43,11 @@ public class TestIA {
 		jeu.addPartie(partie);
 		// On construit le contrôleur à partir de la partie métier
 		ClicSouris gestion = new ClicSouris(jeu);
-
 		// Détecte les appuie sur les touches de clavier
-		ToucheClavier clavier = new ToucheClavier(jeu);
+		ToucheClavier clavier = new ToucheClavier(jeu, true);
 		// On détecte les fins de partie et les pauses
-		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier);
+		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier,
+				F_jeuRainbow.MODE_ARCADE, false);
 		gestion.setObserver();
 		gestion.setFenetre(nouvelleFenetre);
 		clavier.setFenetre(nouvelleFenetre);
@@ -56,7 +56,7 @@ public class TestIA {
 
 		// On force le jeu à se lancer
 		clavier.startPartie();
-		new IntelligenceArtificielle(jeu.getPartieCourante()).start();
+		new IntelligenceArtificielle(jeu.getPartieCouranteIA()).start();
 	}
 
 	/**

@@ -224,6 +224,14 @@ public class F_arcade extends F_abstractModeJeu implements ChangementLangue {
 	}
 
 	/**
+	 * @return true si l'utilisateur à choisit le mode solo, false sinon (<=>
+	 *         mode contre l'IA)
+	 */
+	public boolean isJeuSolo() {
+		return getRb_jeuSolo().isSelected();
+	}
+
+	/**
 	 * @return le JRadioButton rb_facile qui permet d'initilialiser l'IA en mode
 	 *         facile
 	 */

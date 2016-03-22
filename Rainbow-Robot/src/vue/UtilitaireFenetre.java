@@ -22,26 +22,20 @@ import javax.swing.JComponent;
  * @version 1.0
  */
 public class UtilitaireFenetre {
-    
-        /**
-         * Dimension des boutons dans la fenêtre de modification des 
-         * commandes
-         */
-        public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(65,
-                        30);
-        
-        /**
-         * Dimension des composants(JLabels) de la fenêtre commande
-         */
-        public static final Dimension DIM_COMPOSANT_COMMANDE = new Dimension(150,
-                        60);
-        
-        /**
-         * Dimension des boutons du bas (sauvegarder, annuler, reset)
-         * de la fenêtre commande
-         */
-        public static final Dimension DIM_BOUTON_BAS_COMMANDE = new Dimension(110,
-                        30);
+
+	/** Dimension des boutons dans la fenêtre de modification des commandes */
+	public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(65, 30);
+
+	/** Dimension des composants(JLabels) de la fenêtre commande */
+	public static final Dimension DIM_COMPOSANT_COMMANDE = new Dimension(150,
+			60);
+
+	/**
+	 * Dimension des boutons du bas (sauvegarder, annuler, reset) de la fenêtre
+	 * commande
+	 */
+	public static final Dimension DIM_BOUTON_BAS_COMMANDE = new Dimension(110,
+			30);
 
 	/** Dimension des boutons des fenêtres principales */
 	public static final Dimension DIM_COMPOSANT_PRINCIPAL = new Dimension(650,
@@ -52,26 +46,25 @@ public class UtilitaireFenetre {
 			60);
 	/** Dimension des fenêtres usuelles */
 	public static final Dimension DIM_FENETRE = new Dimension(1000, 750);
-	
+
 	/** Dimensions de la fenêtre d'accueil */
-        public static final Dimension DIM_FENETRE_ACCUEIL = new Dimension(1000, 800);
-        
-	/**
-         * Dimension des fenêtres usuelles
-         */
-        public static final Dimension DIM_FENETRE_COMMANDES = new Dimension(550, 500);
-        
+	public static final Dimension DIM_FENETRE_ACCUEIL = new Dimension(1000, 800);
+
+	/** Dimension de la fenêtre des commandes */
+	public static final Dimension DIM_FENETRE_COMMANDES = new Dimension(550,
+			500);
+
 	/**
 	 * Dimension d'une case vide. Une case vide est une case en fond représentée
 	 * lors d'une partie du jeu.
 	 */
-	public static final Dimension DIM_CASE_VIDE = new Dimension(50, 50);
+	public static Dimension DIM_CASE_VIDE = new Dimension(50, 50);
 
 	/** Dimension de l'image d'une caisse */
-	public static final Dimension DIM_CAISSE = new Dimension(40, 40);
+	public static Dimension DIM_CAISSE_JEU = new Dimension(40, 40);
 
 	/** Dimension de l'image du robot */
-	public static final Dimension DIM_ROBOT = new Dimension(100, 100);
+	public static Dimension DIM_ROBOT = new Dimension(100, 100);
 
 	/** Dimension d'une case de caisse à récupérée */
 	public static final Dimension DIM_CAISSE_RECUPEREE = new Dimension(60, 70);
@@ -80,7 +73,7 @@ public class UtilitaireFenetre {
 	 * Largeur de la bordure d'une case vide. Une case vide est une case en fond
 	 * représentée lors d'une partie du jeu.
 	 */
-	public static final float LARGEUR_BORDURE = 2.0f;
+	public static float LARGEUR_BORDURE = 2.0f;
 
 	/**
 	 * Couleur de fond d'une case vide. Une case vide est une case en fond
@@ -106,6 +99,9 @@ public class UtilitaireFenetre {
 	/** Couleur de fond de la première caisse à récupérée */
 	public static final Color COULEUR_FOND_CAISSE_UN = new Color(231, 231, 233);
 
+	/** Dimension de l'image d'une caisse */
+	public static final Dimension DIM_CAISSE_A_RECUPEREE = new Dimension(40, 40);
+
 	/** Marge entre deux caisses a récupérées */
 	public static final int MARGE_ENTRE_CAISSE = 5;
 
@@ -114,6 +110,28 @@ public class UtilitaireFenetre {
 
 	/** Nombre de niveaux par ligne. Utilisé dans F_choixNiveau */
 	public static final int NB_NIVEAU_LIGNE = 5;
+
+	/**
+	 * Initialise toutes les dimensions des composants utilisés dans le jeu.
+	 * (Initialisation par défaut)
+	 */
+	public static void setDimensionJeuSolo() {
+		DIM_CASE_VIDE = new Dimension(50, 50);
+		DIM_CAISSE_JEU = new Dimension(40, 40);
+		DIM_ROBOT = new Dimension(100, 100);
+		LARGEUR_BORDURE = 2.0f;
+	}
+
+	/**
+	 * Initialise toutes les dimensions des composants utilisés dans le jeu. On
+	 * effectue des calculs pour réduire les dimensions des composants
+	 */
+	public static void setDimensionJeuMulti() {
+		DIM_CASE_VIDE = new Dimension(25, 25);
+		DIM_CAISSE_JEU = new Dimension(20, 20);
+		DIM_ROBOT = new Dimension(50, 50);
+		LARGEUR_BORDURE = 1.0f;
+	}
 
 	/**
 	 * Centre la fenêtre par rapport au dimension de l'écran, c'est à dire le

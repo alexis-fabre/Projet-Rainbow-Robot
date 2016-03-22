@@ -105,8 +105,12 @@ public class OperationsFichier {
 	 *
 	 * @param fichier
 	 *            contenu de la partie
+	 * @throws IllegalArgumentException
+	 *             si le fichier n'est pas correct. On initialise avec la nature
+	 *             de l'erreur
 	 */
-	public static Partie recupFichier(File fichier) {
+	public static Partie recupFichier(File fichier)
+			throws IllegalArgumentException {
 		Partie partie = null;
 		int numLigne = 0;
 		int ligne;
@@ -224,8 +228,9 @@ public class OperationsFichier {
 								Caisse.getCaisse('P'), new Position(x, y));
 						break;
 					case 'X':
-						System.out.println("x=" + x + "y = " + y) ;
-						posInacessible[x + y * tableau[y].length] = new Position(x, y);
+						System.out.println("x=" + x + "y = " + y);
+						posInacessible[x + y * tableau[y].length] = new Position(
+								x, y);
 
 						break;
 					case ' ':
@@ -267,7 +272,8 @@ public class OperationsFichier {
 			partie = new Partie(ligne, colonne, resultatPos, robot, vortex,
 					caisseARecuperer, resultatCaisse);
 		} catch (IOException e) {
-			System.out.println("Problème d'accès au fichier " + fichier);
+			throw new IllegalArgumentException("Problème d'accès au fichier : "
+					+ fichier);
 		}
 		return partie;
 	}

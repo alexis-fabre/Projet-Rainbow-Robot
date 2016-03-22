@@ -290,10 +290,10 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		if (caisse != null) {
 			abscisseDessinCaisse = caisse.getPosCaisse().getX()
 					* UtilitaireFenetre.DIM_CASE_VIDE.width
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_CAISSE.width / 2)));
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - ((UtilitaireFenetre.DIM_CAISSE_JEU.width / 2)));
 			ordonneeDessinCaisse = caisse.getPosCaisse().getY()
 					* UtilitaireFenetre.DIM_CASE_VIDE.height
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2));
 		}
 	}
 
@@ -578,7 +578,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() + 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-									.getPosCaisse().getY() + 1)) {
+											.getPosCaisse().getY() + 1)) {
 						// On modifie la position de la caisse
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
@@ -592,7 +592,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-									.getPosCaisse().getY() - 1)) {
+											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterGauche(orientation);
@@ -604,7 +604,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() - 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-									.getPosCaisse().getY() - 1)) {
+											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterGauche(orientation);
@@ -616,7 +616,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-									.getPosCaisse().getY() + 1)) {
+											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterGauche(orientation);
@@ -632,7 +632,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() - 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-									.getPosCaisse().getY() - 1)) {
+											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() - 1);
 						// Nouvelle orientation du robot
@@ -646,7 +646,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() + 1, caisse
-									.getPosCaisse().getY() + 1)) {
+											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() + 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterDroite(orientation);
@@ -658,7 +658,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY() + 1)
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-									.getPosCaisse().getY() + 1)) {
+											.getPosCaisse().getY() + 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() + 1);
 						orientation = pivoterDroite(orientation);
@@ -670,7 +670,7 @@ public class Robot extends Observable implements Dessinable, Serializable {
 							caisse.getPosCaisse().getY())
 							&& deplacementCaisseOK(
 									caisse.getPosCaisse().getX() - 1, caisse
-									.getPosCaisse().getY() - 1)) {
+											.getPosCaisse().getY() - 1)) {
 						setPositionCaisse(caisse.getPosCaisse().getX() - 1,
 								caisse.getPosCaisse().getY() - 1);
 						orientation = pivoterDroite(orientation);
@@ -742,69 +742,71 @@ public class Robot extends Observable implements Dessinable, Serializable {
 	public void fusionner() {
 		initRobotAction();
 		derniereAction = ACTION_FUSIONNER;
-		// Seconde caisse intervenant dans la fusion (Caisse non tenue par le robot)
-		Caisse c2 = new Caisse(0) ; 
+		// Seconde caisse intervenant dans la fusion (Caisse non tenue par le
+		// robot)
+		Caisse c2 = new Caisse(0);
 		// Récupération de toute les caisses présentent sur le niveau en cours
 		Caisse[] caissePlateau = partie.getCaissePlateau();
 
-		if (caisse != null ) {
+		if (caisse != null) {
 			// Récupération de la couleur et de la position de c2 en fonction de
 			// l'orientation du Robot
 			switch (orientation) {
 			case ORIENTATION_GAUCHE:
 				// Vérification de la présence d'une caisse
-				if(!partie.isPositionOKAvecCaisse(
-				  new Position(pos_courante.getX() - 2, pos_courante.getY()))) {
-				    
-					c2.setCouleur(partie.getCaisseJeu(new Position(
-						pos_courante.getX() - 2,
-						pos_courante.getY())).getCouleur());
-				
-				    c2.setPosCaisse(new Position(pos_courante.getX() - 2, 
-						pos_courante.getY()));
-				    updateObserver();
+				if (!partie.isPositionOKAvecCaisse(new Position(pos_courante
+						.getX() - 2, pos_courante.getY()))) {
+
+					c2.setCouleur(partie.getCaisseJeu(
+							new Position(pos_courante.getX() - 2, pos_courante
+									.getY())).getCouleur());
+
+					c2.setPosCaisse(new Position(pos_courante.getX() - 2,
+							pos_courante.getY()));
+					updateObserver();
 				}
 				break;
 
 			case ORIENTATION_HAUT:
 				// Vérification de la présence d'une caisse
-				if(!partie.isPositionOKAvecCaisse(
-				  new Position(pos_courante.getX(), pos_courante.getY()-2))) {
-				    
-					c2.setCouleur(partie.getCaisseJeu(new Position(
-						pos_courante.getX(),
-						pos_courante.getY() - 2)).getCouleur());
-				    c2.setPosCaisse(new Position(pos_courante.getX(),
-						pos_courante.getY() - 2));
-				    updateObserver();
+				if (!partie.isPositionOKAvecCaisse(new Position(pos_courante
+						.getX(), pos_courante.getY() - 2))) {
+
+					c2.setCouleur(partie.getCaisseJeu(
+							new Position(pos_courante.getX(), pos_courante
+									.getY() - 2)).getCouleur());
+					c2.setPosCaisse(new Position(pos_courante.getX(),
+							pos_courante.getY() - 2));
+					updateObserver();
 				}
 				break;
 
 			case ORIENTATION_DROITE:
 				// Vérification de la présence d'une caisse
-				if(!partie.isPositionOKAvecCaisse(
-				  new Position(pos_courante.getX() + 2, pos_courante.getY()))) {
-				
-				    c2.setCouleur(partie.getCaisseJeu(new Position(
-						pos_courante.getX() + 2,
-						pos_courante.getY())).getCouleur());
-				    c2.setPosCaisse(new Position(pos_courante.getX() + 2,
-						pos_courante.getY()));
-				    updateObserver();
+				if (!partie.isPositionOKAvecCaisse(new Position(pos_courante
+						.getX() + 2, pos_courante.getY()))) {
+
+					c2.setCouleur(partie.getCaisseJeu(
+							new Position(pos_courante.getX() + 2, pos_courante
+									.getY())).getCouleur());
+					c2.setPosCaisse(new Position(pos_courante.getX() + 2,
+							pos_courante.getY()));
+					updateObserver();
 				}
 				break;
 
 			case ORIENTATION_BAS:
 				// Vérification de la présence d'une caisse
-				if(!partie.isPositionOKAvecCaisse(
-				  new Position(pos_courante.getX(), pos_courante.getY()+2))) {
-					
-				    c2.setCouleur(partie.getCaisseJeu(new Position(pos_courante.getX(),
-						pos_courante.getY() + 2)).getCouleur());
-				    c2.setPosCaisse(new Position(pos_courante.getX(),
-						pos_courante.getY() + 2));
-				    updateObserver();
-			    }
+				if (!partie.isPositionOKAvecCaisse(new Position(pos_courante
+						.getX(), pos_courante.getY() + 2))) {
+
+					c2.setCouleur(partie.getCaisseJeu(
+							new Position(pos_courante.getX(), pos_courante
+									.getY() + 2)).getCouleur());
+					c2.setPosCaisse(new Position(pos_courante.getX(),
+							pos_courante.getY() + 2));
+					updateObserver();
+				}
 				break;
 			}
 
@@ -812,47 +814,44 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			Caisse c3 = Caisse.fusionCouleur(caisse, c2);
 
 			// On parcours les caisse du plateau
-			 for (int i = 0; i < caissePlateau.length; i++) {
-                // si une caisse correpond à la caisse tenu on la fait disparaitre
+			for (int i = 0; i < caissePlateau.length; i++) {
+				// si une caisse correpond à la caisse tenu on la fait
+				// disparaitre
 				if (caissePlateau[i] != null
 						&& caissePlateau[i].getPosCaisse().equals(
-								caisse.getPosCaisse()) ) {
+								caisse.getPosCaisse())) {
 
-					
-
-		            // on parcours de nouveau les caisses afin de chercher une
+					// on parcours de nouveau les caisses afin de chercher une
 					// caisse correspondant à la caisse situer avant la caisse
 					// tenue par le robot
-					for (int j = 0; j < caissePlateau.length; j++)	 {
-				 
+					for (int j = 0; j < caissePlateau.length; j++) {
 
-						if( caissePlateau[j] != null
+						if (caissePlateau[j] != null
 								&& caissePlateau[j].getPosCaisse().equals(
-										                      c2.getPosCaisse())
-								&& c3.getCouleur() != 0){
-							
-                            //Robot prend la position de Caisse
-							pos_courante = new Position(caisse.getPosCaisse().getX(),
-									caisse.getPosCaisse().getY());
+										c2.getPosCaisse())
+								&& c3.getCouleur() != 0) {
+
+							// Robot prend la position de Caisse
+							pos_courante = new Position(caisse.getPosCaisse()
+									.getX(), caisse.getPosCaisse().getY());
 							// On fait disparaître la caisse
-						    caissePlateau[i] = null;
-							// On fait disparaître la caisse devant la caisse tenue
+							caissePlateau[i] = null;
+							// On fait disparaître la caisse devant la caisse
+							// tenue
 							c2 = null;
 							// on fait disparaitre la caisse tenue
 							caisse = null;
-							// on fait apparaitre la caisse issue de la fusion 
+							// on fait apparaitre la caisse issue de la fusion
 							caissePlateau[j] = c3;
 							updateObserver();
 							break;
 
+						}
 
-						} 
-
-						
 					}
-					
+
 					break;
-				} 
+				}
 
 			}
 
@@ -861,7 +860,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 			// le robot ne fait rien
 		}
 	}
-
 
 	/**
 	 * Détermine, uniquement si la dernière action était de pivoter, le sens de
@@ -878,8 +876,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		final int orientationDepart = Robot.angleToOrientation(angleDessin);
 		final int orientationArrivee = Robot.angleToOrientation(angleDessinMax);
 		return ((orientationArrivee > orientationDepart || (orientationArrivee == Robot.ORIENTATION_GAUCHE && orientationDepart == Robot.ORIENTATION_BAS)) && (orientationArrivee != Robot.ORIENTATION_BAS || orientationDepart != Robot.ORIENTATION_GAUCHE)) //
-				? PIVOTER_DROITE
-						: PIVOTER_GAUCHE;
+		? PIVOTER_DROITE
+				: PIVOTER_GAUCHE;
 	}
 
 	/**
@@ -1039,9 +1037,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 				+ (UtilitaireFenetre.DIM_ROBOT.height / 2);
 		// Centre de la caisse
 		final int xc = abscisseDessinCaissePivoter
-				+ (UtilitaireFenetre.DIM_CAISSE.width / 2);
+				+ (UtilitaireFenetre.DIM_CAISSE_JEU.width / 2);
 		final int yc = ordonneeDessinCaissePivoter
-				+ (UtilitaireFenetre.DIM_CAISSE.height / 2);
+				+ (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2);
 		// distance entre le centre du robot et le centre de la caisse
 		// On utilise la formule :
 		// Sqrt( (xr-xc)² + (yr-yc)² )
@@ -1053,9 +1051,9 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		// x => abscisseDessinCaisse
 		// y => ordonneeDessinCaisse
 		abscisseDessinCaisse = (int) (xr + r
-				* Math.cos((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+				* Math.cos((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE_JEU.width / 2));
 		ordonneeDessinCaisse = (int) (yr + r
-				* Math.sin((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+				* Math.sin((alpha * Math.PI) / 180) - (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2));
 	}
 
 	/**
@@ -1086,13 +1084,13 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		if (caisse != null) {
 			int abscisseCaisse = caisse.getPosCaisse().getX()
 					* UtilitaireFenetre.DIM_CASE_VIDE.width
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.width / 2));
 			int ordonneCaisse = caisse.getPosCaisse().getY()
 					* UtilitaireFenetre.DIM_CASE_VIDE.height
-					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+					+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2));
 			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
-					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
-					UtilitaireFenetre.DIM_CAISSE.height);
+					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE_JEU.width,
+					UtilitaireFenetre.DIM_CAISSE_JEU.height);
 			caisse.dessiner(contexteCaisse);
 			contexteCaisse.dispose();
 		}
@@ -1105,10 +1103,11 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		try {
 			contexteRobot.transform(transform);
 			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
-					0, 0, null);
+					0, 0, UtilitaireFenetre.DIM_ROBOT.width,
+					UtilitaireFenetre.DIM_ROBOT.height, null);
 		} catch (IOException e) {
 			System.out
-			.println("Robot : dessiner : Chemin de l'image introuvable");
+					.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
 
 		contexteRobot.dispose();
@@ -1129,8 +1128,8 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		if (caisse != null) {
 			Graphics2D contexteCaisse = (Graphics2D) g.create(
 					abscisseDessinCaisse, ordonneeDessinCaisse,
-					UtilitaireFenetre.DIM_CAISSE.width,
-					UtilitaireFenetre.DIM_CAISSE.height);
+					UtilitaireFenetre.DIM_CAISSE_JEU.width,
+					UtilitaireFenetre.DIM_CAISSE_JEU.height);
 			caisse.dessiner(contexteCaisse);
 			contexteCaisse.dispose();
 		}
@@ -1138,7 +1137,6 @@ public class Robot extends Observable implements Dessinable, Serializable {
 		Graphics2D contexteRobot = (Graphics2D) g.create(abscisseDessin,
 				ordonneeDessin, UtilitaireFenetre.DIM_ROBOT.width,
 				UtilitaireFenetre.DIM_ROBOT.height);
-
 		transform.rotate((angleDessin * Math.PI) / 180,
 				UtilitaireFenetre.DIM_ROBOT.width / 2,
 				UtilitaireFenetre.DIM_ROBOT.height / 2);
@@ -1146,10 +1144,11 @@ public class Robot extends Observable implements Dessinable, Serializable {
 
 		try {
 			contexteRobot.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_ROBOT)),
-					0, 0, null);
+					0, 0, UtilitaireFenetre.DIM_ROBOT.width,
+					UtilitaireFenetre.DIM_ROBOT.height, null);
 		} catch (IOException e) {
 			System.out
-			.println("Robot : dessiner : Chemin de l'image introuvable");
+					.println("Robot : dessiner : Chemin de l'image introuvable");
 		}
 		contexteRobot.dispose();
 	}

@@ -60,8 +60,8 @@ public class ToucheClavier implements KeyListener {
 
 	/**
 	 * Boolean permettant de savoir dans quelle configuration des touches joue
-	 * l'utilisateur. Par défaut false (= mode absolu).
-	 * Si true, on est dans le mode relatif.
+	 * l'utilisateur. Par défaut false (= mode absolu). Si true, on est dans le
+	 * mode relatif.
 	 */
 	public static boolean isModeRelatif = false;
 
@@ -78,7 +78,7 @@ public class ToucheClavier implements KeyListener {
 	private static boolean premiereAction;
 
 	/** Gestion du thread du vortex */
-	private static Thread threadVortex;
+	private static Thread threadVortexJoueur, threadVortexIA;
 
 	static {
 		for (int i = 0; i < NB_TOUCHES; i++) {
@@ -90,14 +90,29 @@ public class ToucheClavier implements KeyListener {
 
 	/**
 	 * On initialise le constructeur avec la partie métier du jeu.
-	 * 
+	 *
 	 * @param jeu
-	 *            représentation du jeu Rainbow Robot (partie métier). Il
-	 *            contient notamment les différents niveaux.
+	 *            Permet de récupérer les différentes parties utilisées (celle
+	 *            pour le joueur et celle pour l'IA)
+	 * @param isIA
+	 *            permet de savoir si le jeu dispose d'une IA ou non
 	 */
-	public ToucheClavier(JeuRainbow jeu) {
+	public ToucheClavier(JeuRainbow jeu, boolean isIA) {
 		this.metier = jeu;
 		premiereAction = false;
+		threadVortexJoueur = new Thread(metier.getPartieCouranteJoueur()
+				.getVortex());
+		if (isIA) {
+			threadVortexIA = new Thread(metier.getPartieCouranteIA()
+					.getVortex());
+		}
+	}
+
+	/**
+	 * @return true si la partie a commencé, false sinon
+	 */
+	public static boolean isPartieCommence() {
+		return premiereAction;
 	}
 
 	/**
@@ -108,10 +123,11 @@ public class ToucheClavier implements KeyListener {
 	}
 
 	/**
-	 * @return true si la partie a commencé, false sinon
+	 * @param nouvelle
+	 *            la nouvelle valeur (changement de mode)
 	 */
-	public static boolean isPartieCommence() {
-		return premiereAction;
+	public static void setModeRelatif(boolean nouvelle) {
+		isModeRelatif = nouvelle;
 	}
 
 	/**
@@ -131,9 +147,15 @@ public class ToucheClavier implements KeyListener {
 		if (!premiereAction) {
 			// On démarre le timer
 			vue.startChrono();
-			// On lance le vortex
-			threadVortex = new Thread(metier.getPartieCourante().getVortex());
-			threadVortex.start();
+			// On lance le vortex du joueur et de l'IA
+			threadVortexJoueur = new Thread(metier.getPartieCouranteJoueur()
+					.getVortex());
+			threadVortexJoueur.start();
+			if (threadVortexIA != null) {
+				threadVortexIA = new Thread(metier.getPartieCouranteIA()
+						.getVortex());
+				threadVortexIA.start();
+			}
 			premiereAction = true;
 		}
 	}
@@ -142,8 +164,11 @@ public class ToucheClavier implements KeyListener {
 	public static void restartPartie() {
 		// On restart la 1ère action
 		premiereAction = false;
-		// On arrête le vortex
-		threadVortex.interrupt();
+		// On arrête les vortex
+		threadVortexJoueur.interrupt();
+		if (threadVortexIA != null) {
+			threadVortexIA.interrupt();
+		}
 	}
 
 	/*
@@ -154,136 +179,136 @@ public class ToucheClavier implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// On vérifie que le robot n'est pas déjà en train de faire une action
-		if (!metier.getPartieCourante().getRobot().estOccupe()) {
+		if (!metier.getPartieCouranteJoueur().getRobot().estOccupe()) {
 			// mode relatif
 			if (isModeRelatif) {
 				// touche pour avancer
 				if (e.getKeyCode() == TOUCHES_RELATIF[0]) {
 					startPartie();
-					metier.getPartieCourante().getRobot().avancer();
+					metier.getPartieCouranteJoueur().getRobot().avancer();
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[1]) {
 					// touche pour rotation gauche
 					startPartie();
-					metier.getPartieCourante().getRobot()
+					metier.getPartieCouranteJoueur().getRobot()
 							.pivoter(Robot.PIVOTER_GAUCHE);
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[2]) {
 					// touche pour rotation droite
 					startPartie();
-					metier.getPartieCourante().getRobot()
+					metier.getPartieCouranteJoueur().getRobot()
 							.pivoter(Robot.PIVOTER_DROITE);
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[3]) {
 					// touche pour reculer
 					startPartie();
-					metier.getPartieCourante().getRobot().reculer();
+					metier.getPartieCouranteJoueur().getRobot().reculer();
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[4]) {
 					// touche pour fusionner
 					startPartie();
-					metier.getPartieCourante().getRobot().fusionner();
+					metier.getPartieCouranteJoueur().getRobot().fusionner();
 				} else if (e.getKeyCode() == TOUCHES_RELATIF[5]) {
 					// touche pour attraper
 					startPartie();
-					metier.getPartieCourante().getRobot().charger();
+					metier.getPartieCouranteJoueur().getRobot().charger();
 				}
 			} else { // mode absolu
 				if (e.getKeyCode() == TOUCHES_ABSOLU[0]) {
 					// touche aller en haut
-					switch (metier.getPartieCourante().getRobot()
+					switch (metier.getPartieCouranteJoueur().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
 						startPartie();
-						metier.getPartieCourante().getRobot().avancer();
+						metier.getPartieCouranteJoueur().getRobot().avancer();
 						break;
 					case Robot.ORIENTATION_GAUCHE:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
 						break;
 					case Robot.ORIENTATION_DROITE:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
 						break;
 					case Robot.ORIENTATION_BAS:
 						startPartie();
-						metier.getPartieCourante().getRobot().reculer();
+						metier.getPartieCouranteJoueur().getRobot().reculer();
 						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_ABSOLU[1]) {
 					// touche aller à gauche
-					switch (metier.getPartieCourante().getRobot()
+					switch (metier.getPartieCouranteJoueur().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
 						break;
 					case Robot.ORIENTATION_GAUCHE:
 						startPartie();
-						metier.getPartieCourante().getRobot().avancer();
+						metier.getPartieCouranteJoueur().getRobot().avancer();
 						break;
 					case Robot.ORIENTATION_DROITE:
 						startPartie();
-						metier.getPartieCourante().getRobot().reculer();
+						metier.getPartieCouranteJoueur().getRobot().reculer();
 						break;
 					case Robot.ORIENTATION_BAS:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
 						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_ABSOLU[2]) {
 					// touche aller à droite
-					switch (metier.getPartieCourante().getRobot()
+					switch (metier.getPartieCouranteJoueur().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
 						break;
 					case Robot.ORIENTATION_GAUCHE:
 						startPartie();
-						metier.getPartieCourante().getRobot().reculer();
+						metier.getPartieCouranteJoueur().getRobot().reculer();
 						break;
 					case Robot.ORIENTATION_DROITE:
 						startPartie();
-						metier.getPartieCourante().getRobot().avancer();
+						metier.getPartieCouranteJoueur().getRobot().avancer();
 						break;
 					case Robot.ORIENTATION_BAS:
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
 						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_ABSOLU[3]) {
 					// touche aller en bas
-					switch (metier.getPartieCourante().getRobot()
+					switch (metier.getPartieCouranteJoueur().getRobot()
 							.getOrientation()) {
 					case Robot.ORIENTATION_HAUT:
 						startPartie();
-						metier.getPartieCourante().getRobot().reculer();
+						metier.getPartieCouranteJoueur().getRobot().reculer();
 						break;
 					case Robot.ORIENTATION_GAUCHE:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_GAUCHE);
 						break;
 					case Robot.ORIENTATION_DROITE:
 						startPartie();
-						metier.getPartieCourante().getRobot()
+						metier.getPartieCouranteJoueur().getRobot()
 								.pivoter(Robot.PIVOTER_DROITE);
 						break;
 					case Robot.ORIENTATION_BAS:
 						startPartie();
-						metier.getPartieCourante().getRobot().avancer();
+						metier.getPartieCouranteJoueur().getRobot().avancer();
 						break;
 					}
 				} else if (e.getKeyCode() == TOUCHES_ABSOLU[4]) {
 					// touche pour fusionner
 					startPartie();
-					metier.getPartieCourante().getRobot().fusionner();
+					metier.getPartieCouranteJoueur().getRobot().fusionner();
 				} else if (e.getKeyCode() == TOUCHES_ABSOLU[5]) {
 					// touche pour attraper
 					startPartie();
-					metier.getPartieCourante().getRobot().charger();
+					metier.getPartieCouranteJoueur().getRobot().charger();
 				}
 			}
 		}
@@ -306,13 +331,4 @@ public class ToucheClavier implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-
-	/**
-	 * @param nouvelle
-	 *            la nouvelle valeur (changement de mode)
-	 */
-	public static void setModeRelatif(boolean nouvelle) {
-		isModeRelatif = nouvelle;
-	}
-
 }

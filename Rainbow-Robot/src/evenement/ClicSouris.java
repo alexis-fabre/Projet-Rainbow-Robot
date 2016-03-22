@@ -23,6 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import metier.IntelligenceArtificielle;
 import metier.JeuRainbow;
 import metier.OperationsFichier;
 import metier.Partie;
@@ -55,6 +56,9 @@ public class ClicSouris implements MouseListener, Observer {
 	 */
 	private JeuRainbow metier;
 
+	/** Gestion de l'IA */
+	private Thread threadIA;
+
 	/**
 	 * Détection des clics sur une fenêtre. On peut traiter qu'une seule fenêtre
 	 * car il n'y aura jamais deux fenêtres affichées en même temps.
@@ -80,7 +84,39 @@ public class ClicSouris implements MouseListener, Observer {
 	}
 
 	/**
-	 * @return le metier
+	 * Initialise une IA sur une partie donnée
+	 *
+	 * @param aControllee
+	 *            partie que l'IA doit contrôler
+	 */
+	private void startIA(Partie aControllee) {
+		threadIA = new IntelligenceArtificielle(aControllee);
+		threadIA.start();
+	}
+
+	/**
+	 * Arrête le fonctionnement de l'IA
+	 */
+	private void stopIA() {
+		if (threadIA != null && threadIA.isAlive()) {
+			threadIA.interrupt();
+		}
+		threadIA = null;
+	}
+
+	/**
+	 * Arrête et relance une IA
+	 *
+	 * @param aControllee
+	 *            partie que l'IA doit contrôler
+	 */
+	private void restartIA(Partie aControllee) {
+		stopIA();
+		startIA(aControllee);
+	}
+
+	/**
+	 * @return la partie métier contenant les parties de jeu
 	 */
 	public JeuRainbow getMetier() {
 		return metier;
@@ -90,7 +126,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 * Actualise la nouvelle partie a observé
 	 */
 	public void setObserver() {
-		this.metier.getPartieCourante().addObserver(this);
+		this.metier.getPartieCouranteJoueur().addObserver(this);
 	}
 
 	/**
@@ -277,7 +313,7 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreCommande.getBt_reset()) {
 				if (ToucheClavier.isModeRelatif) {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
-					    ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
+						ToucheClavier.TOUCHES_RELATIF[i] = ToucheClavier.TOUCHES_RELATIF_DEFAUT[i];
 					}
 				} else {
 					for (int i = 0; i < ToucheClavier.NB_TOUCHES; i++) {
@@ -291,9 +327,9 @@ public class ClicSouris implements MouseListener, Observer {
 				setFenetre(fenetreCommande.getOwner());
 				fenetreCommande.dispose();
 				if (vue instanceof F_jeuRainbow) {
-				    F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
-				    fenetreJeu.startChrono();
-				    fenetreJeu.requestFocus();
+					F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
+					fenetreJeu.startChrono();
+					fenetreJeu.requestFocus();
 				}
 			}
 			// bouton annuler
@@ -392,9 +428,10 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreChoixNiveau.getBt_Jouer()) {
 				// On regarde quel niveau a choisi l'utilisateur
 				metier.setNiveau(fenetreChoixNiveau.getNiveauChoisi());
-				ToucheClavier clavier = new ToucheClavier(metier);
+				ToucheClavier clavier = new ToucheClavier(metier, false);
 				// On détecte les fins de partie et les pauses
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier,
+						F_jeuRainbow.MODE_STORY, false);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -402,9 +439,10 @@ public class ClicSouris implements MouseListener, Observer {
 				setFenetre(nouvelleFenetre);
 			}
 			if (e.getSource() == fenetreChoixNiveau.getBt_Precedent()) {
-			    F_story nouvelleFenetre = new F_story(this);
-			    nouvelleFenetre.setVisible(true);
-			    setFenetre(nouvelleFenetre);
+				F_story nouvelleFenetre = new F_story(this);
+				vue.setVisible(false);
+				nouvelleFenetre.setVisible(true);
+				setFenetre(nouvelleFenetre);
 			}
 		}
 
@@ -423,17 +461,37 @@ public class ClicSouris implements MouseListener, Observer {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				String fichier;
 				fichier = fenetreCustom.getTf_cheminFichier().getText();
-				Partie partie = OperationsFichier
-						.recupFichier(new File(fichier));
-				metier = new JeuRainbow();
-				metier.addPartie(partie);
-				ToucheClavier clavier = new ToucheClavier(metier);
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
-				clavier.setFenetre(nouvelleFenetre);
-				setObserver();
-				vue.setVisible(false);
-				nouvelleFenetre.setVisible(true);
-				setFenetre(nouvelleFenetre);
+				Partie partie = null;
+				try {
+					partie = OperationsFichier.recupFichier(new File(fichier));
+				} catch (IllegalArgumentException erreur) {
+					JOptionPane.showMessageDialog(null, erreur.getMessage());
+				}
+				if (partie != null) {
+					metier = new JeuRainbow();
+					metier.addPartie(partie);
+					ToucheClavier clavier;
+					if (!fenetreCustom.isJeuSolo()) {
+						clavier = new ToucheClavier(metier, true);
+						// On lance le vortex de la partie de l'IA car il est
+						// naturellement lancé par ToucheClavier, or l'IA ne
+						// passe
+						// jamais par cette classe
+						startIA(metier.getPartieCouranteIA());
+					} else {
+						clavier = new ToucheClavier(metier, false);
+					}
+
+					F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this,
+							clavier, F_jeuRainbow.MODE_CUSTOM,
+							!fenetreCustom.isJeuSolo());
+
+					clavier.setFenetre(nouvelleFenetre);
+					setObserver();
+					vue.setVisible(false);
+					nouvelleFenetre.setVisible(true);
+					setFenetre(nouvelleFenetre);
+				}
 			}
 		}
 		if (vue instanceof F_arcade) {
@@ -441,9 +499,22 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreArcade.getBt_Jouer()) {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				metier = new JeuRainbow();
-				metier.addPartie(metier.carteAleatoire());
-				ToucheClavier clavier = new ToucheClavier(metier);
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier);
+				metier.addPartie(JeuRainbow.carteAleatoire());
+
+				ToucheClavier clavier;
+
+				if (!fenetreArcade.isJeuSolo()) {
+					clavier = new ToucheClavier(metier, true);
+					// On lance le vortex de la partie de l'IA car il est
+					// naturellement lancé par ToucheClavier, or l'IA ne passe
+					// jamais par cette classe
+					startIA(metier.getPartieCouranteIA());
+				} else {
+					clavier = new ToucheClavier(metier, false);
+				}
+
+				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier,
+						F_jeuRainbow.MODE_ARCADE, !fenetreArcade.isJeuSolo());
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -469,18 +540,19 @@ public class ClicSouris implements MouseListener, Observer {
 						traductionBouton[0]);
 				switch (retour) {
 				case 0: // Continuer
-				    fenetreJeu.startChrono();
-                                    fenetreJeu.requestFocus();
+					fenetreJeu.startChrono();
+					fenetreJeu.requestFocus();
 					break;
-					
+
 				case 1: // Commandes
-				    F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
-				    fenetreCmd.setVisible(true);
-				    setFenetre(fenetreCmd);
-				    break;
+					F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
+					fenetreCmd.setVisible(true);
+					setFenetre(fenetreCmd);
+					break;
 				case 2: // Recommencer
 					metier.reinitialiserPartie();
-					fenetreJeu.setPartieCourante(metier.getPartieCourante());
+					fenetreJeu.setPartieCourante(metier);
+					restartIA(metier.getPartieCouranteIA());
 					setObserver();
 					fenetreJeu.restartChrono();
 					ToucheClavier.restartPartie();
@@ -497,6 +569,7 @@ public class ClicSouris implements MouseListener, Observer {
 							JOptionPane.YES_NO_CANCEL_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 					if (option == JOptionPane.YES_OPTION) {
+						stopIA();
 						metier.reinitialiserPartie();
 						F_accueil fenetreAccueil = new F_accueil(this);
 						vue.setVisible(false);
@@ -538,86 +611,170 @@ public class ClicSouris implements MouseListener, Observer {
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
 					2, traductionFinPartie.length);
-			String scoreCourant = fenetre.getScore();
-			// Si le joueur fait un score dans le top 10 du niveau
-			String nomFichier = F_records.FIC_RECORD
-					+ Integer.toString(metier.getNiveau() + 1)
-					+ F_records.FIC_EXTENSION;
-			int classement = F_records.estRecord(scoreCourant,
-					metier.getNiveau() + 1);
-			if (classement != -1) {
-				// Boite de dialogue pour demander le nom du joueur
-				String pseudo = JOptionPane.showInputDialog(null,
-						"Vous avez fait le " + classement + "ième score\n"
-								+ "Veuillez entrer votre pseudo",
-						"Nouveau record !", JOptionPane.QUESTION_MESSAGE);
-				try {
-					// Création d'un fichier temporaire
-					File temp = new File("./Ressource/tempo.txt");
-					temp.createNewFile();
-					PrintWriter nouvFichier = new PrintWriter(temp);
-					BufferedReader fichier = new BufferedReader(new FileReader(
-							nomFichier));
-					// Fichier que l'on va supprimer à la fin du traitement
-					File aSupprimer = new File(nomFichier);
-					// Ligne pour parcourir le fichier
-					String ligne;
-					// Compteur pour trouver la ligne à ajouter
-					int compteur = 1;
-					// On lit le fichier jusqu'au classement du joueur ou la fin
-					// du fichier
-					while ((ligne = fichier.readLine()) != null
-							&& compteur < 10) {
-						// Si on arrive au classement du joueur
-						if (compteur == classement) {
-							// On écrit la ligne
-							nouvFichier.println(pseudo + "#" + scoreCourant);
-						}
-						// else
-						// On recopie la ligne;
-						nouvFichier.println(ligne);
-						compteur++;
-					}
-					// Fermeture des fichiers
-					nouvFichier.close();
-					fichier.close();
-					// Suppression du fichier temporaire
-					aSupprimer.delete();
-					// Renommage du fichier
-					temp.renameTo(new File(nomFichier));
-				} catch (IOException erreur) {
-					System.out.println("Fichier records non trouvé");
-				}
-			}
-			// else
-			int retour = JOptionPane.showOptionDialog(null,
-					traductionFinPartie[0] + " " + fenetre.getScore(),
-					traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
-					traductionBouton[0]);
 
-			// On reinitialise les paramètres
-			metier.reinitialiserPartie();
-			fenetre.restartChrono();
-			ToucheClavier.restartPartie();
-			switch (retour) {
-			case 0: // Recommencer
-				fenetre.setPartieCourante(metier.getPartieCourante());
-				setObserver();
+			switch (fenetre.getMode()) {
+			case F_jeuRainbow.MODE_STORY:
+				String scoreCourant = fenetre.getScore();
+				// Si le joueur fait un score dans le top 10 du niveau
+				String nomFichier = F_records.FIC_RECORD
+						+ Integer.toString(metier.getNiveau() + 1)
+						+ F_records.FIC_EXTENSION;
+				int classement = F_records.estRecord(scoreCourant,
+						metier.getNiveau() + 1);
+				if (classement != -1) {
+					// Boite de dialogue pour demander le nom du joueur
+					String pseudo = JOptionPane.showInputDialog(null,
+							"Vous avez fait le " + classement + "ième score\n"
+									+ "Veuillez entrer votre pseudo",
+							"Nouveau record !", JOptionPane.QUESTION_MESSAGE);
+					try {
+						// Création d'un fichier temporaire
+						File temp = new File("./Ressource/tempo.txt");
+						temp.createNewFile();
+						PrintWriter nouvFichier = new PrintWriter(temp);
+						BufferedReader fichier = new BufferedReader(
+								new FileReader(nomFichier));
+						// Fichier que l'on va supprimer à la fin du traitement
+						File aSupprimer = new File(nomFichier);
+						// Ligne pour parcourir le fichier
+						String ligne;
+						// Compteur pour trouver la ligne à ajouter
+						int compteur = 1;
+						// On lit le fichier jusqu'au classement du joueur ou la
+						// fin
+						// du fichier
+						while ((ligne = fichier.readLine()) != null
+								&& compteur < 10) {
+							// Si on arrive au classement du joueur
+							if (compteur == classement) {
+								// On écrit la ligne
+								nouvFichier
+										.println(pseudo + "#" + scoreCourant);
+							}
+							// else
+							// On recopie la ligne;
+							nouvFichier.println(ligne);
+							compteur++;
+						}
+						// Fermeture des fichiers
+						nouvFichier.close();
+						fichier.close();
+						// Suppression du fichier temporaire
+						aSupprimer.delete();
+						// Renommage du fichier
+						temp.renameTo(new File(nomFichier));
+					} catch (IOException erreur) {
+						System.out.println("Fichier records non trouvé");
+					}
+				}
+				// else
+				int retourStory = JOptionPane.showOptionDialog(null,
+						traductionFinPartie[0] + " " + fenetre.getScore(),
+						traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
+						traductionBouton[0]);
+				// On reinitialise les paramètres
+				metier.reinitialiserPartie();
+				fenetre.restartChrono();
+				ToucheClavier.restartPartie();
+				switch (retourStory) {
+				case 0: // Recommencer
+					fenetre.setPartieCourante(metier);
+					setObserver();
+					break;
+				case 1: // Partie suivante
+					metier.setNiveauSuivant();
+					fenetre.setPartieCourante(metier);
+					setObserver();
+					break;
+				case 2: // Quitter
+					// On revient à l'accueil
+					F_accueil fenetreAccueil = new F_accueil(this);
+					vue.setVisible(false);
+					setFenetre(fenetreAccueil);
+					fenetreAccueil.setVisible(true);
+					break;
+				}
 				break;
-			case 1: // Partie suivante
-				metier.setNiveauSuivant();
-				fenetre.setPartieCourante(metier.getPartieCourante());
-				setObserver();
+
+			case F_jeuRainbow.MODE_ARCADE:
+				int retourArcade = JOptionPane.showOptionDialog(null,
+						traductionFinPartie[0] + " " + fenetre.getScore(),
+						traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
+						traductionBouton[0]);
+				// On reinitialise les paramètres
+				metier.reinitialiserPartie();
+				fenetre.restartChrono();
+				ToucheClavier.restartPartie();
+				switch (retourArcade) {
+				case 0: // Recommencer
+					fenetre.setPartieCourante(metier);
+					if (threadIA != null) {
+						restartIA(metier.getPartieCouranteIA());
+					}
+					setObserver();
+					break;
+				case 1: // Partie suivante
+					// On construit un nouveau métier pour ne pas avoir à gérer
+					// une grande quantité de partie
+					metier = new JeuRainbow();
+					metier.addPartie(JeuRainbow.carteAleatoire());
+					if (threadIA != null) {
+						restartIA(metier.getPartieCouranteIA());
+					}
+					fenetre.setPartieCourante(metier);
+					setObserver();
+					break;
+				case 2: // Quitter
+					// On revient à l'accueil
+					stopIA();
+					F_accueil fenetreAccueil = new F_accueil(this);
+					vue.setVisible(false);
+					setFenetre(fenetreAccueil);
+					fenetreAccueil.setVisible(true);
+					break;
+				}
 				break;
-			case 2: // Quitter
-				// On revient à l'accueil
-				F_accueil fenetreAccueil = new F_accueil(this);
-				vue.setVisible(false);
-				setFenetre(fenetreAccueil);
-				fenetreAccueil.setVisible(true);
+
+			case F_jeuRainbow.MODE_CUSTOM:
+				int retourCustom = JOptionPane.showOptionDialog(null,
+						traductionFinPartie[0] + " " + fenetre.getScore(),
+						traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
+						traductionBouton[0]);
+				// On reinitialise les paramètres
+				metier.reinitialiserPartie();
+				fenetre.restartChrono();
+				ToucheClavier.restartPartie();
+				switch (retourCustom) {
+				case 0: // Recommencer
+					fenetre.setPartieCourante(metier);
+					if (threadIA != null) {
+						restartIA(metier.getPartieCouranteIA());
+					}
+					setObserver();
+					break;
+				case 1: // Partie suivante
+					// On recharge la fenêtre pour choisir un niveau
+					stopIA();
+					F_custom nouvelleFenetre = new F_custom(this);
+					vue.setVisible(false);
+					nouvelleFenetre.setVisible(true);
+					setFenetre(nouvelleFenetre);
+					break;
+				case 2: // Quitter
+					// On revient à l'accueil
+					stopIA();
+					F_accueil fenetreAccueil = new F_accueil(this);
+					vue.setVisible(false);
+					setFenetre(fenetreAccueil);
+					fenetreAccueil.setVisible(true);
+					break;
+				}
 				break;
 			}
+
 		}
 	}
 

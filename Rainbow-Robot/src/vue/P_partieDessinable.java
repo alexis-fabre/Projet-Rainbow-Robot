@@ -4,6 +4,7 @@
  */
 package vue;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Observable;
@@ -56,6 +57,10 @@ public class P_partieDessinable extends JPanel implements Observer {
 		super();
 		// Permet d'éviter quelques latences
 		super.setDoubleBuffered(true);
+		// On définit une taille par défaut
+		super.setPreferredSize(new Dimension(
+				UtilitaireFenetre.DIM_FENETRE.width / 2,
+				UtilitaireFenetre.DIM_FENETRE.height));
 		// abonner cette vue aux changements du modèle (DP observateur)
 		setPartieCourante(partie);
 		isAnimationRobot = false;

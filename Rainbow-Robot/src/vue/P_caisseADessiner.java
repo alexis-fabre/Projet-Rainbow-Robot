@@ -53,7 +53,9 @@ public class P_caisseADessiner extends JPanel implements Observer {
 	 * Initialise la partie courante au travers de la référence du jeu. On
 	 * ajoute un Observer pour savoir quand est-ce que le vortex aspire un
 	 * caisse pour ensuite actualiser la liste des caisses à récupérées.
-	 * @param partieCourante la partie courante
+	 * 
+	 * @param partieCourante
+	 *            la partie courante
 	 * 
 	 * @param jeu
 	 *            la partie métier du jeu contenant l'ensemble des instructions
@@ -132,11 +134,12 @@ public class P_caisseADessiner extends JPanel implements Observer {
 		for (int i = 0; i < UtilitaireFenetre.NB_CAISSE_AFFICHE
 				&& i < aDessiner.size(); i++) {
 			int abscisseCaisse = (i * ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width) + UtilitaireFenetre.MARGE_ENTRE_CAISSE))
-					+ ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
-			int ordonneCaisse = ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+					+ ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.width / 2) - (UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.width / 2));
+			int ordonneCaisse = ((UtilitaireFenetre.DIM_CAISSE_RECUPEREE.height / 2) - (UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.height / 2));
 			Graphics2D contexteCaisse = (Graphics2D) g.create(abscisseCaisse,
-					ordonneCaisse, UtilitaireFenetre.DIM_CAISSE.width,
-					UtilitaireFenetre.DIM_CAISSE.height);
+					ordonneCaisse,
+					UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.width,
+					UtilitaireFenetre.DIM_CAISSE_A_RECUPEREE.height);
 			aDessiner.get(i).dessiner(contexteCaisse);
 			contexteCaisse.dispose();
 		}

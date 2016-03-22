@@ -192,21 +192,21 @@ public class Vortex extends Observable implements Serializable, Runnable {
 
 		int abscisseCaisse = aAbsorbe.getPosCaisse().getX()
 				* UtilitaireFenetre.DIM_CASE_VIDE.width
-				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE.width / 2));
+				+ ((UtilitaireFenetre.DIM_CASE_VIDE.width / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.width / 2));
 		int ordonneCaisse = aAbsorbe.getPosCaisse().getY()
 				* UtilitaireFenetre.DIM_CASE_VIDE.height
-				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE.height / 2));
+				+ ((UtilitaireFenetre.DIM_CASE_VIDE.height / 2) - (UtilitaireFenetre.DIM_CAISSE_JEU.height / 2));
 		Graphics2D contexteCaisse = (Graphics2D) g
 				.create((int) (abscisseCaisse + ((UtilitaireFenetre.DIM_CASE_VIDE.width * (1 - echelleDessin)) / 2)),
 						(int) (ordonneCaisse + ((UtilitaireFenetre.DIM_CASE_VIDE.height * (1 - echelleDessin)) / 2)),
-						UtilitaireFenetre.DIM_CAISSE.width,
-						UtilitaireFenetre.DIM_CAISSE.height);
+						UtilitaireFenetre.DIM_CAISSE_JEU.width,
+						UtilitaireFenetre.DIM_CAISSE_JEU.height);
 
 		// On définit un sens de rotation est une échelle
 		transform.scale(echelleDessin, echelleDessin);
 		transform.rotate((angleDessin * Math.PI) / 180,
-				UtilitaireFenetre.DIM_CAISSE.width / 2,
-				UtilitaireFenetre.DIM_CAISSE.height / 2);
+				UtilitaireFenetre.DIM_CAISSE_JEU.width / 2,
+				UtilitaireFenetre.DIM_CAISSE_JEU.height / 2);
 
 		contexteCaisse.transform(transform);
 		aAbsorbe.dessiner(contexteCaisse);

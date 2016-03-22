@@ -55,7 +55,7 @@ public class Caisse implements Dessinable, Serializable {
 	 * Couleur autorisée pour une caisse dans l'application
 	 */
 	public static final int[] COULEUR_AUTORISEE = { ROUGE, JAUNE, VIOLET, VERT,
-		BLEU, ORANGE };
+			BLEU, ORANGE };
 
 	/**
 	 * Matrice carré d'ordre "COULEUR_AUTORISEE" représentant le résultat obtenu
@@ -64,12 +64,12 @@ public class Caisse implements Dessinable, Serializable {
 	 * impossible l'intersection de ces deux couleurs vaut 0.
 	 */
 	public static final int[][] FUSION_COULEUR = {
-		{ 0, ORANGE, 0, JAUNE, VIOLET, 0 },//
-		{ ORANGE, 0, 0, 0, 0, 0 },//
-		{ 0, 0, 0, 0, 0, 0 },//
-		{ JAUNE, 0, 0, 0, 0, 0 },//
-		{ VIOLET, 0, 0, 0, 0, 0 },//
-		{ 0, 0, 0, 0, 0, 0 } //
+			{ 0, ORANGE, 0, JAUNE, VIOLET, 0 },//
+			{ ORANGE, 0, 0, 0, 0, 0 },//
+			{ 0, 0, 0, 0, 0, 0 },//
+			{ JAUNE, 0, 0, 0, 0, 0 },//
+			{ VIOLET, 0, 0, 0, 0, 0 },//
+			{ 0, 0, 0, 0, 0, 0 } //
 	};
 
 	/**
@@ -78,10 +78,10 @@ public class Caisse implements Dessinable, Serializable {
 	 * couleurs autorisées. Cela facilite le traitement de l'affichage.
 	 */
 	public static final String[] CHEMIN_IMAGE_CAISSE = {
-		"./Ressource/img/CaseRouge.PNG", "./Ressource/img/CaseJaune.PNG",
-		"./Ressource/img/CaseViolette.PNG",
-		"./Ressource/img/CaseVerte.PNG", "./Ressource/img/CaseBleue.PNG",
-	"./Ressource/img/CaseOrange.PNG" };
+			"./Ressource/img/CaseRouge.PNG", "./Ressource/img/CaseJaune.PNG",
+			"./Ressource/img/CaseViolette.PNG",
+			"./Ressource/img/CaseVerte.PNG", "./Ressource/img/CaseBleue.PNG",
+			"./Ressource/img/CaseOrange.PNG" };
 
 	/** Couleur de la caisse */
 	private int couleur;
@@ -141,19 +141,19 @@ public class Caisse implements Dessinable, Serializable {
 	public static Caisse fusionCouleur(Caisse c1, Caisse c2) {
 		// caisse à retourner si fusion impossible
 		Caisse c3 = new Caisse(0);
-		if(c1.getCouleur() != 0 && c2.getCouleur()!=0){
-			
+		if (c1.getCouleur() != 0 && c2.getCouleur() != 0) {
+
 			// Vérification que la fusion donne un couleur
 			if (isFusionOk(c1.getCouleur(), c2.getCouleur())) {
 				// la nouvelle caisse prend comme couleur
 				// la fusion des couleurs des caisses c1 et c2
 				// couleur -1 car le premier indice d'un tableau est 0
-				c3.setCouleur(FUSION_COULEUR[c1.getCouleur() - 1]
-						[c2.getCouleur() - 1]);
+				c3.setCouleur(FUSION_COULEUR[c1.getCouleur() - 1][c2
+						.getCouleur() - 1]);
 
 				// La caisse résultat de la fusion prend la position de c2
-				c3.setPosCaisse(new Position (c2.getPosCaisse().getX(),
-						c2.getPosCaisse().getY()));
+				c3.setPosCaisse(new Position(c2.getPosCaisse().getX(), c2
+						.getPosCaisse().getY()));
 			}
 		}
 		return c3;
@@ -215,10 +215,9 @@ public class Caisse implements Dessinable, Serializable {
 			// empty body
 		}
 
-		
 		// si le résultat de l'intersection de Li et Cj
 		// différent de 0 alors fusion valide fusion valide
-		if (FUSION_COULEUR[i][c2-1] != 0) {
+		if (FUSION_COULEUR[i][c2 - 1] != 0) {
 
 			fusionOk = true;
 		}
@@ -235,10 +234,11 @@ public class Caisse implements Dessinable, Serializable {
 
 	/**
 	 * Modifie la position de la caisse
+	 * 
 	 * @param position
-	 *                nouvelle position
+	 *            nouvelle position
 	 */
-	public void setPosCaisse(Position position){
+	public void setPosCaisse(Position position) {
 		this.pos_courante = position;
 
 	}
@@ -267,19 +267,18 @@ public class Caisse implements Dessinable, Serializable {
 	 */
 	@Override
 	public void dessiner(Graphics2D g) {
-		boolean couleurTrouvee = false;
-		for (int i = 0; i < COULEUR_AUTORISEE.length && !couleurTrouvee; i++) {
+		for (int i = 0; i < COULEUR_AUTORISEE.length; i++) {
 			if (couleur == (COULEUR_AUTORISEE[i])) {
 				// dessiner
-				couleurTrouvee = true;
 				try {
 					g.drawImage(ImageIO.read(new File(CHEMIN_IMAGE_CAISSE[i])),
-							0, 0, UtilitaireFenetre.DIM_CAISSE.width,
-							UtilitaireFenetre.DIM_CAISSE.height, null);
+							0, 0, UtilitaireFenetre.DIM_CAISSE_JEU.width,
+							UtilitaireFenetre.DIM_CAISSE_JEU.height, null);
 				} catch (IOException e) {
 					System.out.println("Caisse : dessiner : "
 							+ "Chemin introuvable");
 				}
+				break;
 			}
 		}
 	}
@@ -311,22 +310,23 @@ public class Caisse implements Dessinable, Serializable {
 		}
 	}
 
-
 	/**
 	 * Permet de récupérer l'entier correspondant a une caisse
-	 * @param couleur le caractère correpondant à une caisse
+	 * 
+	 * @param couleur
+	 *            le caractère correpondant à une caisse
 	 * @return la valeur correspondante à la couleur
 	 */
-	public static int getCaisse(char couleur){
-		if(couleur == 'R'){
+	public static int getCaisse(char couleur) {
+		if (couleur == 'R') {
 			return ROUGE;
-		} else if (couleur =='Y'){
+		} else if (couleur == 'Y') {
 			return JAUNE;
-		} else if (couleur == 'P'){
+		} else if (couleur == 'P') {
 			return VIOLET;
-		}  else if (couleur == 'O'){
+		} else if (couleur == 'O') {
 			return ORANGE;
-		} else if (couleur == 'G'){
+		} else if (couleur == 'G') {
 			return VERT;
 		} else if (couleur == 'B') {
 			return BLEU;

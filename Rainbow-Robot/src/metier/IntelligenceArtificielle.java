@@ -1824,7 +1824,7 @@ public class IntelligenceArtificielle extends Thread {
 						try {
 							Thread.sleep(PAUSE);
 						} catch (InterruptedException e) {
-
+							interrupt();
 						}
 						if (deplacement.get(0) == ACTION_AVANCER) {
 							robot.avancer();
@@ -1847,7 +1847,7 @@ public class IntelligenceArtificielle extends Thread {
 					try {
 						Thread.sleep(PAUSE);
 					} catch (InterruptedException e) {
-
+						interrupt();
 					}
 				}
 			}
