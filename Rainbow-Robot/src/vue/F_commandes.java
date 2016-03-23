@@ -305,7 +305,6 @@ public class F_commandes extends JDialog implements ChangementLangue {
      */
     public static String keyToString(int key) {
         String valeur;
-        System.out.println(key);
         // caractères particuliers
         switch (key) {
         case KeyEvent.VK_UP: // Flêche du haut

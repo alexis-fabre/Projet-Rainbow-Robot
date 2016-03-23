@@ -24,7 +24,7 @@ import javax.swing.JComponent;
 public class UtilitaireFenetre {
 
 	/** Dimension des boutons dans la fenêtre de modification des commandes */
-	public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(65, 30);
+	public static final Dimension DIM_BOUTON_COMMANDE = new Dimension(73, 30);
 
 	/** Dimension des composants(JLabels) de la fenêtre commande */
 	public static final Dimension DIM_COMPOSANT_COMMANDE = new Dimension(150,

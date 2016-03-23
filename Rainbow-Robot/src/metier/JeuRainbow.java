@@ -90,7 +90,6 @@ public class JeuRainbow implements Serializable {
 
 	public static JeuRainbow getStory() {
 		JeuRainbow story = new JeuRainbow();
-		System.out.println(FICHIER_STORY.length);
 		for (int i = 0; i < FICHIER_STORY.length; i++) {
 			story.addPartie(OperationsFichier.recupFichier(new File(
 					FICHIER_STORY[i])));

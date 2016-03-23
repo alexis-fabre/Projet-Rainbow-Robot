@@ -156,7 +156,6 @@ public class OperationsFichier {
 			} while (temp != null);
 
 			for (int y = 0; y < tableau.length; y++) {
-				System.out.println();
 				for (int x = 0; x < tableau[y].length; x++) {
 					switch (tableau[y][x]) {
 					case 'Z':
@@ -228,7 +227,6 @@ public class OperationsFichier {
 								Caisse.getCaisse('P'), new Position(x, y));
 						break;
 					case 'X':
-						System.out.println("x=" + x + "y = " + y);
 						posInacessible[x + y * tableau[y].length] = new Position(
 								x, y);
 

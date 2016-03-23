@@ -248,7 +248,7 @@ public class F_records extends JFrame implements ChangementLangue {
 	public void setLangue() {
 		// On actualise la langue
 		String[] traductionReccords = ChoixLangue.getChoixLangue()
-				.getReccords();
+				.getRecords();
 		this.setTitle(traductionReccords[0]);
 		getLa_titreJoueur().setText(traductionReccords[1]);
 		getLa_titreTemps().setText(traductionReccords[2]);

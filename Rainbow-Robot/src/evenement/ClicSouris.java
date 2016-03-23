@@ -610,8 +610,9 @@ public class ClicSouris implements MouseListener, Observer {
 			String[] traductionFinPartie = ChoixLangue.getChoixLangue()
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
-					2, traductionFinPartie.length);
-
+					2,5); // on prend que les traductions 
+			                      // dont on a besoin (les 4 premières)
+			
 			switch (fenetre.getMode()) {
 			case F_jeuRainbow.MODE_STORY:
 				String scoreCourant = fenetre.getScore();
@@ -624,9 +625,9 @@ public class ClicSouris implements MouseListener, Observer {
 				if (classement != -1) {
 					// Boite de dialogue pour demander le nom du joueur
 					String pseudo = JOptionPane.showInputDialog(null,
-							"Vous avez fait le " + classement + "ième score\n"
-									+ "Veuillez entrer votre pseudo",
-							"Nouveau record !", JOptionPane.QUESTION_MESSAGE);
+					        traductionFinPartie[6] + classement + traductionFinPartie[7]
+									+ traductionFinPartie[8],
+							traductionFinPartie[5], JOptionPane.QUESTION_MESSAGE);
 					try {
 						// Création d'un fichier temporaire
 						File temp = new File("./Ressource/tempo.txt");
