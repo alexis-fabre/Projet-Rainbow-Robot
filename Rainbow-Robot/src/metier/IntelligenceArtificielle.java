@@ -85,24 +85,10 @@ public class IntelligenceArtificielle extends Thread {
 	public static final float TEMPS_DEMI_TOUR_DROITE = 4000.0f;
 
 	/**
-	 * <p>
-	 * Temps réel que met le Robot pour avancer sur une case avec une caisse.<br />
-	 * On tient compte ici que pour avancer on peut aussi faire 2 rotations plus
-	 * reculer. On calcule donc qu'est ce qui est le plus rapide.
-	 * </p>
+	 * Indicateur qui permet à l'IA de signaler que le robot devra déplacer une
+	 * caisse
 	 */
-	public static final float TEMPS_REEL_AVANCER_CAISSE = (2 * TEMPS_PIVOTER_CAISSE + TEMPS_RECULER_CAISSE) < TEMPS_AVANCER_CAISSE ? (2 * TEMPS_PIVOTER_CAISSE + TEMPS_RECULER_CAISSE)
-			: TEMPS_AVANCER_CAISSE;
-
-	/**
-	 * <p>
-	 * Temps réel que met le Robot pour reculer sur une case avec une caisse.<br />
-	 * On tient compte ici que pour reculer on peut aussi faire 2 rotations plus
-	 * avancer. On calcule donc qu'est ce qui est le plus rapide.
-	 * </p>
-	 */
-	public static final float TEMPS_REEL_RECULER_CAISSE = (2 * TEMPS_PIVOTER_CAISSE + TEMPS_AVANCER_CAISSE) < TEMPS_RECULER_CAISSE ? (2 * TEMPS_PIVOTER_CAISSE + TEMPS_AVANCER_CAISSE)
-			: TEMPS_RECULER_CAISSE;
+	public static final float TEMPS_DEPLACER_CAISSE = 100000.0f;
 
 	/**
 	 * Utilisé pour optimiser la recherche de l'indice minimal. Elle doit
@@ -160,6 +146,28 @@ public class IntelligenceArtificielle extends Thread {
 	 * @see metier.IntelligenceArtificielle#chercherChemin(HashMap)
 	 */
 	public static final Integer SEPARATION_ORIENTATION = new Integer(10);
+
+	/**
+	 * Identifie les positions à supprimer
+	 * 
+	 * @see metier.IntelligenceArtificielle#chercherPositionPourDeplacer(Position,
+	 *      int)
+	 */
+	public static final Position POSITION_A_SUPPRIMER = new Position(-1, -1);
+
+	/**
+	 * Permet de séparer les différenters positions au sein d'un même niveau
+	 * 
+	 * @see metier.IntelligenceArtificielle#chercherPositionPourDeplacer(Position,
+	 *      int)
+	 */
+	public static final Position POSITION_SEPARATRICE = new Position(-2, -2);
+
+	/**
+	 * Saut qu'il faut faire pour passer d'une position à une autre dans un même
+	 * niveau
+	 */
+	public static final int SAUT_NIVEAU = 2;
 
 	/**
 	 * Partie que l'IA doit résoudre. On utilise ici une copie pour pouvoir
@@ -316,11 +324,12 @@ public class IntelligenceArtificielle extends Thread {
 	 *            Liste de déplacement à inverser
 	 * @return une ArrayList des déplacements inverser
 	 */
-	private static List<Integer> inverserListe(List<Integer> aInverser) {
+	@SuppressWarnings("unchecked")
+	private static <T> List<T> inverserListe(List<T> aInverser) {
 		// On récupère la liste sous la forme d'un tableau
-		Integer[] tabInvertion = aInverser.toArray(new Integer[0]);
+		T[] tabInvertion = aInverser.toArray((T[]) (new Object[0]));
 		// Variable de temporisation pour inverser le contenu
-		Integer temp;
+		T temp;
 
 		// On inverse le contenu du tableau
 		for (int i = 0; i < tabInvertion.length / 2; i++) {
@@ -330,7 +339,7 @@ public class IntelligenceArtificielle extends Thread {
 		}
 
 		// On recréer une nouvelle liste avec le tableau inversé
-		return new ArrayList<Integer>(Arrays.asList(tabInvertion));
+		return new ArrayList<T>(Arrays.asList(tabInvertion));
 	}
 
 	/**
@@ -350,6 +359,29 @@ public class IntelligenceArtificielle extends Thread {
 			return new Position(posRobot.getX() + 1, posRobot.getY());
 		} else { // Robot.ORIENTATION_GAUCHE
 			return new Position(posRobot.getX() - 1, posRobot.getY());
+		}
+	}
+
+	/**
+	 * On calcule l'orientation du robot, s'il était en face de la caisse
+	 *
+	 * @param posRobot
+	 *            position du robot
+	 * @param posCaisse
+	 *            position de la caisse
+	 * @return orientation du robot en face de la caisse
+	 */
+	private static int getOrientation(Position posRobot, Position posCaisse) {
+		Position delta = new Position(posRobot.getX() - posCaisse.getX(),
+				posRobot.getY() - posCaisse.getY());
+		if (delta.getX() > 0) {
+			return Robot.ORIENTATION_GAUCHE;
+		} else if (delta.getX() < 0) {
+			return Robot.ORIENTATION_DROITE;
+		} else if (delta.getY() > 0) {
+			return Robot.ORIENTATION_HAUT;
+		} else { // delta.getY() < 0
+			return Robot.ORIENTATION_BAS;
 		}
 	}
 
@@ -531,7 +563,8 @@ public class IntelligenceArtificielle extends Thread {
 	 * @param caissePotentielle
 	 *            liste des caisses potentielles
 	 * @return HashMap contenant pour chaque Position (adjacentes aux caisses à
-	 *         récupérer) un liste de déplacements potentielles.
+	 *         récupérer) une liste de déplacements supplémentaires pour
+	 *         atteindre la caisse depuis l'une de ses positions adjacentes.
 	 */
 	private HashMap<Position, List<Integer>> chercherCaisses(
 			List<Caisse> caissePotentielle) {
@@ -591,20 +624,19 @@ public class IntelligenceArtificielle extends Thread {
 	 * (aller/retour) puis appelle la fonction pour déplacer le robot.
 	 * </p>
 	 * 
-	 * @param positionPotentielle
-	 *            HashMap contenant pour chaque Position (adjacentes aux caisses
-	 *            à récupérer) un liste de déplacements potentielles.
+	 * @param listeCaisses
+	 *            Liste des caisses que doit récupérer le robot
 	 * 
 	 * @return true si le déplacement est possible, false sinon.
 	 * @see metier.IntelligenceArtificielle#chercherCaisses(List)
 	 */
-	private boolean chercherChemin(
-			HashMap<Position, List<Integer>> positionPotentielle) {
+	private boolean chercherChemin(List<Caisse> listeCaisses) {
+		HashMap<Position, List<Integer>> positionPotentielle = chercherCaisses(listeCaisses);
 		// Position du vortex
 		final Position positionVortex = partieClone.getVortex().getPosVortex();
 
 		// Position min <=> Position qui mettra le moins de temps aller +
-		// retour
+		// retour+
 		Position posMinCaisse = null, //
 		posMinVortex = null;
 		// Liste des déplacements supplémentaires à effectuer pour les
@@ -682,7 +714,7 @@ public class IntelligenceArtificielle extends Thread {
 				if ((tempsCaisse[indicePositionAdjacenteVortex] % 1000)
 						+ temps[positionToIndice(posCourante)]
 						+ ((deplacement.size() - 1) * TEMPS_PIVOTER_CAISSE) < tempsMis) {
-					tempsMis = tempsCaisse[indicePositionAdjacenteVortex]
+					tempsMis = (tempsCaisse[indicePositionAdjacenteVortex] % 1000)
 							+ temps[positionToIndice(posCourante)]
 							+ ((deplacement.size() - 1) * TEMPS_PIVOTER_CAISSE);
 					posMinCaisse = posCourante;
@@ -695,12 +727,53 @@ public class IntelligenceArtificielle extends Thread {
 
 		// Aucun déplacement trouvé
 		if (posMinCaisse == null) {
-			System.out.println("IA : Trajectoire introuvable");
+			afficherDijkstra(temps, orientations, partieClone.getNbColonne());
+			Position positionBloquante = null;
+			int nbCaisseDeplaceMin = Integer.MAX_VALUE;
+
+			// On vérifie le vortex
+			int nbCaisseDeplace = (int) (temps[positionToIndice(partieClone
+					.getVortex().getPosVortex())] / TEMPS_DEPLACER_CAISSE);
+			if (nbCaisseDeplace >= 1 && nbCaisseDeplace < nbCaisseDeplaceMin) {
+				nbCaisseDeplaceMin = nbCaisseDeplace + 1;
+				positionBloquante = partieClone.getVortex().getPosVortex();
+			} else {
+				// On vérifie la liste des caisses
+				for (Caisse caisse : listeCaisses) {
+					// Nombre de caisse qu'il faudra déplacer
+					nbCaisseDeplace = (int) (temps[positionToIndice(caisse
+							.getPosCaisse())] / TEMPS_DEPLACER_CAISSE);
+					if (nbCaisseDeplace >= 2
+							&& nbCaisseDeplace < nbCaisseDeplaceMin) {
+						nbCaisseDeplaceMin = nbCaisseDeplace;
+						positionBloquante = caisse.getPosCaisse();
+					}
+				}
+			}
+			if (positionBloquante == null) {
+				System.out.println("IA : Trajectoire introuvable");
+				return false;
+			} else {
+				List<Position>[] positionCaisse = chercherPositionPourDeplacer(
+						positionBloquante, nbCaisseDeplaceMin,
+						!positionBloquante.equals(partieClone.getVortex()
+								.getPosVortex()));
+				suppressionPositionInvalide(positionCaisse);
+				System.out.println("\n\nFIN\n\n");
+				for (List<Position> list : positionCaisse) {
+					System.out.println("Liste de position :\n"
+							+ Arrays.toString(list.toArray()));
+				}
+
+			}
 			return false;
 		} else {
 			// Sachant que l'algorithme est rapide sur les petites cartes on
 			// peut se permettre de rappeler la fonction pour calculer le retour
 			dijkstraAvecCaisse(posMinCaisse, oriMin);
+			afficherDijkstra(temps, orientations, partieClone.getNbColonne());
+			afficherDijkstra(tempsCaisse, orientationsCaisse,
+					partieClone.getNbColonne());
 
 			// Compteur utilisé pour les déplacements supplémentaires
 			int i;
@@ -754,6 +827,210 @@ public class IntelligenceArtificielle extends Thread {
 			threadDeplacement.addDeplacement(deplacement);
 			return true;
 		}
+	}
+
+	/**
+	 * Recherche les positions des caisses à déplacer et leurs positions
+	 * adjacentes valides (autre caisse ou case vide). Fonction enveloppe de la
+	 * fonction itérative pour initialiser les différents paramètres.
+	 *
+	 * @param posDepart
+	 *            Position de départ puis on tourne autour de cette position
+	 *            pour rechercher les positions adjacentes
+	 * @param nbCaisseDeplaceMin
+	 *            nombre de déplacement que l'on doit effectuer pour aller
+	 *            chercher notre caisse
+	 * @param isSuppression
+	 *            permet de savoir si l'on gère le fait de supprimer ou non les
+	 *            positions invalidés par l'algorithme
+	 * @return une liste de position avec SEPARATEUR_POSITION pour séparer les
+	 *         différents niveaux de caisses
+	 */
+	@SuppressWarnings("unchecked")
+	private List<Position>[] chercherPositionPourDeplacer(Position posDepart,
+			int nbCaisseDeplaceMin, boolean isSuppression) {
+		List<Position>[] listePosition = new ArrayList[nbCaisseDeplaceMin + 1];
+		listePosition[0] = new ArrayList<Position>();
+		listePosition[0].add(posDepart);
+		return chercherPositionPourDeplacer(listePosition, listePosition[0], 1,
+				nbCaisseDeplaceMin, isSuppression);
+	}
+
+	/**
+	 * Fonction itérative qui parcourt de indice jusqu'à n. A chaque tour elle
+	 * estime les positions qui sont liées à une positio d'un niveau supérieur
+	 * et vérifie que celles-là soient valides. Et ainsi de suite pour tous les
+	 * niveaux. Pour pouvoir identifier les positions d'un supérieur, on insère
+	 * POSITION_SEPARATRICE des qu'on a fini de parcourir les positions
+	 * adjacentes.
+	 *
+	 * @param listePosition
+	 *            liste des positions adjacentes à la caisse bloquée sur n
+	 *            niveaux
+	 * @param positionPrec
+	 *            liste des positions précédentes (niveau + 1)
+	 * @param n
+	 *            nombre de niveau
+	 * @param isSuppression
+	 *            permet de savoir si l'on gère le fait de supprimer ou non les
+	 *            positions invalidés par l'algorithme
+	 * @return liste des positions avec POSITION_SEPARATRICE pour séparer entre
+	 *         les sous-niveaux
+	 */
+	private List<Position>[] chercherPositionPourDeplacer(
+			List<Position>[] listePosition, List<Position> positionPrec,
+			int indice, int n, boolean isSuppression) {
+		if (indice > n) {
+			return listePosition;
+		}
+		// else
+		listePosition[indice] = new ArrayList<Position>();
+		for (int i = 0; i < positionPrec.size(); i++) {
+			Position posCourante = positionPrec.get(i);
+			if (posCourante.equals(POSITION_A_SUPPRIMER)
+					|| posCourante.equals(POSITION_SEPARATRICE)) {
+				continue;
+			}
+			Position[] posAdjacentes = Position
+					.getPositionsAdjacentes(posCourante);
+			for (int j = 0; j < posAdjacentes.length; j++) {
+				// On vérifie que ce ne soit pas une position invalide
+				if (partieClone.isPositionOK(posAdjacentes[j])) {
+					if ((int) (temps[positionToIndice(posAdjacentes[j])] / TEMPS_DEPLACER_CAISSE) == n
+							- indice) {
+						listePosition[indice].add(posAdjacentes[j]);
+					}
+				} else if (isSuppression) {
+					listePosition[indice].add(POSITION_A_SUPPRIMER);
+					break;
+				}
+			}
+			listePosition[indice].add(POSITION_SEPARATRICE);
+		}
+		return chercherPositionPourDeplacer(listePosition,
+				listePosition[indice], indice + 1, n, isSuppression);
+	}
+
+	/**
+	 * Supprime les positions invalides dans la liste des positions. Chaque fois
+	 * qu'une position est invalide on notifie à la position du dessus qu'elle
+	 * est elle aussi invalide et ainsi de suite.
+	 *
+	 * @param listePosition
+	 *            les listes contiennent les différentes positions pour un
+	 *            niveau donnée (indice du tableau)
+	 */
+	private void suppressionPositionInvalide(List<Position>[] listePosition) {
+		int niveauMax = listePosition.length;
+		// Indice des niveaux supérieurs pour pouvoir se retrouver dans la
+		// hierarchie
+		int indiceNiveauPrec = 0;
+
+		// On garde en mémoire l'indice de départ (avant le changement d'un
+		// niveau)
+		int depart = 0;
+
+		// On supprime les positions invalides du niveau le plus bas
+		for (int i = 0; i < listePosition[niveauMax].size(); i++) {
+			Position posCourante = listePosition[niveauMax].get(i);
+			if (posCourante.equals(POSITION_SEPARATRICE)) {
+				depart = i + 1;
+				indiceNiveauPrec++;
+			} else if (posCourante.equals(POSITION_A_SUPPRIMER)) {
+				// On supprime toutes les positions précédentes
+				for (int j = depart; j <= i + 1; j++) {
+					listePosition[niveauMax].remove(depart);
+				}
+				// On signale que la position au niveau du dessus est invalide
+				listePosition[niveauMax - 1].remove(indiceNiveauPrec);
+				listePosition[niveauMax - 1].add(indiceNiveauPrec,
+						POSITION_A_SUPPRIMER);
+				i = depart - 1;
+			}
+		}
+
+		// On supprime les positions invalides des niveaux supérieurs
+		// On détecte s'il existe au moins une position dans le niveau courant
+		boolean unePosition = false;
+		// Parcours les niveaux (verticalement)
+		int compteur = niveauMax - 1;
+		while (compteur > 0) {
+			// Reset
+			indiceNiveauPrec = 0;
+			depart = 0;
+
+			// Parcours d'un niveau (horizontalement)
+			for (int i = 0; i < listePosition[compteur].size(); i++) {
+				Position posCourante = listePosition[compteur].get(i);
+
+				if (posCourante.equals(POSITION_SEPARATRICE)) {
+					depart = i + 1;
+					indiceNiveauPrec++;
+					if (!unePosition) {
+						// On signale que la position au niveau du dessus est
+						// invalide
+						listePosition[compteur - 1].remove(indiceNiveauPrec);
+						listePosition[compteur - 1].add(indiceNiveauPrec,
+								POSITION_A_SUPPRIMER);
+					}
+					// Reset
+					unePosition = false;
+				} else if (posCourante.equals(POSITION_A_SUPPRIMER)) {
+					listePosition[compteur].remove(i);
+					i = depart - 1;
+				} else {
+					// Il existe au moins une position valide
+					unePosition = true;
+				}
+			}
+
+			// Niveau supérieur
+			compteur--;
+		}
+		// compteur == 0
+	}
+
+	/**
+	 * TODO Commenter la méthode
+	 *
+	 * @param listePosition
+	 *            liste des positions bloquantes. A chaque indice correspond un
+	 *            niveau.
+	 * @return liste de déplacement optimal pour déplacer les caisses
+	 */
+	private List<Integer> getDeplacementBloquant(List<Position>[] listePosition) {
+		// Map contenant une paire de position (posRobot, posCaisse) et pour
+		// chaque couple une liste de déplacement pour amener la caisse dans une
+		// case non bloquante
+		HashMap<Position[], List<Integer>> map = new HashMap<Position[], List<Integer>>();
+
+		int niveauMax = listePosition.length;
+		// Indice des niveaux supérieurs pour pouvoir se retrouver dans la
+		// hierarchie
+		int indiceNiveauPrec = 0;
+		// Parcours les niveaux (verticalement)
+		int compteur = niveauMax - 1;
+
+		while (compteur > 0) {
+			// Reset
+			indiceNiveauPrec = 0;
+
+			// Parcours d'un niveau (horizontalement)
+			for (int i = 0; i < listePosition[compteur].size(); i++) {
+				Position posCourante = listePosition[compteur].get(i);
+
+				if (posCourante.equals(POSITION_SEPARATRICE)) {
+					indiceNiveauPrec++;
+				} else { // Position d'une caisse
+
+				}
+			}
+
+			// Niveau supérieur
+			compteur--;
+		}
+		// compteur == 0
+		return null; // bouchon
 	}
 
 	/**
@@ -825,12 +1102,12 @@ public class IntelligenceArtificielle extends Thread {
 			// Parcours des positions adjacentes
 			for (int j = 0; j < positionsAdjacentes.length; j++) {
 
+				// Indice de la position adjacente
+				int indice = positionToIndice(positionsAdjacentes[j]);
+
 				// Sachant que l'indice du tableau (positions adjacentes) est
 				// équivalent à l'orientation du robot
 				if (partieClone.isPositionOKAvecTout(positionsAdjacentes[j])) {
-
-					// Indice de la position adjacente
-					int indice = positionToIndice(positionsAdjacentes[j]);
 
 					if (j == orientations[indiceCentral]) {
 						// Position qui suit l'orientation du robot
@@ -900,13 +1177,13 @@ public class IntelligenceArtificielle extends Thread {
 							// du robot
 							Position delta = new Position(posCaisse.getX()
 									- posRobot.getX(), posCaisse.getY()
-									- posRobot.getX());
+									- posRobot.getY());
 							int compteur;
 							for (compteur = 1; compteur <= n; compteur++) {
 								if (!partieClone.isPositionOKAvecTout(
 										posRobot.getX() + compteur
 												* delta.getX(), posRobot.getY()
-												+ compteur * delta.getX())) {
+												+ compteur * delta.getY())) {
 									break;
 								}
 							}
@@ -971,6 +1248,13 @@ public class IntelligenceArtificielle extends Thread {
 							}
 						}
 					}
+				} else if (!partieClone
+						.isPositionOKAvecCaisse(positionsAdjacentes[j])) {
+					// On est sur une caisse
+					if (temps[indiceCentral] + TEMPS_DEPLACER_CAISSE < temps[indice]) {
+						temps[indice] = temps[indiceCentral]
+								+ TEMPS_DEPLACER_CAISSE;
+					}
 				}
 			}
 			indiceDejaUtilise[i] = indiceCentral;
@@ -1000,7 +1284,6 @@ public class IntelligenceArtificielle extends Thread {
 	 * @see metier.IntelligenceArtificielle#getDeplacementVersCaisse(float[],
 	 *      int[])
 	 */
-	@SuppressWarnings("unused")
 	private void dijkstraAvecCaisse(Position pos_ini, int ori_ini) {
 		// On initialise les positions qui permettent de faire un demi-tour
 		// Tableau contenant les résultats de l'algorithme de Dijkstra
@@ -1084,7 +1367,7 @@ public class IntelligenceArtificielle extends Thread {
 							&& TEMPS_AVANCER_CAISSE
 									+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
 						tempsCaisse[indice] = tempsCaisse[indiceCentral]
-								+ TEMPS_REEL_AVANCER_CAISSE;
+								+ TEMPS_AVANCER_CAISSE;
 						// On garde la même orientation
 						orientationsCaisse[indice] = orientationsCaisse[indiceCentral];
 					} else {
@@ -1239,58 +1522,100 @@ public class IntelligenceArtificielle extends Thread {
 					} else if (j == Robot
 							.pivoterDroite(orientationsCaisse[indiceCentral])) {
 
-						if (TEMPS_AVANCER_CAISSE + TEMPS_PIVOTER_CAISSE
-								+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
-							// Utiliser pour optimiser les calculs liés aux
-							// détections des caisses qui pourraient bloqués le
-							// déplacement
-							Position temp = indiceToPosition(indiceCentral
-									- indiceCaisse);
-							Position delta = new Position(temp.getY(),
-									-temp.getX());
+						// Utiliser pour optimiser les calculs liés aux
+						// détections des caisses qui pourraient bloqués le
+						// déplacement
+						Position temp = indiceToPosition(indiceCentral
+								- indiceCaisse);
+						Position deltaDroite = new Position(temp.getY(),
+								-temp.getX());
 
-							// On vérifie si le déplacement est possible
-							if (
-							// Position à droite du robot
-							partieClone.isPositionOKAvecTout(posRobot.getX()
-									+ delta.getX(),
-									posRobot.getY() + delta.getY())
-									// Position (deux fois) à droite du robot
-									&& partieClone.isPositionOKAvecTout(
-											posRobot.getX() + 2 * delta.getX(),
-											posRobot.getY() + 2 * delta.getY())
+						// On vérifie si le déplacement est possible
+						if (
+						// Position (deux fois) à droite du robot
+						partieClone.isPositionOKAvecTout(posRobot.getX() + 2
+								* deltaDroite.getX(), posRobot.getY() + 2
+								* deltaDroite.getY())) {
+
+							if (TEMPS_AVANCER_CAISSE + TEMPS_PIVOTER_CAISSE
+									+ tempsCaisse[indiceCentral] < tempsCaisse[indice]
 									// Position à droite de la caisse
 									&& partieClone.isPositionOKAvecTout(
-											posCaisse.getX() + delta.getX(),
-											posCaisse.getY() + delta.getY())) {
-
+											posCaisse.getX()
+													+ deltaDroite.getX(),
+											posCaisse.getY()
+													+ deltaDroite.getY())) {
 								tempsCaisse[indice] = tempsCaisse[indiceCentral]
 										+ TEMPS_AVANCER_CAISSE
 										+ TEMPS_PIVOTER_CAISSE;
 								orientationsCaisse[indice] = Robot
 										.pivoterDroite(orientationsCaisse[indiceCentral]);
-							} // else
+							} else if (TEMPS_AVANCER_CAISSE + 3
+									* TEMPS_PIVOTER_CAISSE
+									+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
+
+								Position deltaGauche = new Position(
+										-temp.getY(), temp.getX());
+
+								if (// Position à gauche du robot
+								partieClone.isPositionOKAvecTout(
+										posRobot.getX() + deltaGauche.getX(),
+										posRobot.getY() + deltaGauche.getY())
+								// Position à gauche de la caisse
+										&& partieClone.isPositionOKAvecTout(
+												posCaisse.getX()
+														+ deltaGauche.getX(),
+												posCaisse.getY()
+														+ deltaGauche.getY())
+										// Position à l'arrière centre du
+										// robot
+										&& partieClone.isPositionOKAvecTout(
+												posCaisse.getX() + temp.getX(),
+												posCaisse.getY() + temp.getY())
+										// Position à l'arrière gauche du
+										// robot
+										&& partieClone.isPositionOKAvecTout(
+												posCaisse.getX() + temp.getX()
+														+ deltaGauche.getX(),
+												posCaisse.getY() + temp.getY()
+														+ deltaGauche.getY())
+										// Position à l'arrière droite du
+										// robot
+										&& partieClone.isPositionOKAvecTout(
+												posCaisse.getX() + temp.getX()
+														+ deltaDroite.getX(),
+												posCaisse.getY() + temp.getY()
+														+ deltaDroite.getY())) {
+
+									tempsCaisse[indice] = tempsCaisse[indiceCentral]
+											+ TEMPS_AVANCER_CAISSE
+											+ (3 * TEMPS_PIVOTER_CAISSE)
+											+ TEMPS_TROIS_QUART_DROITE;
+									orientationsCaisse[indice] = Robot
+											.pivoterDroite(orientationsCaisse[indiceCentral]);
+									continue;
+								}
+							}
+
 						}
 						if (TEMPS_RECULER_CAISSE + TEMPS_PIVOTER_CAISSE
 								+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
-							// Utiliser pour optimiser les calculs liés aux
-							// détections des caisses qui pourraient bloqués le
-							// déplacement
-							Position temp = indiceToPosition(indiceCentral
-									- indiceCaisse);
-							Position delta = new Position(-temp.getY(),
+
+							Position deltaGauche = new Position(-temp.getY(),
 									temp.getX());
 
 							// On vérifie si le déplacement est possible
 							if (
 							// Position à gauche du robot
 							partieClone.isPositionOKAvecTout(posRobot.getX()
-									+ delta.getX(),
-									posRobot.getY() + delta.getY())
+									+ deltaGauche.getX(), posRobot.getY()
+									+ deltaGauche.getY())
 									// Position à gauche de la caisse
 									&& partieClone.isPositionOKAvecTout(
-											posCaisse.getX() + delta.getX(),
-											posCaisse.getY() + delta.getY())) {
+											posCaisse.getX()
+													+ deltaGauche.getX(),
+											posCaisse.getY()
+													+ deltaGauche.getY())) {
 
 								tempsCaisse[indice] = tempsCaisse[indiceCentral]
 										+ TEMPS_RECULER_CAISSE
@@ -1302,8 +1627,7 @@ public class IntelligenceArtificielle extends Thread {
 						}
 					} else { // j ==
 								// Robot.pivoterGauche(orientationsCaisse[indiceCentral])
-						// On vérifie si l'on met plus de temps pour avancer ou
-						// pour reculer
+
 						if (TEMPS_AVANCER_CAISSE + TEMPS_PIVOTER_CAISSE
 								+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
 							// Utiliser pour optimiser les calculs liés aux
@@ -1311,31 +1635,95 @@ public class IntelligenceArtificielle extends Thread {
 							// déplacement
 							Position temp = indiceToPosition(indiceCentral
 									- indiceCaisse);
-							Position delta = new Position(-temp.getY(),
+							Position deltaGauche = new Position(-temp.getY(),
 									temp.getX());
 
 							// On vérifie si le déplacement est possible
 							if (
-							// Position à gauche du robot
+							// Position (deux fois) à gauche du robot
 							partieClone.isPositionOKAvecTout(posRobot.getX()
-									+ delta.getX(),
-									posRobot.getY() + delta.getY())
-									// Position (deux fois) à gauche du robot
-									&& partieClone.isPositionOKAvecTout(
-											posRobot.getX() + 2 * delta.getX(),
-											posRobot.getY() + 2 * delta.getY())
-									// Position à gauche de la caisse
-									&& partieClone.isPositionOKAvecTout(
-											posCaisse.getX() + delta.getX(),
-											posCaisse.getY() + delta.getY())) {
+									+ 2 * deltaGauche.getX(), posRobot.getY()
+									+ 2 * deltaGauche.getY())) {
+								if (
+								// Position à gauche de la caisse
+								partieClone.isPositionOKAvecTout(
+										posCaisse.getX() + deltaGauche.getX(),
+										posCaisse.getY() + deltaGauche.getY())) {
+									tempsCaisse[indice] = tempsCaisse[indiceCentral]
+											+ TEMPS_AVANCER_CAISSE
+											+ TEMPS_PIVOTER_CAISSE;
+									orientationsCaisse[indice] = Robot
+											.pivoterGauche(orientationsCaisse[indiceCentral]);
+									continue;
+									// On tente de faire une 3/4 de tour vers la
+									// gauche puis d'avancer
+								} else if (TEMPS_AVANCER_CAISSE + 3
+										* TEMPS_PIVOTER_CAISSE
+										+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
 
-								tempsCaisse[indice] = tempsCaisse[indiceCentral]
-										+ TEMPS_AVANCER_CAISSE
-										+ TEMPS_PIVOTER_CAISSE;
-								orientationsCaisse[indice] = Robot
-										.pivoterGauche(orientationsCaisse[indiceCentral]);
+									Position deltaDroite = new Position(
+											temp.getY(), -temp.getX());
+
+									if (// Position à droite du robot
+									partieClone.isPositionOKAvecTout(
+											posRobot.getX()
+													+ deltaDroite.getX(),
+											posRobot.getY()
+													+ deltaDroite.getY())
+											// Position à droite de la caisse
+											&& partieClone
+													.isPositionOKAvecTout(
+															posCaisse.getX()
+																	+ deltaDroite
+																			.getX(),
+															posCaisse.getY()
+																	+ deltaDroite
+																			.getY())
+											// Position à l'arrière centre du
+											// robot
+											&& partieClone
+													.isPositionOKAvecTout(
+															posCaisse.getX()
+																	+ temp.getX(),
+															posCaisse.getY()
+																	+ temp.getY())
+											// Position à l'arrière gauche du
+											// robot
+											&& partieClone
+													.isPositionOKAvecTout(
+															posCaisse.getX()
+																	+ temp.getX()
+																	+ deltaGauche
+																			.getX(),
+															posCaisse.getY()
+																	+ temp.getY()
+																	+ deltaGauche
+																			.getY())
+											// Position à l'arrière droite du
+											// robot
+											&& partieClone
+													.isPositionOKAvecTout(
+															posCaisse.getX()
+																	+ temp.getX()
+																	+ deltaDroite
+																			.getX(),
+															posCaisse.getY()
+																	+ temp.getY()
+																	+ deltaDroite
+																			.getY())) {
+
+										tempsCaisse[indice] = tempsCaisse[indiceCentral]
+												+ TEMPS_AVANCER_CAISSE
+												+ (3 * TEMPS_PIVOTER_CAISSE)
+												+ TEMPS_TROIS_QUART_GAUCHE;
+										orientationsCaisse[indice] = Robot
+												.pivoterGauche(orientationsCaisse[indiceCentral]);
+										continue;
+									}
+								}
 							}
 						}
+
 						if (TEMPS_RECULER_CAISSE + TEMPS_PIVOTER_CAISSE
 								+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
 
@@ -1779,6 +2167,17 @@ public class IntelligenceArtificielle extends Thread {
 
 								indiceCourant = indiceAdj;
 								break;
+							} else if (temps[indiceCourant] == temps[indiceAdj]
+									+ 3 * TEMPS_PIVOTER + TEMPS_AVANCER
+									+ TEMPS_TROIS_QUART_DROITE) {
+
+								deplacement.add(ACTION_AVANCER);
+								deplacement.add(ACTION_PIVOTER_GAUCHE);
+								deplacement.add(ACTION_PIVOTER_GAUCHE);
+								deplacement.add(ACTION_PIVOTER_GAUCHE);
+
+								indiceCourant = indiceAdj;
+								break;
 							}
 
 						} else {
@@ -1790,6 +2189,17 @@ public class IntelligenceArtificielle extends Thread {
 
 								deplacement.add(ACTION_AVANCER);
 								deplacement.add(ACTION_PIVOTER_GAUCHE);
+
+								indiceCourant = indiceAdj;
+								break;
+							} else if (temps[indiceCourant] == temps[indiceAdj]
+									+ 3 * TEMPS_PIVOTER + TEMPS_AVANCER
+									+ TEMPS_TROIS_QUART_GAUCHE) {
+
+								deplacement.add(ACTION_AVANCER);
+								deplacement.add(ACTION_PIVOTER_DROITE);
+								deplacement.add(ACTION_PIVOTER_DROITE);
+								deplacement.add(ACTION_PIVOTER_DROITE);
 
 								indiceCourant = indiceAdj;
 								break;
@@ -1867,7 +2277,7 @@ public class IntelligenceArtificielle extends Thread {
 		List<Caisse>[] liste = getCaisseParCouleur();
 		// On cherche la liste des déplacements pour aller chercher la caisse
 		for (int i = 0; i < liste.length; i++) {
-			if (!chercherChemin(chercherCaisses(liste[i]))) {
+			if (!chercherChemin(liste[i])) {
 				break;
 			}
 			// On supprime la caisse de la partie
@@ -1906,6 +2316,7 @@ public class IntelligenceArtificielle extends Thread {
 		 */
 		public void addDeplacement(List<Integer> ajoutDeplacement) {
 			synchronized (deplacement) {
+				afficherDeplacement(ajoutDeplacement);
 				this.deplacement.addAll(ajoutDeplacement);
 			}
 		}

@@ -37,12 +37,13 @@ public class TestIA {
 	 *            non utilisé
 	 */
 	public static void main(String[] args) {
-		Partie partie = getPartieAlea();
+		Partie partie = getPartieCustom();
 
 		JeuRainbow jeu = new JeuRainbow();
 		jeu.addPartie(partie);
 		// On construit le contrôleur à partir de la partie métier
 		ClicSouris gestion = new ClicSouris(jeu);
+		gestion.restartIA(jeu.getPartieCouranteIA());
 		// Détecte les appuie sur les touches de clavier
 		ToucheClavier clavier = new ToucheClavier(jeu, true);
 		// On détecte les fins de partie et les pauses
@@ -56,7 +57,6 @@ public class TestIA {
 
 		// On force le jeu à se lancer
 		clavier.startPartie();
-		new IntelligenceArtificielle(jeu.getPartieCouranteIA()).start();
 	}
 
 	/**

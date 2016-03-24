@@ -1,6 +1,8 @@
-3
-18
-R
-                R
-                 
-Q               V
+5
+5
+B
+ RRBR
+ZRRBR
+  RR 
+V    
+     

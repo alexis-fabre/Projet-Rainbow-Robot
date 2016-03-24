@@ -110,7 +110,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 * @param aControllee
 	 *            partie que l'IA doit contrôler
 	 */
-	private void restartIA(Partie aControllee) {
+	public void restartIA(Partie aControllee) {
 		stopIA();
 		startIA(aControllee);
 	}
