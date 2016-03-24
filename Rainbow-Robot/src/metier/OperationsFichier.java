@@ -1,4 +1,4 @@
-/* OperationsFichier.java                8 déc. 2015
+/* OperationsFichier.java                8 dÃ©c. 2015
  * IUT Info2 2015-2016 
  */
 package metier;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 import metier.LigneUsernameScore;
 
 /**
- * Classe permettant de lire et d'écrire dans le fichier highscores.txt
+ * Classe permettant de lire et d'Ã©crire dans le fichier highscores.txt
  * 
  * @author Rainbow Robot
  * @version 0.1
@@ -26,13 +26,13 @@ import metier.LigneUsernameScore;
 public class OperationsFichier {
 
 	/**
-	 * Lis le fichier des reccords et retourne les données présentes dans une
+	 * Lis le fichier des reccords et retourne les donnÃ©es prÃ©sentes dans une
 	 * ArrayList
 	 * 
 	 * @param fichier
 	 *            le fichier qui contient les noms des utilisateurs et les
 	 *            reccords
-	 * @return Une liste contenant les données
+	 * @return Une liste contenant les donnÃ©es
 	 */
 	public static ArrayList<LigneUsernameScore> lectureFichierReccord(
 			File fichier) {
@@ -80,7 +80,7 @@ public class OperationsFichier {
 	 *            le fichier qui contient les noms des utilisateurs et les
 	 *            reccords
 	 * @param ligneUsernameScore
-	 *            les nouveaux couples noms/scores a enregistré
+	 *            les nouveaux couples noms/scores a enregistrÃ©
 	 */
 	public static void ecrireFichierReccord(File fichier,
 			ArrayList<LigneUsernameScore> ligneUsernameScore) {
@@ -100,8 +100,8 @@ public class OperationsFichier {
 
 	/**
 	 * Lit un fichier et le transforme en une partie. Le fichier doit respecter
-	 * certaines règles et des vérifications seront faites sur la cohérence et
-	 * la resolvabilité de la partie.
+	 * certaines rÃ¨gles et des vÃ©rifications seront faites sur la cohÃ©rence et
+	 * la resolvabilitÃ© de la partie.
 	 *
 	 * @param fichier
 	 *            contenu de la partie
@@ -113,53 +113,52 @@ public class OperationsFichier {
 			throws IllegalArgumentException {
 		Partie partie = null;
 		int numLigne = 0;
-		int ligne;
-		int colonne;
-		String temp;
+		int ligne; // nombre de ligne pour une carte
+		int colonne; // nombre de colonne pour une carte
+		String temp; // caisse à récupérer 
 		Robot robot = null;
 		Vortex vortex = null;
-		Caisse[] caissePlateau;
-		Caisse[] resultatCaisse;
-		Position[] posInacessible;
-		Position[] resultatPos;
+		Caisse[] caissePlateau; // tableau de la map avec les caisses
+		Caisse[] resultatCaisse; // tableau de la map avec les caisses mais sans les null
+		Position[] posInacessible;// tableau des positions inacessibles
+		Position[] resultatPos;//  tableau des positions inacessibles mais sans les null
 		int indice = 0;
 		int parcours = 0;
-		char tableau[][];
+		char tableau[][]; // tableau qui enregistre les ligne a partir de la 4ieme ligne
 		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
 		try (BufferedReader fich = new BufferedReader(new FileReader(fichier))) {
-			ligne = Integer.valueOf(fich.readLine());
-			colonne = Integer.valueOf(fich.readLine());
+			ligne = Integer.valueOf(fich.readLine()); // on recupere le nombre de ligne dans la premiere ligne du fichier
+			colonne = Integer.valueOf(fich.readLine());// on recupere le nombre de colonne dans la premiere ligne du fichier
 
-			temp = fich.readLine();
+			temp = fich.readLine(); // On recupere les caisses a recuperer dans la troisieme ligne
 
-			for (int i = 0; i < temp.length(); i++) {
+			for (int i = 0; i < temp.length(); i++) { // parcours de la ligne temp
 				if (Caisse.getCaisse(temp.charAt(i)) == -1) {
 					throw new IllegalArgumentException(
 							"Le fichier n'est pas bon");
 				} else {
 					caisseARecuperer.add(new Caisse(Caisse.getCaisse(temp
-							.charAt(i))));
+							.charAt(i)))); // ajout dans l'arrayList caisseARecuperer
 				}
 			}
 
 			tableau = new char[ligne][colonne];
-			posInacessible = new Position[ligne * colonne];
+			posInacessible = new Position[ligne * colonne]; 
 			caissePlateau = new Caisse[ligne * colonne];
-			do {
-				temp = fich.readLine();
+			do { // on parcours le fichier tant qu'on ne trouve pas une ligne vide
+				temp = fich.readLine(); 
 				if (temp != null && temp.length() != 0) {
-					for (int i = 0; i < temp.length(); i++) {
-						tableau[numLigne][i] = temp.charAt(i);
+					for (int i = 0; i < temp.length(); i++) { // on parcours la ligne i
+						tableau[numLigne][i] = temp.charAt(i); // on ajoute le caractere dans tableau
 					}
 					numLigne++;
 				}
 			} while (temp != null);
-
-			for (int y = 0; y < tableau.length; y++) {
-				System.out.println();
+			
+			for (int y = 0; y < tableau.length; y++) { // On parcours le tableau de caractere
 				for (int x = 0; x < tableau[y].length; x++) {
-					switch (tableau[y][x]) {
-					case 'Z':
+					switch (tableau[y][x]) { // on regarde quelle caractere est a la position yx
+					case 'Z': // char Z correspond au robot orienté vers le haut
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_HAUT,
 									new Position(x, y));
@@ -168,7 +167,7 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'Q':
+					case 'Q': // char Q correspond au robot orienté vers la gauche
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_GAUCHE,
 									new Position(x, y));
@@ -177,7 +176,7 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'W':
+					case 'W': // char W correspond au robot orienté vers le bas
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_BAS,
 									new Position(x, y));
@@ -186,7 +185,7 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'S':
+					case 'S': // char S correspond au robot orienté vers la droite
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_DROITE,
 									new Position(x, y));
@@ -195,7 +194,7 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'V':
+					case 'V': // char V correspond au vortex
 						if (vortex == null) {
 							vortex = new Vortex(new Position(x, y));
 							break;
@@ -203,50 +202,49 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'B':
+					case 'B': // char B correspond a une caisse de couleur bleu
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('B'), new Position(x, y));
 						break;
-					case 'G':
+					case 'G':// char G correspond a une caisse de couleur verte
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('G'), new Position(x, y));
 						break;
-					case 'R':
+					case 'R':// char R correspond a une caisse de couleur rouge
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('R'), new Position(x, y));
 						break;
-					case 'Y':
+					case 'Y':// char Y correspond a une caisse de couleur jaune
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('Y'), new Position(x, y));
 						break;
-					case 'O':
+					case 'O':// char O correspond a une caisse de couleur orange
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('O'), new Position(x, y));
 						break;
-					case 'P':
+					case 'P':// char P correspond a une caisse de couleur violet
 						caissePlateau[x + y * tableau[y].length] = new Caisse(
 								Caisse.getCaisse('P'), new Position(x, y));
 						break;
-					case 'X':
-						System.out.println("x=" + x + "y = " + y);
+					case 'X':// char B correspond a une case inacessible
 						posInacessible[x + y * tableau[y].length] = new Position(
 								x, y);
 
 						break;
-					case ' ':
+					case ' ': // char espace correspond a une case vide
 						break;
 					}
 				}
 			}
 
-			for (int i = 0; i < caissePlateau.length; i++) {
+			for (int i = 0; i < caissePlateau.length; i++) { // On compte le nombre de caisse sur le Plateau
 				if (caissePlateau[i] != null) {
 					indice++;
 				}
 			}
 
-			resultatCaisse = new Caisse[indice];
-			for (int y = 0; y < caissePlateau.length; y++) {
+			resultatCaisse = new Caisse[indice]; // on initialise le tableau avec le bon nombre de caisse
+			for (int y = 0; y < caissePlateau.length; y++) { // on ajoute les caisse dans le tableau resultatCaisse
 				if (caissePlateau[y] != null) {
 					resultatCaisse[parcours] = caissePlateau[y];
 					parcours++;
@@ -256,19 +254,19 @@ public class OperationsFichier {
 
 			parcours = 0;
 			indice = 0;
-			for (int i = 0; i < posInacessible.length; i++) {
+			for (int i = 0; i < posInacessible.length; i++) { // on fait pareil pour les positions inacessibles
 				if (posInacessible[i] != null) {
 					indice++;
 				}
 			}
-			resultatPos = new Position[indice];
+			resultatPos = new Position[indice];  // on fait pareil pour les positions inacessibles
 			for (int y = 0; y < posInacessible.length; y++) {
 				if (posInacessible[y] != null) {
 					resultatPos[parcours] = posInacessible[y];
 					parcours++;
 				}
 			}
-
+			// on crée la partie
 			partie = new Partie(ligne, colonne, resultatPos, robot, vortex,
 					caisseARecuperer, resultatCaisse);
 		} catch (IOException e) {

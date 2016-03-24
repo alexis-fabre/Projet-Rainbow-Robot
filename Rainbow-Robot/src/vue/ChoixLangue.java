@@ -64,7 +64,7 @@ public class ChoixLangue {
 	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
 	 * <li>La 2ème colonne correspond au titre de la page.</li>
 	 * <li>La 3ème colonne correspond au contenu du bouton Jouer.</li>
-	 * <li>La 4ème colonne correspond au contenu du bouton Reccords.</li>
+	 * <li>La 4ème colonne correspond au contenu du bouton Records.</li>
 	 * <li>La 5ème colonne correspond au contenu du bouton Langue.</li>
 	 * <li>La 6ème colonne correspond au contenu du bouton Commandes</li>
 	 * <li>La 7ème colonne correspond au contenu du bouton A Propos.</li>
@@ -169,11 +169,11 @@ public class ChoixLangue {
 					"Back" } };
 
 	/**
-	 * Contient les traductions pour la fenêtre Reccords
+	 * Contient les traductions pour la fenêtre records
 	 */
-	private static final String[][] MODE_RECCORD = {
-			{ "Reccords", "Joueur", "Temps", "Niveau", "Retour" },
-			{ "High Score", "Player", "Time", "Level", "Back" } };
+	private static final String[][] MODE_RECORD = {
+			{ "Records", "Joueur", "Temps", "Niveau", "Retour"},
+			{ "High Score", "Player", "Time", "Level", "Back"} };
 
 	/**
 	 * <p>
@@ -193,7 +193,7 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] QUITTER = {
-			{ "Quitter l'application", "Voulez-vous quitter l'application" },
+			{ "Quitter l'application", "Voulez-vous quitter l'application ?" },
 			{ "Exit application", "Do you want to exit the application ?" } };
 
 	/**
@@ -238,12 +238,12 @@ public class ChoixLangue {
 			{
 					"Mode story",
 					"MODE STORY",
-					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
+					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
 					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>" }, //
 			{
 					"Story mode",
 					"STORY MODE",
-					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in reccords.<br /> Let's play!!!</html>",
+					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
 					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>" } };
 
 	/**
@@ -278,14 +278,14 @@ public class ChoixLangue {
 			{
 					"Mode arcade",
 					"MODE ARCADE",
-					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
+					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
 					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile" }, //
 			{
 					"Arcade mode",
 					"ARCADE MODE",
-					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in reccords.<br /> Let's play!!!</html>",
+					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
 					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
 					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
 					"Hard" } };
@@ -325,14 +325,14 @@ public class ChoixLangue {
 			{
 					"Mode custom",
 					"MODE CUSTOM",
-					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les reccords.<br /> A vous de jouer !!!</html>",
+					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
 					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile", "Choisir un fichier", "Parcourir" }, //
 			{
 					"Custom mode",
 					"CUSTOM MODE",
-					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in reccords.<br /> Let's play!!!</html>",
+					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
 					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
 					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
 					"Hard", "Choose a file", "Browse" } };
@@ -451,14 +451,22 @@ public class ChoixLangue {
 	 * <li>La 4ème colonne correspond à la traduction du bouton
 	 * "Passer au niveau suivant".</li>
 	 * <li>La 5ème colonne correspond à la traduction du bouton "Quitter".</li>
+	 * <li>La 6ème colonne correspond à la traduction du titre de la fenetre de fin de partie.</li>
+	 * <li>La 7ème colonne correspond à la traduction de la 1ère partie de la phrase annonçant le classement.</li>
+	 * <li>La 8ème colonne correspond à la traduction de la 2ème partie de la phrase annonçant le classement.</li>
+	 * <li>La 9ème colonne correspond à la traduction de la demande de saisie du pseudo.</li>
 	 * </ul>
 	 * </li>
 	 * </ul>
 	 */
 	private static final String[][] FIN_PARTIE = {
 			{ "Fin de la partie", "Fin de la partie", "Recommencer",
-					"Passer au niveau suivant", "Quitter" }, //
-			{ "Game over", "Game over", "Restart", "Next level", "Exit" } };
+				"Passer au niveau suivant", "Quitter", 
+		                  "Nouveau record !", "Vous avez fait le ", 
+		                  "ième score.\n", "Veuillez entrer votre pseudo : " }, //
+			{ "Game over", "Game over", "Restart", "Next level", "Exit",
+		                       "New record !", "Your rank is ", ".\n",
+		                       "Enter your name : "} };
 
 	/**
 	 * <p>
@@ -637,10 +645,10 @@ public class ChoixLangue {
 	}
 
 	/**
-	 * @return les traductions utilisées pour pour la JFrame Reccords
+	 * @return les traductions utilisées pour pour la JFrame records
 	 */
-	public String[] getReccords() {
-		return MODE_RECCORD[langue];
+	public String[] getRecords() {
+		return MODE_RECORD[langue];
 	}
 
 	/**

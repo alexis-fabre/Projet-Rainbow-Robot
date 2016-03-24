@@ -90,7 +90,6 @@ public class JeuRainbow implements Serializable {
 
 	public static JeuRainbow getStory() {
 		JeuRainbow story = new JeuRainbow();
-		System.out.println(FICHIER_STORY.length);
 		for (int i = 0; i < FICHIER_STORY.length; i++) {
 			story.addPartie(OperationsFichier.recupFichier(new File(
 					FICHIER_STORY[i])));
@@ -437,27 +436,30 @@ public class JeuRainbow implements Serializable {
 	}
 
 	public static Partie carteAleatoire() {
-		Random rand = new Random();
-		int colonne = (rand.nextInt(17)) + 2;
-		int ligne = (rand.nextInt(10)) + 2;
-		int nbCaisses = ((ligne * colonne) / (rand.nextInt(5) + 1));
-		Caisse[] caissePlateau = new Caisse[nbCaisses];
+		Random rand = new Random(); 
+		int colonne = (rand.nextInt(17)) + 2; // nombre de colonne pour la partie
+		int ligne = (rand.nextInt(10)) + 2; // nombre de colonne pour la partie
+		int nbCaisses = ((ligne * colonne) / (rand.nextInt(5) + 1)); // nombre de caisse sur un plateau
+		Caisse[] caissePlateau = new Caisse[nbCaisses]; 
 		Position random = new Position(rand.nextInt(colonne),
-				rand.nextInt(ligne));
+				rand.nextInt(ligne)); // création des positions aéatoire pour les caisses
 		Robot robot = new Robot(rand.nextInt(4), new Position(
-				rand.nextInt(colonne), rand.nextInt(ligne)));
+				rand.nextInt(colonne), rand.nextInt(ligne))); //creation du robot
 		Vortex vortex = new Vortex(new Position(rand.nextInt(colonne),
-				rand.nextInt(ligne)));
+				rand.nextInt(ligne))); // creation du vortex
 		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
 
-		int indice = rand.nextInt(6) + 1;
+		int indice = rand.nextInt(5) + 1;
 		for (int i = 0; i <= indice; i++) {
-			caisseARecuperer.add(new Caisse(rand.nextInt(6) + 1));
-		}
+			// initialisation de la liste des caisses a recuperer
+			caisseARecuperer.add(new Caisse(rand.nextInt(6) + 1)); 
+		} 
 
 		for (int i = 0; i < nbCaisses; i++) {
 			random = new Position(rand.nextInt(colonne), rand.nextInt(ligne));
-			if (!random.equals(vortex)) {
+			 // on regarde si la pos de la caisse est sur le vortex
+			if (!random.equals(vortex)) { // si c'est on refait la fonction
+				// sinon on ajoute la caisse dans le tableau
 				caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), random);
 			} else {
 				return carteAleatoire();
@@ -466,9 +468,9 @@ public class JeuRainbow implements Serializable {
 
 		try {
 			return new Partie(ligne, colonne, null, robot, vortex,
-					caisseARecuperer, caissePlateau);
+					caisseARecuperer, caissePlateau); // on créé la partie
 		} catch (IllegalArgumentException e) {
-			return carteAleatoire();
+			return carteAleatoire(); // sinon on refait la fonction
 		}
 	}
 
