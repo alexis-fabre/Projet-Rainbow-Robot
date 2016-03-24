@@ -334,7 +334,18 @@ public class F_commandes extends JDialog implements ChangementLangue {
         case KeyEvent.VK_CAPS_LOCK: // Verrouillage majuscule
             valeur = "CAPS";
             break;
-
+        case KeyEvent.VK_CLEAR: // touche 5 sans verr. num
+            valeur = "5";
+            break;
+        case KeyEvent.VK_SCROLL_LOCK: // arret defil
+            valeur = "ArretD";
+            break;
+        case KeyEvent.VK_PAUSE: // Pause
+            valeur = "Pause";
+            break;
+        case KeyEvent.VK_CONTEXT_MENU: // menu contextuel
+            valeur = "MenuCxt";
+            break;
         case KeyEvent.VK_SHIFT:
             valeur = "Maj";
             break;

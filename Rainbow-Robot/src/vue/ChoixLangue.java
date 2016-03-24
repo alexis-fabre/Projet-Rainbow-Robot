@@ -193,7 +193,7 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] QUITTER = {
-			{ "Quitter l'application", "Voulez-vous quitter l'application" },
+			{ "Quitter l'application", "Voulez-vous quitter l'application ?" },
 			{ "Exit application", "Do you want to exit the application ?" } };
 
 	/**
