@@ -316,8 +316,9 @@ public class Partie extends Observable implements Dessinable, Serializable {
 						continue BoucleVerification;
 					}
 				}
-				if (caisseARecuperer.get(i).getCouleur() == caissePlateau[j]
-						.getCouleur()) {
+				if (caissePlateau[j] != null
+						&& caisseARecuperer.get(i).getCouleur() == caissePlateau[j]
+								.getCouleur()) {
 					indiceDejaUtilise[compteur] = j;
 					compteur++;
 					continue BouclePrincipale;

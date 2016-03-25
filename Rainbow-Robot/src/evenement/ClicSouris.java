@@ -99,6 +99,13 @@ public class ClicSouris implements MouseListener, Observer {
 		if (threadIA != null && threadIA.isAlive()) {
 			threadIA.interrupt();
 		}
+	}
+
+	/**
+	 * Détruit le Thread de l'IA
+	 */
+	private void destroyIA() {
+		stopIA();
 		threadIA = null;
 	}
 
@@ -109,8 +116,10 @@ public class ClicSouris implements MouseListener, Observer {
 	 *            partie que l'IA doit contrôler
 	 */
 	public void restartIA(Partie aControllee) {
-		stopIA();
-		startIA(aControllee);
+		if (threadIA != null) {
+			stopIA();
+			startIA(aControllee);
+		}
 	}
 
 	/**
@@ -125,6 +134,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 */
 	public void setObserver() {
 		this.metier.getPartieCouranteJoueur().addObserver(this);
+		this.metier.getPartieCouranteIA().addObserver(this);
 	}
 
 	/**
@@ -327,8 +337,9 @@ public class ClicSouris implements MouseListener, Observer {
 				if (vue instanceof F_jeuRainbow) {
 					F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 					restartIA(metier.getPartieCouranteIA());
-					fenetreJeu.startChrono();
-					fenetreJeu.requestFocus();
+					if (ToucheClavier.isPartieCommence()) {
+						fenetreJeu.startChrono();
+					}
 				}
 			}
 			// bouton annuler
@@ -549,13 +560,14 @@ public class ClicSouris implements MouseListener, Observer {
 						JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
 						traductionBouton[0]);
+
 				switch (retour) {
 				case 0: // Continuer
-					restartIA(metier.getPartieCouranteIA());
-					fenetreJeu.startChrono();
-					fenetreJeu.requestFocus();
+					if (ToucheClavier.isPartieCommence()) {
+						fenetreJeu.startChrono();
+						restartIA(metier.getPartieCouranteIA());
+					}
 					break;
-
 				case 1: // Commandes
 					F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
 					fenetreCmd.setVisible(true);
@@ -568,7 +580,6 @@ public class ClicSouris implements MouseListener, Observer {
 					setObserver();
 					fenetreJeu.restartChrono();
 					ToucheClavier.restartPartie();
-					fenetreJeu.requestFocus();
 					break;
 				case 3: // Quitter
 					// On revient à l'accueil
@@ -581,7 +592,7 @@ public class ClicSouris implements MouseListener, Observer {
 							JOptionPane.YES_NO_CANCEL_OPTION,
 							JOptionPane.QUESTION_MESSAGE);
 					if (option == JOptionPane.YES_OPTION) {
-						stopIA();
+						destroyIA();
 						metier.reinitialiserPartie();
 						F_accueil fenetreAccueil = new F_accueil(this);
 						vue.setVisible(false);
@@ -589,9 +600,11 @@ public class ClicSouris implements MouseListener, Observer {
 						vue.setVisible(true);
 					} else {
 						fenetreJeu.startChrono();
-						fenetreJeu.requestFocus();
 					}
 					break;
+				case JOptionPane.CLOSED_OPTION:
+					fenetreJeu.requestFocus();
+					restartIA(metier.getPartieCouranteIA());
 				}
 			}
 		}
@@ -736,9 +749,7 @@ public class ClicSouris implements MouseListener, Observer {
 				switch (retourArcade) {
 				case 0: // Recommencer
 					fenetre.setPartieCourante(metier);
-					if (threadIA != null) {
-						restartIA(metier.getPartieCouranteIA());
-					}
+					restartIA(metier.getPartieCouranteIA());
 					setObserver();
 					break;
 				case 1: // Partie suivante
@@ -756,7 +767,7 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 2: // Quitter
 					// On revient à l'accueil
-					stopIA();
+					destroyIA();
 					F_accueil fenetreAccueil = new F_accueil(this);
 					vue.setVisible(false);
 					setFenetre(fenetreAccueil);
@@ -795,7 +806,7 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 1: // Partie suivante
 					// On recharge la fenêtre pour choisir un niveau
-					stopIA();
+					destroyIA();
 					F_custom nouvelleFenetre = new F_custom(this);
 					vue.setVisible(false);
 					nouvelleFenetre.setVisible(true);
@@ -803,7 +814,7 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 2: // Quitter
 					// On revient à l'accueil
-					stopIA();
+					destroyIA();
 					F_accueil fenetreAccueil = new F_accueil(this);
 					vue.setVisible(false);
 					setFenetre(fenetreAccueil);

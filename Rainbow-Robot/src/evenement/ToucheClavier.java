@@ -274,6 +274,7 @@ public class ToucheClavier implements KeyListener {
                         metier.getPartieCouranteJoueur().getRobot().avancer();
                         break;
                     case Robot.ORIENTATION_BAS:
+                    	startPartie();
                         metier.getPartieCouranteJoueur().getRobot()
                                 .pivoter(Robot.PIVOTER_GAUCHE);
                         break;

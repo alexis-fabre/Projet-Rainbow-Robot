@@ -59,13 +59,13 @@ public class IntelligenceArtificielle extends Thread {
 	 * Indicateur qui permet de signaler à l'IA que le robot a fait un 3/4 de
 	 * tour sur la gauche.
 	 */
-	public static final float TEMPS_TROIS_QUART_GAUCHE = 1000.0f;
+	public static final float TEMPS_TROIS_QUART_DROITE = 1000.0f;
 
 	/**
 	 * Indicateur qui permet de signaler à l'IA que le robot a fait un 3/4 de
 	 * tour sur la droite.
 	 */
-	public static final float TEMPS_TROIS_QUART_DROITE = 2000.0f;
+	public static final float TEMPS_TROIS_QUART_GAUCHE = 2000.0f;
 
 	/**
 	 * Indicateur qui permet de signaler à l'IA que le robot a fait un demi tour
@@ -497,8 +497,9 @@ public class IntelligenceArtificielle extends Thread {
 			for (int j = 0; j < tableauCaissePlateau.length; j++) {
 				// On ajoute la caisse si elle a la même couleur que celle à
 				// récupérer
-				if (tableauCaissePlateau[j].getCouleur() == aRecuperer
-						.getCouleur()) {
+				if (tableauCaissePlateau[j] != null
+						&& tableauCaissePlateau[j].getCouleur() == aRecuperer
+								.getCouleur()) {
 					liste[i].add(tableauCaissePlateau[j]);
 					// Pour l'optimisation
 					continue;
@@ -751,7 +752,7 @@ public class IntelligenceArtificielle extends Thread {
 					return false;
 				}
 				threadDeplacement.addDeplacement(deplacementDebloquage);
-				return chercherChemin(listeCaisses);
+				return true && chercherChemin(listeCaisses);
 			}
 		} else {
 			// Sachant que l'algorithme est rapide sur les petites cartes on
@@ -1713,7 +1714,7 @@ public class IntelligenceArtificielle extends Thread {
 									tempsCaisse[indice] = tempsCaisse[indiceCentral]
 											+ TEMPS_AVANCER_CAISSE
 											+ (3 * TEMPS_PIVOTER_CAISSE)
-											+ TEMPS_TROIS_QUART_DROITE;
+											+ TEMPS_TROIS_QUART_GAUCHE;
 									orientationsCaisse[indice] = Robot
 											.pivoterDroite(orientationsCaisse[indiceCentral]);
 									continue;
@@ -1836,7 +1837,7 @@ public class IntelligenceArtificielle extends Thread {
 										tempsCaisse[indice] = tempsCaisse[indiceCentral]
 												+ TEMPS_AVANCER_CAISSE
 												+ (3 * TEMPS_PIVOTER_CAISSE)
-												+ TEMPS_TROIS_QUART_GAUCHE;
+												+ TEMPS_TROIS_QUART_DROITE;
 										orientationsCaisse[indice] = Robot
 												.pivoterGauche(orientationsCaisse[indiceCentral]);
 										continue;
@@ -2290,7 +2291,7 @@ public class IntelligenceArtificielle extends Thread {
 								break;
 							} else if (temps[indiceCourant] == temps[indiceAdj]
 									+ 3 * TEMPS_PIVOTER + TEMPS_AVANCER
-									+ TEMPS_TROIS_QUART_DROITE) {
+									+ TEMPS_TROIS_QUART_GAUCHE) {
 
 								deplacement.add(ACTION_AVANCER);
 								deplacement.add(ACTION_PIVOTER_GAUCHE);
@@ -2315,7 +2316,7 @@ public class IntelligenceArtificielle extends Thread {
 								break;
 							} else if (temps[indiceCourant] == temps[indiceAdj]
 									+ 3 * TEMPS_PIVOTER + TEMPS_AVANCER
-									+ TEMPS_TROIS_QUART_GAUCHE) {
+									+ TEMPS_TROIS_QUART_DROITE) {
 
 								deplacement.add(ACTION_AVANCER);
 								deplacement.add(ACTION_PIVOTER_DROITE);
@@ -2345,6 +2346,7 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	private void deplacerIA(List<Integer> deplacement) {
 		Robot robot = partieReelle.getRobot();
+		boolean isCharge = false;
 		if (deplacement == null) {
 			System.out.println("IA ; Déplacer IA : Pas de déplacement défini");
 		} else {
@@ -2352,6 +2354,7 @@ public class IntelligenceArtificielle extends Thread {
 				try {
 					while (!deplacement.isEmpty()) {
 						if (!robot.estOccupe()) {
+							isCharge = false;
 							// On fait une seconde pause au cas ou la partie
 							// graphique n'est pas totalement fini de se
 							// redessiner
@@ -2369,6 +2372,7 @@ public class IntelligenceArtificielle extends Thread {
 								robot.reculer();
 								deplacement.remove(0);
 							} else if (deplacement.get(0) == ACTION_CHARGER) {
+								isCharge = true;
 								robot.charger();
 								deplacement.remove(0);
 							}
@@ -2377,6 +2381,12 @@ public class IntelligenceArtificielle extends Thread {
 						Thread.sleep(PAUSE);
 					}
 				} catch (InterruptedException e) {
+					if (robot.getCaisse() != null) {
+						robot.charger();
+					}
+					while (robot.estOccupe())
+						// Attente passive
+						;
 					this.interrupt();
 				}
 			}
@@ -2417,9 +2427,6 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	public synchronized void finIA() {
 		this.notify();
-		if (partieReelle.getCaisseARecuperee().isEmpty()) {
-			partieReelle.partieFinie();
-		}
 	}
 
 	/*
