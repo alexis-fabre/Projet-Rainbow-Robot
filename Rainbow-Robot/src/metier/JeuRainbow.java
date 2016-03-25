@@ -62,6 +62,7 @@ public class JeuRainbow implements Serializable {
 	public static final String[] FICHIER_STORY = {
 			"./Ressource/fichierStory/Level1.txt",
 			"./Ressource/fichierStory/Level2.txt",
+			"./Ressource/fichierStory/Level3.txt",
 			"./Ressource/fichierStory/Level4.txt",
 			"./Ressource/fichierStory/Level5.txt",
 			"./Ressource/fichierStory/Level6.txt",

@@ -1,12 +1,10 @@
-9
-11
-BRVBRV
-XXGY   YRXX
-XXYY   YYXX
-RY         
-YY         
-    SV     
-YY       YY
-BY       YG
-XX     YYXX
-XX     YBXX
+7
+10
+R
+ G  GXXXXX
+ R  GXXXXX
+  G G  XXX
+  G G  XXX
+  G GGG   
+       SV 
+  GGGGG   
