@@ -75,8 +75,8 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] ACCUEIL = {
-			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue", 
-			    "Commandes", "A Propos", "Quitter" },
+			{ "Accueil", "Rainbow Robot", "Jouer", "Records", "Langue",
+					"Commandes", "A Propos", "Quitter" },
 			{ "Home", "Rainbow Robot", "Play", "High Scores", "Language",
 					"Controls", "About", "Exit" } };
 
@@ -172,8 +172,8 @@ public class ChoixLangue {
 	 * Contient les traductions pour la fenêtre records
 	 */
 	private static final String[][] MODE_RECORD = {
-			{ "Records", "Joueur", "Temps", "Niveau", "Retour"},
-			{ "High Score", "Player", "Time", "Level", "Back"} };
+			{ "Records", "Joueur", "Temps", "Niveau", "Retour" },
+			{ "High Score", "Player", "Time", "Level", "Back" } };
 
 	/**
 	 * <p>
@@ -338,104 +338,127 @@ public class ChoixLangue {
 					"Hard", "Choose a file", "Browse" } };
 
 	/**
-         * <p>
-         * Comprend les traductions pour la JFrame F_commandes<br />
-         * </p>
-         * <ul>
-         * <li>La 1ère ligne correspond au tradution française.</li>
-         * <li>La 2nde ligne correspond à la traduction anglaise.</li>
-         * <li>
-         * <ul>
-         * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
-         * <li>La 2ème colonne correspond au type de commande.</li>
-         * <li>La 3ème colonne correspond au bouton radio "absolu".</li>
-         * <li>La 4ème colonne correspond au bouton radio "relatif"</li>
-         * <li>La 5ème colonne correspond à la description du mode.</li>
-         * <li>La 6ème colonne correspond au titre pour avancer.</li>
-         * <li>La 7ème colonne correspond au titre pour reculer.</li>
-         * <li>La 8ème colonne correspond au titre pour tourner à droite.</li>
-         * <li>La 9ème colonne correspond au titre pour tourner à gauche.</li>
-         * <li>La 10ème colonne correspond au titre pour attraper/lâcher 
-         * une caisse </li>
-         * <li>La 11ème colonne correspond au titre pour fusionner.</li>
-         * <li>La 12ème colonne correspond au titre pour restaurer les paramètres
-         * par défaut.</li>
-         * <li>La 13ème colonne correspond au bouton pour annuler l'opération.</li>
-         * <li>La 14ème colonne correspond au bouton pour sauvegarder l'opération.</li>
-         * <li>La 15ème colonne correspond message de demande d'appui sur une touche.</li>
-         * <li>La 16ème colonne correspond titre de la fenêtre qui s'affiche lorsque 
-         * l'utilisateur entre une touche qui est déjà assignée à une commande.</li>
-         * <li>La 17ème colonne correspond contenu de la fenêtre qui s'affiche lorsque 
-         * l'utilisateur entre une touche qui est déjà assignée à une commande.</li>
-         * </ul>
-         * </li>
-         * </ul>
-         */
-        private static final String[][] COMMANDES_ABSOLU = {
-                        {
-                                        "Configuration commandes",
-                                        "Type : ", "Absolu", "Relatif",
-                                        "Mode absolu : les déplacements sont "
-                                        + "intuitifs (pas de touche pour la rotation)",                                        
-                                        "Aller en haut : ",
-                                        "Aller en bas : ",
-                                        "Aller vers la droite : ",
-                                        "Aller vers la gauche : ",
-                                        "Attraper/lâcher une caisse : ",
-                                        "Fusionner : ", "Reset", "Annuler",
-                                        "Sauvegarder", "Appuyez sur une touche",
-                                        " Avertissement ",
-                                        "Touche non modifiée car utilisée pour "
-                                        + "une autre action",
-                                        }, //
-                        {
-                                        "Control Settings",
-                                        "Mode", "Absolute", "Relative",
-                                        "Absolute mode : movements are intuitive "
-                                        + "(not key to spin)",
-                                        "Go up : ",
-                                        "Go down : ",
-                                        "Go right : ",
-                                        "Go left : ",
-                                        "Catch/drop a box : ", "Merge : ", 
-                                        "Reset", "Cancel", "Save", "Press a key",
-                                        "Warning", "Key unchanged because already "
-                                                + "assigned for another action"
-                                        } };
-        /**
-         * Même signification que COMMANDES_ABSOLU mais pour le mode relatif
-         * Seules les actions de mouvement changent
-         */
-        private static final String[][] COMMANDES_RELATIF = {
-            {
-                            "Configuration commandes",
-                            "Type : ", "Absolu", "Relatif",
-                            "Mode relatif : les déplacements sont "
-                            + "faits par rapport au robot (on gère la "
-                            + "rotation du robot)",      
-                            "Avancer : ",
-                            "Reculer : ",
-                            "Pivoter vers la droite : ",
-                            "Pivoter vers la gauche : ",
-                            "Attraper/lâcher une caisse : ",
-                            "Fusionner : ", "Reset", "Annuler",
-                            "Sauvegarder", "Appuyez sur une touche",
-                            " Avertissement ",
-                            "Touche non modifiée car utilisée pour "
-                            + "une autre action",}, //
-            {
-                            "Control Settings",
-                            "Mode", "Absolute", "Relative",
-                            "Relative Mode: movements are made relative to the "
-                            + "robot (you manage the rotation of it)",
-                            "Move forward : ",
-                            "Move backwards : ",
-                            "Spin right : ",
-                            "Spin left : ",
-                            "Catch/drop a box : ", "Merge : ", 
-                            "Reset", "Cancel", "Save", "Press a key",
-                            "Warning", "Key unchanged because already "
-                                    + "assigned for another action"} };
+	 * <p>
+	 * Comprend les traductions pour la JFrame F_commandes<br />
+	 * </p>
+	 * <ul>
+	 * <li>La 1ère ligne correspond au tradution française.</li>
+	 * <li>La 2nde ligne correspond à la traduction anglaise.</li>
+	 * <li>
+	 * <ul>
+	 * <li>La 1ère colonne correspond au nom de la fenêtre.</li>
+	 * <li>La 2ème colonne correspond au type de commande.</li>
+	 * <li>La 3ème colonne correspond au bouton radio "absolu".</li>
+	 * <li>La 4ème colonne correspond au bouton radio "relatif"</li>
+	 * <li>La 5ème colonne correspond à la description du mode.</li>
+	 * <li>La 6ème colonne correspond au titre pour avancer.</li>
+	 * <li>La 7ème colonne correspond au titre pour reculer.</li>
+	 * <li>La 8ème colonne correspond au titre pour tourner à droite.</li>
+	 * <li>La 9ème colonne correspond au titre pour tourner à gauche.</li>
+	 * <li>La 10ème colonne correspond au titre pour attraper/lâcher une caisse</li>
+	 * <li>La 11ème colonne correspond au titre pour fusionner.</li>
+	 * <li>La 12ème colonne correspond au titre pour restaurer les paramètres
+	 * par défaut.</li>
+	 * <li>La 13ème colonne correspond au bouton pour annuler l'opération.</li>
+	 * <li>La 14ème colonne correspond au bouton pour sauvegarder l'opération.</li>
+	 * <li>La 15ème colonne correspond message de demande d'appui sur une
+	 * touche.</li>
+	 * <li>La 16ème colonne correspond titre de la fenêtre qui s'affiche lorsque
+	 * l'utilisateur entre une touche qui est déjà assignée à une commande.</li>
+	 * <li>La 17ème colonne correspond contenu de la fenêtre qui s'affiche
+	 * lorsque l'utilisateur entre une touche qui est déjà assignée à une
+	 * commande.</li>
+	 * </ul>
+	 * </li>
+	 * </ul>
+	 */
+	private static final String[][] COMMANDES_ABSOLU = {
+			{
+					"Configuration commandes",
+					"Type : ",
+					"Absolu",
+					"Relatif",
+					"Mode absolu : les déplacements sont "
+							+ "intuitifs (pas de touche pour la rotation)",
+					"Aller en haut : ",
+					"Aller en bas : ",
+					"Aller vers la droite : ",
+					"Aller vers la gauche : ",
+					"Attraper/lâcher une caisse : ",
+					"Fusionner : ",
+					"Reset",
+					"Annuler",
+					"Sauvegarder",
+					"Appuyez sur une touche",
+					" Avertissement ",
+					"Touche non modifiée car utilisée pour "
+							+ "une autre action", }, //
+			{
+					"Control Settings",
+					"Mode",
+					"Absolute",
+					"Relative",
+					"Absolute mode : movements are intuitive "
+							+ "(not key to spin)",
+					"Go up : ",
+					"Go down : ",
+					"Go right : ",
+					"Go left : ",
+					"Catch/drop a box : ",
+					"Merge : ",
+					"Reset",
+					"Cancel",
+					"Save",
+					"Press a key",
+					"Warning",
+					"Key unchanged because already "
+							+ "assigned for another action" } };
+	/**
+	 * Même signification que COMMANDES_ABSOLU mais pour le mode relatif Seules
+	 * les actions de mouvement changent
+	 */
+	private static final String[][] COMMANDES_RELATIF = {
+			{
+					"Configuration commandes",
+					"Type : ",
+					"Absolu",
+					"Relatif",
+					"Mode relatif : les déplacements sont "
+							+ "faits par rapport au robot (on gère la "
+							+ "rotation du robot)",
+					"Avancer : ",
+					"Reculer : ",
+					"Pivoter vers la droite : ",
+					"Pivoter vers la gauche : ",
+					"Attraper/lâcher une caisse : ",
+					"Fusionner : ",
+					"Reset",
+					"Annuler",
+					"Sauvegarder",
+					"Appuyez sur une touche",
+					" Avertissement ",
+					"Touche non modifiée car utilisée pour "
+							+ "une autre action", }, //
+			{
+					"Control Settings",
+					"Mode",
+					"Absolute",
+					"Relative",
+					"Relative Mode: movements are made relative to the "
+							+ "robot (you manage the rotation of it)",
+					"Move forward : ",
+					"Move backwards : ",
+					"Spin right : ",
+					"Spin left : ",
+					"Catch/drop a box : ",
+					"Merge : ",
+					"Reset",
+					"Cancel",
+					"Save",
+					"Press a key",
+					"Warning",
+					"Key unchanged because already "
+							+ "assigned for another action" } };
 	/**
 	 * <p>
 	 * Comprend les traductions pour la fin d'une partie de Rainbow Robot.<br />
@@ -451,22 +474,27 @@ public class ChoixLangue {
 	 * <li>La 4ème colonne correspond à la traduction du bouton
 	 * "Passer au niveau suivant".</li>
 	 * <li>La 5ème colonne correspond à la traduction du bouton "Quitter".</li>
-	 * <li>La 6ème colonne correspond à la traduction du titre de la fenetre de fin de partie.</li>
-	 * <li>La 7ème colonne correspond à la traduction de la 1ère partie de la phrase annonçant le classement.</li>
-	 * <li>La 8ème colonne correspond à la traduction de la 2ème partie de la phrase annonçant le classement.</li>
-	 * <li>La 9ème colonne correspond à la traduction de la demande de saisie du pseudo.</li>
+	 * <li>La 6ème colonne correspond à la traduction du titre de la fenetre de
+	 * fin de partie.</li>
+	 * <li>La 7ème colonne correspond à la traduction de la 1ère partie de la
+	 * phrase annonçant le classement.</li>
+	 * <li>La 8ème colonne correspond à la traduction de la 2ème partie de la
+	 * phrase annonçant le classement.</li>
+	 * <li>La 9ème colonne correspond à la traduction de la demande de saisie du
+	 * pseudo.</li>
 	 * </ul>
 	 * </li>
 	 * </ul>
 	 */
 	private static final String[][] FIN_PARTIE = {
 			{ "Fin de la partie", "Fin de la partie", "Recommencer",
-				"Passer au niveau suivant", "Quitter", 
-		                  "Nouveau record !", "Vous avez fait le ", 
-		                  "ième score.\n", "Veuillez entrer votre pseudo : " }, //
+					"Passer au niveau suivant", "Quitter", "Nouveau record !",
+					"Vous avez fait le ", "ième score.\n",
+					"Veuillez entrer votre pseudo : ",
+					"L'IA a finit avant vous !" }, //
 			{ "Game over", "Game over", "Restart", "Next level", "Exit",
-		                       "New record !", "Your rank is ", ".\n",
-		                       "Enter your name : "} };
+					"New record !", "Your rank is ", ".\n",
+					"Enter your name : ", "the AI has finished before you !" } };
 
 	/**
 	 * <p>
@@ -488,8 +516,8 @@ public class ChoixLangue {
 	 * </ul>
 	 */
 	private static final String[][] MENU_PAUSE = {
-			{ "Pause", "Pause", "Continuer", "Commandes",
-			         "Recommencer", "Quitter" }, //
+			{ "Pause", "Pause", "Continuer", "Commandes", "Recommencer",
+					"Quitter" }, //
 			{ "Pause", "Pause", "Continue", "Controls", "Restart", "Exit" } };
 
 	/**
@@ -513,7 +541,7 @@ public class ChoixLangue {
 			{ "Voulez-vous vraiment quitter la partie en cours ?",
 					"Quitter la partie" },
 			{ "Do you want to exit the game ?", "Exit game" } };
-	
+
 	/**
 	 * Traductions pour la fenêtre de choix d'un niveau
 	 */
@@ -631,12 +659,13 @@ public class ChoixLangue {
 	}
 
 	/**
-         * @return les traductions utilisées pour pour la JDialog F_commandes
-         */
-        public String[] getCommandes() {
-            return (ToucheClavier.isModeRelatif) ? COMMANDES_RELATIF[langue]
-                    : COMMANDES_ABSOLU[langue];
-        }
+	 * @return les traductions utilisées pour pour la JDialog F_commandes
+	 */
+	public String[] getCommandes() {
+		return (ToucheClavier.isModeRelatif) ? COMMANDES_RELATIF[langue]
+				: COMMANDES_ABSOLU[langue];
+	}
+
 	/**
 	 * @return les traductions utilisées pour pour la JFrame F_story
 	 */

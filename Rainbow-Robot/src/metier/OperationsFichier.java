@@ -100,8 +100,8 @@ public class OperationsFichier {
 
 	/**
 	 * Lit un fichier et le transforme en une partie. Le fichier doit respecter
-	 * certaines rÃ¨gles et des vÃ©rifications seront faites sur la cohÃ©rence et
-	 * la resolvabilitÃ© de la partie.
+	 * certaines rÃ¨gles et des vÃ©rifications seront faites sur la cohÃ©rence
+	 * et la resolvabilitÃ© de la partie.
 	 *
 	 * @param fichier
 	 *            contenu de la partie
@@ -115,49 +115,67 @@ public class OperationsFichier {
 		int numLigne = 0;
 		int ligne; // nombre de ligne pour une carte
 		int colonne; // nombre de colonne pour une carte
-		String temp; // caisse à récupérer 
+		String temp; // caisse à récupérer
 		Robot robot = null;
 		Vortex vortex = null;
 		Caisse[] caissePlateau; // tableau de la map avec les caisses
-		Caisse[] resultatCaisse; // tableau de la map avec les caisses mais sans les null
+		Caisse[] resultatCaisse; // tableau de la map avec les caisses mais sans
+									// les null
 		Position[] posInacessible;// tableau des positions inacessibles
-		Position[] resultatPos;//  tableau des positions inacessibles mais sans les null
+		Position[] resultatPos;// tableau des positions inacessibles mais sans
+								// les null
 		int indice = 0;
 		int parcours = 0;
-		char tableau[][]; // tableau qui enregistre les ligne a partir de la 4ieme ligne
+		char tableau[][]; // tableau qui enregistre les ligne a partir de la
+							// 4ieme ligne
 		ArrayList<Caisse> caisseARecuperer = new ArrayList<Caisse>();
 		try (BufferedReader fich = new BufferedReader(new FileReader(fichier))) {
-			ligne = Integer.valueOf(fich.readLine()); // on recupere le nombre de ligne dans la premiere ligne du fichier
-			colonne = Integer.valueOf(fich.readLine());// on recupere le nombre de colonne dans la premiere ligne du fichier
+			ligne = Integer.valueOf(fich.readLine()); // on recupere le nombre
+														// de ligne dans la
+														// premiere ligne du
+														// fichier
+			colonne = Integer.valueOf(fich.readLine());// on recupere le nombre
+														// de colonne dans la
+														// premiere ligne du
+														// fichier
 
-			temp = fich.readLine(); // On recupere les caisses a recuperer dans la troisieme ligne
+			temp = fich.readLine(); // On recupere les caisses a recuperer dans
+									// la troisieme ligne
 
-			for (int i = 0; i < temp.length(); i++) { // parcours de la ligne temp
+			for (int i = 0; i < temp.length(); i++) { // parcours de la ligne
+														// temp
 				if (Caisse.getCaisse(temp.charAt(i)) == -1) {
 					throw new IllegalArgumentException(
 							"Le fichier n'est pas bon");
 				} else {
 					caisseARecuperer.add(new Caisse(Caisse.getCaisse(temp
-							.charAt(i)))); // ajout dans l'arrayList caisseARecuperer
+							.charAt(i)))); // ajout dans l'arrayList
+											// caisseARecuperer
 				}
 			}
 
 			tableau = new char[ligne][colonne];
-			posInacessible = new Position[ligne * colonne]; 
+			posInacessible = new Position[ligne * colonne];
 			caissePlateau = new Caisse[ligne * colonne];
-			do { // on parcours le fichier tant qu'on ne trouve pas une ligne vide
-				temp = fich.readLine(); 
+			do { // on parcours le fichier tant qu'on ne trouve pas une ligne
+					// vide
+				temp = fich.readLine();
 				if (temp != null && temp.length() != 0) {
-					for (int i = 0; i < temp.length(); i++) { // on parcours la ligne i
-						tableau[numLigne][i] = temp.charAt(i); // on ajoute le caractere dans tableau
+					for (int i = 0; i < temp.length(); i++) { // on parcours la
+																// ligne i
+						tableau[numLigne][i] = temp.charAt(i); // on ajoute le
+																// caractere
+																// dans tableau
 					}
 					numLigne++;
 				}
 			} while (temp != null);
-			
-			for (int y = 0; y < tableau.length; y++) { // On parcours le tableau de caractere
+
+			for (int y = 0; y < tableau.length; y++) { // On parcours le tableau
+														// de caractere
 				for (int x = 0; x < tableau[y].length; x++) {
-					switch (tableau[y][x]) { // on regarde quelle caractere est a la position yx
+					switch (tableau[y][x]) { // on regarde quelle caractere est
+												// a la position yx
 					case 'Z': // char Z correspond au robot orienté vers le haut
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_HAUT,
@@ -167,7 +185,8 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'Q': // char Q correspond au robot orienté vers la gauche
+					case 'Q': // char Q correspond au robot orienté vers la
+								// gauche
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_GAUCHE,
 									new Position(x, y));
@@ -185,7 +204,8 @@ public class OperationsFichier {
 							throw new IllegalArgumentException(
 									"Le fichier n'est pas bon");
 						}
-					case 'S': // char S correspond au robot orienté vers la droite
+					case 'S': // char S correspond au robot orienté vers la
+								// droite
 						if (robot == null) {
 							robot = new Robot(Robot.ORIENTATION_DROITE,
 									new Position(x, y));
@@ -237,14 +257,22 @@ public class OperationsFichier {
 				}
 			}
 
-			for (int i = 0; i < caissePlateau.length; i++) { // On compte le nombre de caisse sur le Plateau
+			for (int i = 0; i < caissePlateau.length; i++) { // On compte le
+																// nombre de
+																// caisse sur le
+																// Plateau
 				if (caissePlateau[i] != null) {
 					indice++;
 				}
 			}
 
-			resultatCaisse = new Caisse[indice]; // on initialise le tableau avec le bon nombre de caisse
-			for (int y = 0; y < caissePlateau.length; y++) { // on ajoute les caisse dans le tableau resultatCaisse
+			resultatCaisse = new Caisse[indice]; // on initialise le tableau
+													// avec le bon nombre de
+													// caisse
+			for (int y = 0; y < caissePlateau.length; y++) { // on ajoute les
+																// caisse dans
+																// le tableau
+																// resultatCaisse
 				if (caissePlateau[y] != null) {
 					resultatCaisse[parcours] = caissePlateau[y];
 					parcours++;
@@ -254,12 +282,16 @@ public class OperationsFichier {
 
 			parcours = 0;
 			indice = 0;
-			for (int i = 0; i < posInacessible.length; i++) { // on fait pareil pour les positions inacessibles
+			for (int i = 0; i < posInacessible.length; i++) { // on fait pareil
+																// pour les
+																// positions
+																// inacessibles
 				if (posInacessible[i] != null) {
 					indice++;
 				}
 			}
-			resultatPos = new Position[indice];  // on fait pareil pour les positions inacessibles
+			resultatPos = new Position[indice]; // on fait pareil pour les
+												// positions inacessibles
 			for (int y = 0; y < posInacessible.length; y++) {
 				if (posInacessible[y] != null) {
 					resultatPos[parcours] = posInacessible[y];
@@ -268,7 +300,7 @@ public class OperationsFichier {
 			}
 			// on crée la partie
 			partie = new Partie(ligne, colonne, resultatPos, robot, vortex,
-					caisseARecuperer, resultatCaisse);
+					caisseARecuperer, resultatCaisse, false);
 		} catch (IOException e) {
 			throw new IllegalArgumentException("Problème d'accès au fichier : "
 					+ fichier);

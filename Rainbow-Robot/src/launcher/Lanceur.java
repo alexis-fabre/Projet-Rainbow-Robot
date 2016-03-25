@@ -53,8 +53,7 @@ public class Lanceur {
 			ex.printStackTrace();
 		}
 		// On initialise la partie métier
-		JeuRainbow.restartFichierPartie();
-		JeuRainbow jeu = JeuRainbow.lectureFichier();
+		JeuRainbow jeu = JeuRainbow.getStory();
 
 		// On construit le contrôleur à partir de la partie métier
 		ClicSouris gestion = new ClicSouris(jeu);
@@ -67,6 +66,6 @@ public class Lanceur {
 
 		// On rend la fenêtre visible
 		fenetreActive.setVisible(true);
-		
+
 	}
 }

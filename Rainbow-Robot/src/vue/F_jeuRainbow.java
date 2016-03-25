@@ -54,6 +54,15 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	/** Mode Custom : Jeu en solo ou contre l'IA sur des cartes personalisées */
 	public static final int MODE_CUSTOM = 3;
 
+	/** Affichage de la fenêtre en écran partagé */
+	public static final int MODE_ECRAN_PARTAGE = 1;
+
+	/** Affichage de l'écran en mode solo pour le joueur */
+	public static final int MODE_ECRAN_SOLO_JOUEUR = 2;
+
+	/** Affichage de l'écran en mode solo pour l'IA */
+	public static final int MODE_ECRAN_SOLO_IA = 3;
+
 	/**
 	 * Panneau du jeu RainbowRobot qui contient l'interface graphique 2D du jeu
 	 * (avec le robot, les caisses et le vortex).
@@ -101,11 +110,11 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 	 * 
 	 * @param mode
 	 *            mode de jeu (story, arcade, custom) que doit gérer la fenêtre
-	 * @param ecranSepare
+	 * @param modeEcran
 	 *            true si on joue en écran séparé, false sinon
 	 */
 	public F_jeuRainbow(ClicSouris gestion, ToucheClavier gestionClavier,
-			int mode, boolean ecranSepare) {
+			int mode, int modeEcran) {
 		super();
 
 		super.setSize(UtilitaireFenetre.DIM_FENETRE);
@@ -175,9 +184,14 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		});
 
 		// On créé le plateau de jeu
+		// Partie du joueur
 		partieDessinableJoueur = new P_partieDessinable(gestionClavier
 				.getJeuRainbow().getPartieCouranteJoueur());
-		if (ecranSepare) {
+		// Partie de l'IA
+		partieDessinableIA = new P_partieDessinable(gestionClavier
+				.getJeuRainbow().getPartieCouranteIA());
+		switch (modeEcran) {
+		case MODE_ECRAN_PARTAGE:
 			contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
 
 			// On réinitialise les dimensions du jeu pour l'écran séparé
@@ -185,17 +199,24 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 
 			contentPane.add(partieDessinableJoueur, BorderLayout.WEST);
 
-			// Partie de l'IA
-			partieDessinableIA = new P_partieDessinable(gestionClavier
-					.getJeuRainbow().getPartieCouranteIA());
 			contentPane.add(partieDessinableIA, BorderLayout.EAST);
-		} else {
+			break;
+		case MODE_ECRAN_SOLO_IA:
+			contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
+
+			// On initialise les dimensions pour le mode solo
+			UtilitaireFenetre.setDimensionJeuSolo();
+
+			contentPane.add(partieDessinableIA, BorderLayout.CENTER);
+			break;
+		case MODE_ECRAN_SOLO_JOUEUR:
 			contentPane.add(contentMenuHaut, BorderLayout.PAGE_START);
 
 			// On initialise les dimensions pour le mode solo
 			UtilitaireFenetre.setDimensionJeuSolo();
 
 			contentPane.add(partieDessinableJoueur, BorderLayout.CENTER);
+			break;
 		}
 
 		// On ajoute les évènements lors de l'appuie d'une touche sur le clavier

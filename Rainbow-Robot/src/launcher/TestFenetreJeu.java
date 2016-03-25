@@ -42,7 +42,7 @@ public class TestFenetreJeu {
 		ToucheClavier clavier = new ToucheClavier(jeu, false);
 		// On détecte les fins de partie et les pauses
 		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier,
-				F_jeuRainbow.MODE_ARCADE, false);
+				F_jeuRainbow.MODE_ARCADE, F_jeuRainbow.MODE_ECRAN_SOLO_JOUEUR);
 		gestion.setObserver();
 		gestion.setFenetre(nouvelleFenetre);
 		clavier.setFenetre(nouvelleFenetre);
@@ -76,7 +76,7 @@ public class TestFenetreJeu {
 		Robot robot = new Robot(Robot.ORIENTATION_DROITE, new Position(0, 1));
 
 		Partie partie = new Partie(nbLigne, nbColonne, null, robot, vortex,
-				caisseARecuperee, caissePlateau);
+				caisseARecuperee, caissePlateau, false);
 
 		jeu.addPartie(partie);
 
@@ -115,7 +115,7 @@ public class TestFenetreJeu {
 		try {
 			// Test Valide
 			new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-					vortex, caisseARecuperee, caissePlateau);
+					vortex, caisseARecuperee, caissePlateau, false);
 		} catch (IllegalArgumentException e) {
 			System.out.println("ERREUR : Jeu de test de base incorrect");
 			e.printStackTrace();
@@ -126,7 +126,7 @@ public class TestFenetreJeu {
 		// --------------------------------------------------------------------
 		try {
 			new Partie(Partie.NB_LIGNE_MAX, nbColonne, positionsInaccessibles,
-					robot, vortex, caisseARecuperee, caissePlateau);
+					robot, vortex, caisseARecuperee, caissePlateau, false);
 		} catch (IllegalArgumentException e) {
 			testOK = false;
 			System.out.println("ERREUR : Impossibilité de créer une partie "
@@ -135,7 +135,7 @@ public class TestFenetreJeu {
 		}
 		try {
 			new Partie(nbLigne, Partie.NB_COLONNE_MAX, positionsInaccessibles,
-					robot, vortex, caisseARecuperee, caissePlateau);
+					robot, vortex, caisseARecuperee, caissePlateau, false);
 		} catch (IllegalArgumentException e) {
 			testOK = false;
 			System.out.println("ERREUR : Impossibilité de créer une partie "
@@ -149,7 +149,7 @@ public class TestFenetreJeu {
 		try {
 			new Partie(Partie.NB_LIGNE_MIN - 1, nbColonne,
 					positionsInaccessibles, robot, vortex, caisseARecuperee,
-					caissePlateau);
+					caissePlateau, false);
 			testOK = false;
 			System.out.println("ERREUR : Possibilité de créer une partie avec "
 					+ "un nombre de ligne de 0");
@@ -158,7 +158,7 @@ public class TestFenetreJeu {
 		try {
 			new Partie(nbLigne, Partie.NB_COLONNE_MIN - 1,
 					positionsInaccessibles, robot, vortex, caisseARecuperee,
-					caissePlateau);
+					caissePlateau, false);
 			testOK = false;
 			System.out.println("ERREUR : Possibilité de créer une partie avec "
 					+ "un nombre de colonne de 0");
@@ -167,7 +167,7 @@ public class TestFenetreJeu {
 		try {
 			new Partie(Partie.NB_LIGNE_MAX + 1, nbColonne,
 					positionsInaccessibles, robot, vortex, caisseARecuperee,
-					caissePlateau);
+					caissePlateau, false);
 			testOK = false;
 			System.out.println("ERREUR : Possibilité de créer une partie avec "
 					+ "un nombre de ligne supérieur au nombre "
@@ -177,7 +177,7 @@ public class TestFenetreJeu {
 		try {
 			new Partie(nbLigne, Partie.NB_COLONNE_MAX + 1,
 					positionsInaccessibles, robot, vortex, caisseARecuperee,
-					caissePlateau);
+					caissePlateau, false);
 			testOK = false;
 			System.out.println("ERREUR : Possibilité de créer une partie avec "
 					+ "un nombre de colonne supérieur au nombre "
@@ -203,7 +203,7 @@ public class TestFenetreJeu {
 				positionsInaccessiblesErronees[2] = new Position(1, 0);
 				positionsInaccessiblesErronees[3] = new Position(1, 1);
 				new Partie(nbLigne, nbColonne, positionsInaccessiblesErronees,
-						robot, vortex, caisseARecuperee, caissePlateau);
+						robot, vortex, caisseARecuperee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -218,7 +218,7 @@ public class TestFenetreJeu {
 				positionsInaccessiblesErronees[2] = new Position(1, 0);
 				positionsInaccessiblesErronees[3] = new Position(1, 1);
 				new Partie(nbLigne, nbColonne, positionsInaccessiblesErronees,
-						robot, vortex, caisseARecuperee, caissePlateau);
+						robot, vortex, caisseARecuperee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -233,7 +233,7 @@ public class TestFenetreJeu {
 				positionsInaccessiblesErronees[2] = new Position(1, 0);
 				positionsInaccessiblesErronees[3] = new Position(0, 0);
 				new Partie(nbLigne, nbColonne, positionsInaccessiblesErronees,
-						robot, vortex, caisseARecuperee, caissePlateau);
+						robot, vortex, caisseARecuperee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -263,7 +263,7 @@ public class TestFenetreJeu {
 				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(2, 2));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecuperee, caissePlateauErronee);
+						vortex, caisseARecuperee, caissePlateauErronee, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -282,7 +282,7 @@ public class TestFenetreJeu {
 				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(2, 2));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecuperee, caissePlateauErronee);
+						vortex, caisseARecuperee, caissePlateauErronee, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -301,7 +301,7 @@ public class TestFenetreJeu {
 				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(5, 5));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecuperee, caissePlateauErronee);
+						vortex, caisseARecuperee, caissePlateauErronee, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -320,7 +320,7 @@ public class TestFenetreJeu {
 				caissePlateauErronee[3] = new Caisse(6,//
 						new Position(5, 5));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecuperee, caissePlateauErronee);
+						vortex, caisseARecuperee, caissePlateauErronee, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -350,7 +350,7 @@ public class TestFenetreJeu {
 				caisseARecupereeErronee.add(null);
 				caisseARecupereeErronee.add(new Caisse(6));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecupereeErronee, caissePlateau);
+						vortex, caisseARecupereeErronee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -368,7 +368,7 @@ public class TestFenetreJeu {
 				caisseARecupereeErronee.add(new Caisse(1));
 				caisseARecupereeErronee.add(new Caisse(4));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecupereeErronee, caissePlateau);
+						vortex, caisseARecupereeErronee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "
@@ -382,7 +382,7 @@ public class TestFenetreJeu {
 				caisseARecupereeErronee.add(new Caisse(5));
 				caisseARecupereeErronee.add(new Caisse(3));
 				new Partie(nbLigne, nbColonne, positionsInaccessibles, robot,
-						vortex, caisseARecupereeErronee, caissePlateau);
+						vortex, caisseARecupereeErronee, caissePlateau, false);
 				testOK = false;
 				System.out
 						.println("ERREUR : Possibilité de créer une partie avec "

@@ -48,7 +48,7 @@ public class TestIA {
 		ToucheClavier clavier = new ToucheClavier(jeu, true);
 		// On détecte les fins de partie et les pauses
 		F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(gestion, clavier,
-				F_jeuRainbow.MODE_ARCADE, false);
+				F_jeuRainbow.MODE_ARCADE, F_jeuRainbow.MODE_ECRAN_SOLO_IA);
 		gestion.setObserver();
 		gestion.setFenetre(nouvelleFenetre);
 		clavier.setFenetre(nouvelleFenetre);
@@ -56,13 +56,13 @@ public class TestIA {
 		nouvelleFenetre.setVisible(true);
 
 		// On force le jeu à se lancer
-		clavier.startPartie();
+		// clavier.startPartie();
 	}
 
 	/**
 	 * @return une partie de test personnalisée
 	 */
-	private static Partie getPartiePerso() {
+	public static Partie getPartiePerso() {
 		//
 		// ---------------------------------------------------------------------
 		// 1ère partie
@@ -103,7 +103,7 @@ public class TestIA {
 		Robot robot = new Robot(Robot.ORIENTATION_DROITE, new Position(4, 5));
 
 		return new Partie(nbLigne, nbColonne, null, robot, vortex,
-				caisseARecuperee, caissePlateau);
+				caisseARecuperee, caissePlateau, true);
 
 		// int nbLigne = 8;
 		// int nbColonne = 2;
@@ -131,7 +131,7 @@ public class TestIA {
 	 * @return une partie construit aléatoirement
 	 */
 	public static Partie getPartieAlea() {
-		return JeuRainbow.carteAleatoire();
+		return JeuRainbow.carteAleatoire(true);
 	}
 
 	/**

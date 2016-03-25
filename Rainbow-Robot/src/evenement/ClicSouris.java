@@ -6,8 +6,6 @@
 package evenement;
 
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -90,7 +88,7 @@ public class ClicSouris implements MouseListener, Observer {
 	 *            partie que l'IA doit contrôler
 	 */
 	private void startIA(Partie aControllee) {
-		threadIA = new IntelligenceArtificielle(aControllee);
+		threadIA = new IntelligenceArtificielle(aControllee, false);
 		threadIA.start();
 	}
 
@@ -328,6 +326,7 @@ public class ClicSouris implements MouseListener, Observer {
 				fenetreCommande.dispose();
 				if (vue instanceof F_jeuRainbow) {
 					F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
+					restartIA(metier.getPartieCouranteIA());
 					fenetreJeu.startChrono();
 					fenetreJeu.requestFocus();
 				}
@@ -431,7 +430,8 @@ public class ClicSouris implements MouseListener, Observer {
 				ToucheClavier clavier = new ToucheClavier(metier, false);
 				// On détecte les fins de partie et les pauses
 				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier,
-						F_jeuRainbow.MODE_STORY, false);
+						F_jeuRainbow.MODE_STORY,
+						F_jeuRainbow.MODE_ECRAN_SOLO_JOUEUR);
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -470,9 +470,15 @@ public class ClicSouris implements MouseListener, Observer {
 				if (partie != null) {
 					metier = new JeuRainbow();
 					metier.addPartie(partie);
+
 					ToucheClavier clavier;
+					F_jeuRainbow nouvelleFenetre;
+
 					if (!fenetreCustom.isJeuSolo()) {
 						clavier = new ToucheClavier(metier, true);
+						nouvelleFenetre = new F_jeuRainbow(this, clavier,
+								F_jeuRainbow.MODE_CUSTOM,
+								F_jeuRainbow.MODE_ECRAN_PARTAGE);
 						// On lance le vortex de la partie de l'IA car il est
 						// naturellement lancé par ToucheClavier, or l'IA ne
 						// passe
@@ -480,11 +486,10 @@ public class ClicSouris implements MouseListener, Observer {
 						startIA(metier.getPartieCouranteIA());
 					} else {
 						clavier = new ToucheClavier(metier, false);
+						nouvelleFenetre = new F_jeuRainbow(this, clavier,
+								F_jeuRainbow.MODE_CUSTOM,
+								F_jeuRainbow.MODE_ECRAN_SOLO_JOUEUR);
 					}
-
-					F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this,
-							clavier, F_jeuRainbow.MODE_CUSTOM,
-							!fenetreCustom.isJeuSolo());
 
 					clavier.setFenetre(nouvelleFenetre);
 					setObserver();
@@ -499,22 +504,27 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreArcade.getBt_Jouer()) {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				metier = new JeuRainbow();
-				metier.addPartie(JeuRainbow.carteAleatoire());
 
 				ToucheClavier clavier;
+				F_jeuRainbow nouvelleFenetre;
 
 				if (!fenetreArcade.isJeuSolo()) {
+					metier.addPartie(JeuRainbow.carteAleatoire(true));
 					clavier = new ToucheClavier(metier, true);
+					nouvelleFenetre = new F_jeuRainbow(this, clavier,
+							F_jeuRainbow.MODE_ARCADE,
+							F_jeuRainbow.MODE_ECRAN_PARTAGE);
 					// On lance le vortex de la partie de l'IA car il est
 					// naturellement lancé par ToucheClavier, or l'IA ne passe
 					// jamais par cette classe
 					startIA(metier.getPartieCouranteIA());
 				} else {
+					metier.addPartie(JeuRainbow.carteAleatoire(false));
 					clavier = new ToucheClavier(metier, false);
+					nouvelleFenetre = new F_jeuRainbow(this, clavier,
+							F_jeuRainbow.MODE_ARCADE,
+							F_jeuRainbow.MODE_ECRAN_SOLO_JOUEUR);
 				}
-
-				F_jeuRainbow nouvelleFenetre = new F_jeuRainbow(this, clavier,
-						F_jeuRainbow.MODE_ARCADE, !fenetreArcade.isJeuSolo());
 				clavier.setFenetre(nouvelleFenetre);
 				setObserver();
 				vue.setVisible(false);
@@ -528,6 +538,8 @@ public class ClicSouris implements MouseListener, Observer {
 				// On vérifie quel bouton a été utilisé
 				// Bouton Pause
 				// 1ère fenêtre de discussion avec l'utilisateur
+				// On stop l'IA
+				stopIA();
 				fenetreJeu.stopChrono();
 				String[] traductionMenuPause = ChoixLangue.getChoixLangue()
 						.getMenuPause();
@@ -540,6 +552,7 @@ public class ClicSouris implements MouseListener, Observer {
 						traductionBouton[0]);
 				switch (retour) {
 				case 0: // Continuer
+					restartIA(metier.getPartieCouranteIA());
 					fenetreJeu.startChrono();
 					fenetreJeu.requestFocus();
 					break;
@@ -610,9 +623,9 @@ public class ClicSouris implements MouseListener, Observer {
 			String[] traductionFinPartie = ChoixLangue.getChoixLangue()
 					.getFinPartie();
 			String[] traductionBouton = Arrays.copyOfRange(traductionFinPartie,
-					2,5); // on prend que les traductions 
-			                      // dont on a besoin (les 4 premières)
-			
+					2, 5); // on prend que les traductions
+							// dont on a besoin (les 4 premières)
+
 			switch (fenetre.getMode()) {
 			case F_jeuRainbow.MODE_STORY:
 				String scoreCourant = fenetre.getScore();
@@ -625,9 +638,11 @@ public class ClicSouris implements MouseListener, Observer {
 				if (classement != -1) {
 					// Boite de dialogue pour demander le nom du joueur
 					String pseudo = JOptionPane.showInputDialog(null,
-					        traductionFinPartie[6] + classement + traductionFinPartie[7]
+							traductionFinPartie[6] + classement
+									+ traductionFinPartie[7]
 									+ traductionFinPartie[8],
-							traductionFinPartie[5], JOptionPane.QUESTION_MESSAGE);
+							traductionFinPartie[5],
+							JOptionPane.QUESTION_MESSAGE);
 					try {
 						// Création d'un fichier temporaire
 						File temp = new File("./Ressource/tempo.txt");
@@ -699,11 +714,23 @@ public class ClicSouris implements MouseListener, Observer {
 				break;
 
 			case F_jeuRainbow.MODE_ARCADE:
-				int retourArcade = JOptionPane.showOptionDialog(null,
-						traductionFinPartie[0] + " " + fenetre.getScore(),
-						traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
-						traductionBouton[0]);
+				int retourArcade;
+				if (o.equals(metier.getPartieCouranteJoueur())) {
+					// Le joueur a fini avant l'IA
+					retourArcade = JOptionPane.showOptionDialog(null,
+							traductionFinPartie[0] + " " + fenetre.getScore(),
+							traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null,
+							traductionBouton, traductionBouton[0]);
+				} else {
+					// Le joueur a fini après l'IA
+					retourArcade = JOptionPane.showOptionDialog(null,
+							traductionFinPartie[9], traductionFinPartie[1],
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null,
+							traductionBouton, traductionBouton[0]);
+				}
+
 				// On reinitialise les paramètres
 				metier.reinitialiserPartie();
 				fenetre.restartChrono();
@@ -720,9 +747,11 @@ public class ClicSouris implements MouseListener, Observer {
 					// On construit un nouveau métier pour ne pas avoir à gérer
 					// une grande quantité de partie
 					metier = new JeuRainbow();
-					metier.addPartie(JeuRainbow.carteAleatoire());
 					if (threadIA != null) {
+						metier.addPartie(JeuRainbow.carteAleatoire(true));
 						restartIA(metier.getPartieCouranteIA());
+					} else {
+						metier.addPartie(JeuRainbow.carteAleatoire(false));
 					}
 					fenetre.setPartieCourante(metier);
 					setObserver();
@@ -739,11 +768,22 @@ public class ClicSouris implements MouseListener, Observer {
 				break;
 
 			case F_jeuRainbow.MODE_CUSTOM:
-				int retourCustom = JOptionPane.showOptionDialog(null,
-						traductionFinPartie[0] + " " + fenetre.getScore(),
-						traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, traductionBouton,
-						traductionBouton[0]);
+				int retourCustom;
+				if (o.equals(metier.getPartieCouranteJoueur())) {
+					// Le joueur a fini avant l'IA
+					retourCustom = JOptionPane.showOptionDialog(null,
+							traductionFinPartie[0] + " " + fenetre.getScore(),
+							traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null,
+							traductionBouton, traductionBouton[0]);
+				} else {
+					// Le joueur a fini après l'IA
+					retourCustom = JOptionPane.showOptionDialog(null,
+							traductionFinPartie[9],
+							traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null,
+							traductionBouton, traductionBouton[0]);
+				}
 				// On reinitialise les paramètres
 				metier.reinitialiserPartie();
 				fenetre.restartChrono();

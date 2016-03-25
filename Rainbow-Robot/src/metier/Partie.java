@@ -152,7 +152,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 */
 	public Partie(int ligne, int colonne, Position[] posInaccessible,
 			Robot robot, Vortex vortex, ArrayList<Caisse> caisseARecuperer,
-			Caisse[] caissePlateau) throws IllegalArgumentException {
+			Caisse[] caissePlateau, boolean isIA)
+			throws IllegalArgumentException {
 		// On teste les limites du nombre de ligne et de colonne
 		if (ligne > NB_LIGNE_MAX || ligne < NB_LIGNE_MIN) {
 			throw new IllegalArgumentException(
@@ -196,46 +197,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		}
 		this.positionsInaccessibles = posInaccessible;
 
-		// On vérifie si les caisses sont situées sur le plateau de jeu et
-		// qu'elles ne se trouvent pas sur des positions inaccessibles.
-		if (caissePlateau == null) {
-			throw new IllegalArgumentException(
-					"Référence des caisses sur le plateau introuvables");
-		}
-		for (int i = 0; i < caissePlateau.length; i++) {
-			if (caissePlateau[i] == null) {
-				throw new IllegalArgumentException(
-						"La caisse sur le plateau de jeu à l'indice " + i
-								+ " est introuvable");
-			}
-			if (isPositionOK(caissePlateau[i].getPosCaisse())) {
-				if (isPositionOKAvecPositionInaccessible(caissePlateau[i]
-						.getPosCaisse())) {
-					for (int j = i + 1; j < caissePlateau.length; j++) {
-						if (caissePlateau[j] != null
-								&& caissePlateau[i].getPosCaisse().equals(
-										caissePlateau[j].getPosCaisse())) {
-							throw new IllegalArgumentException(
-									"La caisse à la position "
-											+ caissePlateau[i].getPosCaisse()
-											+ " est présente deux fois");
-						}
-					}
-				} else {
-					throw new IllegalArgumentException(
-							"La caisse sur le plateau de jeu à la position "
-									+ caissePlateau[i].getPosCaisse()
-									+ " est sur une des positions inaccessibles");
-				}
-			} else {
-				throw new IllegalArgumentException(
-						"La caisse sur le plateau de jeu à la position "
-								+ caissePlateau[i].getPosCaisse()
-								+ " est en dehors du plateau de jeu");
-			}
-		}
-		this.caissePlateau = caissePlateau;
-
 		// On vérifie si le vortex est en dehors du plateau ou si il est situé
 		// sur une position inaccessible
 		if (vortex == null) {
@@ -251,6 +212,52 @@ public class Partie extends Observable implements Dessinable, Serializable {
 					"Position du vortex sur une position inaccessible");
 		}
 		this.vortex = vortex;
+
+		// On vérifie si les caisses sont situées sur le plateau de jeu et
+		// qu'elles ne se trouvent pas sur des positions inaccessibles.
+		if (caissePlateau == null) {
+			throw new IllegalArgumentException(
+					"Référence des caisses sur le plateau introuvables");
+		}
+		for (int i = 0; i < caissePlateau.length; i++) {
+			if (caissePlateau[i] != null) {
+				if (isPositionOK(caissePlateau[i].getPosCaisse())) {
+					if (isPositionOKAvecPositionInaccessible(caissePlateau[i]
+							.getPosCaisse())) {
+						if (!caissePlateau[i].getPosCaisse().equals(
+								vortex.getPosVortex())) {
+							for (int j = i + 1; j < caissePlateau.length; j++) {
+								if (caissePlateau[j] != null
+										&& caissePlateau[i].getPosCaisse()
+												.equals(caissePlateau[j]
+														.getPosCaisse())) {
+									throw new IllegalArgumentException(
+											"La caisse à la position "
+													+ caissePlateau[i]
+															.getPosCaisse()
+													+ " est présente deux fois");
+								}
+							}
+						} else {
+							throw new IllegalArgumentException(
+									"Une caisse est sur la position du vortex : "
+											+ vortex.getPosVortex());
+						}
+					} else {
+						throw new IllegalArgumentException(
+								"La caisse sur le plateau de jeu à la position "
+										+ caissePlateau[i].getPosCaisse()
+										+ " est sur une des positions inaccessibles");
+					}
+				} else {
+					throw new IllegalArgumentException(
+							"La caisse sur le plateau de jeu à la position "
+									+ caissePlateau[i].getPosCaisse()
+									+ " est en dehors du plateau de jeu");
+				}
+			}
+		}
+		this.caissePlateau = caissePlateau;
 
 		// On vérifie si le Robot est en dehors du plateau de jeu ou s'il est
 		// situé sur une position inaccessible
@@ -323,7 +330,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 							+ " ne peut pas s'obtenir ni par la fusion, ni directement par une caisse sur le plateau de jeu");
 		}
 		this.caisseARecuperer = caisseARecuperer;
-		if (!verificationPartieResolvable()) {
+		if (isIA && !verificationPartieResolvable()) {
 			throw new IllegalArgumentException(
 					"La partie n'est pas résolvable. Il est impossible d'amener toutes les caisses à récupérer dans le vortex");
 		}
@@ -340,35 +347,21 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 * @return true si la partie est réalisable, false sinon
 	 */
 	private boolean verificationPartieResolvable() {
-		// On vérifie si la partie (dans son ensemble) est résolvable
-		// Le calcul qui est fait ici est un calcul très simplificateur de la
-		// réalité mais il permet entre autre d'éliminer un bon nombre de cas
-		// complexe. Toutefois il est possible que certaines parties soient
-		// résolvable mais que l'algorithme ne l'acceptent pas.
+		IntelligenceArtificielle IA = new IntelligenceArtificielle(this, true);
+		IA.start();
+		long temps = 0, depart, fin;
+		while (IA.isAlive()) {
+			depart = System.currentTimeMillis();
+			fin = System.currentTimeMillis();
+			temps = temps + (fin - depart);
 
-		// On vérifie si le robot n'est pas piegé dans la partie
-		// Légende :
-		// R = Robot
-		// I = position bloquante (inaccessible ou caisse)
-
-		// Deux situations possibles ou le Robot ne pourra pas se déplacer
-		// 1ère situation :
-		// I
-		// I
-		// I I R I I
-		// I
-		// I
-
-		// 2ème situation :
-		// I
-		// I I
-		// I I I I I
-		// I I R I I
-		// I I I I I
-		// I I I I
-		// I
-
-		return true;
+			if (temps > 10000) { // 10s max
+				break;
+			}
+		}
+		boolean ok = IA.isPartieFaisable();
+		IA.interrupt();
+		return ok;
 	}
 
 	/**
@@ -689,11 +682,15 @@ public class Partie extends Observable implements Dessinable, Serializable {
 		// On clone les caisses disponibles sur le plateau
 		Caisse[] caissePlat = new Caisse[caissePlateau.length];
 		for (int i = 0; i < caissePlateau.length; i++) {
-			caissePlat[i] = (Caisse) caissePlateau[i].clone();
+			if (caissePlateau[i] != null) {
+				caissePlat[i] = (Caisse) caissePlateau[i].clone();
+			} else {
+				caissePlat[i] = null;
+			}
 		}
 
 		return new Partie(nbLigne, nbColonne, posInaccessibles,
 				(Robot) robot.clone(), (Vortex) vortex.clone(), caisseARecup,
-				caissePlat);
+				caissePlat, false);
 	}
 }
