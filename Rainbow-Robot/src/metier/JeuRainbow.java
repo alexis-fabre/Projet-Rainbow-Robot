@@ -62,11 +62,14 @@ public class JeuRainbow implements Serializable {
 	public static final String[] FICHIER_STORY = {
 			"./Ressource/fichierStory/Level1.txt",
 			"./Ressource/fichierStory/Level2.txt",
+			"./Ressource/fichierStory/Level3.txt",
 			"./Ressource/fichierStory/Level4.txt",
 			"./Ressource/fichierStory/Level5.txt",
 			"./Ressource/fichierStory/Level6.txt",
+			"./Ressource/fichierStory/Level8.txt",
 			"./Ressource/fichierStory/Level7.txt",
-			"./Ressource/fichierStory/Level8.txt" };
+			"./Ressource/fichierStory/Level9.txt",
+			"./Ressource/fichierStory/Level10.txt" };
 
 	/**
 	 * Constructeur par défaut pour créer les parties
@@ -266,7 +269,8 @@ public class JeuRainbow implements Serializable {
 		for (int i = 0; i < nbCaisses; i++) {
 			random = new Position(rand.nextInt(colonne), rand.nextInt(ligne));
 			// on regarde si la pos de la caisse est sur le vortex
-			if (!random.equals(vortex)) { // si c'est on refait la fonction
+			if (random != vortex.getPosVortex()) { // si c'est on refait la
+													// fonction
 				// sinon on ajoute la caisse dans le tableau
 				caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), random);
 			} else {

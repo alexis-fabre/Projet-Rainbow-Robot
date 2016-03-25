@@ -19,7 +19,7 @@ import evenement.ClicSouris;
  * jeu de type "taquin".<br >
  * Le joueur contrôle en temps réel un petit robot qui doit aller chercher des
  * caisses colorées dans un entrepôt. Si la caisse à aller chercher est derrière
- * d'autre caisse, il va falloir déplacer celles-ci de façon optimisée.<br />
+ * d'autre caisse, il va falloir déplacer celle-ci de façon optimisée.<br />
  * La particularité de ce jeu réside dans la possibilité de fusionner des
  * caisses (fusionner une caisse rouge et une jaune donne un caisse orange).<br />
  * Le jeu dispose de trois modes : Story, Arcade et Custom
@@ -66,6 +66,5 @@ public class Lanceur {
 
 		// On rend la fenêtre visible
 		fenetreActive.setVisible(true);
-
 	}
 }

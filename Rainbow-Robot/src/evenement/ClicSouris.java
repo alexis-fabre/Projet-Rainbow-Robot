@@ -422,6 +422,7 @@ public class ClicSouris implements MouseListener, Observer {
 				setFenetre(nouvelleFenetre);
 			}
 		}
+
 		if (vue instanceof F_choixNiveau) {
 			F_choixNiveau fenetreChoixNiveau = (F_choixNiveau) vue;
 			if (e.getSource() == fenetreChoixNiveau.getBt_Jouer()) {
@@ -504,10 +505,8 @@ public class ClicSouris implements MouseListener, Observer {
 			if (e.getSource() == fenetreArcade.getBt_Jouer()) {
 				// Objet qui permet de naviguer dans les dossiers personnels
 				metier = new JeuRainbow();
-
 				ToucheClavier clavier;
 				F_jeuRainbow nouvelleFenetre;
-
 				if (!fenetreArcade.isJeuSolo()) {
 					metier.addPartie(JeuRainbow.carteAleatoire(true));
 					clavier = new ToucheClavier(metier, true);
@@ -712,7 +711,6 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				}
 				break;
-
 			case F_jeuRainbow.MODE_ARCADE:
 				int retourArcade;
 				if (o.equals(metier.getPartieCouranteJoueur())) {
@@ -766,7 +764,6 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				}
 				break;
-
 			case F_jeuRainbow.MODE_CUSTOM:
 				int retourCustom;
 				if (o.equals(metier.getPartieCouranteJoueur())) {
@@ -779,8 +776,8 @@ public class ClicSouris implements MouseListener, Observer {
 				} else {
 					// Le joueur a fini après l'IA
 					retourCustom = JOptionPane.showOptionDialog(null,
-							traductionFinPartie[9],
-							traductionFinPartie[1], JOptionPane.YES_NO_OPTION,
+							traductionFinPartie[9], traductionFinPartie[1],
+							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null,
 							traductionBouton, traductionBouton[0]);
 				}
@@ -815,8 +812,6 @@ public class ClicSouris implements MouseListener, Observer {
 				}
 				break;
 			}
-
 		}
 	}
-
 }

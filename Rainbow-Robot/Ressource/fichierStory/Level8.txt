@@ -1,10 +1,11 @@
-7
-10
-R
- G  GXXXXX
- R  GXXXXX
-  G G  XXX
-  G G  XXX
-  G GGG   
-       SV 
-  GGGGG   
+8
+8
+BOG
+RGRY    
+RORJ  R 
+  BY    
+  Y   P 
+ P VQ   
+      P 
+        
+      PO

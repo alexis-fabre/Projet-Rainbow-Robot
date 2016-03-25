@@ -26,14 +26,9 @@ import evenement.ToucheClavier;
  * Les différents niveaux de l'IA permettront de réduire le temps et d'optimiser
  * les déplacements du Robot de l'IA.
  * <ul>
- * <li>Niveau Facile : l'IA cherche à faire le moins de déplacement pour aller
+ * <li>Niveau Facile : l'IA cherche à faire le moins de déplacements pour aller
  * chercher la caisse (On ne s'occupe pas du temps mis).L'IA cherche en mode
  * caisse par caisse.</li>
- * <li>Niveau Moyen : l'IA cherche à faire la partie en un minimum de temps en
- * optimisant ses déplacements. L'IA cherche en mode caisse par caisse.</li>
- * <li>Niveau Difficile : l'IA cherche à faire la partie en un minimum de temps
- * en optimisant ses déplacements. L'IA cherche son parcours en regardant les
- * caisses qui sont après.</li>
  * </ul>
  * <p>
  * 
@@ -214,7 +209,7 @@ public class IntelligenceArtificielle extends Thread {
 
 	/**
 	 * <p>
-	 * Tableau contenant les temps mis pour aller vers n'importe quel position
+	 * Tableau contenant les temps mis pour aller vers n'importe quelle position
 	 * du plateau de jeu à partir d'une position initiale.<br />
 	 * L'algorithme considère que le robot a déjà charger une caisse et qu'elle
 	 * se trouve devant lui (selon son orientation).<br />
@@ -515,7 +510,7 @@ public class IntelligenceArtificielle extends Thread {
 	}
 
 	/**
-	 * Supprime la référence de la caisse dans la partie clonée et dans la lise
+	 * Supprime la référence de la caisse dans la partie clonée et dans la liste
 	 * des caisses de l'IA
 	 *
 	 * @param liste
@@ -526,7 +521,7 @@ public class IntelligenceArtificielle extends Thread {
 			Caisse[] caissePlateau = partieClone.getCaissePlateau();
 			for (int i = 0; i < caissePlateau.length; i++) {
 				// Pour optimiser on supprime aussi dans la liste
-				// La liste aura toujours une taille inférieur ou égale aux
+				// La liste aura toujours une taille inférieure ou égale aux
 				// nombres de caisses sur le plateau
 				if (i < liste.size()
 						&& liste.get(i).getPosCaisse()
@@ -629,7 +624,7 @@ public class IntelligenceArtificielle extends Thread {
 		final Position positionVortex = partieClone.getVortex().getPosVortex();
 
 		// Position min <=> Position qui mettra le moins de temps aller +
-		// retour+
+		// retour
 		Position posMinCaisse = null, //
 		posMinVortex = null;
 		// Liste des déplacements supplémentaires à effectuer pour les
@@ -802,7 +797,6 @@ public class IntelligenceArtificielle extends Thread {
 				} else if (deplacementMin.get(i).equals(ACTION_PIVOTER_GAUCHE)) {
 					oriFuture = Robot.pivoterGauche(oriFuture);
 				}
-
 				deplacement.add(deplacementMin.get(i));
 			}
 			// On décharge la caisse
@@ -1217,8 +1211,8 @@ public class IntelligenceArtificielle extends Thread {
 		// Pour chaque tour,
 		// On récupère l'indice de la valeur minimal du tableau sans tenir
 		// compte des indice précédement utilisé
-		// On regarde si les position adjacentes sont occupés ou non
-		// On calcul le temps mis pour aller jusqu'à la position adjacentes
+		// On regarde si les position adjacentes sont occupées ou non
+		// On calcule le temps mis pour aller jusqu'à la position adjacente
 		// On réactualise le tableau si le temps mis est inférieur au temps déjà
 		// présent sur la position adjacente
 		for (int i = 0; i < indiceDejaUtilise.length; i++) {
@@ -1356,7 +1350,6 @@ public class IntelligenceArtificielle extends Thread {
 										.pivoterGauche(orientations[indiceCentral]);
 							}
 						}
-
 					} else { // j ==
 								// Robot.pivoterGauche(orientations[indiceCentral])
 						// On vérifie si l'on met plus de temps pour avancer ou
@@ -1652,7 +1645,6 @@ public class IntelligenceArtificielle extends Thread {
 						}
 					} else if (j == Robot
 							.pivoterDroite(orientationsCaisse[indiceCentral])) {
-
 						// Utiliser pour optimiser les calculs liés aux
 						// détections des caisses qui pourraient bloqués le
 						// déplacement
@@ -1768,7 +1760,6 @@ public class IntelligenceArtificielle extends Thread {
 									- indiceCaisse);
 							Position deltaGauche = new Position(-temp.getY(),
 									temp.getX());
-
 							// On vérifie si le déplacement est possible
 							if (
 							// Position (deux fois) à gauche du robot
@@ -1791,7 +1782,6 @@ public class IntelligenceArtificielle extends Thread {
 								} else if (TEMPS_AVANCER_CAISSE + 3
 										* TEMPS_PIVOTER_CAISSE
 										+ tempsCaisse[indiceCentral] < tempsCaisse[indice]) {
-
 									Position deltaDroite = new Position(
 											temp.getY(), -temp.getX());
 
@@ -2453,6 +2443,9 @@ public class IntelligenceArtificielle extends Thread {
 		threadDeplacement.interrupt();
 	}
 
+	/**
+	 * Inner class pour le thread contenant les déplacements du robot
+	 */
 	public class ThreadDeplacement extends Thread {
 
 		/** Liste des déplacements à effectuer */
