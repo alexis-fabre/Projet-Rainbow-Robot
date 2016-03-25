@@ -66,8 +66,11 @@ public class JeuRainbow implements Serializable {
 			"./Ressource/fichierStory/Level4.txt",
 			"./Ressource/fichierStory/Level5.txt",
 			"./Ressource/fichierStory/Level6.txt",
+			"./Ressource/fichierStory/Level8.txt",
 			"./Ressource/fichierStory/Level7.txt",
-			"./Ressource/fichierStory/Level9.txt" };
+			"./Ressource/fichierStory/Level9.txt",
+			"./Ressource/fichierStory/Level10.txt"
+			};
 
 	/**
 	 * Constructeur par défaut pour créer les parties
