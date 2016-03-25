@@ -23,7 +23,7 @@ import vue.UtilitaireFenetre;
  */
 public class Partie extends Observable implements Dessinable, Serializable {
 
-	/** Générer automatiquement par Eclipse */
+	/** Généré automatiquement par Eclipse */
 	private static final long serialVersionUID = -6712326189565570979L;
 
 	/** Nombre de colonne maximal que peut contenir une partie */
@@ -69,7 +69,7 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	/**
 	 * Créer une carte avec un nombre de nigne et de colonne précis. Initialise
 	 * le robot à la position (1,0) et dirigé vers la gauche. Le vortex est
-	 * initialisé à la position (0,0). Il y a 3 caisses a récupérée et 3 caisses
+	 * initialisé à la position (0,0). Il y a 3 caisses a récupérer et 3 caisses
 	 * sur le plateau de jeu avec les mêmes couleurs.
 	 * 
 	 * @param nbLigne
@@ -137,6 +137,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	 * @param caissePlateau
 	 *            caisse placé sur le plateau. On a besoin de connaître la
 	 *            position et la couleur de chaque caisse
+	 * @param isIA
+	 *            permet de savoir si on crée une partie avec ou sans l'IA
 	 * @throws IllegalArgumentException
 	 *             <p>
 	 *             si le nombre de ligne est supérieur au nombre de ligne
@@ -354,7 +356,6 @@ public class Partie extends Observable implements Dessinable, Serializable {
 			depart = System.currentTimeMillis();
 			fin = System.currentTimeMillis();
 			temps = temps + (fin - depart);
-
 			if (temps > 10000) { // 10s max
 				break;
 			}
@@ -446,8 +447,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
-	 * elle n'est pas occupé par une caisse.
+	 * Vérifie si la position envoyée en paramètre est correcte, c'est à dire si
+	 * elle n'est pas occupée par une caisse.
 	 * 
 	 * @param aVerifier
 	 *            position à vérifier
@@ -465,8 +466,8 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
-	 * elle n'est pas occupé par une caisse.
+	 * Vérifie si la position envoyée en paramètre est correcte, c'est à dire si
+	 * elle n'est pas occupée par une caisse.
 	 * 
 	 * @param x
 	 *            abscisse de la position à vérifier
@@ -479,10 +480,10 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * Vérifie si la position envoyée en paramètre est correcte, c'est à dire si
 	 * elle existe sur le plateau de jeu, si elle n'est pas située sur une
-	 * position inaccessible, si elle n'est pas occupé par une caisse et si elle
-	 * n'est pas occupé par le robot.
+	 * position inaccessible, si elle n'est pas occupée par une caisse et si
+	 * elle n'est pas occupée par le robot.
 	 * 
 	 * @param aVerifier
 	 *            position à vérifier
@@ -495,10 +496,10 @@ public class Partie extends Observable implements Dessinable, Serializable {
 	}
 
 	/**
-	 * Vérifie si la position envoyé en paramètre est correcte, c'est à dire si
+	 * Vérifie si la position envoyée en paramètre est correcte, c'est à dire si
 	 * elle existe sur le plateau de jeu, si elle n'est pas située sur une
-	 * position inaccessible, si elle n'est pas occupé par une caisse et si elle
-	 * n'est pas occupé par le robot.
+	 * position inaccessible, si elle n'est pas occupée par une caisse et si
+	 * elle n'est pas occupé par le robot.
 	 * 
 	 * @param x
 	 *            abscisse de la position à vérifier

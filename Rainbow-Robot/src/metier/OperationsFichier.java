@@ -18,7 +18,7 @@ import java.util.Arrays;
 import metier.LigneUsernameScore;
 
 /**
- * Classe permettant de lire et d'Ã©crire dans le fichier highscores.txt
+ * Classe permettant de lire et d'écrire dans les fichiers highscore.txt
  * 
  * @author Rainbow Robot
  * @version 0.1
@@ -26,13 +26,13 @@ import metier.LigneUsernameScore;
 public class OperationsFichier {
 
 	/**
-	 * Lis le fichier des reccords et retourne les donnÃ©es prÃ©sentes dans une
+	 * Lis le fichier des reccords et retourne les données présentes dans une
 	 * ArrayList
 	 * 
 	 * @param fichier
 	 *            le fichier qui contient les noms des utilisateurs et les
 	 *            reccords
-	 * @return Une liste contenant les donnÃ©es
+	 * @return Une liste contenant les données
 	 */
 	public static ArrayList<LigneUsernameScore> lectureFichierReccord(
 			File fichier) {
@@ -80,7 +80,7 @@ public class OperationsFichier {
 	 *            le fichier qui contient les noms des utilisateurs et les
 	 *            reccords
 	 * @param ligneUsernameScore
-	 *            les nouveaux couples noms/scores a enregistrÃ©
+	 *            les nouveaux couples noms/scores a enregistré
 	 */
 	public static void ecrireFichierReccord(File fichier,
 			ArrayList<LigneUsernameScore> ligneUsernameScore) {
@@ -100,11 +100,12 @@ public class OperationsFichier {
 
 	/**
 	 * Lit un fichier et le transforme en une partie. Le fichier doit respecter
-	 * certaines rÃ¨gles et des vÃ©rifications seront faites sur la cohÃ©rence
-	 * et la resolvabilitÃ© de la partie.
+	 * certaines règles et des vérifications seront faites sur la cohérence et
+	 * la resolvabilité de la partie.
 	 *
 	 * @param fichier
 	 *            contenu de la partie
+	 * @return la partie créee grâce au fichier
 	 * @throws IllegalArgumentException
 	 *             si le fichier n'est pas correct. On initialise avec la nature
 	 *             de l'erreur
@@ -138,7 +139,6 @@ public class OperationsFichier {
 														// de colonne dans la
 														// premiere ligne du
 														// fichier
-
 			temp = fich.readLine(); // On recupere les caisses a recuperer dans
 									// la troisieme ligne
 
@@ -165,7 +165,8 @@ public class OperationsFichier {
 																// ligne i
 						tableau[numLigne][i] = temp.charAt(i); // on ajoute le
 																// caractere
-																// dans tableau
+																// dans
+																// tableau
 					}
 					numLigne++;
 				}
@@ -249,7 +250,6 @@ public class OperationsFichier {
 					case 'X':// char B correspond a une case inacessible
 						posInacessible[x + y * tableau[y].length] = new Position(
 								x, y);
-
 						break;
 					case ' ': // char espace correspond a une case vide
 						break;
@@ -259,7 +259,8 @@ public class OperationsFichier {
 
 			for (int i = 0; i < caissePlateau.length; i++) { // On compte le
 																// nombre de
-																// caisse sur le
+																// caisse
+																// sur le
 																// Plateau
 				if (caissePlateau[i] != null) {
 					indice++;
@@ -271,21 +272,19 @@ public class OperationsFichier {
 													// caisse
 			for (int y = 0; y < caissePlateau.length; y++) { // on ajoute les
 																// caisse dans
-																// le tableau
+																// le
+																// tableau
 																// resultatCaisse
 				if (caissePlateau[y] != null) {
 					resultatCaisse[parcours] = caissePlateau[y];
 					parcours++;
 				}
-
 			}
 
 			parcours = 0;
 			indice = 0;
-			for (int i = 0; i < posInacessible.length; i++) { // on fait pareil
-																// pour les
-																// positions
-																// inacessibles
+			// on fait pareril pour les positions inaccessibles
+			for (int i = 0; i < posInacessible.length; i++) {
 				if (posInacessible[i] != null) {
 					indice++;
 				}
@@ -307,5 +306,4 @@ public class OperationsFichier {
 		}
 		return partie;
 	}
-
 }

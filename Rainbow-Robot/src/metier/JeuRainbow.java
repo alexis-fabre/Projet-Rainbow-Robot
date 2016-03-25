@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Classe qui va permettre de gérer plusieurs partie et de les récupérer à
+ * Classe qui va permettre de gérer plusieurs parties et de les récupérer à
  * partir d'un fichier créer par l'utilisateur.
  * 
  * @author Rainbow Robot
@@ -31,7 +31,7 @@ import java.util.Random;
 public class JeuRainbow implements Serializable {
 
 	/**
-	 * Génerer automatiquement par Eclipse
+	 * Géneré automatiquement par Eclipse
 	 */
 	private static final long serialVersionUID = 1725976228595779419L;
 
@@ -53,12 +53,13 @@ public class JeuRainbow implements Serializable {
 	/** Carte de la partie courante de l'IA */
 	private transient Partie partieIA;
 
-	/** Nom du fichier ou se trouve les parties jouables dans le mode solo */
+	/** Nom du fichier ou se trouvent les parties jouables dans le mode solo */
 	public static final String CHEMIN_FICHIER_PARTIE = "./Ressource/lib/partie_mode_solo.bin";
 
 	/** Nom du fichier ou se trouve la sauvegarde du mode Story */
 	public static final String CHEMIN_FICHIER_SAUVEGARDE = "./Ressource/sauvegarde.txt";
 
+	/** chemins des fichiers contenant les niveaux du mode Story */
 	public static final String[] FICHIER_STORY = {
 			"./Ressource/fichierStory/Level1.txt",
 			"./Ressource/fichierStory/Level2.txt",
@@ -91,6 +92,9 @@ public class JeuRainbow implements Serializable {
 		partiesEnregistrees.add(aAjouter);
 	}
 
+	/**
+	 * @return story la partie du mode story
+	 */
 	public static JeuRainbow getStory() {
 		JeuRainbow story = new JeuRainbow();
 		for (int i = 0; i < FICHIER_STORY.length; i++) {
@@ -236,7 +240,7 @@ public class JeuRainbow implements Serializable {
 	 *
 	 * @param withIA
 	 *            détermine si on doit vérifier la faisabilité avec l'IA ou sans
-	 * @return
+	 * @return une nouvelle Partie
 	 */
 	public static Partie carteAleatoire(boolean withIA) {
 		Random rand = new Random();
@@ -279,9 +283,9 @@ public class JeuRainbow implements Serializable {
 		}
 
 		try {
+			// on créé la partie
 			return new Partie(ligne, colonne, null, robot, vortex,
-					caisseARecuperer, caissePlateau, withIA); // on créé la
-																// partie
+					caisseARecuperer, caissePlateau, withIA);
 		} catch (IllegalArgumentException e) {
 			return carteAleatoire(withIA); // sinon on refait la fonction
 		}
