@@ -458,7 +458,7 @@ public class JeuRainbow implements Serializable {
 		for (int i = 0; i < nbCaisses; i++) {
 			random = new Position(rand.nextInt(colonne), rand.nextInt(ligne));
 			 // on regarde si la pos de la caisse est sur le vortex
-			if (!random.equals(vortex)) { // si c'est on refait la fonction
+			if (random != vortex.getPosVortex()) { // si c'est on refait la fonction
 				// sinon on ajoute la caisse dans le tableau
 				caissePlateau[i] = new Caisse((rand.nextInt(6) + 1), random);
 			} else {
