@@ -361,7 +361,7 @@ public class IntelligenceArtificielle extends Thread {
 	 * @return la position de la caisse connaissant la position et l'orientation
 	 *         du robot
 	 */
-	private static Position getCaisse(Position posRobot, int oriRobot) {
+	public static Position getCaisse(Position posRobot, int oriRobot) {
 		if (oriRobot == Robot.ORIENTATION_BAS) {
 			return new Position(posRobot.getX(), posRobot.getY() + 1);
 		} else if (oriRobot == Robot.ORIENTATION_HAUT) {
@@ -379,7 +379,7 @@ public class IntelligenceArtificielle extends Thread {
 	 * @param deplacement
 	 *            liste de déplacements
 	 */
-	private static void afficherDeplacement(List<Integer> deplacement) {
+	public static void afficherDeplacement(List<Integer> deplacement) {
 		System.out.println("Liste de déplacement : ");
 		for (Integer integer : deplacement) {
 			if (integer == ACTION_AVANCER) {
@@ -408,7 +408,7 @@ public class IntelligenceArtificielle extends Thread {
 	 *            nombre de colonnes par ligne (utiliser pour représenter le
 	 *            tableau en 2 dimensions)
 	 */
-	private static void afficherDijkstra(float[] temps, int[] orientations,
+	public static void afficherDijkstra(float[] temps, int[] orientations,
 			int nbLigne) {
 		System.out.println("\nDijkstra :\n\tTemps : ");
 		for (int j = 0; j < temps.length; j++) {
@@ -504,7 +504,7 @@ public class IntelligenceArtificielle extends Thread {
 					// Pour l'optimisation
 					continue;
 				}
-				// TODO faire avec la fusion
+				// TODO Faire avec la fusion
 			}
 		}
 		return liste;
@@ -738,7 +738,6 @@ public class IntelligenceArtificielle extends Thread {
 				}
 			}
 			if (positionBloquante == null) {
-				System.out.println("IA : Trajectoire introuvable");
 				return false;
 			} else {
 				List<Position>[] listePosition = chercherPositionPourDeplacer(
@@ -2346,7 +2345,6 @@ public class IntelligenceArtificielle extends Thread {
 	 */
 	private void deplacerIA(List<Integer> deplacement) {
 		Robot robot = partieReelle.getRobot();
-		boolean isCharge = false;
 		if (deplacement == null) {
 			System.out.println("IA ; Déplacer IA : Pas de déplacement défini");
 		} else {
@@ -2354,7 +2352,6 @@ public class IntelligenceArtificielle extends Thread {
 				try {
 					while (!deplacement.isEmpty()) {
 						if (!robot.estOccupe()) {
-							isCharge = false;
 							// On fait une seconde pause au cas ou la partie
 							// graphique n'est pas totalement fini de se
 							// redessiner
@@ -2372,7 +2369,6 @@ public class IntelligenceArtificielle extends Thread {
 								robot.reculer();
 								deplacement.remove(0);
 							} else if (deplacement.get(0) == ACTION_CHARGER) {
-								isCharge = true;
 								robot.charger();
 								deplacement.remove(0);
 							}

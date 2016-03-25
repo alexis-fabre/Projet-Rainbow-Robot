@@ -31,6 +31,7 @@ public class testRobot {
 	/**
 	 * Test de la méthode avancer
 	 */
+	@SuppressWarnings("deprecation")
 	public static void testAvancer() {
 		System.out
 				.println("--------------------METHODE AVANCER-------------------\n");
@@ -48,6 +49,7 @@ public class testRobot {
 	/**
 	 * Test de la méthode reculer
 	 */
+	@SuppressWarnings("deprecation")
 	public static void testReculer() {
 		System.out
 				.println("--------------------METHODE RECULER-------------------\n");
@@ -65,6 +67,7 @@ public class testRobot {
 	/**
 	 * Test de la méthode pivoter
 	 */
+	@SuppressWarnings("deprecation")
 	public static void testPivoter() {
 		System.out
 				.println("--------------------METHODE PIVOTER-------------------\n");

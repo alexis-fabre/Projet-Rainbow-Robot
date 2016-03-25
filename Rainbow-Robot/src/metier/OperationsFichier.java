@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import metier.LigneUsernameScore;
 
 /**
  * Classe permettant de lire et d'écrire dans les fichiers highscore.txt

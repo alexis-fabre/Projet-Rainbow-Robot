@@ -8,7 +8,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import metier.Caisse;
-import metier.IntelligenceArtificielle;
 import metier.JeuRainbow;
 import metier.OperationsFichier;
 import metier.Partie;

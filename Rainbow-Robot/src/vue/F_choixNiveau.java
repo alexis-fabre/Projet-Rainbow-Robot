@@ -107,7 +107,7 @@ public class F_choixNiveau extends JFrame implements ChangementLangue {
 								* UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE.width)
 								/ UtilitaireFenetre.NB_NIVEAU_LIGNE + 1, 50));
 		final int nbNiveaux = gestion.getMetier().getNbNiveau();
-		final int niveauMax = gestion.getMetier().getNiveauMax();
+		final int niveauMax = JeuRainbow.getNiveauMax();
 		bt_niveaux = new JButton[nbNiveaux];
 
 		for (int i = 0; i < bt_niveaux.length; i++) {
