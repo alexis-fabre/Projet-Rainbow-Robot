@@ -19,7 +19,7 @@ import evenement.ClicSouris;
  * jeu de type "taquin".<br >
  * Le joueur contrôle en temps réel un petit robot qui doit aller chercher des
  * caisses colorées dans un entrepôt. Si la caisse à aller chercher est derrière
- * d'autre caisse, il va falloir déplacer celles-ci de façon optimisée.<br />
+ * d'autre caisse, il va falloir déplacer celle-ci de façon optimisée.<br />
  * La particularité de ce jeu réside dans la possibilité de fusionner des
  * caisses (fusionner une caisse rouge et une jaune donne un caisse orange).<br />
  * Le jeu dispose de trois modes : Story, Arcade et Custom
@@ -38,35 +38,35 @@ import evenement.ClicSouris;
  */
 public class Lanceur {
 
-	/**
-	 * Déroulement logique du jeu Rainbow Robot
-	 * 
-	 * @param args
-	 *            non utilisé
-	 */
-	public static void main(String[] args) {
-		try {
-			// select Look and Feel
-			UIManager.setLookAndFeel(new AcrylLookAndFeel());
-			// start application
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		// On initialise la partie métier
-		JeuRainbow.restartFichierPartie();
-		JeuRainbow jeu = JeuRainbow.lectureFichier();
+    /**
+     * Déroulement logique du jeu Rainbow Robot
+     * 
+     * @param args
+     *            non utilisé
+     */
+    public static void main(String[] args) {
+        try {
+            // select Look and Feel
+            UIManager.setLookAndFeel(new AcrylLookAndFeel());
+            // start application
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        // On initialise la partie métier
+        JeuRainbow.restartFichierPartie();
+        JeuRainbow jeu = JeuRainbow.lectureFichier();
 
-		// On construit le contrôleur à partir de la partie métier
-		ClicSouris gestion = new ClicSouris(jeu);
+        // On construit le contrôleur à partir de la partie métier
+        ClicSouris gestion = new ClicSouris(jeu);
 
-		// On construit la fenêtre avec le contrôleur
-		F_accueil fenetreActive = new F_accueil(gestion);
+        // On construit la fenêtre avec le contrôleur
+        F_accueil fenetreActive = new F_accueil(gestion);
 
-		// On ajoute la nouvelle fenêtre à contrôler
-		gestion.setFenetre(fenetreActive);
+        // On ajoute la nouvelle fenêtre à contrôler
+        gestion.setFenetre(fenetreActive);
 
-		// On rend la fenêtre visible
-		fenetreActive.setVisible(true);
-		
-	}
+        // On rend la fenêtre visible
+        fenetreActive.setVisible(true);
+
+    }
 }
