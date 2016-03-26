@@ -43,6 +43,9 @@ public class F_records extends JFrame implements ChangementLangue {
 
 	/** nombre de scores à afficher */
 	private static final int NB_MAX_SCORES = 10;
+	
+	/** Nombre maximal de caractères que doit faire le pseudo du joueur */
+	public static final int NB_MAX_CARACT_PSEUDO = 16;
 
 	/** Titre de la fenêtre */
 	private JLabel la_titre;

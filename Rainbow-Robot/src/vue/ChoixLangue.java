@@ -482,19 +482,41 @@ public class ChoixLangue {
 	 * phrase annonçant le classement.</li>
 	 * <li>La 9ème colonne correspond à la traduction de la demande de saisie du
 	 * pseudo.</li>
+	 * <li>La 10ème colonne correspond à la traduction lorsque l'IA a terminé
+	 * en premier</li>
+	 * <li>La 11ème colonne correspond à la traduction lorsque la taille du 
+	 * pseudo est trop grande et qu'il a été tronqué (partie 1)</li>
+	 * <li>La 12ème colonne correspond à la traduction lorsque la taille du 
+         * pseudo est trop grande et qu'il a été tronqué (partie 2)</li>
+         * <li>La 13ème colonne correspond à la traduction lorsque l'utilisateur 
+         * a terminé le dernier niveau du mode story(partie 1)</li>
+         * <li>La 14ème colonne correspond à la traduction lorsque l'utilisateur 
+         * a terminé le dernier niveau du mode story (partie 2) pour annoncer 
+         * son temps</li>
 	 * </ul>
 	 * </li>
 	 * </ul>
 	 */
 	private static final String[][] FIN_PARTIE = {
-			{ "Fin de la partie", "Fin de la partie", "Recommencer",
+			{ "Fin de la partie", "Fin de la partie\n", "Recommencer",
 					"Passer au niveau suivant", "Quitter", "Nouveau record !",
 					"Vous avez fait le ", "ième score.\n",
 					"Veuillez entrer votre pseudo : ",
-					"L'IA a finit avant vous !" }, //
-			{ "Game over", "Game over", "Restart", "Next level", "Exit",
+					"L'IA a finit avant vous !",
+					"Votre pseudo est supérieur à ",
+					" caractères.\nIl a donc été tronqué.",
+					"Félicitations, vous avez terminé le "
+					+ "dernier niveau du mode Story !\n", "Votre temps : "
+					}, //
+			{ "Game over", "Game over\n", "Restart", "Next level", "Exit",
 					"New record !", "Your rank is ", ".\n",
-					"Enter your name : ", "the AI has finished before you !" } };
+					"Enter your pseudo : ", "The AI has finished before you !",
+					"Your pseudo length exceeds ", 
+					" characters.\nSo it has been truncated.",
+					"Congratulations, you have completed the "
+					+ "last level of the story mode.\n",
+					"Your time : "
+			} };
 
 	/**
 	 * <p>

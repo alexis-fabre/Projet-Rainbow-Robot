@@ -121,17 +121,21 @@ public class F_jeuRainbow extends JFrame implements ChangementLangue {
 		// On rend la fenêtre non redimenssionable
 		super.setResizable(false);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Titre de la fenêtre
+		
+		// traducteur pour le titre de la fenêtre
+		String[] traducteurStory = ChoixLangue.getChoixLangue().getModeStory();
+		String[] traducteurArcade = ChoixLangue.getChoixLangue().getModeArcade();
+		String[] traducteurCustom = ChoixLangue.getChoixLangue().getModeCustom();
+ 		// Titre de la fenêtre
 		switch (mode) {
 		case MODE_ARCADE:
-			super.setTitle("Mode Jeu Arcade");
+			super.setTitle(traducteurArcade[0]);
 			break;
 		case MODE_CUSTOM:
-			super.setTitle("Mode Jeu Custom");
+			super.setTitle(traducteurCustom[0]);
 			break;
 		case MODE_STORY:
-			super.setTitle("Mode Jeu Story");
+			super.setTitle(traducteurStory[0]);
 			break;
 		}
 		this.mode = mode;

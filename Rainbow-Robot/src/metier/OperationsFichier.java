@@ -14,6 +14,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
+import vue.F_records;
+
 /**
  * Classe permettant de lire et d'écrire dans les fichiers highscore.txt
  * 
@@ -56,6 +58,9 @@ public class OperationsFichier {
 			String score;
 			if (ligne != null) {
 				username = ligne.split("#")[0];
+				if (username.length() > F_records.NB_MAX_CARACT_PSEUDO) {
+				    username = username.substring(0, F_records.NB_MAX_CARACT_PSEUDO);
+				}
 				score = ligne.split("#")[1];
 				resultat.add(new LigneUsernameScore(username, score));
 			}

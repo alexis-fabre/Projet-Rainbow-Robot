@@ -134,11 +134,11 @@ public class F_choixNiveau extends JFrame implements ChangementLangue {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						niveauChoisi = Integer.parseInt(((JButton) e
-								.getSource()).getText());
+								.getSource()).getText())-1;
 					}
 
 				});
-				bt_niveaux[i].setText("" + i);
+				bt_niveaux[i].setText("" + (i+1));
 				UtilitaireFenetre.setAllSize(bt_niveaux[i],
 						UtilitaireFenetre.DIM_COMPOSANT_SECONDAIRE);
 			}
