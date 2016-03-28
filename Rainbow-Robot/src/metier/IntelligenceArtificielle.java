@@ -852,6 +852,7 @@ public class IntelligenceArtificielle extends Thread {
 	 *            niveaux
 	 * @param positionPrec
 	 *            liste des positions précédentes (niveau + 1)
+	 * @param indice niveau courant
 	 * @param n
 	 *            nombre de niveau
 	 * @param isSuppression

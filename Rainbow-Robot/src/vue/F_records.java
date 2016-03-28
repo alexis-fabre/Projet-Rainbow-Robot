@@ -71,8 +71,10 @@ public class F_records extends JFrame implements ChangementLangue {
 	/** label du niveau affiché dans les onglets */
 	private JLabel la_niveau;
 
+	/** chemin d'accès au fichier record */
 	public static final String FIC_RECORD = "./Ressource/highscore";
-
+	
+	/** extension obligatoire du fichier */
 	public static final String FIC_EXTENSION = ".txt";
 
 	/**
@@ -125,6 +127,7 @@ public class F_records extends JFrame implements ChangementLangue {
 	 * 
 	 * @param aAjouter
 	 *            nouveau panneau contenant des scores
+	 * @param indice niveau du mode story
 	 * @return aAjouter le panneau avec le contenu
 	 */
 	public JPanel ajoutContenu(JPanel aAjouter, int indice) {
@@ -173,6 +176,7 @@ public class F_records extends JFrame implements ChangementLangue {
 	 * 
 	 * @param score
 	 *            Score à comparer
+	 * @param niveau niveau du mode story
 	 * @return la place dans le classement -1 si ce n'est pas un record
 	 */
 	public static int estRecord(String score, int niveau) {
