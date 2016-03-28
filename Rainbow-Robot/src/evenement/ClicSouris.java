@@ -630,6 +630,7 @@ public class ClicSouris implements MouseListener, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof Partie) {
+			stopIA();
 			F_jeuRainbow fenetre = (F_jeuRainbow) vue;
 
 			fenetre.stopChrono();
