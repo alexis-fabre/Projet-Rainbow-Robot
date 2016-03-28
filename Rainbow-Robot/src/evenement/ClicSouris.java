@@ -752,10 +752,12 @@ public class ClicSouris implements MouseListener, Observer {
 					switch (retourStory) {
 					case 0: // Recommencer
 						fenetre.setPartieCourante(metier);
+						fenetre.requestFocus();
 						setObserver();
 						break;
 					case 1: // Partie suivante
 						metier.setNiveauSuivant();
+						fenetre.requestFocus();
 						fenetre.setPartieCourante(metier);
 						setObserver();
 						break;
@@ -796,6 +798,7 @@ public class ClicSouris implements MouseListener, Observer {
 				case 0: // Recommencer
 					fenetre.setPartieCourante(metier);
 					restartIA(metier.getPartieCouranteIA());
+					fenetre.requestFocus();
 					setObserver();
 					break;
 				case 1: // Partie suivante
@@ -807,6 +810,7 @@ public class ClicSouris implements MouseListener, Observer {
 					metier.setNiveauSuivant();
 					restartIA(metier.getPartieCouranteIA());
 					fenetre.setPartieCourante(metier);
+					fenetre.requestFocus();
 					setObserver();
 					break;
 				case 2: // Quitter
@@ -845,6 +849,7 @@ public class ClicSouris implements MouseListener, Observer {
 				case 0: // Recommencer
 					fenetre.setPartieCourante(metier);
 					restartIA(metier.getPartieCouranteIA());
+					fenetre.requestFocus();
 					setObserver();
 					break;
 				case 1: // Partie suivante
@@ -853,6 +858,7 @@ public class ClicSouris implements MouseListener, Observer {
 					F_custom nouvelleFenetre = new F_custom(this);
 					vue.setVisible(false);
 					nouvelleFenetre.setVisible(true);
+					fenetre.requestFocus();
 					setFenetre(nouvelleFenetre);
 					break;
 				case 2: // Quitter
