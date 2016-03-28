@@ -424,7 +424,6 @@ public class ClicSouris implements MouseListener, Observer {
 			// Bouton Jouer
 			if (e.getSource() == fenetreAbastractModeJeu.getBt_Jouer()
 					&& fenetreAbastractModeJeu.getBt_Jouer().isEnabled()) {
-				// On lance la fenêtre Accueil F_accueil.java
 				// Détecte les appuie sur les touches de clavier
 				metier = JeuRainbow.getStory();
 				F_choixNiveau nouvelleFenetre = new F_choixNiveau(this);
@@ -575,11 +574,12 @@ public class ClicSouris implements MouseListener, Observer {
 					break;
 				case 2: // Recommencer
 					metier.reinitialiserPartie();
-					fenetreJeu.setPartieCourante(metier);
-					restartIA(metier.getPartieCouranteIA());
-					setObserver();
 					fenetreJeu.restartChrono();
 					ToucheClavier.restartPartie();
+					fenetreJeu.setPartieCourante(metier);
+					fenetreJeu.requestFocus();
+					restartIA(metier.getPartieCouranteIA());
+					setObserver();
 					break;
 				case 3: // Quitter
 					// On revient à l'accueil
