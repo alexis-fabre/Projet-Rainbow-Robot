@@ -337,6 +337,7 @@ public class ClicSouris implements MouseListener, Observer {
 				if (vue instanceof F_jeuRainbow) {
 					F_jeuRainbow fenetreJeu = (F_jeuRainbow) vue;
 					restartIA(metier.getPartieCouranteIA());
+					fenetreJeu.requestFocus();
 					if (ToucheClavier.isPartieCommence()) {
 						fenetreJeu.startChrono();
 					}
