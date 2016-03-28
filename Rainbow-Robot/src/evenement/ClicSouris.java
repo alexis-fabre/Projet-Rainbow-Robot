@@ -567,6 +567,7 @@ public class ClicSouris implements MouseListener, Observer {
 						fenetreJeu.startChrono();
 						restartIA(metier.getPartieCouranteIA());
 					}
+					fenetreJeu.requestFocus();
 					break;
 				case 1: // Commandes
 					F_commandes fenetreCmd = new F_commandes(this, (JFrame) vue);
