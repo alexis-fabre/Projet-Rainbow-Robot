@@ -65,11 +65,11 @@ public class Caisse implements Dessinable, Serializable {
      * ORANGE JAUNE + BLEU = VERT BLEU + ROUGE = VIOLET
      */
     public static final int[][] FUSION_COULEUR = {
-            { 0, ORANGE, 0, JAUNE, VIOLET, 0 },//
-            { ORANGE, 0, 0, 0, 0, 0 },//
+            { 0, ORANGE, 0, 0, VIOLET, 0 },//
+            { ORANGE, 0, 0, 0, VERT, 0 },//
             { 0, 0, 0, 0, 0, 0 },//
-            { JAUNE, 0, 0, 0, 0, 0 },//
-            { VIOLET, 0, 0, 0, 0, 0 },//
+            { 0, 0, 0, 0, 0, 0 },//
+            { VIOLET, VERT, 0, 0, 0, 0 },//
             { 0, 0, 0, 0, 0, 0 } //
     };
 
