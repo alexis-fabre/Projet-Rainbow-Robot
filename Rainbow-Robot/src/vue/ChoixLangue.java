@@ -239,12 +239,12 @@ public class ChoixLangue {
 					"Mode story",
 					"MODE STORY",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>" }, //
+					"<html>Commandes par défaut du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>" }, //
 			{
 					"Story mode",
 					"STORY MODE",
 					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
-					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>" } };
+					"<html>Default Controls : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>" } };
 
 	/**
 	 * <p>
@@ -279,14 +279,14 @@ public class ChoixLangue {
 					"Mode arcade",
 					"MODE ARCADE",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
+					"<html>Commandes par défaut du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile" }, //
 			{
 					"Arcade mode",
 					"ARCADE MODE",
 					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
-					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
+					"<html>Default Controls : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
 					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
 					"Hard" } };
 
@@ -326,14 +326,14 @@ public class ChoixLangue {
 					"Mode custom",
 					"MODE CUSTOM",
 					"<html>Règle : Attraper toutes les caisses affichées dans le panneau du haut et les déposer dans le vortex (trou sombre).<br /> Si vous êtes le plus rapide, vous pourrez peut-être apparaître dans les records.<br /> A vous de jouer !!!</html>",
-					"<html>Commande du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
+					"<html>Commandes par défaut du robot : <br /><pre>↑ pour avancer<br />↓ pour reculer<br />← pour pivoter à gauche<br />→ pour pivoter à droite<br />\"Espace\" pour récupérer une caisse</pre></html>",
 					"Jeu Solo", "Jeu contre l'IA", "Difficulté", "Facile",
 					"Moyenne", "Difficile", "Choisir un fichier", "Parcourir" }, //
 			{
 					"Custom mode",
 					"CUSTOM MODE",
 					"<html>Rules : Catch all the boxes (cash registers) shown into the trap by the top and put down them in the whirlpool ( dark hole) .<br /> If you are the fastest, you can maybe seem in records.<br /> Let's play!!!</html>",
-					"<html>Control : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
+					"<html>Default Controls : Command of robot:<br/><pre>↑ To move forward<br/>↓ To move back<br/>← To swing to the left<br/>→ To swing to the right <br/> \"Space\" to catch a box </pre> </html>",
 					"Play Solo", "Play against AI", "Level", "Easy", "Medium",
 					"Hard", "Choose a file", "Browse" } };
 
