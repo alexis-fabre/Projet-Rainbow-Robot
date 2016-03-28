@@ -187,10 +187,6 @@ public class F_custom extends F_abstractModeJeu implements ChangementLangue {
 		contentCustom.add(Box.createHorizontalStrut(30));
 		contentCustom.add(contentWest);
 
-		// On rend inactif le bouton jouer (il sera actif dans une future
-		// version)
-		super.getBt_Jouer().setEnabled(true);
-
 		setLangue();
 
 		Container contentPane = super.getContentPane();
